@@ -2,11 +2,14 @@ from __future__ import annotations
 
 
 import logging
+import os
 import re
 import requests
 import time
 
 from bs4 import BeautifulSoup
+from fastcore.xtras import obj2dict
+from dataclasses import dataclass
 from ghapi.core import GhApi
 from fastcore.net import HTTP404NotFoundError, HTTP403ForbiddenError
 from typing import Callable, Iterator, Optional
@@ -62,7 +65,7 @@ class Repo:
                 logger.info(f"[{self.owner}/{self.name}] Resource not found {kwargs}")
                 return None
 
-    def extract_resolved_issues(self, pull: dict) -> list[str]:
+    def extract_resolved_issues(self, pull: dict | Pull) -> list[str]:
         """
         Extract list of issues referenced by a PR
 
@@ -116,7 +119,7 @@ class Repo:
     ) -> Iterator:
         """
         Return all values from a paginated API endpoint.
-        
+
         Args:
             func (callable): API function to call
             per_page (int): number of values to return per page
@@ -227,6 +230,106 @@ class Repo:
             state=state,
             quiet=quiet,
         )
+        return pulls
+
+    def get_prefiltered_pulls(self, labels: list[str], cutoff_date: Optional[str] = None, max_pulls: Optional[int] = None) -> list[Pull]:
+        """
+        Get all pulls that satisfy the following criteria:
+        - The pull is merged
+        - The pull is linked to a closed issue
+        - The linked issue has a label in the labels list
+
+        Args:
+            labels (list[str]): list of labels to filter by
+            cutoff_date (str): get pulls created after this date. If None, get all pulls
+            max_pulls (int): maximum number of pulls to return. If None, get all pulls
+        Return:
+            pulls (list[dict]): list of pull requests
+        """
+        query_path = os.path.join(os.path.dirname(__file__), "pulls.gql")
+        with open(query_path, "r") as f:
+            query = f.read()
+
+        def run_query(query, variables):
+            headers = {"Authorization": f"Bearer {self.token}"}
+            response = requests.post(
+                "https://api.github.com/graphql",
+                json={"query": query, "variables": variables},
+                headers=headers,
+            )
+            if response.status_code != 200:
+                raise Exception(
+                    f"Query failed with status code {response.status_code}: {response.text}"
+                )
+            return response.json()
+
+        variables = {
+            "owner": self.owner,
+            "name": self.name,
+            "labels": labels,
+            "cutoffDate": cutoff_date,
+        }
+
+        pulls = []
+        has_next_page = True
+        cursor = None
+        total_processed = 0
+
+        while has_next_page and (max_pulls is None or total_processed < max_pulls):
+            variables["cursor"] = cursor
+            result = run_query(query, variables)
+
+            if "data" not in result:
+                print(f"Error in API response: {result}")
+                if "errors" in result:
+                    print(f"API errors: {result['errors']}")
+                break
+
+            issues = result["data"]["repository"]["issues"]["nodes"]
+
+            for issue in issues:
+                if max_pulls and total_processed >= max_pulls:
+                    break
+
+                pull = (
+                    issue["timelineItems"]["nodes"][0]["source"]
+                    if issue["timelineItems"]["nodes"]
+                    else None
+                )
+
+                if pull and pull["merged"]:
+                    assert pull["mergeCommit"]
+
+                    # A single pull can be linked to multiple issues, so we might have seen this pull before.
+                    # If so, append to list of resolved issues and continue to next pull
+                    existing_pull = next((p for p in pulls if p.number == pull["number"]), None)
+                    if existing_pull:
+                        existing_pull.resolved_issues.append(issue["number"])
+                        continue
+
+                    pulls.append(Pull(
+                        number=pull["number"],
+                        title=pull["title"],
+                        body=pull["body"],
+                        url=pull["url"],
+                        diff_url=pull["url"] + ".diff",
+                        patch_url=pull["url"] + ".patch",
+                        created_at=pull["createdAt"],
+                        merged_at=pull["mergedAt"],
+                        resolved_issues=[str(issue["number"])],
+                        base={
+                            "repo": {
+                                "full_name": f"{self.owner}/{self.name}",
+                            },
+                            "sha": pull["mergeCommit"]["parents"]["nodes"][0]["oid"]
+                        }
+                    ))
+                    total_processed += 1
+
+            page_info = result["data"]["repository"]["issues"]["pageInfo"]
+            has_next_page = page_info["hasNextPage"]
+            cursor = page_info["endCursor"]
+
         return pulls
 
 
@@ -402,3 +505,30 @@ def extract_problem_statement_and_hints_django(
                 all_hints_text.append((comment_text, timestamp))
 
     return text, all_hints_text
+
+@dataclass
+class Pull:
+    number: int
+    title: str
+    body: str
+    url: str
+    diff_url: str
+    patch_url: str
+    created_at: str
+    merged_at: str
+    base: dict
+    resolved_issues: list[str]
+
+    def to_dict(self):
+        return {
+            'number': self.number,
+            'title': self.title,
+            'body': self.body,
+            'url': self.url,
+            'diff_url': self.diff_url,
+            'patch_url': self.patch_url,
+            'created_at': self.created_at,
+            'merged_at': self.merged_at,
+            'base': self.base,
+            'resolved_issues': obj2dict(self.resolved_issues),
+        }
