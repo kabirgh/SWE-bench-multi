@@ -18,7 +18,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def create_instance(repo: Repo, pull: dict) -> dict:
+def create_instance(repo: Repo, pull: dict, fast: bool = False) -> dict:
     """
     Create a single task instance from a pull request, where task instance is:
 
@@ -31,7 +31,7 @@ def create_instance(repo: Repo, pull: dict) -> dict:
     }
     """
     patch, test_patch = extract_patches(pull, repo)
-    problem_statement, hints = extract_problem_statement_and_hints(pull, repo)
+    problem_statement, hints = extract_problem_statement_and_hints(pull, repo, fast)
     return {
         "repo": repo.repo.full_name,
         "pull_number": pull["number"],
@@ -94,7 +94,7 @@ def has_test_patch(instance: dict) -> bool:
     return True
 
 
-def main(pr_file: str, output: str, token: Optional[str] = None):
+def main(pr_file: str, output: str, token: Optional[str] = None, fast: bool = False):
     """
     Main thread for creating task instances from pull requests
 
@@ -102,6 +102,8 @@ def main(pr_file: str, output: str, token: Optional[str] = None):
         pr_file (str): path to pull request JSONL file
         output (str): output file name
         token (str): GitHub token
+        fast (bool): Skip API calls to get issue data by using data in existing pr_file.
+                     print_pulls should have been called with --prefilter or get_tasks_pipeline.py with --fast.
     """
     if token is None:
         # Get GitHub token from environment variable if not provided
@@ -166,7 +168,7 @@ def main(pr_file: str, output: str, token: Optional[str] = None):
                 if repo_name not in repos:
                     repos[repo_name] = load_repo(repo_name)
                 repo = repos[repo_name]
-                instance = create_instance(repo, pull)
+                instance = create_instance(repo, pull, fast)
                 if is_valid_instance(instance):
                     # If valid, write to .all output file
                     print(

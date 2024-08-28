@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from multiprocessing import Pool
 from swebench.collect.build_dataset import main as build_dataset
 from swebench.collect.print_pulls import main as print_pulls
-
+from typing import Optional
 
 load_dotenv()
 
@@ -47,13 +47,16 @@ def construct_data_files(data: dict):
             path_prs (str): Path to save PR data files to
             path_tasks (str): Path to save task instance data files to
             token (str): GitHub token to use for API requests
+            cutoff_date (str): Cutoff date for PRs to consider in format YYYYMMDD
+            prefilter (bool): If True, prefilter pulls to get only those that resolve an issue and have a label in LABELS
     """
-    repos, path_prs, path_tasks, max_pulls, cutoff_date, token = (
+    repos, path_prs, path_tasks, max_pulls, cutoff_date, fast, token = (
         data["repos"],
         data["path_prs"],
         data["path_tasks"],
         data["max_pulls"],
         data["cutoff_date"],
+        data["fast"],
         data["token"],
     )
     for repo in repos:
@@ -70,7 +73,8 @@ def construct_data_files(data: dict):
                     path_pr,
                     token,
                     max_pulls=max_pulls,
-                    cutoff_date=cutoff_date
+                    cutoff_date=cutoff_date,
+                    prefilter=fast
                 )
                 print(f"✅ Successfully saved PR data for {repo} to {path_pr}")
             else:
@@ -79,7 +83,7 @@ def construct_data_files(data: dict):
             path_task = os.path.join(path_tasks, f"{repo_name}-task-instances.jsonl")
             if not os.path.exists(path_task):
                 print(f"Task instance data for {repo} not found, creating...")
-                build_dataset(path_pr, path_task, token)
+                build_dataset(path_pr, path_task, token, fast=fast)
                 print(f"✅ Successfully saved task instance data for {repo} to {path_task}")
             else:
                 print(f"📁 Task instance data for {repo} already exists at {path_task}, skipping...")
@@ -95,8 +99,9 @@ def main(
         repos: list,
         path_prs: str,
         path_tasks: str,
-        max_pulls: int = None,
-        cutoff_date: str = None,
+        max_pulls: Optional[int] = None,
+        cutoff_date: Optional[str] = None,
+        fast: bool = False,
     ):
     """
     Spawns multiple threads given multiple GitHub tokens for collecting fine tuning data
@@ -124,6 +129,7 @@ def main(
             "path_tasks": path_tasks,
             "max_pulls": max_pulls,
             "cutoff_date": cutoff_date,
+            "fast": fast,
             "token": token
         }
         for repos, token in zip(data_task_lists, tokens)
@@ -157,6 +163,11 @@ if __name__ == "__main__":
         type=str,
         help="Cutoff date for PRs to consider in format YYYYMMDD",
         default=None,
+    )
+    parser.add_argument(
+        "--fast",
+        action='store_true',
+        help="If supplied, prefilter pulls to get only merged pulls that resolve an issue and have bug, feature, or regression label. Skips uneccessary API calls to get issue data in build_dataset.",
     )
     args = parser.parse_args()
     main(**vars(args))

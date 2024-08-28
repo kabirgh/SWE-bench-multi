@@ -316,13 +316,20 @@ class Repo:
                         patch_url=pull["url"] + ".patch",
                         created_at=pull["createdAt"],
                         merged_at=pull["mergedAt"],
-                        resolved_issues=[str(issue["number"])],
                         base={
                             "repo": {
                                 "full_name": f"{self.owner}/{self.name}",
                             },
                             "sha": pull["mergeCommit"]["parents"]["nodes"][0]["oid"]
-                        }
+                        },
+                        resolved_issues=[str(issue["number"])],
+                        related_issues=[{
+                            "number": issue["number"],
+                            "title": issue["title"],
+                            "body": issue["body"],
+                            "url": issue["url"],
+                            "labels": [label["name"] for label in issue["labels"]["nodes"]],
+                        }]
                     ))
                     total_processed += 1
 
@@ -333,7 +340,7 @@ class Repo:
         return pulls
 
 
-def extract_problem_statement_and_hints(pull: dict, repo: Repo) -> tuple[str, str]:
+def extract_problem_statement_and_hints(pull: dict, repo: Repo, fast: bool = False) -> tuple[str, str]:
     """
     Extract problem statement from issues associated with a pull request
 
@@ -346,8 +353,18 @@ def extract_problem_statement_and_hints(pull: dict, repo: Repo) -> tuple[str, st
     """
     if repo.name == "django":
         return extract_problem_statement_and_hints_django(pull, repo)
+
     text = ""
     all_hint_texts = list()
+
+    if fast:
+        for issue in pull["related_issues"]:
+            text += f"{issue['title']}\n{issue['body']}\n"
+            hint_texts = _extract_hints(pull, repo, issue["number"])
+            hint_text = "\n".join(hint_texts)
+            all_hint_texts.append(hint_text)
+        return text, "\n".join(all_hint_texts) if all_hint_texts else ""
+
     for issue_number in pull["resolved_issues"]:
         issue = repo.call_api(
             repo.api.issues.get,
@@ -518,6 +535,7 @@ class Pull:
     merged_at: str
     base: dict
     resolved_issues: list[str]
+    related_issues: list[dict]
 
     def to_dict(self):
         return {
@@ -530,5 +548,6 @@ class Pull:
             'created_at': self.created_at,
             'merged_at': self.merged_at,
             'base': self.base,
-            'resolved_issues': obj2dict(self.resolved_issues),
+            'resolved_issues': self.resolved_issues,
+            'related_issues': self.related_issues,
         }
