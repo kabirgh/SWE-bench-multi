@@ -37,7 +37,7 @@ class Repo:
         self.api = GhApi(token=token)
         self.repo = self.call_api(self.api.repos.get, owner=owner, repo=name)
 
-    def call_api(self, func: Callable, **kwargs) -> dict|None:
+    def call_api(self, func: Callable, **kwargs) -> dict | None:
         """
         API call wrapper with rate limit handling (checks every 5 minutes if rate limit is reset)
 
@@ -232,7 +232,12 @@ class Repo:
         )
         return pulls
 
-    def get_prefiltered_pulls(self, labels: list[str], cutoff_date: Optional[str] = None, max_pulls: Optional[int] = None) -> list[Pull]:
+    def get_prefiltered_pulls(
+        self,
+        labels: list[str],
+        cutoff_date: Optional[str] = None,
+        max_pulls: Optional[int] = None,
+    ) -> list[Pull]:
         """
         Get all pulls that satisfy the following criteria:
         - The pull is merged
@@ -302,35 +307,46 @@ class Repo:
 
                     # A single pull can be linked to multiple issues, so we might have seen this pull before.
                     # If so, append to list of resolved issues and continue to next pull
-                    existing_pull = next((p for p in pulls if p.number == pull["number"]), None)
+                    existing_pull = next(
+                        (p for p in pulls if p.number == pull["number"]), None
+                    )
                     if existing_pull:
                         existing_pull.resolved_issues.append(issue["number"])
                         continue
 
-                    pulls.append(Pull(
-                        number=pull["number"],
-                        title=pull["title"],
-                        body=pull["body"],
-                        url=pull["url"],
-                        diff_url=pull["url"] + ".diff",
-                        patch_url=pull["url"] + ".patch",
-                        created_at=pull["createdAt"],
-                        merged_at=pull["mergedAt"],
-                        base={
-                            "repo": {
-                                "full_name": f"{self.owner}/{self.name}",
+                    pulls.append(
+                        Pull(
+                            number=pull["number"],
+                            title=pull["title"],
+                            body=pull["body"],
+                            url=pull["url"],
+                            diff_url=pull["url"] + ".diff",
+                            patch_url=pull["url"] + ".patch",
+                            created_at=pull["createdAt"],
+                            merged_at=pull["mergedAt"],
+                            base={
+                                "repo": {
+                                    "full_name": f"{self.owner}/{self.name}",
+                                },
+                                "sha": pull["mergeCommit"]["parents"]["nodes"][0][
+                                    "oid"
+                                ],
                             },
-                            "sha": pull["mergeCommit"]["parents"]["nodes"][0]["oid"]
-                        },
-                        resolved_issues=[str(issue["number"])],
-                        related_issues=[{
-                            "number": issue["number"],
-                            "title": issue["title"],
-                            "body": issue["body"],
-                            "url": issue["url"],
-                            "labels": [label["name"] for label in issue["labels"]["nodes"]],
-                        }]
-                    ))
+                            resolved_issues=[str(issue["number"])],
+                            related_issues=[
+                                {
+                                    "number": issue["number"],
+                                    "title": issue["title"],
+                                    "body": issue["body"],
+                                    "url": issue["url"],
+                                    "labels": [
+                                        label["name"]
+                                        for label in issue["labels"]["nodes"]
+                                    ],
+                                }
+                            ],
+                        )
+                    )
                     total_processed += 1
 
             page_info = result["data"]["repository"]["issues"]["pageInfo"]
@@ -340,7 +356,9 @@ class Repo:
         return pulls
 
 
-def extract_problem_statement_and_hints(pull: dict, repo: Repo, fast: bool = False) -> tuple[str, str]:
+def extract_problem_statement_and_hints(
+    pull: dict, repo: Repo, fast: bool = False
+) -> tuple[str, str]:
     """
     Extract problem statement from issues associated with a pull request
 
@@ -440,11 +458,10 @@ def extract_patches(pull: dict, repo: Repo) -> tuple[str, str]:
     """
     patch = requests.get(pull["diff_url"]).text
     patch_test = ""
-    patch_fix  = ""
+    patch_fix = ""
     for hunk in PatchSet(patch):
         if any(
-            test_word in hunk.path for test_word in
-            ['test', 'tests', 'e2e', 'testing']
+            test_word in hunk.path for test_word in ["test", "tests", "e2e", "testing"]
         ):
             patch_test += str(hunk)
         else:
@@ -513,7 +530,9 @@ def extract_problem_statement_and_hints_django(
             if "/" in timestamp:
                 timestamp = time.mktime(time.strptime(timestamp, "%m/%d/%y %H:%M:%S"))
             elif "," in timestamp:
-                timestamp = time.mktime(time.strptime(timestamp, "%b %d, %Y, %I:%M:%S %p"))
+                timestamp = time.mktime(
+                    time.strptime(timestamp, "%b %d, %Y, %I:%M:%S %p")
+                )
             else:
                 raise ValueError(f"Timestamp format not recognized: {timestamp}")
 
@@ -522,6 +541,7 @@ def extract_problem_statement_and_hints_django(
                 all_hints_text.append((comment_text, timestamp))
 
     return text, all_hints_text
+
 
 @dataclass
 class Pull:
@@ -539,15 +559,15 @@ class Pull:
 
     def to_dict(self):
         return {
-            'number': self.number,
-            'title': self.title,
-            'body': self.body,
-            'url': self.url,
-            'diff_url': self.diff_url,
-            'patch_url': self.patch_url,
-            'created_at': self.created_at,
-            'merged_at': self.merged_at,
-            'base': self.base,
-            'resolved_issues': self.resolved_issues,
-            'related_issues': self.related_issues,
+            "number": self.number,
+            "title": self.title,
+            "body": self.body,
+            "url": self.url,
+            "diff_url": self.diff_url,
+            "patch_url": self.patch_url,
+            "created_at": self.created_at,
+            "merged_at": self.merged_at,
+            "base": self.base,
+            "resolved_issues": self.resolved_issues,
+            "related_issues": self.related_issues,
         }

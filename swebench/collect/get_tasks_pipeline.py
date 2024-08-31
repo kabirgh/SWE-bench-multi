@@ -74,35 +74,41 @@ def construct_data_files(data: dict):
                     token,
                     max_pulls=max_pulls,
                     cutoff_date=cutoff_date,
-                    prefilter=fast
+                    prefilter=fast,
                 )
                 print(f"✅ Successfully saved PR data for {repo} to {path_pr}")
             else:
-                print(f"📁 Pull request data for {repo} already exists at {path_pr}, skipping...")
+                print(
+                    f"📁 Pull request data for {repo} already exists at {path_pr}, skipping..."
+                )
 
             path_task = os.path.join(path_tasks, f"{repo_name}-task-instances.jsonl")
             if not os.path.exists(path_task):
                 print(f"Task instance data for {repo} not found, creating...")
                 build_dataset(path_pr, path_task, token, fast=fast)
-                print(f"✅ Successfully saved task instance data for {repo} to {path_task}")
+                print(
+                    f"✅ Successfully saved task instance data for {repo} to {path_task}"
+                )
             else:
-                print(f"📁 Task instance data for {repo} already exists at {path_task}, skipping...")
+                print(
+                    f"📁 Task instance data for {repo} already exists at {path_task}, skipping..."
+                )
         except Exception as e:
-            print("-"*80)
+            print("-" * 80)
             print(f"Something went wrong for {repo}, skipping: {e}")
             print("Here is the full traceback:")
             traceback.print_exc()
-            print("-"*80)
+            print("-" * 80)
 
 
 def main(
-        repos: list,
-        path_prs: str,
-        path_tasks: str,
-        max_pulls: Optional[int] = None,
-        cutoff_date: Optional[str] = None,
-        fast: bool = False,
-    ):
+    repos: list,
+    path_prs: str,
+    path_tasks: str,
+    max_pulls: Optional[int] = None,
+    cutoff_date: Optional[str] = None,
+    fast: bool = False,
+):
     """
     Spawns multiple threads given multiple GitHub tokens for collecting fine tuning data
 
@@ -118,7 +124,10 @@ def main(
     print(f"Received following repos to create task instances for: {repos}")
 
     tokens = os.getenv("GITHUB_TOKENS")
-    if not tokens: raise Exception("Missing GITHUB_TOKENS, consider rerunning with GITHUB_TOKENS=$(gh auth token)")
+    if not tokens:
+        raise Exception(
+            "Missing GITHUB_TOKENS, consider rerunning with GITHUB_TOKENS=$(gh auth token)"
+        )
     tokens = tokens.split(",")
     data_task_lists = split_instances(repos, len(tokens))
 
@@ -130,7 +139,7 @@ def main(
             "max_pulls": max_pulls,
             "cutoff_date": cutoff_date,
             "fast": fast,
-            "token": token
+            "token": token,
         }
         for repos, token in zip(data_task_lists, tokens)
     ]
@@ -142,7 +151,9 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
-        "--repos", nargs="+", help="List of repositories (e.g., `sqlfluff/sqlfluff`) to create task instances for"
+        "--repos",
+        nargs="+",
+        help="List of repositories (e.g., `sqlfluff/sqlfluff`) to create task instances for",
     )
     parser.add_argument(
         "--path_prs", type=str, help="Path to folder to save PR data files to"
@@ -153,10 +164,7 @@ if __name__ == "__main__":
         help="Path to folder to save task instance data files to",
     )
     parser.add_argument(
-        "--max_pulls",
-        type=int,
-        help="Maximum number of pulls to log",
-        default=None
+        "--max_pulls", type=int, help="Maximum number of pulls to log", default=None
     )
     parser.add_argument(
         "--cutoff_date",
@@ -166,7 +174,7 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--fast",
-        action='store_true',
+        action="store_true",
         help="If supplied, prefilter pulls to get only merged pulls that resolve an issue and have bug, feature, or regression label. Skips uneccessary API calls to get issue data in build_dataset.",
     )
     args = parser.parse_args()

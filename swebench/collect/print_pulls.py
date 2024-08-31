@@ -59,9 +59,11 @@ def log_all_pulls(
         repo (Repo): repository object
         output (str): output file name
     """
-    cutoff_date = datetime.strptime(cutoff_date, "%Y%m%d") \
-        .strftime("%Y-%m-%dT%H:%M:%SZ") \
-        if cutoff_date is not None else None
+    cutoff_date = (
+        datetime.strptime(cutoff_date, "%Y%m%d").strftime("%Y-%m-%dT%H:%M:%SZ")
+        if cutoff_date is not None
+        else None
+    )
 
     with open(output, "w") as file:
         for i_pull, pull in enumerate(repo.get_all_pulls()):
@@ -71,6 +73,7 @@ def log_all_pulls(
                 break
             if cutoff_date is not None and pull.created_at < cutoff_date:
                 break
+
 
 def log_prefiltered_pulls(
     repo: Repo,
@@ -85,7 +88,9 @@ def log_prefiltered_pulls(
     )
 
     with open(output, "w") as file:
-        for pull in repo.get_prefiltered_pulls(labels=LABELS, cutoff_date=cutoff_date, max_pulls=max_pulls):
+        for pull in repo.get_prefiltered_pulls(
+            labels=LABELS, cutoff_date=cutoff_date, max_pulls=max_pulls
+        ):
             print(json.dumps(pull.to_dict()), end="\n", flush=True, file=file)
 
 
@@ -110,7 +115,9 @@ def main(
     owner, repo = repo_name.split("/")
     repo = Repo(owner, repo, token=token)
     if prefilter:
-        log_prefiltered_pulls(repo, output, max_pulls=max_pulls, cutoff_date=cutoff_date)
+        log_prefiltered_pulls(
+            repo, output, max_pulls=max_pulls, cutoff_date=cutoff_date
+        )
     else:
         log_all_pulls(repo, output, max_pulls=max_pulls, cutoff_date=cutoff_date)
 
@@ -131,8 +138,9 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--prefilter",
-        action='store_true',
-        help="If supplied, prefilter pulls to get only those that resolve an issue and have one of the following labels: " + ", ".join(LABELS),
+        action="store_true",
+        help="If supplied, prefilter pulls to get only those that resolve an issue and have one of the following labels: "
+        + ", ".join(LABELS),
     )
     args = parser.parse_args()
     main(**vars(args))
