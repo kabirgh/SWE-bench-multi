@@ -26,6 +26,7 @@ class PythonAdapter(Adapter):
     no_use_env: bool = False
     eval_commands: Optional[List[str]] = None
 
+    @property
     def language(self):
         return "python"
 

@@ -5,6 +5,7 @@ from swebench.harness.constants import SWEbenchInstance
 
 
 class Adapter(ABC):
+    @property
     @abstractmethod
     def language(self) -> str:
         pass

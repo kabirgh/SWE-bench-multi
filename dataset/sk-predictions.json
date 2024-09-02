@@ -1,0 +1,7 @@
+[
+  {
+    "instance_id": "scikit-learn__scikit-learn-25102",
+    "model_patch": "diff --git a/doc/whats_new/v1.3.rst b/doc/whats_new/v1.3.rst\nindex 6012ac7a336a4..ea13527ee2474 100644\n--- a/doc/whats_new/v1.3.rst\n+++ b/doc/whats_new/v1.3.rst\n@@ -36,6 +36,12 @@ Changelog\n     :pr:`123456` by :user:`Joe Bloggs <joeongithub>`.\n     where 123456 is the *pull request* number, not the issue number.\n \n+:mod:`sklearn.feature_selection`\n+................................\n+\n+- |Enhancement| All selectors in :mod:`sklearn.feature_selection` will preserve\n+  a DataFrame's dtype when transformed. :pr:`xxxxx` by `Thomas Fan`_.\n+\n Code and Documentation Contributors\n -----------------------------------\n \n",
+    "model_name_or_path": "fake_model"
+  }
+]

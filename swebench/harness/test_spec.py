@@ -4,9 +4,12 @@ import platform
 import re
 
 from dataclasses import dataclass
-from typing import Any, Union, cast
+from typing import Any, Optional, Union, cast
 
+from swebench.harness.adapters.adapter import Adapter
+from swebench.harness.adapters.registry import ADAPTERS
 from swebench.harness.constants import (
+    DIFF_MODIFIED_FILE_REGEX,
     SWEbenchInstance,
     KEY_INSTANCE_ID,
     FAIL_TO_PASS,
@@ -26,8 +29,6 @@ from swebench.harness.utils import (
     get_test_directives,
 )
 
-DIFF_MODIFIED_FILE_REGEX = r"--- a/(.*)"
-
 
 @dataclass
 class TestSpec:
@@ -44,6 +45,7 @@ class TestSpec:
     arch: str
     FAIL_TO_PASS: list[str]
     PASS_TO_PASS: list[str]
+    adapter: Optional[Adapter] = None
 
     @property
     def setup_env_script(self):
@@ -69,6 +71,8 @@ class TestSpec:
 
     @property
     def base_image_key(self):
+        if self.adapter:
+            return f"sweb.base.{self.arch}.{self.adapter.language}:latest"
         return f"sweb.base.{self.arch}:latest"
 
     @property
@@ -83,28 +87,48 @@ class TestSpec:
         hash_object.update(str(self.env_script_list).encode("utf-8"))
         hash_value = hash_object.hexdigest()
         val = hash_value[:22]  # 22 characters is still very likely to be unique
+
+        if self.adapter:
+            return f"sweb.env.{self.arch}.{self.adapter.language}.{val}:latest"
         return f"sweb.env.{self.arch}.{val}:latest"
 
     @property
     def instance_image_key(self):
+        if self.adapter:
+            return f"sweb.eval.{self.arch}.{self.adapter.language}.{self.instance_id}:latest"
         return f"sweb.eval.{self.arch}.{self.instance_id}:latest"
 
     def get_instance_container_name(self, run_id=None):
-        if not run_id:
-            return f"sweb.eval.{self.instance_id}"
-        return f"sweb.eval.{self.instance_id}.{run_id}"
+        name = f"sweb.eval.{self.instance_id}"
+        if self.adapter:
+            name = f"sweb.eval.{self.arch}.{self.adapter.language}.{self.instance_id}"
+        if run_id:
+            name = f"{name}.{self.instance_id}"
+        return name
 
     @property
-    def base_dockerfile(self):
-        return get_dockerfile_base(self.platform, self.arch)
+    def base_dockerfile(self) -> str:
+        return get_dockerfile_base(
+            self.platform,
+            self.arch,
+            self.adapter.language if self.adapter else None,
+        )
 
     @property
-    def env_dockerfile(self):
-        return get_dockerfile_env(self.platform, self.arch)
+    def env_dockerfile(self) -> str:
+        return get_dockerfile_env(
+            self.platform,
+            self.arch,
+            self.adapter.language if self.adapter else None,
+        )
 
     @property
-    def instance_dockerfile(self):
-        return get_dockerfile_instance(self.platform, self.env_image_key)
+    def instance_dockerfile(self) -> str:
+        return get_dockerfile_instance(
+            self.platform,
+            self.env_image_key,
+            self.adapter.language if self.adapter else None,
+        )
 
     @property
     def platform(self):
@@ -138,11 +162,11 @@ def make_repo_script_list(specs, repo, repo_directory, base_commit, env_name):
         f"cd {repo_directory}",
         f"git reset --hard {base_commit}",
         # Remove the remote so the agent won't see newer commits.
-        f"git remote remove origin",
+        "git remote remove origin",
         # Make sure conda is available for later use
         "source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
-        f'echo "Current environment: $CONDA_DEFAULT_ENV"',
+        'echo "Current environment: $CONDA_DEFAULT_ENV"',
     ]
     if repo in MAP_REPO_TO_INSTALL:
         setup_commands.append(MAP_REPO_TO_INSTALL[repo])
@@ -246,7 +270,7 @@ def make_eval_script_list(
         ]
     )
     eval_commands = [
-        f"source /opt/miniconda3/bin/activate",
+        "source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
         f"cd {repo_directory}",
     ]
@@ -256,8 +280,8 @@ def make_eval_script_list(
         f"git config --global --add safe.directory {repo_directory}",  # for nonroot user
         f"cd {repo_directory}",
         # This is just informational, so we have a record
-        f"git status",
-        f"git show",
+        "git status",
+        "git show",
         f"git diff {base_commit}",
         "source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
@@ -295,15 +319,27 @@ def make_test_spec(instance: SWEbenchInstance) -> TestSpec:
 
     env_name = "testbed"
     repo_directory = f"/{env_name}"
-    specs = MAP_REPO_VERSION_TO_SPECS[repo][version]
 
-    repo_script_list = make_repo_script_list(
-        specs, repo, repo_directory, base_commit, env_name
-    )
-    env_script_list = make_env_script_list(instance, specs, env_name)
-    eval_script_list = make_eval_script_list(
-        instance, specs, env_name, repo_directory, base_commit, test_patch
-    )
+    if repo in ADAPTERS:
+        adapter = ADAPTERS[repo][version]
+        repo_script_list = adapter.make_repo_script_list(
+            repo, repo_directory, base_commit, env_name
+        )
+        env_script_list = adapter.make_env_script_list(instance, env_name)
+        eval_script_list = adapter.make_eval_script_list(
+            instance, env_name, repo_directory, base_commit, test_patch
+        )
+    else:
+        specs = MAP_REPO_VERSION_TO_SPECS[repo][version]
+
+        repo_script_list = make_repo_script_list(
+            specs, repo, repo_directory, base_commit, env_name
+        )
+        env_script_list = make_env_script_list(instance, specs, env_name)
+        eval_script_list = make_eval_script_list(
+            instance, specs, env_name, repo_directory, base_commit, test_patch
+        )
+
     if platform.machine() in {"aarch64", "arm64"}:
         # use arm64 unless explicitly specified
         arch = "arm64" if instance_id not in USE_X86 else "x86_64"
@@ -320,4 +356,5 @@ def make_test_spec(instance: SWEbenchInstance) -> TestSpec:
         arch=arch,
         FAIL_TO_PASS=fail_to_pass,
         PASS_TO_PASS=pass_to_pass,
+        adapter=adapter,
     )

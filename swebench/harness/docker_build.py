@@ -6,6 +6,7 @@ from tqdm import tqdm
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
+from swebench.harness.adapters.registry import ADAPTERS
 from swebench.harness.constants import (
     BASE_IMAGE_BUILD_DIR,
     ENV_IMAGE_BUILD_DIR,
@@ -513,9 +514,17 @@ def build_container(
     container = None
     try:
         # Get configurations for how container should be created
-        config = MAP_REPO_VERSION_TO_SPECS[test_spec.repo][test_spec.version]
-        user = "root" if not config.get("execute_test_as_nonroot", False) else "nonroot"
-        nano_cpus = config.get("nano_cpus")
+        if test_spec.repo in ADAPTERS:
+            user = "root"
+            nano_cpus = None
+        else:
+            config = MAP_REPO_VERSION_TO_SPECS[test_spec.repo][test_spec.version]
+            user = (
+                "root"
+                if not config.get("execute_test_as_nonroot", False)
+                else "nonroot"
+            )
+            nano_cpus = config.get("nano_cpus")
 
         # Create the container
         logger.info(f"Creating container for {test_spec.instance_id}...")

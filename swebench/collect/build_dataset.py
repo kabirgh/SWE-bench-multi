@@ -45,6 +45,7 @@ def create_instance(repo: Repo, pull: dict, fast: bool = False) -> dict:
         "problem_statement": problem_statement,
         "hints_text": hints,
         "created_at": pull["created_at"],
+        "url": pull["url"],
     }
 
 

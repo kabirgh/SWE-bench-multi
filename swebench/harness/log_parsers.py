@@ -164,6 +164,7 @@ def parse_log_pytest_v2(log: str) -> dict[str, str]:
         elif any([line.endswith(x.value) for x in TestStatus]):
             test_case = line.split()
             test_status_map[test_case[0]] = test_case[1]
+    print(test_status_map)
     return test_status_map
 
 

@@ -29,14 +29,29 @@ def make_patch(url: str):
     return patch[0]
 
 
-def write_patch_to_jsonl(target_file: str, patch: PatchedFile, instance_id: str):
+def write_patch_to_json(target_file: str, patch: PatchedFile, instance_id: str):
     d = {
         "instance_id": instance_id,
         "model_patch": str(patch),
         "model_name_or_path": "fake_model",
     }
-    with open(target_file, "w+") as f:
-        f.write(json.dumps([d]) + "\n")
+
+    try:
+        with open(target_file, "r+") as f:
+            try:
+                data = json.load(f)
+                if not isinstance(data, list):
+                    data = [data]
+            except json.JSONDecodeError:
+                data = []
+
+            data.append(d)
+            f.seek(0)
+            json.dump(data, f, indent=2)
+            f.truncate()
+    except FileNotFoundError:
+        with open(target_file, "w") as f:
+            json.dump([d], f, indent=2)
 
 
 if __name__ == "__main__":
@@ -51,4 +66,4 @@ if __name__ == "__main__":
     patch_url = args.url + ".patch"
 
     patch = make_patch(patch_url)
-    write_patch_to_jsonl(args.target_file, patch, f"{repo_id}-{pr_number}")
+    write_patch_to_json(args.target_file, patch, f"{repo_id}-{pr_number}")

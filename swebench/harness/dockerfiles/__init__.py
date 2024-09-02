@@ -14,12 +14,13 @@ def get_dockerfile_base(platform: str, arch: str, language: str | None):
         conda_arch = "aarch64"
     else:
         conda_arch = arch
+    print(f"Getting dockerfile base for {language} on {platform} {arch}")
     return _dockerfiles[language or "python"]["base"].format(
         platform=platform, conda_arch=conda_arch
     )
 
 
-def get_dockerfile_env(platform: str, arch: str, language: str | None) -> str | None:
+def get_dockerfile_env(platform: str, arch: str, language: str | None) -> str:
     file = _dockerfiles[language or "python"]["env"]
     if not file:
         return None
@@ -35,7 +36,8 @@ def get_dockerfile_instance(platform: str, env_image_name: str, language: str | 
 _dockerfiles = {
     "go": {
         "base": _DOCKERFILE_BASE_GO,
-        "env": None,  # No env needed for go repos
+        # No env needed for go repos, return base since rest of code expects env to be built
+        "env": _DOCKERFILE_BASE_GO,
         "instance": _DOCKERFILE_INSTANCE_GO,
     },
     "python": {

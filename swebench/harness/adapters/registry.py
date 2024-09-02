@@ -1,8 +1,9 @@
+from swebench.harness.adapters.adapter import Adapter
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.constants import TEST_PYTEST
 
-ADAPTERS = {
+ADAPTERS: dict[str, dict[str, Adapter]] = {
     "scikit-learn/scikit-learn": {
         **{
             k: PythonAdapter(

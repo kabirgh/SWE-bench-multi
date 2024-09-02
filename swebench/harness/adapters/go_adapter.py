@@ -19,6 +19,7 @@ class GoAdapter(Adapter):
     pre_install: Optional[str] = None
     eval_commands: Optional[List[str]] = None
 
+    @property
     def language(self):
         return "go"
 

@@ -8,6 +8,8 @@ ENV_IMAGE_BUILD_DIR = Path("logs/build_images/env")
 INSTANCE_IMAGE_BUILD_DIR = Path("logs/build_images/instances")
 RUN_EVALUATION_LOG_DIR = Path("logs/run_evaluation")
 
+DIFF_MODIFIED_FILE_REGEX = r"--- a/(.*)"
+
 
 # Constants - Task Instance Class
 class SWEbenchInstance(TypedDict):
