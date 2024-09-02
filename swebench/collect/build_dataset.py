@@ -18,7 +18,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def create_instance(repo: Repo, pull: dict, fast: bool = False) -> dict:
+def create_instance(
+    repo: Repo, pull: dict, fast: bool = False, pr_is_version: bool = False
+) -> dict:
     """
     Create a single task instance from a pull request, where task instance is:
 
@@ -32,7 +34,8 @@ def create_instance(repo: Repo, pull: dict, fast: bool = False) -> dict:
     """
     patch, test_patch = extract_patches(pull, repo)
     problem_statement, hints = extract_problem_statement_and_hints(pull, repo, fast)
-    return {
+
+    instance = {
         "repo": repo.repo.full_name,
         "pull_number": pull["number"],
         "instance_id": (repo.repo.full_name + "-" + str(pull["number"])).replace(
@@ -47,6 +50,9 @@ def create_instance(repo: Repo, pull: dict, fast: bool = False) -> dict:
         "created_at": pull["created_at"],
         "url": pull["url"],
     }
+    if pr_is_version:
+        instance["version"] = str(pull["number"])
+    return instance
 
 
 def is_valid_pull(pull: dict) -> bool:
@@ -95,7 +101,13 @@ def has_test_patch(instance: dict) -> bool:
     return True
 
 
-def main(pr_file: str, output: str, token: Optional[str] = None, fast: bool = False):
+def main(
+    pr_file: str,
+    output: str,
+    token: Optional[str] = None,
+    fast: bool = False,
+    pr_is_version: bool = False,
+):
     """
     Main thread for creating task instances from pull requests
 
@@ -105,6 +117,7 @@ def main(pr_file: str, output: str, token: Optional[str] = None, fast: bool = Fa
         token (str): GitHub token
         fast (bool): Skip API calls to get issue data by using data in existing pr_file.
                      print_pulls should have been called with --prefilter or get_tasks_pipeline.py with --fast.
+        pr_is_version (bool): Whether to use the PR number as the version string
     """
     if token is None:
         # Get GitHub token from environment variable if not provided
@@ -146,7 +159,7 @@ def main(pr_file: str, output: str, token: Optional[str] = None, fast: bool = Fa
     with open(all_output, write_mode_all) as all_output:
         # Write to output file for PRs with test suites
         write_mode = "w" if not os.path.exists(output) else "a"
-        with open(output, write_mode) as output:
+        with open(output, write_mode) as output_file:
             for ix, line in enumerate(open(pr_file)):
                 total_instances += 1
                 pull = json.loads(line)
@@ -171,7 +184,7 @@ def main(pr_file: str, output: str, token: Optional[str] = None, fast: bool = Fa
                 if repo_name not in repos:
                     repos[repo_name] = load_repo(repo_name)
                 repo = repos[repo_name]
-                instance = create_instance(repo, pull, fast)
+                instance = create_instance(repo, pull, fast, pr_is_version)
                 if is_valid_instance(instance):
                     # If valid, write to .all output file
                     print(
@@ -180,7 +193,9 @@ def main(pr_file: str, output: str, token: Optional[str] = None, fast: bool = Fa
                     completed += 1
                     if has_test_patch(instance):
                         # If has test suite, write to output file
-                        print(json.dumps(instance), end="\n", flush=True, file=output)
+                        print(
+                            json.dumps(instance), end="\n", flush=True, file=output_file
+                        )
                         with_tests += 1
     logger.info(
         f"[{', '.join(repos.keys())}] Total instances: {total_instances}, completed: {completed}, with tests: {with_tests}"

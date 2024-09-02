@@ -2,7 +2,8 @@
 
 """Script to collect pull requests and convert them to candidate task instances"""
 
-import argparse, os
+import argparse
+import os
 import traceback
 
 from dotenv import load_dotenv
@@ -50,13 +51,14 @@ def construct_data_files(data: dict):
             cutoff_date (str): Cutoff date for PRs to consider in format YYYYMMDD
             prefilter (bool): If True, prefilter pulls to get only those that resolve an issue and have a label in LABELS
     """
-    repos, path_prs, path_tasks, max_pulls, cutoff_date, fast, token = (
+    repos, path_prs, path_tasks, max_pulls, cutoff_date, fast, pr_is_version, token = (
         data["repos"],
         data["path_prs"],
         data["path_tasks"],
         data["max_pulls"],
         data["cutoff_date"],
         data["fast"],
+        data["pr_is_version"],
         data["token"],
     )
     for repo in repos:
@@ -85,7 +87,9 @@ def construct_data_files(data: dict):
             path_task = os.path.join(path_tasks, f"{repo_name}-task-instances.jsonl")
             if not os.path.exists(path_task):
                 print(f"Task instance data for {repo} not found, creating...")
-                build_dataset(path_pr, path_task, token, fast=fast)
+                build_dataset(
+                    path_pr, path_task, token, fast=fast, pr_is_version=pr_is_version
+                )
                 print(
                     f"✅ Successfully saved task instance data for {repo} to {path_task}"
                 )
@@ -108,6 +112,7 @@ def main(
     max_pulls: Optional[int] = None,
     cutoff_date: Optional[str] = None,
     fast: bool = False,
+    pr_is_version: bool = False,
 ):
     """
     Spawns multiple threads given multiple GitHub tokens for collecting fine tuning data
@@ -139,6 +144,7 @@ def main(
             "max_pulls": max_pulls,
             "cutoff_date": cutoff_date,
             "fast": fast,
+            "pr_is_version": pr_is_version,
             "token": token,
         }
         for repos, token in zip(data_task_lists, tokens)
@@ -176,6 +182,11 @@ if __name__ == "__main__":
         "--fast",
         action="store_true",
         help="If supplied, prefilter pulls to get only merged pulls that resolve an issue and have bug, feature, or regression label. Skips uneccessary API calls to get issue data in build_dataset.",
+    )
+    parser.add_argument(
+        "--pr_is_version",
+        action="store_true",
+        help="If supplied, use the PR as the version string",
     )
     args = parser.parse_args()
     main(**vars(args))

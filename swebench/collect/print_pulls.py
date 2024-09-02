@@ -87,7 +87,7 @@ def log_prefiltered_pulls(
         else None
     )
 
-    with open(output, "w") as file:
+    with open(output, "w+") as file:
         for pull in repo.get_prefiltered_pulls(
             labels=LABELS, cutoff_date=cutoff_date, max_pulls=max_pulls
         ):
