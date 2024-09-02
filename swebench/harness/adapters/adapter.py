@@ -1,10 +1,14 @@
 from abc import ABC, abstractmethod
-from typing import List
+from dataclasses import dataclass
+from typing import Callable, List
 
 from swebench.harness.constants import SWEbenchInstance
 
 
+@dataclass
 class Adapter(ABC):
+    log_parser: Callable[[str], dict[str, str]]
+
     @property
     @abstractmethod
     def language(self) -> str:
