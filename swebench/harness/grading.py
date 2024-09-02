@@ -46,7 +46,7 @@ def get_logs_eval(test_spec: TestSpec, log_fp: str) -> tuple[dict[str, str], boo
     """
     adapter = ADAPTERS[test_spec.repo]
     if adapter:
-        log_parser = adapter[test_spec.version].log_parser
+        log_parser = adapter[test_spec.version].get_log_parser()
     else:
         log_parser = MAP_REPO_TO_PARSER[test_spec.repo]
 

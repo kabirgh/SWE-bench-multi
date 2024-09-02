@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import re
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 from swebench.harness.constants import (
     DIFF_MODIFIED_FILE_REGEX,
@@ -20,6 +20,7 @@ class PythonAdapter(Adapter):
     python: str
     install: str
     test_cmd: str
+    log_parser: Callable[[str], dict[str, str]]
     pre_install: Optional[str] = None
     packages: Optional[str] = None
     pip_packages: Optional[List[str]] = None
@@ -183,3 +184,6 @@ class PythonAdapter(Adapter):
             reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
         ]
         return eval_commands
+
+    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
+        return self.log_parser

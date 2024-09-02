@@ -34,8 +34,6 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install="go mod download",
             # TODO specify test files
             test_cmd="go test -v ./modules/caddyhttp/reverseproxy/...",
-            # TODO specify log parser
-            log_parser=MAP_REPO_TO_PARSER["scikit-learn/scikit-learn"],
         )
     },
 }

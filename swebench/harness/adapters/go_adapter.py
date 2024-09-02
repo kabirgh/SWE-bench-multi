@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 import re
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 from swebench.harness.constants import (
     DIFF_MODIFIED_FILE_REGEX,
@@ -87,12 +87,6 @@ class GoAdapter(Adapter):
         apply_test_patch_command = (
             f"git apply -v - <<'{HEREDOC_DELIMITER}'\n{test_patch}\n{HEREDOC_DELIMITER}"
         )
-        test_command = " ".join(
-            [
-                self.test_cmd,
-                *get_test_directives(instance),
-            ]
-        )
 
         base_eval_commands = [
             f"cd {repo_directory}",
@@ -105,7 +99,7 @@ class GoAdapter(Adapter):
             self.install,
             reset_tests_command,
             apply_test_patch_command,
-            test_command,
+            self.test_cmd,
             reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
         ]
 
@@ -113,3 +107,12 @@ class GoAdapter(Adapter):
         eval_commands = [cmd for cmd in base_eval_commands if cmd]
 
         return eval_commands
+
+    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
+        return self._log_parser
+
+    def _log_parser(self, log: str) -> dict[str, str]:
+        print("------------------------------------------")
+        print(log)
+        print("##########################################")
+        return {}

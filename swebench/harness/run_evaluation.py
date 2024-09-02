@@ -364,9 +364,9 @@ def get_dataset_from_preds(
         dataset = [i for i in dataset if i[KEY_INSTANCE_ID] not in completed_ids]
 
     empty_patch_ids = {
-        k
-        for k, v in predictions.items()
-        if v["model_patch"] == "" or v["model_patch"] is None
+        # k
+        # for k, v in predictions.items()
+        # if v["model_patch"] == "" or v["model_patch"] is None
     }
 
     # filter dataset to only instances with predictions

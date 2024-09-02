@@ -7,8 +7,6 @@ from swebench.harness.constants import SWEbenchInstance
 
 @dataclass
 class Adapter(ABC):
-    log_parser: Callable[[str], dict[str, str]]
-
     @property
     @abstractmethod
     def language(self) -> str:
@@ -41,4 +39,8 @@ class Adapter(ABC):
         base_commit: str,
         test_patch: str,
     ) -> List[str]:
+        pass
+
+    @abstractmethod
+    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
         pass
