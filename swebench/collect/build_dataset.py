@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+import copy
 import json
 import logging
 import os
@@ -107,6 +108,7 @@ def main(
     token: Optional[str] = None,
     fast: bool = False,
     pr_is_version: bool = False,
+    empty_test_cases: bool = False,
 ):
     """
     Main thread for creating task instances from pull requests
@@ -118,6 +120,7 @@ def main(
         fast (bool): Skip API calls to get issue data by using data in existing pr_file.
                      print_pulls should have been called with --prefilter or get_tasks_pipeline.py with --fast.
         pr_is_version (bool): Whether to use the PR number as the version string
+        empty_test_cases (bool): Whether to write an empty list for FAIL_TO_PASS and PASS_TO_PASS test cases
     """
     if token is None:
         # Get GitHub token from environment variable if not provided
@@ -186,15 +189,26 @@ def main(
                 repo = repos[repo_name]
                 instance = create_instance(repo, pull, fast, pr_is_version)
                 if is_valid_instance(instance):
+                    instance_to_write = copy.deepcopy(instance)
+                    if empty_test_cases:
+                        instance_to_write["FAIL_TO_PASS"] = []
+                        instance_to_write["PASS_TO_PASS"] = []
+
                     # If valid, write to .all output file
                     print(
-                        json.dumps(instance), end="\n", flush=True, file=all_output
-                    )  # write all instances to a separate file
+                        json.dumps(instance_to_write),
+                        end="\n",
+                        flush=True,
+                        file=all_output,
+                    )  # write all instance_to_writes to a separate file
                     completed += 1
-                    if has_test_patch(instance):
+                    if has_test_patch(instance_to_write):
                         # If has test suite, write to output file
                         print(
-                            json.dumps(instance), end="\n", flush=True, file=output_file
+                            json.dumps(instance_to_write),
+                            end="\n",
+                            flush=True,
+                            file=output_file,
                         )
                         with_tests += 1
     logger.info(

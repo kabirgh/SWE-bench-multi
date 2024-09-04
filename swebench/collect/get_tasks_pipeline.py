@@ -51,7 +51,17 @@ def construct_data_files(data: dict):
             cutoff_date (str): Cutoff date for PRs to consider in format YYYYMMDD
             prefilter (bool): If True, prefilter pulls to get only those that resolve an issue and have a label in LABELS
     """
-    repos, path_prs, path_tasks, max_pulls, cutoff_date, fast, pr_is_version, token = (
+    (
+        repos,
+        path_prs,
+        path_tasks,
+        max_pulls,
+        cutoff_date,
+        fast,
+        pr_is_version,
+        empty_test_cases,
+        token,
+    ) = (
         data["repos"],
         data["path_prs"],
         data["path_tasks"],
@@ -59,6 +69,7 @@ def construct_data_files(data: dict):
         data["cutoff_date"],
         data["fast"],
         data["pr_is_version"],
+        data["empty_test_cases"],
         data["token"],
     )
     for repo in repos:
@@ -88,7 +99,12 @@ def construct_data_files(data: dict):
             if not os.path.exists(path_task):
                 print(f"Task instance data for {repo} not found, creating...")
                 build_dataset(
-                    path_pr, path_task, token, fast=fast, pr_is_version=pr_is_version
+                    path_pr,
+                    path_task,
+                    token,
+                    fast=fast,
+                    pr_is_version=pr_is_version,
+                    empty_test_cases=empty_test_cases,
                 )
                 print(
                     f"✅ Successfully saved task instance data for {repo} to {path_task}"
@@ -113,6 +129,7 @@ def main(
     cutoff_date: Optional[str] = None,
     fast: bool = False,
     pr_is_version: bool = False,
+    empty_test_cases: bool = False,
 ):
     """
     Spawns multiple threads given multiple GitHub tokens for collecting fine tuning data
@@ -145,6 +162,7 @@ def main(
             "cutoff_date": cutoff_date,
             "fast": fast,
             "pr_is_version": pr_is_version,
+            "empty_test_cases": empty_test_cases,
             "token": token,
         }
         for repos, token in zip(data_task_lists, tokens)
@@ -187,6 +205,11 @@ if __name__ == "__main__":
         "--pr_is_version",
         action="store_true",
         help="If supplied, use the PR as the version string",
+    )
+    parser.add_argument(
+        "--empty_test_cases",
+        action="store_true",
+        help="If supplied, write an empty list for FAIL_TO_PASS and PASS_TO_PASS test cases",
     )
     args = parser.parse_args()
     main(**vars(args))
