@@ -1,3 +1,4 @@
+import logging
 from typing import Any
 
 from swebench.harness.adapters.registry import ADAPTERS
@@ -32,7 +33,9 @@ def test_failed(case: str, sm: dict[str, str]) -> bool:
 
 
 # MARK: Evaluation report functions
-def get_logs_eval(test_spec: TestSpec, log_fp: str) -> tuple[dict[str, str], bool]:
+def get_logs_eval(
+    test_spec: TestSpec, log_fp: str, logger: logging.Logger
+) -> tuple[dict[str, str], bool]:
     """
     Retrieve evaluation results for a task instance from its corresponding log file
 
@@ -53,22 +56,19 @@ def get_logs_eval(test_spec: TestSpec, log_fp: str) -> tuple[dict[str, str], boo
     with open(log_fp) as f:
         content = f.read()
         # TODO fix constant here
-        if (
-            any(
-                [
-                    x in content
-                    for x in [
-                        APPLY_PATCH_FAIL,
-                        RESET_FAILED,
-                        TESTS_ERROR,
-                        TESTS_TIMEOUT,
-                        "Failed to reset task environment",
-                    ]
-                ]
-            )
-            or "applied patch" not in content.lower()
-        ):
+        fails = {
+            APPLY_PATCH_FAIL: APPLY_PATCH_FAIL in content,
+            RESET_FAILED: RESET_FAILED in content,
+            TESTS_ERROR: TESTS_ERROR in content,
+            TESTS_TIMEOUT: TESTS_TIMEOUT in content,
+            "Failed to reset task environment": "Failed to reset task environment"
+            in content,
+            "No applied patch": "applied patch" not in content.lower(),
+        }
+
+        if any(fails.values()):
             # Eval patch was not applied successfully
+            logger.info(f"Eval patch was not applied successfully. Fails: {fails}")
             return {}, False
 
         # Get status map of evaluation results
@@ -213,6 +213,7 @@ def get_eval_report(
     prediction: dict[str, str],
     log_path: str,
     include_tests_status: bool,
+    logger: logging.Logger,
 ) -> dict[str, Any]:
     """
     Generate a report of model evaluation results from a prediction, task instance,
@@ -244,7 +245,8 @@ def get_eval_report(
     report_map[instance_id]["patch_exists"] = True
 
     # Get evaluation logs
-    eval_sm, found = get_logs_eval(test_spec, log_path)
+    eval_sm, found = get_logs_eval(test_spec, log_path, logger)
+    logger.info(f"------------- got eval_sm: {eval_sm}")
 
     if not found:
         return report_map

@@ -125,7 +125,7 @@ def run_instance(
             user="root",
         )
         if val.exit_code != 0:
-            logger.info(f"Failed to apply patch to container, trying again...")
+            logger.info("Failed to apply patch to container, trying again...")
 
             # try "patch --batch --fuzz=5 -p1 -i {patch_path}" to try again
             val = container.exec_run(
@@ -187,7 +187,7 @@ def run_instance(
         # Check if git diff changed after running eval script
         logger.info(f"Git diff after:\n{git_diff_output_after}")
         if git_diff_output_after != git_diff_output_before:
-            logger.info(f"Git diff changed after running eval script")
+            logger.info("Git diff changed after running eval script")
 
         # Get report from test output
         logger.info(f"Grading answer for {instance_id}...")
@@ -196,6 +196,7 @@ def run_instance(
             prediction=pred,
             log_path=test_output_path,
             include_tests_status=True,
+            logger=logger,
         )
         logger.info(
             f"report: {report}\n"
