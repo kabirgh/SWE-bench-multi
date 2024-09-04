@@ -5,15 +5,14 @@ from typing import Callable, List, Optional
 from swebench.harness.constants import (
     DIFF_MODIFIED_FILE_REGEX,
     SWEbenchInstance,
+    TestStatus,
 )
 from swebench.harness.adapters.adapter import Adapter
-from swebench.harness.utils import (
-    get_test_directives,
-)
 
 
 @dataclass
 class GoAdapter(Adapter):
+    version: str
     install: str
     test_cmd: str
     pre_install: Optional[str] = None
@@ -22,6 +21,14 @@ class GoAdapter(Adapter):
     @property
     def language(self):
         return "go"
+
+    @property
+    def base_image_name(self):
+        """
+        Returns:
+            str: the "real" base image for the dockerfile, e.g. golang:1.23 or ubuntu:22.04
+        """
+        return f"golang:{self.version}"
 
     def make_repo_script_list(
         self,
@@ -94,7 +101,7 @@ class GoAdapter(Adapter):
             f"git config --global --add safe.directory {repo_directory}",  # for nonroot user
             f"cd {repo_directory}",
             "git status",  # This is just informational, so we have a record
-            "git show",
+            # "git show",
             f"git diff {base_commit}",
             self.install,
             reset_tests_command,
@@ -109,10 +116,32 @@ class GoAdapter(Adapter):
         return eval_commands
 
     def get_log_parser(self) -> Callable[[str], dict[str, str]]:
-        return self._log_parser
+        return _log_parser
 
-    def _log_parser(self, log: str) -> dict[str, str]:
-        print("------------------------------------------")
-        print(log)
-        print("##########################################")
-        return {}
+
+def _log_parser(log: str) -> dict[str, str]:
+    """
+    Parser for test logs generated with 'go test'
+
+    Args:
+        log (str): log content
+    Returns:
+        dict: test case to test status mapping
+    """
+    test_status_map = {}
+
+    # Pattern to match test result lines
+    pattern = r"^--- (PASS|FAIL|SKIP): (.+) \((.+)\)$"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            status, test_name, _duration = match.groups()
+            if status == "PASS":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            elif status == "FAIL":
+                test_status_map[test_name] = TestStatus.FAILED.value
+            elif status == "SKIP":
+                test_status_map[test_name] = TestStatus.SKIPPED.value
+
+    return test_status_map

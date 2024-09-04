@@ -12,6 +12,11 @@ class Adapter(ABC):
     def language(self) -> str:
         pass
 
+    @property
+    @abstractmethod
+    def base_image_name(self) -> str:
+        pass
+
     @abstractmethod
     def make_repo_script_list(
         self,

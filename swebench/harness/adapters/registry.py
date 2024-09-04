@@ -30,10 +30,30 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         },
     },
     "caddyserver/caddy": {
-        "6448": GoAdapter(
+        "6411": GoAdapter(
+            version="1.23.0",
             install="go mod download",
-            # TODO specify test files
+            test_cmd='go test -v . -run "TestReplacerNew*"',
+        ),
+        "6345": GoAdapter(
+            version="1.23.0",
+            install="go mod download",
+            test_cmd="go test -v ./caddytest/integration/...",
+        ),
+        "6115": GoAdapter(
+            version="1.23.0",
+            install="go mod download",
             test_cmd="go test -v ./modules/caddyhttp/reverseproxy/...",
-        )
+        ),
+        "6051": GoAdapter(
+            version="1.23.0",
+            install="go mod download",
+            test_cmd="go test -v ./caddyconfig/caddyfile/...",
+        ),
+        "5404": GoAdapter(
+            version="1.20.4",
+            install="go mod download",
+            test_cmd="go test -v ./caddyconfig/caddyfile/...",
+        ),
     },
 }

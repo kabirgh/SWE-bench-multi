@@ -31,6 +31,10 @@ class PythonAdapter(Adapter):
     def language(self):
         return "python"
 
+    @property
+    def base_image_name(self):
+        return "ubuntu:22.04"
+
     def make_repo_script_list(
         self,
         repo: str,
@@ -170,7 +174,7 @@ class PythonAdapter(Adapter):
             f"cd {repo_directory}",
             # This is just informational, so we have a record
             "git status",
-            "git show",
+            # "git show",
             f"git diff {base_commit}",
             "source /opt/miniconda3/bin/activate",
             f"conda activate {env_name}",

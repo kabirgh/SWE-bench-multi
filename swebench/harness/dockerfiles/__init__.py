@@ -9,22 +9,35 @@ from swebench.harness.dockerfiles.python import (
 )
 
 
-def get_dockerfile_base(platform: str, arch: str, language: str | None):
+def get_dockerfile_base(
+    platform: str,
+    arch: str,
+    language: str | None,
+    base_image_name: str | None,
+):
     if arch == "arm64":
         conda_arch = "aarch64"
     else:
         conda_arch = arch
+
+    if not base_image_name:
+        base_image_name = "ubuntu:22.04"
+
     print(f"Getting dockerfile base for {language} on {platform} {arch}")
     return _dockerfiles[language or "python"]["base"].format(
-        platform=platform, conda_arch=conda_arch
+        platform=platform, conda_arch=conda_arch, base_image_name=base_image_name
     )
 
 
-def get_dockerfile_env(platform: str, arch: str, language: str | None) -> str:
-    file = _dockerfiles[language or "python"]["env"]
-    if not file:
-        return None
-    return file.format(platform=platform, arch=arch)
+def get_dockerfile_env(
+    platform: str, arch: str, language: str | None, base_image_name: str | None
+) -> str:
+    if not base_image_name:
+        base_image_name = "ubuntu:22.04"
+
+    return _dockerfiles[language or "python"]["env"].format(
+        platform=platform, arch=arch, language=language, base_image_name=base_image_name
+    )
 
 
 def get_dockerfile_instance(platform: str, env_image_name: str, language: str | None):
