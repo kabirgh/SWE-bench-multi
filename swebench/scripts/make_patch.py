@@ -26,10 +26,16 @@ def make_patch(url: str):
     response = requests.get(url)
     response.raise_for_status()
     patch = PatchSet(response.text)
-    return patch[0]
+
+    # Filter out files with 'test' in the path
+    filtered_patch = PatchSet(
+        "\n".join(str(file) for file in patch if "test" not in file.path.lower())
+    )
+
+    return filtered_patch
 
 
-def write_patch_to_json(target_file: str, patch: PatchedFile, instance_id: str):
+def write_patch_to_json(target_file: str, patch: PatchSet, instance_id: str):
     d = {
         "instance_id": instance_id,
         "model_patch": str(patch),
