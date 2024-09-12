@@ -150,6 +150,12 @@ class Repo:
                 if num_pages is not None and page >= num_pages:
                     break
                 page += 1
+            except HTTP404NotFoundError:
+                logger.warning(
+                    f"[{self.owner}/{self.name}] 404 Error on page {page}. Returning"
+                )
+                values = None
+                break
             except Exception as e:
                 # Rate limit handling
                 logger.error(
@@ -165,7 +171,7 @@ class Repo:
                         f"for token {self.token[:10]}, checking again in 5 minutes"
                     )
                     time.sleep(60 * 5)
-        if not quiet:
+        if not quiet and values:
             logger.info(
                 f"[{self.owner}/{self.name}] Processed {(page-1)*per_page + len(values)} values"
             )
@@ -303,7 +309,9 @@ class Repo:
                 )
 
                 if pull and pull["merged"]:
-                    assert pull["mergeCommit"]
+                    if not pull["mergeCommit"]:
+                        print(f"Pull {pull['number']} has no merge commit")
+                        continue
 
                     # A single pull can be linked to multiple issues, so we might have seen this pull before.
                     # If so, append to list of resolved issues and continue to next pull

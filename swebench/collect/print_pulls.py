@@ -34,7 +34,7 @@ if not GITHUB_TOKEN:
 BUG_LABELS = [
     "bug",
     "type: bug",
-    "type::bug",
+    "type::bug",  # eg https://github.com/axios/axios
     "kind/bug",
     "issue-bug",
     "bug :bug:",
@@ -42,7 +42,15 @@ BUG_LABELS = [
 ]
 EASY_LABELS = ["good first issue", "easy", "good first issue :baby_chick:"]
 REGRESSION_LABELS = ["regression", "type: regression"]
-FEATURE_LABELS = ["feature", "type: feature", "enhancement", "type: enhancement"]
+FEATURE_LABELS = [
+    "feature",
+    "type: feature",
+    "enhancement",
+    "type: enhancement",
+    "type::feature",
+    "feature-request",
+    "feature :gear:",
+]
 LABELS = BUG_LABELS + EASY_LABELS + REGRESSION_LABELS + FEATURE_LABELS
 
 
@@ -86,6 +94,9 @@ def log_prefiltered_pulls(
         if cutoff_date is not None
         else None
     )
+
+    # Create the directory if it doesn't exist
+    os.makedirs(os.path.dirname(output), exist_ok=True)
 
     with open(output, "w+") as file:
         for pull in repo.get_prefiltered_pulls(
