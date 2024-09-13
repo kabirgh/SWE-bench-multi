@@ -39,7 +39,7 @@ def write_patch_to_json(target_file: str, patch: PatchSet, instance_id: str):
     d = {
         "instance_id": instance_id,
         "model_patch": str(patch),
-        "model_name_or_path": "fake_model",
+        "model_name_or_path": "gold",
     }
 
     try:

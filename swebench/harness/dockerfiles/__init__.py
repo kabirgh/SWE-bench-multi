@@ -2,6 +2,10 @@ from swebench.harness.dockerfiles.go import (
     _DOCKERFILE_BASE_GO,
     _DOCKERFILE_INSTANCE_GO,
 )
+from swebench.harness.dockerfiles.javascript import (
+    _DOCKERFILE_BASE_JAVASCRIPT,
+    _DOCKERFILE_INSTANCE_JAVASCRIPT,
+)
 from swebench.harness.dockerfiles.python import (
     _DOCKERFILE_BASE_PYTHON,
     _DOCKERFILE_ENV_PYTHON,
@@ -52,6 +56,11 @@ _dockerfiles = {
         # No env needed for go repos, return base since rest of code expects env to be built
         "env": _DOCKERFILE_BASE_GO,
         "instance": _DOCKERFILE_INSTANCE_GO,
+    },
+    "javascript": {
+        "base": _DOCKERFILE_BASE_JAVASCRIPT,
+        "env": _DOCKERFILE_BASE_JAVASCRIPT,  # Skip env
+        "instance": _DOCKERFILE_INSTANCE_JAVASCRIPT,
     },
     "python": {
         "base": _DOCKERFILE_BASE_PYTHON,

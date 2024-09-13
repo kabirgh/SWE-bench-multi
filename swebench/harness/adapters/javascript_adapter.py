@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import re
 from typing import Callable, List, Optional
 
@@ -11,16 +11,18 @@ from swebench.harness.adapters.adapter import Adapter
 
 
 @dataclass
-class GoAdapter(Adapter):
+class JavaScriptAdapter(Adapter):
     version: str
     install: List[str]
     test_cmd: str
+    log_parser: Callable[[str], dict[str, str]]
     pre_install: Optional[str] = None
     eval_commands: Optional[List[str]] = None
+    pre_test_commands: List[str] = field(default_factory=list)
 
     @property
     def language(self):
-        return "go"
+        return "javascript"
 
     @property
     def base_image_name(self):
@@ -28,7 +30,7 @@ class GoAdapter(Adapter):
         Returns:
             str: the "real" base image for the dockerfile, e.g. golang:1.23 or ubuntu:22.04
         """
-        return f"golang:{self.version}"
+        return f"node:{self.version}"
 
     def make_repo_script_list(
         self,
@@ -69,6 +71,9 @@ class GoAdapter(Adapter):
         """
         Creates the list of commands to set up the environment for testing.
         This is the setup script for the environment image.
+
+        This is unused in the typescript adapter since each PR likely has a different set of package versions to install.
+        Installation happens in the instance image (make_repo_script_list).
         """
         return []
 
@@ -101,6 +106,7 @@ class GoAdapter(Adapter):
             f"git diff {base_commit}",
             reset_tests_command,
             apply_test_patch_command,
+            *self.pre_test_commands,
             self.test_cmd,
             reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
         ]
@@ -111,12 +117,14 @@ class GoAdapter(Adapter):
         return eval_commands
 
     def get_log_parser(self) -> Callable[[str], dict[str, str]]:
-        return _log_parser
+        return self.log_parser
 
 
-def _log_parser(log: str) -> dict[str, str]:
+def jest_log_parser(log: str) -> dict[str, str]:
     """
-    Parser for test logs generated with 'go test'
+    Parser for test logs generated with Jest. Assumes --verbose flag but not
+    --json. We could use --json but the test output contains extraneous lines,
+    so parsing is not as straightforward.
 
     Args:
         log (str): log content
@@ -125,18 +133,18 @@ def _log_parser(log: str) -> dict[str, str]:
     """
     test_status_map = {}
 
-    # Pattern to match test result lines
-    pattern = r"^--- (PASS|FAIL|SKIP): (.+) \((.+)\)$"
+    # Updated pattern to match test result lines without duration
+    pattern = r"^\s*(✓|✕|○)\s(.+?)(?:\s\((\d+\s*m?s)\))?$"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
         if match:
-            status, test_name, _duration = match.groups()
-            if status == "PASS":
+            status_symbol, test_name, _duration = match.groups()
+            if status_symbol == "✓":
                 test_status_map[test_name] = TestStatus.PASSED.value
-            elif status == "FAIL":
+            elif status_symbol == "✕":
                 test_status_map[test_name] = TestStatus.FAILED.value
-            elif status == "SKIP":
+            elif status_symbol == "○":
                 test_status_map[test_name] = TestStatus.SKIPPED.value
 
     return test_status_map

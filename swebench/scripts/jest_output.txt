@@ -1,0 +1,682 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/babel-generator/src/node/parentheses.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff fbd065256ca00d68089293ad48ea9aeba5481914
+diff --git a/packages/babel-generator/src/node/parentheses.ts b/packages/babel-generator/src/node/parentheses.ts
+index bb651b6d22..460767d0b6 100644
+--- a/packages/babel-generator/src/node/parentheses.ts
++++ b/packages/babel-generator/src/node/parentheses.ts
+@@ -5,6 +5,7 @@ import {
+   isAwaitExpression,
+   isBinary,
+   isBinaryExpression,
++  isUpdateExpression,
+   isCallExpression,
+   isClassDeclaration,
+   isClassExpression,
+@@ -414,6 +415,7 @@ function isFirstInContext(
+     if (
+       (hasPostfixPart(node, parent) && !isNewExpression(parent)) ||
+       (isSequenceExpression(parent) && parent.expressions[0] === node) ||
++      (isUpdateExpression(parent) && !parent.prefix) ||
+       isConditional(parent, { test: node }) ||
+       isBinary(parent, { left: node }) ||
+       isAssignmentExpression(parent, { left: node })
++ git checkout fbd065256ca00d68089293ad48ea9aeba5481914
+Note: switching to 'fbd065256ca00d68089293ad48ea9aeba5481914'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at fbd065256c chore: update test262 to 2e7cdfbe18eae4309677033673bb4b5ac6b1de40 (#14531)
+M	packages/babel-generator/src/node/parentheses.ts
++ git apply -v -
+Checking patch packages/babel-generator/test/fixtures/parentheses/unary-postfix/input.js...
+Checking patch packages/babel-generator/test/fixtures/parentheses/unary-postfix/output.js...
+Applied patch packages/babel-generator/test/fixtures/parentheses/unary-postfix/input.js cleanly.
+Applied patch packages/babel-generator/test/fixtures/parentheses/unary-postfix/output.js cleanly.
++ yarn jest babel-generator --verbose
+PASS packages/babel-generator/test/arrow-functions.js
+  parameter parentheses
+    ✓ auxiliaryCommentBefore
+    ✓ auxiliaryCommentAfter
+    ✓ empty leadingComments array
+    ✓ empty trailingComments array
+
+FAIL packages/babel-generator/test/index.js
+  generation
+    ✓ completeness
+    ✓ multiple sources
+    ✓ identifierName
+    ✓ newline in template literal
+    ✓ newline in string literal
+    ✓ lazy source map generation
+    ✓ wraps around infer inside an array type
+    ✓ should not deduplicate comments with same start index
+  programmatic generation
+    ✓ should add parenthesis when NullishCoalescing is used along with ||
+    ✓ should add parenthesis when NullishCoalesing is used with &&
+    ✓ numeric member expression
+    ✓ nested if statements needs block
+    ✓ prints directives in block with empty body
+    ✓ flow object indentation
+    ✓ flow object exact
+    ✓ flow object indentation with empty leading ObjectTypeProperty
+    ✓ flow interface with nullish extends
+    ✓ flow function type annotation with no parent
+    directives
+      ✓ preserves escapes
+      ✓ preserves escapes in minified output
+      ✓ unescaped single quote
+      ✓ unescaped double quote
+      ✓ unescaped single and double quotes together throw
+      ✓ preserves single quotes if not minified
+      ✓ converts single quotes to double quotes if minified
+    typescript generate parentheses if necessary
+      ✓ wraps around union for array
+      ✓ wraps around intersection for array
+      ✓ wraps around rest
+      ✓ wraps around optional type
+    object expressions
+      ✓ not wrapped in parentheses when standalone
+      ✓ wrapped in parentheses in expression statement
+      ✓ wrapped in parentheses in arrow function
+      ✓ not wrapped in parentheses in conditional
+      ✓ wrapped in parentheses in conditional in expression statement
+      ✓ wrapped in parentheses in conditional in arrow function
+      ✓ not wrapped in parentheses in binary expression
+      ✓ wrapped in parentheses in binary expression in expression statement
+      ✓ wrapped in parentheses in binary expression in arrow function
+      ✓ not wrapped in parentheses in sequence expression
+      ✓ wrapped in parentheses in sequence expression in expression statement
+      ✓ wrapped in parentheses in sequence expression in arrow function
+    function expressions
+      ✓ not wrapped in parentheses when standalone
+      ✓ wrapped in parentheses in expression statement
+      ✓ wrapped in parentheses in export default declaration
+    class expressions
+      ✓ not wrapped in parentheses when standalone
+      ✓ wrapped in parentheses in expression statement
+      ✓ wrapped in parentheses in export default declaration
+    jsescOption.minimal
+      ✓ true
+      ✓ false
+      ✓ default in Babel 7
+    typescript interface declaration
+      ✓ empty extends array
+    identifier let
+      ✓ detects open bracket from non-optional OptionalMemberExpression
+  CodeGenerator
+    ✓ generate
+  generation/async do expressions
+    ✓ basic
+    ✓ retain lines
+  generation/auto indentation
+    ✓ hard tab
+    ✓ soft tab 2
+    ✓ soft tab 4
+  generation/auto string
+    ✓ double
+    ✓ jsx
+    ✓ single
+  generation/comments
+    ✓ 2 space multi comment
+    ✓ 2 space multi comment with space
+    ✓ async arrow single param with comments
+    ✓ block line comment
+    ✓ block line comment with concise format
+    ✓ block line comment with retainlines option
+    ✓ class comments
+    ✓ comment only
+    ✓ comment only with space
+    ✓ comment statement with retainlines option
+    ✓ computed property comments
+    ✓ computed property comments 2
+    ✓ create parenthesized expressions
+    ✓ do while line comment
+    ✓ empty
+    ✓ empty line comment
+    ✓ function block line comment
+    ✓ function inner comment
+    ✓ if block line comment
+    ✓ if empty line comment
+    ✓ if line comment
+    ✓ multi comment with retainlines option
+    ✓ object_comments
+    ✓ return no argument
+    ✓ simple a lot of line comment
+    ✓ simple a lot of multi comment
+    ✓ simple line comment
+    ✓ simple multi comment
+    ✓ simple statement comment
+    ✓ slash before leading comment compact
+    ✓ try block line comment
+    ✓ variable declarator line comment
+    ✓ variable declarator multi comment
+    ✓ variable declarator trailing comment
+  generation/compact
+    ✓ assignment
+    ✓ binary expressions
+    ✓ comment after division
+    ✓ expression statement
+    ✓ regex after division
+    ✓ single line comment
+    ✓ while
+  generation/decorators
+    ✓ accessor with retainlines
+    ✓ async method with retainlines
+    ✓ decorator call expression
+    ✓ decorator member expression
+    ✓ decorator parenthesized expression
+    ✓ decorator parenthesized expression createParenthesizedExpression
+    ✓ private props
+  generation/decorators legacy
+    ✓ ts class modifier with retainlines
+  generation/decoratorsBeforeExport
+    ✓ false to false
+    ✓ false to true
+    ✓ true to false
+    ✓ true to true
+  generation/edgecase
+    ✓ async generator
+    ✓ bitwise precedence
+    ✓ floating point
+    ✓ for async of
+    ✓ for await async of
+    ✓ for in no in
+    ✓ for loop in
+    ✓ let identifier
+    ✓ member expression numeric literals
+    ✓ new precedence
+    ✓ one property with line terminator
+    ✓ return with retainlines and compact option
+    ✓ return with retainlines option
+    ✓ single arg async arrow with retainlines
+    ✓ unary op
+    ✓ variable declaration
+  generation/escapes
+    ✓ jsonEscape babel 7
+    ✓ numeric literals
+    ○ skipped jsonEscape
+  generation/flow
+    ✓ array types
+    ✓ arrow functions
+    ✓ boolean literal types
+    ✓ call properties
+    ✓ declare exports
+    ✓ declare field
+    ✓ declare module
+    ✓ declare statements
+    ✓ def site variance
+    ✓ enum declaration
+    ✓ implements
+    ✓ import typeof
+    ✓ indexed access types
+    ✓ interface types
+    ✓ interfaces module and script
+    ✓ internal slot
+    ✓ iterator inside declare
+    ✓ iterator inside interface
+    ✓ iterator inside types
+    ✓ null literal types
+    ✓ number literal types
+    ✓ object literal types
+    ✓ object literal types compact
+    ✓ opaque type alias
+    ✓ optional indexed access types
+    ✓ parantheses
+    ✓ predicates
+    ✓ qualified generic type
+    ✓ string literal types
+    ✓ this param
+    ✓ this types
+    ✓ tuples
+    ✓ type alias
+    ✓ type annotations
+    ✓ type parameters
+    ✓ type union intersection
+    ✓ typeapp call
+    ✓ typecasts
+    ✓ variance
+  generation/flowUsesCommas
+    ✓ ObjectExpression
+  generation/harmony edgecase
+    ✓ arrow function
+    ✓ class declaration
+    ✓ class expression
+    ✓ computed property
+    ✓ default parameter
+    ✓ destructuring assignment
+    ✓ export default class
+    ✓ export default function
+    ✓ export default iife
+    ✓ export default invoked class
+    ✓ export default named class
+    ✓ export default named function
+    ✓ export default object
+    ✓ exports
+    ✓ for of statement
+    ✓ import with break
+    ✓ import with default
+    ✓ imports
+    ✓ spread element
+    ✓ templates
+    ✓ templates escape
+    ✓ templates indentation
+    ✓ yield precedence
+  generation/jsx
+    ✓ comments
+  generation/minified
+    ✓ arrow functions
+    ✓ bigint
+    ✓ block statements
+    ✓ decimal literal
+    ✓ labeled statement
+    ✓ literals babel 7
+    ✓ modules
+    ✓ new expression
+    ✓ no semicolon
+    ✓ static block
+    ○ skipped literals
+  generation/misc
+    ✓ V8IntrinsicIdentifier
+    ✓ placeholders
+  generation/parentheses
+    ✓ arrow function
+    ✓ arrow function object body
+    ✓ arrow function ternary
+    ✓ assignment expression
+    ✓ async arrow function
+    ✓ await arrow function
+    ✓ await expression
+    ✓ binary
+    ✓ break statement
+    ✓ class extends
+    ✓ do expression
+    ✓ exponentiation
+    ✓ expression
+    ✓ nullish coalescing
+    ✓ object
+    ✓ sequence expressions
+    ✓ tagged template expression
+    ✓ terminator break
+    ✓ unary arrow function
+    ✓ unary like
+    ✕ unary postfix
+    ✓ update expression
+    ✓ yield expression
+  generation/recordAndTupleSyntaxType
+    ✓ bar record
+    ✓ bar tuple
+    ✓ hash record
+    ✓ hash tuple
+    ✓ invalid option
+    ✓ missing option
+  generation/regression
+    ✓ 11304
+    ✓ 11870
+    ✓ babel parser 317
+    ✓ comment before parentheses return arg
+    ✓ comment before parentheses return arg createParenthesizedExpressions
+    ✓ throw expression
+  generation/retainFunctionParens
+    ✓ argument
+    ✓ assignment
+    ✓ negation
+    ✓ nested
+    ✓ no parens
+  generation/sourcemaps
+    ✓ call identifiers
+    ✓ string literal newline
+    ✓ template literal newline
+  generation/types
+    ✓ ArgumentPlaceholder
+    ✓ ArrayExpression ArrayPattern
+    ✓ ArrowFunctionExpression
+    ✓ AssignmentExpression BinaryExpression LogicalExpression
+    ✓ AwaitExpression
+    ✓ BigIntLiteral
+    ✓ BigIntLiteral compact
+    ✓ BindExpression
+    ✓ BlockStatement
+    ✓ BreakStatement
+    ✓ CallExpression
+    ✓ ClassBody ClassProperty
+    ✓ ClassBody MethodDefinition
+    ✓ ClassBody StaticBlock
+    ✓ ClassDeclaration
+    ✓ ClassExpression
+    ✓ ConditionalExpression
+    ✓ ContinueStatement
+    ✓ DebuggerStatement
+    ✓ DecimalLiteral
+    ✓ DecimalLiteral compact
+    ✓ Decorator
+    ✓ DoExpression
+    ✓ DoWhileStatement
+    ✓ EmptyStatement
+    ✓ ExportDefaultDeclaration
+    ✓ ExportDefaultDeclaration10
+    ✓ ExportDefaultDeclaration11
+    ✓ ExportDefaultDeclaration2
+    ✓ ExportDefaultDeclaration3
+    ✓ ExportDefaultDeclaration4
+    ✓ ExportDefaultDeclaration5
+    ✓ ExportDefaultDeclaration6
+    ✓ ExportDefaultDeclaration7
+    ✓ ExportDefaultDeclaration8
+    ✓ ExportDefaultDeclaration9
+    ✓ ExportNamedDeclaration
+    ✓ ExportSpecifier
+    ✓ ExportSpecifier10
+    ✓ ExportSpecifier11
+    ✓ ExportSpecifier12
+    ✓ ExportSpecifier13
+    ✓ ExportSpecifier14
+    ✓ ExportSpecifier15
+    ✓ ExportSpecifier16
+    ✓ ExportSpecifier2
+    ✓ ExportSpecifier3
+    ✓ ExportSpecifier4
+    ✓ ExportSpecifier5
+    ✓ ExportSpecifier6
+    ✓ ExportSpecifier7
+    ✓ ExportSpecifier8
+    ✓ ExportSpecifier9
+    ✓ ForInStatement
+    ✓ ForOfStatement
+    ✓ ForStatement
+    ✓ FunctionDeclaration FunctionExpression
+    ✓ HashbangLiteral
+    ✓ Identifier
+    ✓ IfStatement
+    ✓ Import
+    ✓ ImportAssertion
+    ✓ ImportDeclaration ImportSpecifier ImportNamespaceSpecifier
+    ✓ JSXAttribute
+    ✓ JSXElement JSXOpeningElement JSXClosingElement JSXIdentifier
+    ✓ JSXEmptyExpression
+    ✓ JSXExpressionContainer
+    ✓ JSXFragment JSXOpeningFragment JSXClosingFragment
+    ✓ JSXMemberExpression
+    ✓ JSXNamespacedName
+    ✓ JSXSpreadAttribute
+    ✓ JSXSpreadChildren
+    ✓ JSXText
+    ✓ LabeledStatement
+    ✓ Literal
+    ✓ LogicalExpression
+    ✓ MemberExpression
+    ✓ ModuleAttributes
+    ✓ ModuleExpression
+    ✓ NewExpression
+    ✓ ObjectExpression ObjectPattern Property
+    ✓ Optional CallExpression
+    ✓ Optional MemberExpression
+    ✓ Optional TryStatement CatchClause
+    ✓ PipelineBareFunction
+    ✓ PipelinePrimaryTopicReference
+    ✓ PipelineTopicExpression
+    ✓ PrivateName
+    ✓ RestProperty
+    ✓ ReturnStatement
+    ✓ SequenceExpression
+    ✓ SpreadElement SpreadProperty
+    ✓ SwitchStatement SwitchCase
+    ✓ TemplateLiteral TaggedTemplateExpression TemplateElement
+    ✓ ThisExpression
+    ✓ ThrowStatement
+    ✓ TopicReference with caret topicToken
+    ✓ TopicReference with double at topicToken
+    ✓ TopicReference with double caret topicToken
+    ✓ TopicReference with hash topicToken
+    ✓ TopicReference with invalid topicToken
+    ✓ TopicReference with missing topicToken
+    ✓ TopicReference with percent topicToken
+    ✓ TryStatement CatchClause
+    ✓ UnaryExpression
+    ✓ UpdateExpression
+    ✓ VariableDeclaration VariableDeclarator
+    ✓ WhileStatement
+    ✓ WithStatement
+    ✓ YieldExpression
+  generation/typescript
+    ✓ abstract constructor signature types
+    ✓ arrow function annotated
+    ✓ arrow function assertion
+    ✓ arrow function async
+    ✓ arrow function async generic
+    ✓ arrow function async generic false positive
+    ✓ arrow function default parameter values
+    ✓ arrow function destructuring
+    ✓ arrow function generic
+    ✓ arrow function generic tsx
+    ✓ arrow function generic tsx trailing comma
+    ✓ arrow function optional parameter
+    ✓ arrow function predicate types
+    ✓ cast as
+    ✓ cast false positive
+    ✓ cast need parentheses
+    ✓ cast null assertion
+    ✓ cast null assertion then property access
+    ✓ cast type assertion
+    ✓ cast type assertion after operator
+    ✓ cast type assertion before operator
+    ✓ catch param type
+    ✓ class abstract
+    ✓ class constructor
+    ✓ class declare
+    ✓ class expression extends
+    ✓ class expression extends implements
+    ✓ class expression generic
+    ✓ class expression implements
+    ✓ class extends
+    ✓ class extends implements
+    ✓ class field declare
+    ✓ class generic
+    ✓ class get generic
+    ✓ class implements
+    ✓ class index signature
+    ✓ class members with modifier names
+    ✓ class members with reserved names
+    ✓ class method computed
+    ✓ class method generic
+    ✓ class method no body
+    ✓ class method optional
+    ✓ class method return type
+    ✓ class method with newline with body
+    ✓ class method with newline without body
+    ✓ class modifier override
+    ✓ class modifiers accessors
+    ✓ class modifiers methods async
+    ✓ class modifiers properties
+    ✓ class parameter properties
+    ✓ class parameter properties with decorators
+    ✓ class properties
+    ✓ class property computed
+    ✓ class static
+    ✓ const no initializer
+    ✓ constructor signature types
+    ✓ declare const
+    ✓ declare destructure
+    ✓ declare interface
+    ✓ declare let
+    ✓ declare var
+    ✓ enum const
+    ✓ enum declare
+    ✓ enum declare const
+    ✓ enum export
+    ✓ enum export const
+    ✓ enum export declare const
+    ✓ enum members
+    ✓ enum members reserved words
+    ✓ enum members strings
+    ✓ enum members trailing comma
+    ✓ enum members trailing comma with initializer
+    ✓ export as namespace
+    ✓ export declaration type
+    ✓ export declare
+    ✓ export equals
+    ✓ export nested same name
+    ✓ export type
+    ✓ function annotated
+    ✓ function anonymous
+    ✓ function assertion
+    ✓ function declare
+    ✓ function export default
+    ✓ function overloads
+    ✓ function predicate types
+    ✓ import equals
+    ✓ import equals require
+    ✓ import export import
+    ✓ import export import require
+    ✓ import not top level
+    ✓ import type
+    ✓ import type empty object
+    ✓ interface call signature
+    ✓ interface construct signature
+    ✓ interface export
+    ✓ interface extends
+    ✓ interface generic
+    ✓ interface index signature
+    ✓ interface method computed
+    ✓ interface method generic
+    ✓ interface method kind
+    ✓ interface method optional
+    ✓ interface method plain
+    ✓ interface modifiers
+    ✓ interface properties
+    ✓ interface property computed
+    ✓ interface property named public
+    ✓ interface reserved method name
+    ✓ interface separators
+    ✓ module namespace body
+    ✓ module namespace body declare
+    ✓ module namespace body nested
+    ✓ module namespace body nested declare
+    ✓ module namespace declare shorthand
+    ✓ module namespace global in module
+    ✓ module namespace head
+    ✓ module namespace head declare
+    ✓ module namespace head export
+    ✓ non null parentheses
+    ✓ regression is default export
+    ✓ tsx brace is block
+    ✓ tuple
+    ✓ tuple empty
+    ✓ tuple labeled
+    ✓ tuple optional
+    ✓ tuple rest
+    ✓ type alias declare
+    ✓ type alias export
+    ✓ type alias generic
+    ✓ type alias generic complex
+    ✓ type alias plain
+    ✓ type arguments call
+    ✓ type arguments new
+    ✓ type arguments new false positive
+    ✓ type arguments tagged template
+    ✓ type arguments tsx
+    ✓ type arguments whitespace
+    ✓ type only export specifier
+    ✓ type only import specifier
+    ✓ types array
+    ✓ types conditional
+    ✓ types conditional infer
+    ✓ types function
+    ✓ types function generic
+    ✓ types function in generic
+    ✓ types function with this
+    ✓ types import type
+    ✓ types indexed
+    ✓ types keywords
+    ✓ types literal boolean
+    ✓ types literal number
+    ✓ types literal number negative
+    ✓ types literal string
+    ✓ types mapped
+    ✓ types mapped as
+    ✓ types mapped compact
+    ✓ types parenthesized babel 7
+    ✓ types parenthesized createParenthesizedExpression babel 7
+    ✓ types reference
+    ✓ types reference generic
+    ✓ types reference generic nested
+    ✓ types type literal
+    ✓ types type operator
+    ✓ types typeof
+    ✓ types union intersection
+    ✓ variable declarator exclamation
+    ○ skipped types parenthesized
+    ○ skipped types parenthesized createParenthesizedExpression
+  generation/whitespace
+    ✓ call expression
+    ✓ member expression
+
+generation/parentheses > unary postfix
+    JestAssertionError: expect(received).toBe(expected) // Object.is equality
+
+    - Expected  - 2
+    + Received  + 2
+
+    - (function () {
+    + function () {
+        return {
+          x: 24
+        };
+    - })().x++;
+    + }().x++;
+        at file:///testbed/packages/babel-generator/test/index.js:879:39
+        at async runTest (file:///testbed/node_modules/jest-light-runner/src/worker-runner.js:171:3)
+        at async runTestBlock (file:///testbed/node_modules/jest-light-runner/src/worker-runner.js:136:7)
+        at async runTestBlock (file:///testbed/node_modules/jest-light-runner/src/worker-runner.js:126:7)
+        at async run (file:///testbed/node_modules/jest-light-runner/src/worker-runner.js:84:3)
+        at async /testbed/node_modules/piscina/dist/src/worker.js:141:26 {
+      matcherResult: {
+        actual: 'function () {\n  return {\n    x: 24\n  };\n}().x++;',
+        expected: '(function () {\n  return {\n    x: 24\n  };\n})().x++;',
+        message: 'expect(received).toBe(expected) // Object.is equality\n' +
+          '\n' +
+          '- Expected  - 2\n' +
+          '+ Received  + 2\n' +
+          '\n' +
+          '- (function () {\n' +
+          '+ function () {\n' +
+          '    return {\n' +
+          '      x: 24\n' +
+          '    };\n' +
+          '- })().x++;\n' +
+          '+ }().x++;',
+        name: 'toBe',
+        pass: false
+      }
+    }
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 4 skipped, 532 passed, 537 total
+Snapshots:   0 total
+Time:        1.805 s
+Ran all test suites matching /babel-generator/i.
++ git checkout fbd065256ca00d68089293ad48ea9aeba5481914
+HEAD is now at fbd065256c chore: update test262 to 2e7cdfbe18eae4309677033673bb4b5ac6b1de40 (#14531)
+M	packages/babel-generator/src/node/parentheses.ts

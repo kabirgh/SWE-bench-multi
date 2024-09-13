@@ -1,6 +1,10 @@
 from swebench.harness.adapters.adapter import Adapter
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.python_adapter import PythonAdapter
+from swebench.harness.adapters.javascript_adapter import (
+    JavaScriptAdapter,
+    jest_log_parser,
+)
 from swebench.harness.constants import TEST_PYTEST
 from swebench.harness.log_parsers import MAP_REPO_TO_PARSER
 
@@ -32,28 +36,40 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "caddyserver/caddy": {
         "6411": GoAdapter(
             version="1.23.0",
-            install="go mod download",
+            install=["go mod download"],
             test_cmd='go test -v . -run "TestReplacerNew*"',
         ),
         "6345": GoAdapter(
             version="1.23.0",
-            install="go mod download",
+            install=["go mod download"],
             test_cmd="go test -v ./caddytest/integration/...",
         ),
         "6115": GoAdapter(
             version="1.23.0",
-            install="go mod download",
+            install=["go mod download"],
             test_cmd="go test -v ./modules/caddyhttp/reverseproxy/...",
         ),
         "6051": GoAdapter(
             version="1.23.0",
-            install="go mod download",
+            install=["go mod download"],
             test_cmd="go test -v ./caddyconfig/caddyfile/...",
         ),
         "5404": GoAdapter(
-            version="1.20.4",
-            install="go mod download",
+            version="1.20.14",
+            install=["go mod download"],
             test_cmd="go test -v ./caddyconfig/caddyfile/...",
+        ),
+    },
+    "babel/babel": {
+        "14532": JavaScriptAdapter(
+            version="20",
+            test_cmd="yarn jest babel-generator --verbose",
+            pre_test_commands=["make build"],  # Need to rebuild before testing
+            install=[
+                "make bootstrap",
+                "make build",
+            ],
+            log_parser=jest_log_parser,
         ),
     },
 }
