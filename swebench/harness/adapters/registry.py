@@ -71,5 +71,45 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=jest_log_parser,
         ),
+        "13928": JavaScriptAdapter(
+            version="20",
+            test_cmd='yarn jest babel-parser -t "arrow" --verbose',
+            pre_test_commands=["make build"],  # Need to rebuild before testing
+            install=[
+                "make bootstrap",
+                "make build",
+            ],
+            log_parser=jest_log_parser,
+        ),
+        "15649": JavaScriptAdapter(
+            version="20",
+            test_cmd="yarn jest packages/babel-traverse/test/scope.js --verbose",
+            pre_test_commands=["make build"],  # Need to rebuild before testing
+            install=[
+                "make bootstrap",
+                "make build",
+            ],
+            log_parser=jest_log_parser,
+        ),
+        "15445": JavaScriptAdapter(
+            version="20",
+            test_cmd='yarn jest packages/babel-generator/test/index.js -t "generation " --verbose',
+            pre_test_commands=["make build"],  # Need to rebuild before testing
+            install=[
+                "make bootstrap",
+                "make build",
+            ],
+            log_parser=jest_log_parser,
+        ),
+        "16130": JavaScriptAdapter(
+            version="20",
+            test_cmd="yarn jest babel-helpers --verbose",
+            pre_test_commands=["make build"],  # Need to rebuild before testing
+            install=[
+                "make bootstrap",
+                "make build",
+            ],
+            log_parser=jest_log_parser,
+        ),
     },
 }
