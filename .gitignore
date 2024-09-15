@@ -163,6 +163,7 @@ cython_debug/
 .api_key
 .keys
 .vscode/
+*.json
 *.jsonl
 *.jsonl.*
 *.patch
@@ -170,3 +171,5 @@ cython_debug/
 data/repos/copies
 notebooks/
 *logs/
+
+!dataset/**/verified/*
