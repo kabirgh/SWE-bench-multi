@@ -39,9 +39,10 @@ BUG_LABELS = [
     "issue-bug",
     "bug :bug:",
     "bug :lady_beetle:",  # eg https://github.com/caddyserver/caddy
+    "i: bug",  # eg https://github.com/babel/babel
 ]
 EASY_LABELS = ["good first issue", "easy", "good first issue :baby_chick:"]
-REGRESSION_LABELS = ["regression", "type: regression"]
+REGRESSION_LABELS = ["regression", "type: regression", "i: regression"]
 FEATURE_LABELS = [
     "feature",
     "type: feature",
@@ -50,6 +51,7 @@ FEATURE_LABELS = [
     "type::feature",
     "feature-request",
     "feature :gear:",
+    "i: enhancement",
 ]
 LABELS = BUG_LABELS + EASY_LABELS + REGRESSION_LABELS + FEATURE_LABELS
 

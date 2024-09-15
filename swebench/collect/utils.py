@@ -8,7 +8,6 @@ import requests
 import time
 
 from bs4 import BeautifulSoup
-from fastcore.xtras import obj2dict
 from dataclasses import dataclass
 from ghapi.core import GhApi
 from fastcore.net import HTTP404NotFoundError, HTTP403ForbiddenError
@@ -62,7 +61,14 @@ class Repo:
                         break
                     time.sleep(60 * 5)
             except HTTP404NotFoundError as e:
-                logger.info(f"[{self.owner}/{self.name}] Resource not found {kwargs}")
+                logger.info(
+                    f"[{self.owner}/{self.name}] Resource not found {kwargs} - {e}"
+                )
+                return None
+            except Exception as e:
+                logger.error(
+                    f"[{self.owner}/{self.name}] Error processing {kwargs} - {e}"
+                )
                 return None
 
     def extract_resolved_issues(self, pull: dict | Pull) -> list[str]:
@@ -274,12 +280,18 @@ class Repo:
                 )
             return response.json()
 
-        variables = {
-            "owner": self.owner,
-            "name": self.name,
-            "labels": labels,
-            "cutoffDate": cutoff_date,
-        }
+        query_parts = [
+            f"repo:{self.owner}/{self.name}",
+            "is:issue",
+            "is:closed",
+            "label:" + ",".join([f'"{label}"' for label in labels]),
+            "sort:created-desc",
+        ]
+        if cutoff_date is not None:
+            query_parts.append(f"created:>={cutoff_date}")
+
+        variables = {"searchQuery": " ".join(query_parts)}
+        print("Search query:", variables["searchQuery"])
 
         pulls = []
         has_next_page = True
@@ -296,12 +308,13 @@ class Repo:
                     print(f"API errors: {result['errors']}")
                 break
 
-            issues = result["data"]["repository"]["issues"]["nodes"]
+            edges = result["data"]["search"]["edges"]
 
-            for issue in issues:
+            for edge in edges:
                 if max_pulls and total_processed >= max_pulls:
                     break
 
+                issue = edge["node"]
                 pull = (
                     issue["timelineItems"]["nodes"][0]["source"]
                     if issue["timelineItems"]["nodes"]
@@ -357,7 +370,7 @@ class Repo:
                     )
                     total_processed += 1
 
-            page_info = result["data"]["repository"]["issues"]["pageInfo"]
+            page_info = result["data"]["search"]["pageInfo"]
             has_next_page = page_info["hasNextPage"]
             cursor = page_info["endCursor"]
 

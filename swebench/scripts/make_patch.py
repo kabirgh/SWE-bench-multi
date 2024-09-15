@@ -13,7 +13,7 @@ import requests
 import json
 import argparse
 from urllib.parse import urlparse
-from unidiff import PatchSet, PatchedFile
+from unidiff import PatchSet
 
 
 def extract_pr_info(url: str):
@@ -69,7 +69,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     repo_id, pr_number = extract_pr_info(args.url)
-    patch_url = args.url + ".patch"
+    patch_url = args.url + ".diff"
 
     patch = make_patch(patch_url)
     write_patch_to_json(args.target_file, patch, f"{repo_id}-{pr_number}")

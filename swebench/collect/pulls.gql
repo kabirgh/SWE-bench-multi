@@ -1,49 +1,44 @@
-query ($owner: String!, $name: String!, $labels: [String!], $cutoffDate: DateTime, $cursor: String) {
-  repository(owner: $owner, name: $name) {
-    issues(
-      first: 100
-      labels: $labels
-      states: CLOSED
-      orderBy: { field: CREATED_AT, direction: DESC }
-      after: $cursor
-      filterBy: { since: $cutoffDate }
-    ) {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      nodes {
-        number
-        title
-        body
-        url
-        labels(first: 10) {
-          nodes {
-            name
+query ($searchQuery: String!, $cursor: String) {
+  search(
+    query: $searchQuery,
+    type: ISSUE
+    first: 100
+    after: $cursor
+  ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        ... on Issue {
+          number
+          title
+          body
+          url
+          labels(first: 10) {
+            nodes {
+              name
+            }
           }
-        }
-        timelineItems(first: 1, itemTypes: [CROSS_REFERENCED_EVENT]) {
-          nodes {
-            ... on CrossReferencedEvent {
-              source {
-                ... on PullRequest {
-                  number
-                  title
-                  body
-                  url
-                  merged
-                  mergedAt
-                  createdAt
-                  files(first: 100) {
-                    nodes {
-                      path
-                    }
-                  }
-                  mergeCommit {
-                    oid
-                    parents(first: 1) {
-                      nodes {
-                        oid
+          timelineItems(first: 1, itemTypes: [CROSS_REFERENCED_EVENT]) {
+            nodes {
+              ... on CrossReferencedEvent {
+                source {
+                  ... on PullRequest {
+                    number
+                    title
+                    body
+                    url
+                    merged
+                    mergedAt
+                    createdAt
+                    mergeCommit {
+                      oid
+                      parents(first: 1) {
+                        nodes {
+                          oid
+                        }
                       }
                     }
                   }
