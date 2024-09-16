@@ -466,7 +466,7 @@ def _extract_hints(pull: dict, repo: Repo, issue_number: int) -> list[str]:
     return comments
 
 
-def extract_patches(pull: dict, repo: Repo) -> tuple[str, str]:
+def extract_patches(pull: dict, repo: Repo | None) -> tuple[str, str]:
     """
     Get patch and test patch from PR
 

@@ -9,11 +9,12 @@ Write to a jsonl file in the given format for a given patch
 ```
 """
 
-import requests
 import json
 import argparse
 from urllib.parse import urlparse
 from unidiff import PatchSet
+
+from swebench.collect.utils import extract_patches
 
 
 def extract_pr_info(url: str):
@@ -23,22 +24,14 @@ def extract_pr_info(url: str):
 
 
 def make_patch(url: str):
-    response = requests.get(url)
-    response.raise_for_status()
-    patch = PatchSet(response.text)
-
-    # Filter out files with 'test' in the path
-    filtered_patch = PatchSet(
-        "\n".join(str(file) for file in patch if "test" not in file.path.lower())
-    )
-
-    return filtered_patch
+    fix, _test = extract_patches({"diff_url": url}, None)
+    return fix
 
 
-def write_patch_to_json(target_file: str, patch: PatchSet, instance_id: str):
+def write_patch_to_json(target_file: str, patch: str, instance_id: str):
     d = {
         "instance_id": instance_id,
-        "model_patch": str(patch),
+        "model_patch": patch,
         "model_name_or_path": "gold",
     }
 
