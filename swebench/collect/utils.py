@@ -284,7 +284,7 @@ class Repo:
             f"repo:{self.owner}/{self.name}",
             "is:issue",
             "is:closed",
-            "label:" + ",".join([f'"{label}"' for label in labels]),
+            # "label:" + ",".join([f'"{label}"' for label in labels]),
             "sort:created-desc",
         ]
         if cutoff_date is not None:

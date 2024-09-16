@@ -34,12 +34,14 @@ if not GITHUB_TOKEN:
 BUG_LABELS = [
     "bug",
     "type: bug",
-    "type::bug",  # eg https://github.com/axios/axios
+    "type::bug",  # eg https://github.com/axios/axios/issues
     "kind/bug",
     "issue-bug",
     "bug :bug:",
-    "bug :lady_beetle:",  # eg https://github.com/caddyserver/caddy
-    "i: bug",  # eg https://github.com/babel/babel
+    "bug :lady_beetle:",  # eg https://github.com/caddyserver/caddy/issues
+    "i: bug",  # eg https://github.com/babel/babel/issues
+    "class:bug",  # eg https://github.com/redis/redis/issues
+    "critical bug",
 ]
 EASY_LABELS = ["good first issue", "easy", "good first issue :baby_chick:"]
 REGRESSION_LABELS = ["regression", "type: regression", "i: regression"]
@@ -52,6 +54,7 @@ FEATURE_LABELS = [
     "feature-request",
     "feature :gear:",
     "i: enhancement",
+    "class:feature",
 ]
 LABELS = BUG_LABELS + EASY_LABELS + REGRESSION_LABELS + FEATURE_LABELS
 
