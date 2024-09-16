@@ -72,7 +72,7 @@ class JavaScriptAdapter(Adapter):
         Creates the list of commands to set up the environment for testing.
         This is the setup script for the environment image.
 
-        This is unused in the typescript adapter since each PR likely has a different set of package versions to install.
+        This is unused in this adapter since each PR likely has a different set of package versions to install.
         Installation happens in the instance image (make_repo_script_list).
         """
         return []

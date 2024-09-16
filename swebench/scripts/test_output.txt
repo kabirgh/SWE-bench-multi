@@ -1,0 +1,341 @@
+Cleanup: may take some time... OK
+Starting test server at port 21079
+[ready]: 1006198
+Testing unit/type/zset
+[ready]: 1006196
+[ready]: 1006202
+[ready]: 1006199
+[ready]: 1006204
+[ready]: 1006203
+[ready]: 1006197
+[ready]: 1006200
+[ready]: 1006207
+[ready]: 1006209
+[ready]: 1006205
+[ready]: 1006201
+[ready]: 1006211
+[ready]: 1006206
+[ready]: 1006208
+[ready]: 1006210
+[skip]: Check encoding - listpack
+[skip]: ZSET basic ZADD and score update - listpack
+[skip]: ZSET element can't be set to NaN with ZADD - listpack
+[skip]: ZSET element can't be set to NaN with ZINCRBY - listpack
+[skip]: ZADD with options syntax error with incomplete pair - listpack
+[skip]: ZADD XX option without key - listpack
+[skip]: ZADD XX existing key - listpack
+[skip]: ZADD XX returns the number of elements actually added - listpack
+[skip]: ZADD XX updates existing elements score - listpack
+[skip]: ZADD GT updates existing elements when new scores are greater - listpack
+[skip]: ZADD LT updates existing elements when new scores are lower - listpack
+[skip]: ZADD GT XX updates existing elements when new scores are greater and skips new elements - listpack
+[skip]: ZADD LT XX updates existing elements when new scores are lower and skips new elements - listpack
+[skip]: ZADD XX and NX are not compatible - listpack
+[skip]: ZADD NX with non existing key - listpack
+[skip]: ZADD NX only add new elements without updating old ones - listpack
+[skip]: ZADD GT and NX are not compatible - listpack
+[skip]: ZADD LT and NX are not compatible - listpack
+[skip]: ZADD LT and GT are not compatible - listpack
+[skip]: ZADD INCR LT/GT replies with nill if score not updated - listpack
+[skip]: ZADD INCR LT/GT with inf - listpack
+[skip]: ZADD INCR works like ZINCRBY - listpack
+[skip]: ZADD INCR works with a single score-elemenet pair - listpack
+[skip]: ZADD CH option changes return value to all changed elements - listpack
+[skip]: ZINCRBY calls leading to NaN result in error - listpack
+[skip]: ZADD - Variadic version base case - $encoding
+[skip]: ZADD - Return value is the number of actually added items - $encoding
+[skip]: ZADD - Variadic version does not add nothing on single parsing err - $encoding
+[skip]: ZADD - Variadic version will raise error on missing arg - $encoding
+[skip]: ZINCRBY does not work variadic even if shares ZADD implementation - $encoding
+[skip]: ZCARD basics - listpack
+[skip]: ZREM removes key after last element is removed - listpack
+[skip]: ZREM variadic version - listpack
+[skip]: ZREM variadic version -- remove elements after key deletion - listpack
+[skip]: ZRANGE basics - listpack
+[skip]: ZREVRANGE basics - listpack
+[skip]: ZRANK/ZREVRANK basics - listpack
+[skip]: ZRANK - after deletion - listpack
+[skip]: ZINCRBY - can create a new sorted set - listpack
+[skip]: ZINCRBY - increment and decrement - listpack
+[skip]: ZINCRBY return value - listpack
+[skip]: ZRANGEBYSCORE/ZREVRANGEBYSCORE/ZCOUNT basics - listpack
+[skip]: ZRANGEBYSCORE with WITHSCORES - listpack
+[skip]: ZRANGEBYSCORE with LIMIT - listpack
+[skip]: ZRANGEBYSCORE with LIMIT and WITHSCORES - listpack
+[skip]: ZRANGEBYSCORE with non-value min or max - listpack
+[skip]: ZRANGEBYLEX/ZREVRANGEBYLEX/ZLEXCOUNT basics - listpack
+[skip]: ZLEXCOUNT advanced - listpack
+[skip]: ZRANGEBYSLEX with LIMIT - listpack
+[skip]: ZRANGEBYLEX with invalid lex range specifiers - listpack
+[skip]: ZREMRANGEBYSCORE basics - listpack
+[skip]: ZREMRANGEBYSCORE with non-value min or max - listpack
+[skip]: ZREMRANGEBYRANK basics - listpack
+[skip]: ZUNIONSTORE against non-existing key doesn't set destination - listpack
+[skip]: ZUNION/ZINTER/ZINTERCARD/ZDIFF against non-existing key - listpack
+[skip]: ZUNIONSTORE with empty set - listpack
+[skip]: ZUNION/ZINTER/ZINTERCARD/ZDIFF with empty set - listpack
+[skip]: ZUNIONSTORE basics - listpack
+[skip]: ZUNION/ZINTER/ZINTERCARD/ZDIFF with integer members - listpack
+[skip]: ZUNIONSTORE with weights - listpack
+[skip]: ZUNION with weights - listpack
+[skip]: ZUNIONSTORE with a regular set and weights - listpack
+[skip]: ZUNIONSTORE with AGGREGATE MIN - listpack
+[skip]: ZUNION/ZINTER with AGGREGATE MIN - listpack
+[skip]: ZUNIONSTORE with AGGREGATE MAX - listpack
+[skip]: ZUNION/ZINTER with AGGREGATE MAX - listpack
+[skip]: ZINTERSTORE basics - listpack
+[skip]: ZINTER basics - listpack
+[skip]: ZINTERCARD with illegal arguments
+[skip]: ZINTERCARD basics - listpack
+[skip]: ZINTER RESP3 - listpack
+[skip]: ZINTERSTORE with weights - listpack
+[skip]: ZINTER with weights - listpack
+[skip]: ZINTERSTORE with a regular set and weights - listpack
+[skip]: ZINTERSTORE with AGGREGATE MIN - listpack
+[skip]: ZINTERSTORE with AGGREGATE MAX - listpack
+[skip]: ZUNIONSTORE with +inf/-inf scores - listpack
+[skip]: ZUNIONSTORE with NaN weights - listpack
+[skip]: ZINTERSTORE with +inf/-inf scores - listpack
+[skip]: ZINTERSTORE with NaN weights - listpack
+[skip]: ZDIFFSTORE basics - listpack
+[skip]: ZDIFF basics - listpack
+[skip]: ZDIFFSTORE with a regular set - listpack
+[skip]: ZDIFF subtracting set from itself - listpack
+[skip]: ZDIFF algorithm 1 - listpack
+[skip]: ZDIFF algorithm 2 - listpack
+[skip]: ZDIFF fuzzing - listpack
+[skip]: ZPOPMIN with the count 0 returns an empty array
+[skip]: ZPOPMIN with negative count
+[skip]: ZPOPMAX with the count 0 returns an empty array
+[skip]: ZPOPMAX with negative count
+[skip]: Basic ZPOPMIN/ZPOPMAX with a single key - listpack
+[skip]: ZPOPMIN/ZPOPMAX with count - listpack
+[skip]: Basic ZMPOP_MIN/ZMPOP_MAX with a single key - listpack
+[skip]: ZMPOP_MIN/ZMPOP_MAX with count - listpack
+[skip]: BZPOPMIN/BZPOPMAX with a single existing sorted set - listpack
+[skip]: BZPOPMIN/BZPOPMAX with multiple existing sorted sets - listpack
+[skip]: BZPOPMIN/BZPOPMAX second sorted set has members - listpack
+[ok]: BZMPOP_MIN/BZMPOP_MAX with a single existing sorted set - listpack (5 ms)
+[ok]: BZMPOP_MIN/BZMPOP_MAX with multiple existing sorted sets - listpack (5 ms)
+[ok]: BZMPOP_MIN/BZMPOP_MAX second sorted set has members - listpack (3 ms)
+[skip]: Basic ZPOPMIN/ZPOPMAX - listpack RESP3
+[skip]: ZPOPMIN/ZPOPMAX with count - listpack RESP3
+[skip]: Basic ZMPOP_MIN/ZMPOP_MAX - listpack RESP3
+[skip]: ZMPOP_MIN/ZMPOP_MAX with count - listpack RESP3
+[skip]: BZPOPMIN/BZPOPMAX - listpack RESP3
+[ok]: BZMPOP_MIN/BZMPOP_MAX - listpack RESP3 (8 ms)
+[skip]: Check encoding - skiplist
+[skip]: ZSET basic ZADD and score update - skiplist
+[skip]: ZSET element can't be set to NaN with ZADD - skiplist
+[skip]: ZSET element can't be set to NaN with ZINCRBY - skiplist
+[skip]: ZADD with options syntax error with incomplete pair - skiplist
+[skip]: ZADD XX option without key - skiplist
+[skip]: ZADD XX existing key - skiplist
+[skip]: ZADD XX returns the number of elements actually added - skiplist
+[skip]: ZADD XX updates existing elements score - skiplist
+[skip]: ZADD GT updates existing elements when new scores are greater - skiplist
+[skip]: ZADD LT updates existing elements when new scores are lower - skiplist
+[skip]: ZADD GT XX updates existing elements when new scores are greater and skips new elements - skiplist
+[skip]: ZADD LT XX updates existing elements when new scores are lower and skips new elements - skiplist
+[skip]: ZADD XX and NX are not compatible - skiplist
+[skip]: ZADD NX with non existing key - skiplist
+[skip]: ZADD NX only add new elements without updating old ones - skiplist
+[skip]: ZADD GT and NX are not compatible - skiplist
+[skip]: ZADD LT and NX are not compatible - skiplist
+[skip]: ZADD LT and GT are not compatible - skiplist
+[skip]: ZADD INCR LT/GT replies with nill if score not updated - skiplist
+[skip]: ZADD INCR LT/GT with inf - skiplist
+[skip]: ZADD INCR works like ZINCRBY - skiplist
+[skip]: ZADD INCR works with a single score-elemenet pair - skiplist
+[skip]: ZADD CH option changes return value to all changed elements - skiplist
+[skip]: ZINCRBY calls leading to NaN result in error - skiplist
+[skip]: ZADD - Variadic version base case - $encoding
+[skip]: ZADD - Return value is the number of actually added items - $encoding
+[skip]: ZADD - Variadic version does not add nothing on single parsing err - $encoding
+[skip]: ZADD - Variadic version will raise error on missing arg - $encoding
+[skip]: ZINCRBY does not work variadic even if shares ZADD implementation - $encoding
+[skip]: ZCARD basics - skiplist
+[skip]: ZREM removes key after last element is removed - skiplist
+[skip]: ZREM variadic version - skiplist
+[skip]: ZREM variadic version -- remove elements after key deletion - skiplist
+[skip]: ZRANGE basics - skiplist
+[skip]: ZREVRANGE basics - skiplist
+[skip]: ZRANK/ZREVRANK basics - skiplist
+[skip]: ZRANK - after deletion - skiplist
+[skip]: ZINCRBY - can create a new sorted set - skiplist
+[skip]: ZINCRBY - increment and decrement - skiplist
+[skip]: ZINCRBY return value - skiplist
+[skip]: ZRANGEBYSCORE/ZREVRANGEBYSCORE/ZCOUNT basics - skiplist
+[skip]: ZRANGEBYSCORE with WITHSCORES - skiplist
+[skip]: ZRANGEBYSCORE with LIMIT - skiplist
+[skip]: ZRANGEBYSCORE with LIMIT and WITHSCORES - skiplist
+[skip]: ZRANGEBYSCORE with non-value min or max - skiplist
+[skip]: ZRANGEBYLEX/ZREVRANGEBYLEX/ZLEXCOUNT basics - skiplist
+[skip]: ZLEXCOUNT advanced - skiplist
+[skip]: ZRANGEBYSLEX with LIMIT - skiplist
+[skip]: ZRANGEBYLEX with invalid lex range specifiers - skiplist
+[skip]: ZREMRANGEBYSCORE basics - skiplist
+[skip]: ZREMRANGEBYSCORE with non-value min or max - skiplist
+[skip]: ZREMRANGEBYRANK basics - skiplist
+[skip]: ZUNIONSTORE against non-existing key doesn't set destination - skiplist
+[skip]: ZUNION/ZINTER/ZINTERCARD/ZDIFF against non-existing key - skiplist
+[skip]: ZUNIONSTORE with empty set - skiplist
+[skip]: ZUNION/ZINTER/ZINTERCARD/ZDIFF with empty set - skiplist
+[skip]: ZUNIONSTORE basics - skiplist
+[skip]: ZUNION/ZINTER/ZINTERCARD/ZDIFF with integer members - skiplist
+[skip]: ZUNIONSTORE with weights - skiplist
+[skip]: ZUNION with weights - skiplist
+[skip]: ZUNIONSTORE with a regular set and weights - skiplist
+[skip]: ZUNIONSTORE with AGGREGATE MIN - skiplist
+[skip]: ZUNION/ZINTER with AGGREGATE MIN - skiplist
+[skip]: ZUNIONSTORE with AGGREGATE MAX - skiplist
+[skip]: ZUNION/ZINTER with AGGREGATE MAX - skiplist
+[skip]: ZINTERSTORE basics - skiplist
+[skip]: ZINTER basics - skiplist
+[skip]: ZINTERCARD with illegal arguments
+[skip]: ZINTERCARD basics - skiplist
+[skip]: ZINTER RESP3 - skiplist
+[skip]: ZINTERSTORE with weights - skiplist
+[skip]: ZINTER with weights - skiplist
+[skip]: ZINTERSTORE with a regular set and weights - skiplist
+[skip]: ZINTERSTORE with AGGREGATE MIN - skiplist
+[skip]: ZINTERSTORE with AGGREGATE MAX - skiplist
+[skip]: ZUNIONSTORE with +inf/-inf scores - skiplist
+[skip]: ZUNIONSTORE with NaN weights - skiplist
+[skip]: ZINTERSTORE with +inf/-inf scores - skiplist
+[skip]: ZINTERSTORE with NaN weights - skiplist
+[skip]: ZDIFFSTORE basics - skiplist
+[skip]: ZDIFF basics - skiplist
+[skip]: ZDIFFSTORE with a regular set - skiplist
+[skip]: ZDIFF subtracting set from itself - skiplist
+[skip]: ZDIFF algorithm 1 - skiplist
+[skip]: ZDIFF algorithm 2 - skiplist
+[skip]: ZDIFF fuzzing - skiplist
+[skip]: ZPOPMIN with the count 0 returns an empty array
+[skip]: ZPOPMIN with negative count
+[skip]: ZPOPMAX with the count 0 returns an empty array
+[skip]: ZPOPMAX with negative count
+[skip]: Basic ZPOPMIN/ZPOPMAX with a single key - skiplist
+[skip]: ZPOPMIN/ZPOPMAX with count - skiplist
+[skip]: Basic ZMPOP_MIN/ZMPOP_MAX with a single key - skiplist
+[skip]: ZMPOP_MIN/ZMPOP_MAX with count - skiplist
+[skip]: BZPOPMIN/BZPOPMAX with a single existing sorted set - skiplist
+[skip]: BZPOPMIN/BZPOPMAX with multiple existing sorted sets - skiplist
+[skip]: BZPOPMIN/BZPOPMAX second sorted set has members - skiplist
+[ok]: BZMPOP_MIN/BZMPOP_MAX with a single existing sorted set - skiplist (4 ms)
+[ok]: BZMPOP_MIN/BZMPOP_MAX with multiple existing sorted sets - skiplist (5 ms)
+[ok]: BZMPOP_MIN/BZMPOP_MAX second sorted set has members - skiplist (3 ms)
+[skip]: Basic ZPOPMIN/ZPOPMAX - skiplist RESP3
+[skip]: ZPOPMIN/ZPOPMAX with count - skiplist RESP3
+[skip]: Basic ZMPOP_MIN/ZMPOP_MAX - skiplist RESP3
+[skip]: ZMPOP_MIN/ZMPOP_MAX with count - skiplist RESP3
+[skip]: BZPOPMIN/BZPOPMAX - skiplist RESP3
+[ok]: BZMPOP_MIN/BZMPOP_MAX - skiplist RESP3 (4 ms)
+[skip]: ZPOP/ZMPOP against wrong type
+[skip]: ZMPOP with illegal argument
+[skip]: ZMPOP propagate as pop with count command to replica
+[skip]: ZPOPMIN/ZPOPMAX readraw in RESP3
+[skip]: BZPOPMIN/BZPOPMAX readraw in RESP3
+[skip]: ZMPOP readraw in RESP3
+[ok]: BZMPOP readraw in RESP3 (130 ms)
+[skip]: ZPOPMIN/ZPOPMAX readraw in RESP2
+[skip]: BZPOPMIN/BZPOPMAX readraw in RESP2
+[skip]: ZMPOP readraw in RESP2
+[ok]: BZMPOP readraw in RESP2 (198 ms)
+[skip]: ZINTERSTORE regression with two sets, intset+hashtable
+[skip]: ZUNIONSTORE regression, should not create NaN in scores
+[skip]: ZINTERSTORE #516 regression, mixed sets and ziplist zsets
+[skip]: ZUNIONSTORE result is sorted
+[skip]: ZUNIONSTORE/ZINTERSTORE/ZDIFFSTORE error if using WITHSCORES
+[skip]: ZMSCORE retrieve
+[skip]: ZMSCORE retrieve from empty set
+[skip]: ZMSCORE retrieve with missing member
+[skip]: ZMSCORE retrieve single member
+[skip]: ZMSCORE retrieve requires one or more members
+[skip]: ZSET commands don't accept the empty strings as valid score
+[skip]: zunionInterDiffGenericCommand at least 1 input key
+[skip]: ZSCORE - listpack
+[skip]: ZMSCORE - listpack
+[skip]: ZSCORE after a DEBUG RELOAD - listpack
+[skip]: ZSET sorting stresser - listpack
+[skip]: ZRANGEBYSCORE fuzzy test, 100 ranges in 128 element sorted set - listpack
+[skip]: ZRANGEBYLEX fuzzy test, 100 ranges in 128 element sorted set - listpack
+[skip]: ZREMRANGEBYLEX fuzzy test, 100 ranges in 128 element sorted set - listpack
+[skip]: ZSETs skiplist implementation backlink consistency test - listpack
+[skip]: ZSETs ZRANK augmented skip list stress testing - listpack
+[skip]: BZPOPMIN, ZADD + DEL should not awake blocked client
+[skip]: BZPOPMIN, ZADD + DEL + SET should not awake blocked client
+[ok]: BZMPOP_MIN, ZADD + DEL should not awake blocked client (6 ms)
+[ok]: BZMPOP_MIN, ZADD + DEL + SET should not awake blocked client (5 ms)
+[skip]: BZPOPMIN with same key multiple times should work
+[skip]: MULTI/EXEC is isolated from the point of view of BZPOPMIN
+[skip]: BZPOPMIN with variadic ZADD
+[skip]: BZPOPMIN with zero timeout should block indefinitely
+[ok]: MULTI/EXEC is isolated from the point of view of BZMPOP_MIN (3 ms)
+[ok]: BZMPOP_MIN with variadic ZADD (4 ms)
+[ok]: BZMPOP_MIN with zero timeout should block indefinitely (1004 ms)
+[skip]: ZSCORE - skiplist
+[skip]: ZMSCORE - skiplist
+[skip]: ZSCORE after a DEBUG RELOAD - skiplist
+[skip]: ZSET sorting stresser - skiplist
+[skip]: ZRANGEBYSCORE fuzzy test, 100 ranges in 100 element sorted set - skiplist
+[skip]: ZRANGEBYLEX fuzzy test, 100 ranges in 100 element sorted set - skiplist
+[skip]: ZREMRANGEBYLEX fuzzy test, 100 ranges in 100 element sorted set - skiplist
+[skip]: ZSETs skiplist implementation backlink consistency test - skiplist
+[skip]: ZSETs ZRANK augmented skip list stress testing - skiplist
+[skip]: BZPOPMIN, ZADD + DEL should not awake blocked client
+[skip]: BZPOPMIN, ZADD + DEL + SET should not awake blocked client
+[ok]: BZMPOP_MIN, ZADD + DEL should not awake blocked client (4 ms)
+[ok]: BZMPOP_MIN, ZADD + DEL + SET should not awake blocked client (4 ms)
+[skip]: BZPOPMIN with same key multiple times should work
+[skip]: MULTI/EXEC is isolated from the point of view of BZPOPMIN
+[skip]: BZPOPMIN with variadic ZADD
+[skip]: BZPOPMIN with zero timeout should block indefinitely
+[ok]: MULTI/EXEC is isolated from the point of view of BZMPOP_MIN (4 ms)
+[ok]: BZMPOP_MIN with variadic ZADD (3 ms)
+[ok]: BZMPOP_MIN with zero timeout should block indefinitely (1003 ms)
+[ok]: BZPOP/BZMPOP against wrong type (2 ms)
+[ok]: BZMPOP with illegal argument (3 ms)
+[ok]: BZMPOP with multiple blocked clients (8 ms)
+[ok]: BZMPOP propagate as pop with count command to replica (133 ms)
+[err]: BZMPOP should not blocks on non key arguments - #10762 in tests/unit/type/zset.tcl
+Expected 'myzset {{zset 1}}' to be equal to '0 {{timeout_value 100}}' (context: type eval line 21 cmd {assert_equal {myzset {{zset 1}}} [$rd1 read]} proc ::test)
+[skip]: ZSET skiplist order consistency when elements are moved
+[skip]: ZRANGESTORE basic
+[skip]: ZRANGESTORE RESP3
+[skip]: ZRANGESTORE range
+[skip]: ZRANGESTORE BYLEX
+[skip]: ZRANGESTORE BYSCORE
+[skip]: ZRANGESTORE BYSCORE LIMIT
+[skip]: ZRANGESTORE BYSCORE REV LIMIT
+[skip]: ZRANGE BYSCORE REV LIMIT
+[skip]: ZRANGESTORE - src key missing
+[skip]: ZRANGESTORE - src key wrong type
+[skip]: ZRANGESTORE - empty range
+[skip]: ZRANGESTORE BYLEX - empty range
+[skip]: ZRANGESTORE BYSCORE - empty range
+[skip]: ZRANGE BYLEX
+[skip]: ZRANGESTORE invalid syntax
+[skip]: ZRANGE invalid syntax
+[skip]: ZRANDMEMBER - listpack
+[skip]: ZRANDMEMBER - skiplist
+[skip]: ZRANDMEMBER with RESP3
+[skip]: ZRANDMEMBER count of 0 is handled correctly
+[skip]: ZRANDMEMBER with <count> against non existing key
+[skip]: ZRANDMEMBER count of 0 is handled correctly - emptyarray
+[skip]: ZRANDMEMBER with <count> against non existing key - emptyarray
+[skip]: ZRANDMEMBER with <count> - skiplist
+[skip]: ZRANDMEMBER with <count> - listpack
+[skip]: zset score double range
+[1/1 done]: unit/type/zset (3 seconds)
+
+                   The End
+
+Execution time of different units:
+  3 seconds - unit/type/zset
+
+!!! WARNING The following tests failed:
+
+*** [err]: BZMPOP should not blocks on non key arguments - #10762 in tests/unit/type/zset.tcl
+Expected 'myzset {{zset 1}}' to be equal to '0 {{timeout_value 100}}' (context: type eval line 21 cmd {assert_equal {myzset {{zset 1}}} [$rd1 read]} proc ::test)
+Cleanup: may take some time... OK
