@@ -1,3 +1,7 @@
+from swebench.harness.dockerfiles.cplusplus import (
+    _DOCKERFILE_BASE_CPLUSPLUS,
+    _DOCKERFILE_INSTANCE_CPLUSPLUS,
+)
 from swebench.harness.dockerfiles.go import (
     _DOCKERFILE_BASE_GO,
     _DOCKERFILE_INSTANCE_GO,
@@ -66,5 +70,10 @@ _dockerfiles = {
         "base": _DOCKERFILE_BASE_PYTHON,
         "env": _DOCKERFILE_ENV_PYTHON,
         "instance": _DOCKERFILE_INSTANCE_PYTHON,
+    },
+    "c++": {
+        "base": _DOCKERFILE_BASE_CPLUSPLUS,
+        "env": _DOCKERFILE_BASE_CPLUSPLUS,  # Skip env
+        "instance": _DOCKERFILE_INSTANCE_CPLUSPLUS,
     },
 }

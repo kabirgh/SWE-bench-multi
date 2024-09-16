@@ -1,4 +1,8 @@
 from swebench.harness.adapters.adapter import Adapter
+from swebench.harness.adapters.cplusplus_adapter import (
+    CPlusPlusAdapter,
+    redis_log_parser,
+)
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
@@ -110,6 +114,38 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "make build",
             ],
             log_parser=jest_log_parser,
+        ),
+    },
+    "redis/redis": {
+        "13115": CPlusPlusAdapter(
+            install=["make distclean", "make"],
+            pre_test_commands=["make"],
+            test_cmd="TERM=dumb ./runtest --durable --single unit/scripting",
+            log_parser=redis_log_parser,
+        ),
+        "12472": CPlusPlusAdapter(
+            install=["make distclean", "make"],
+            pre_test_commands=["make"],
+            test_cmd='TERM=dumb ./runtest --durable --single unit/acl --only "/.*ACL GETUSER.*"',
+            log_parser=redis_log_parser,
+        ),
+        "12272": CPlusPlusAdapter(
+            install=["make distclean", "make"],
+            pre_test_commands=["make"],
+            test_cmd='TERM=dumb ./runtest --durable --single unit/type/string --only "/.*(GETRANGE|SETRANGE).*"',
+            log_parser=redis_log_parser,
+        ),
+        "11734": CPlusPlusAdapter(
+            install=["make distclean", "make"],
+            pre_test_commands=["make"],
+            test_cmd="TERM=dumb ./runtest --durable --single unit/bitops",
+            log_parser=redis_log_parser,
+        ),
+        "10764": CPlusPlusAdapter(
+            install=["make distclean", "make"],
+            pre_test_commands=["make"],
+            test_cmd='TERM=dumb ./runtest --durable --single unit/type/zset --only "BZMPOP"',
+            log_parser=redis_log_parser,
         ),
     },
 }
