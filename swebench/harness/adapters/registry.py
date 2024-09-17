@@ -9,6 +9,7 @@ from swebench.harness.adapters.javascript_adapter import (
     JavaScriptAdapter,
     jest_log_parser,
 )
+from swebench.harness.adapters.rust_adapter import RustAdapter
 from swebench.harness.constants import TEST_PYTEST
 from swebench.harness.log_parsers import MAP_REPO_TO_PARSER
 
@@ -146,6 +147,36 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             pre_test_commands=["make"],
             test_cmd='TERM=dumb ./runtest --durable --single unit/type/zset --only "BZMPOP"',
             log_parser=redis_log_parser,
+        ),
+    },
+    "tokio-rs/tokio": {
+        "6724": RustAdapter(
+            version="1.81",
+            # compile only as much as needed to run the tests
+            install=["cargo test --test io_write_all_buf --no-fail-fast --no-run"],
+            test_cmd="cargo test --test io_write_all_buf --no-fail-fast",
+        ),
+        "6838": RustAdapter(
+            version="1.81",
+            install=["cargo test --test uds_stream --no-fail-fast --no-run"],
+            test_cmd="cargo test --test uds_stream --no-fail-fast",
+        ),
+        "6752": RustAdapter(
+            version="1.81",
+            install=["cargo test --test time_delay_queue --no-fail-fast --no-run"],
+            test_cmd="cargo test --test time_delay_queue --no-fail-fast",
+        ),
+        "4867": RustAdapter(
+            version="1.81",
+            install=["cargo test --test sync_broadcast --no-fail-fast --no-run"],
+            test_cmd="cargo test --test sync_broadcast --no-fail-fast",
+        ),
+        "4898": RustAdapter(
+            version="1.81",
+            install=[
+                'RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics --no-run'
+            ],
+            test_cmd='RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics',
         ),
     },
 }

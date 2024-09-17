@@ -1,8 +1,8 @@
 import argparse
 import json
 from swebench.harness.constants import TestStatus
-from swebench.harness.adapters.cplusplus_adapter import (
-    redis_log_parser as log_parser,
+from swebench.harness.adapters.rust_adapter import (
+    _cargo_log_parser as log_parser,
 )
 
 if __name__ == "__main__":
