@@ -53,6 +53,10 @@ def create_instance(
     }
     if pr_is_version:
         instance["version"] = str(pull["number"])
+    if "related_issues" in pull:
+        instance["related_issues"] = pull["related_issues"]
+    if "body" in pull:
+        instance["body"] = pull["body"]
     return instance
 
 

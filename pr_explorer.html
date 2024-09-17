@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pull Request Explorer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #app-container {
+            display: flex;
+            height: 100vh;
+        }
+        #sidebar {
+            width: 25%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #ccc;
+        }
+        #main-content {
+            width: 75%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        #repo-list, #pr-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        #pr-header {
+            margin-bottom: 10px;
+        }
+        #descriptions {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        #pr-description, #issue-description {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow-y: auto;
+            max-height: calc(100vh - 100px);
+        }
+        .repo-item, .pr-item {
+            cursor: pointer;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .repo-item:hover, .pr-item:hover {
+            background-color: #f0f0f0;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <div id="sidebar">
+            <div id="repo-list"></div>
+            <div id="pr-list"></div>
+        </div>
+        <div id="main-content">
+            <div id="pr-header"></div>
+            <div id="descriptions">
+                <div id="issue-description"></div>
+                <div id="pr-description"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const repoList = document.getElementById('repo-list');
+        const prList = document.getElementById('pr-list');
+        const prHeader = document.getElementById('pr-header');
+        const prDescription = document.getElementById('pr-description');
+        const issueDescription = document.getElementById('issue-description');
+        let allData = {};
+
+        function loadJSONFiles() {
+            const promises = [];
+            const jsonFiles = [];
+
+            // Get all dataset/<repo>/<repo>-task-instances.jsonl files
+            fetch('/list_files', { cache: 'force-cache' })
+                .then(response => response.json())
+                .then(files => {
+                    files.forEach(file => {
+                        promises.push(
+                            fetch(`/instances/${file}`, { cache: 'force-cache' })
+                                .then(response => response.json())
+                                .then(data => {
+                                    allData[data.repository] = data;
+                                })
+                        );
+                    });
+
+                    Promise.all(promises).then(() => {
+                        console.log("allData[0]", allData[0]);
+                        displayRepositories();
+                    });
+                });
+        }
+
+        function displayRepositories() {
+            repoList.innerHTML = '<h3>Repositories</h3>';
+            Object.keys(allData).forEach(repo => {
+                const repoItem = document.createElement('div');
+                repoItem.className = 'repo-item';
+                repoItem.textContent = repo;
+                repoItem.onclick = () => displayPullRequests(repo);
+                repoList.appendChild(repoItem);
+            });
+        }
+
+        function displayPullRequests(repo) {
+            const repoData = allData[repo];
+            const repoUrl = `https://github.com/${repo}`;
+
+            prList.innerHTML = `<h3><a href="${repoUrl}" target="_blank">${repo}</a></h3>`;
+            repoData.issues.forEach((instance) => {
+                const prItem = document.createElement('div');
+                prItem.className = 'pr-item';
+                prItem.innerHTML = `${instance.related_issues[0].title} (<a href="${instance.url}" target="_blank">PR #${instance.pull_number}</a>)`;
+                prItem.onclick = (e) => {
+                    if (e.target.tagName !== 'A') {
+                        displayPRDetails(instance);
+                    }
+                };
+                prList.appendChild(prItem);
+            });
+        }
+
+        function displayPRDetails(instance) {
+            const issue = instance.related_issues[0];
+            prHeader.innerHTML = `
+                <h2>${issue.title}</h2>
+            `;
+            issueDescription.innerHTML = `
+                <h2>Issue</h2>
+                <p><a href="${issue.url}" target="_blank">${issue.url}</a></p>
+                <div>${marked.parse(issue.body)}</div>
+            `;
+            prDescription.innerHTML = `
+                <h2>PR</h2>
+                <p><a href="${instance.url}" target="_blank">${instance.url}</a></p>
+                <div>${marked.parse(instance.body)}</div>
+            `;
+        }
+
+        loadJSONFiles();
+    </script>
+</body>
+</html>
