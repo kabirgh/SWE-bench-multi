@@ -1,13 +1,40 @@
-test num_workers ... ok
-test worker_local_schedule_count ... ok
-test remote_schedule_count ... ok
-test injection_queue_depth ... ok
-test worker_steal_count ... ok
-test worker_noop_count ... ok
-test worker_local_queue_depth ... ok
-test worker_poll_count ... ok
-test worker_overflow_count ... ok
-test worker_total_busy_duration ... ok
-test io_driver_fd_count ... ok
-test io_driver_ready_count ... FAILED
-test worker_park_count ... ok
+root@eval-1:~/terraform# go test -v ./internal/builtin/provisioners/remote-exec/...
+=== RUN   TestResourceProvider_Validate_good
+--- PASS: TestResourceProvider_Validate_good (0.00s)
+=== RUN   TestResourceProvider_Validate_bad
+--- PASS: TestResourceProvider_Validate_bad (0.00s)
+=== RUN   TestResourceProvider_generateScript
+--- PASS: TestResourceProvider_generateScript (0.00s)
+=== RUN   TestResourceProvider_generateScriptEmptyInline
+--- PASS: TestResourceProvider_generateScriptEmptyInline (0.00s)
+=== RUN   TestResourceProvider_CollectScripts_inline
+--- PASS: TestResourceProvider_CollectScripts_inline (0.00s)
+=== RUN   TestResourceProvider_CollectScripts_script
+--- PASS: TestResourceProvider_CollectScripts_script (0.00s)
+=== RUN   TestResourceProvider_CollectScripts_scripts
+--- PASS: TestResourceProvider_CollectScripts_scripts (0.00s)
+=== RUN   TestResourceProvider_CollectScripts_scriptsEmpty
+--- PASS: TestResourceProvider_CollectScripts_scriptsEmpty (0.00s)
+=== RUN   TestProvisionerTimeout
+    resource_provisioner_test.go:265: communicator did not disconnect
+--- FAIL: TestProvisionerTimeout (4.00s)
+=== RUN   TestResourceProvisioner_StopClose
+--- PASS: TestResourceProvisioner_StopClose (0.00s)
+=== RUN   TestResourceProvisioner_connectionRequired
+--- PASS: TestResourceProvisioner_connectionRequired (0.00s)
+=== RUN   TestResourceProvisioner_nullsInOptionals
+=== RUN   TestResourceProvisioner_nullsInOptionals/0
+=== RUN   TestResourceProvisioner_nullsInOptionals/1
+=== RUN   TestResourceProvisioner_nullsInOptionals/2
+=== RUN   TestResourceProvisioner_nullsInOptionals/3
+=== RUN   TestResourceProvisioner_nullsInOptionals/4
+--- PASS: TestResourceProvisioner_nullsInOptionals (0.00s)
+    --- PASS: TestResourceProvisioner_nullsInOptionals/0 (0.00s)
+    --- PASS: TestResourceProvisioner_nullsInOptionals/1 (0.00s)
+    --- PASS: TestResourceProvisioner_nullsInOptionals/2 (0.00s)
+    --- PASS: TestResourceProvisioner_nullsInOptionals/3 (0.00s)
+    --- PASS: TestResourceProvisioner_nullsInOptionals/4 (0.00s)
+FAIL
+FAIL    github.com/hashicorp/terraform/internal/builtin/provisioners/remote-exec        4.023s
+FAIL
+root@eval-1:~/terraform#

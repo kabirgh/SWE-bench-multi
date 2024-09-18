@@ -280,6 +280,7 @@ class Repo:
                 )
             return response.json()
 
+        # Note: sometimes issues link to PRs in other repositories
         query_parts = [
             f"repo:{self.owner}/{self.name}",
             "is:issue",

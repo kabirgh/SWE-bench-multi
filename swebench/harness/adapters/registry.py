@@ -41,27 +41,27 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "caddyserver/caddy": {
         "6411": GoAdapter(
             version="1.23.0",
-            install=["go mod download"],
+            install=["go mod tidy"],
             test_cmd='go test -v . -run "TestReplacerNew*"',
         ),
         "6345": GoAdapter(
             version="1.23.0",
-            install=["go mod download"],
+            install=["go mod tidy"],
             test_cmd="go test -v ./caddytest/integration/...",
         ),
         "6115": GoAdapter(
             version="1.23.0",
-            install=["go mod download"],
+            install=["go mod tidy"],
             test_cmd="go test -v ./modules/caddyhttp/reverseproxy/...",
         ),
         "6051": GoAdapter(
             version="1.23.0",
-            install=["go mod download"],
+            install=["go mod tidy"],
             test_cmd="go test -v ./caddyconfig/caddyfile/...",
         ),
         "5404": GoAdapter(
             version="1.20.14",
-            install=["go mod download"],
+            install=["go mod tidy"],
             test_cmd="go test -v ./caddyconfig/caddyfile/...",
         ),
     },
@@ -177,6 +177,33 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 'RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics --no-run'
             ],
             test_cmd='RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics',
+        ),
+    },
+    "hashicorp/terraform": {
+        "35611": GoAdapter(
+            version="1.23",
+            install=["go mod tidy"],
+            test_cmd='go test -v ./internal/terraform/... -run "^TestContext2Apply_provisioner"',
+        ),
+        "35543": GoAdapter(
+            version="1.23",
+            install=["go mod tidy"],
+            test_cmd='go test -v ./internal/terraform/... -run "^TestContext2Plan_import"',
+        ),
+        "34900": GoAdapter(
+            version="1.22",
+            install=["go mod tidy"],
+            test_cmd='go test -v ./internal/terraform/... -run "(^TestContext2Apply|^TestContext2Plan).*[Ss]ensitive"',
+        ),
+        "34580": GoAdapter(
+            version="1.21",
+            install=["go mod tidy"],
+            test_cmd='go test -v ./internal/command/... -run "^TestFmt"',
+        ),
+        "34814": GoAdapter(
+            version="1.22",
+            install=["go mod tidy"],
+            test_cmd="go test -v ./internal/builtin/provisioners/remote-exec/...",
         ),
     },
 }
