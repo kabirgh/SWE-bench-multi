@@ -65,6 +65,7 @@ class PRExplorerHandler(SimpleHTTPRequestHandler):
                     instances_data = [json.loads(line.strip()) for line in f]
                     response_data = {
                         "repository": instances_data[0]["repo"],
+                        "repo_short": repo,
                         "issues": instances_data,
                     }
                 self.send_cacheable_response(

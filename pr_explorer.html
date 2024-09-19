@@ -106,13 +106,12 @@
                             fetch(`/instances/${file}`, { cache: 'force-cache' })
                                 .then(response => response.json())
                                 .then(data => {
-                                    allData[data.repository] = data;
+                                    allData[data.repo_short] = data;
                                 })
                         );
                     });
 
                     Promise.all(promises).then(() => {
-                        console.log("allData[0]", allData[0]);
                         displayRepositories();
                     });
                 });
@@ -135,6 +134,10 @@
 
             prList.innerHTML = `<h3><a href="${repoUrl}" target="_blank">${repo}</a></h3>`;
             repoData.issues.forEach((instance) => {
+                if (!('related_issues' in instance)) {
+                    console.log("instance doesn't have related_issues. Skipping", instance.instance_id);
+                    return;
+                }
                 const prItem = document.createElement('div');
                 prItem.className = 'pr-item';
                 prItem.innerHTML = `${instance.related_issues[0].title} (<a href="${instance.url}" target="_blank">PR #${instance.pull_number}</a>)`;
