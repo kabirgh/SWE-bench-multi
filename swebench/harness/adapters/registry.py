@@ -197,4 +197,14 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             test_cmd="go test -v ./internal/builtin/provisioners/remote-exec/...",
         ),
     },
+    "vuejs/core": {
+        "11899": JavaScriptAdapter(
+            version="20",
+            test_cmd="pnpm run test packages/compiler-sfc/__tests__/compileStyle.spec.ts --no-watch --reporter=verbose",
+            pre_install=["corepack enable pnpm"],
+            install=["pnpm i"],
+            build=["pnpm run build compiler-sfc"],
+            log_parser=jest_log_parser,
+        ),
+    },
 }

@@ -29,9 +29,9 @@ class JavaScriptAdapter(Adapter):
 
 def jest_log_parser(log: str) -> dict[str, str]:
     """
-    Parser for test logs generated with Jest. Assumes --verbose flag but not
-    --json. We could use --json but the test output contains extraneous lines,
-    so parsing is not as straightforward.
+    Parser for test logs generated with Jest or vitest. Assumes --verbose flag
+    but not --json. We could use --json but the test output contains extraneous
+    lines, so parsing is not as straightforward.
 
     Args:
         log (str): log content
@@ -40,8 +40,8 @@ def jest_log_parser(log: str) -> dict[str, str]:
     """
     test_status_map = {}
 
-    # Updated pattern to match test result lines without duration
-    pattern = r"^\s*(✓|✕|○)\s(.+?)(?:\s\((\d+\s*m?s)\))?$"
+    # Optional parentheses around duration because vitest might print it like that
+    pattern = r"^\s*(✓|✕|×|○)\s(.+?)(?:\s\(?(\d+\s*m?s)\)?)?$"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
@@ -49,9 +49,9 @@ def jest_log_parser(log: str) -> dict[str, str]:
             status_symbol, test_name, _duration = match.groups()
             if status_symbol == "✓":
                 test_status_map[test_name] = TestStatus.PASSED.value
-            elif status_symbol == "✕":
+            # second symbol handles vitest output too
+            elif status_symbol in ("✕", "×"):
                 test_status_map[test_name] = TestStatus.FAILED.value
             elif status_symbol == "○":
                 test_status_map[test_name] = TestStatus.SKIPPED.value
-
     return test_status_map
