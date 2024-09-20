@@ -19,7 +19,9 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             k: PythonAdapter(
                 python="3.6",
                 packages="numpy scipy cython pytest pandas matplotlib",
-                install="python -m pip install -v --no-use-pep517 --no-build-isolation -e .",
+                install=[
+                    "python -m pip install -v --no-use-pep517 --no-build-isolation -e ."
+                ],
                 pip_packages=["cython", "numpy==1.19.2", "setuptools", "scipy==1.5.2"],
                 test_cmd=TEST_PYTEST,
                 log_parser=MAP_REPO_TO_PARSER["scikit-learn/scikit-learn"],
@@ -30,7 +32,9 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             k: PythonAdapter(
                 python="3.9",
                 packages="numpy scipy cython setuptools pytest pandas matplotlib joblib threadpoolctl",
-                install="python -m pip install -v --no-use-pep517 --no-build-isolation -e .",
+                install=[
+                    "python -m pip install -v --no-use-pep517 --no-build-isolation -e ."
+                ],
                 pip_packages=["cython", "setuptools", "numpy", "scipy"],
                 test_cmd=TEST_PYTEST,
                 log_parser=MAP_REPO_TO_PARSER["scikit-learn/scikit-learn"],
@@ -42,6 +46,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "6411": GoAdapter(
             version="1.23.0",
             install=["go mod tidy"],
+            # no build step, go test will build the relevant packages
             test_cmd='go test -v . -run "TestReplacerNew*"',
         ),
         "6345": GoAdapter(
@@ -69,82 +74,67 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "14532": JavaScriptAdapter(
             version="20",
             test_cmd="yarn jest babel-generator --verbose",
-            pre_test_commands=["make build"],  # Need to rebuild before testing
-            install=[
-                "make bootstrap",
-                "make build",
-            ],
+            install=["make bootstrap"],
+            build=["make build"],
             log_parser=jest_log_parser,
         ),
         "13928": JavaScriptAdapter(
             version="20",
             test_cmd='yarn jest babel-parser -t "arrow" --verbose',
-            pre_test_commands=["make build"],  # Need to rebuild before testing
-            install=[
-                "make bootstrap",
-                "make build",
-            ],
+            install=["make bootstrap"],
+            build=["make build"],
             log_parser=jest_log_parser,
         ),
         "15649": JavaScriptAdapter(
             version="20",
             test_cmd="yarn jest packages/babel-traverse/test/scope.js --verbose",
-            pre_test_commands=["make build"],  # Need to rebuild before testing
-            install=[
-                "make bootstrap",
-                "make build",
-            ],
+            install=["make bootstrap"],
+            build=["make build"],
             log_parser=jest_log_parser,
         ),
         "15445": JavaScriptAdapter(
             version="20",
             test_cmd='yarn jest packages/babel-generator/test/index.js -t "generation " --verbose',
-            pre_test_commands=["make build"],  # Need to rebuild before testing
-            install=[
-                "make bootstrap",
-                "make build",
-            ],
+            install=["make bootstrap"],
+            build=["make build"],
             log_parser=jest_log_parser,
         ),
         "16130": JavaScriptAdapter(
             version="20",
             test_cmd="yarn jest babel-helpers --verbose",
-            pre_test_commands=["make build"],  # Need to rebuild before testing
-            install=[
-                "make bootstrap",
-                "make build",
-            ],
+            install=["make bootstrap"],
+            build=["make build"],
             log_parser=jest_log_parser,
         ),
     },
     "redis/redis": {
         "13115": CPlusPlusAdapter(
             install=["make distclean", "make"],
-            pre_test_commands=["make"],
+            build=["make"],
             test_cmd="TERM=dumb ./runtest --durable --single unit/scripting",
             log_parser=redis_log_parser,
         ),
         "12472": CPlusPlusAdapter(
             install=["make distclean", "make"],
-            pre_test_commands=["make"],
+            build=["make"],
             test_cmd='TERM=dumb ./runtest --durable --single unit/acl --only "/.*ACL GETUSER.*"',
             log_parser=redis_log_parser,
         ),
         "12272": CPlusPlusAdapter(
             install=["make distclean", "make"],
-            pre_test_commands=["make"],
+            build=["make"],
             test_cmd='TERM=dumb ./runtest --durable --single unit/type/string --only "/.*(GETRANGE|SETRANGE).*"',
             log_parser=redis_log_parser,
         ),
         "11734": CPlusPlusAdapter(
             install=["make distclean", "make"],
-            pre_test_commands=["make"],
+            build=["make"],
             test_cmd="TERM=dumb ./runtest --durable --single unit/bitops",
             log_parser=redis_log_parser,
         ),
         "10764": CPlusPlusAdapter(
             install=["make distclean", "make"],
-            pre_test_commands=["make"],
+            build=["make"],
             test_cmd='TERM=dumb ./runtest --durable --single unit/type/zset --only "BZMPOP"',
             log_parser=redis_log_parser,
         ),
@@ -152,8 +142,9 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "tokio-rs/tokio": {
         "6724": RustAdapter(
             version="1.81",
-            # compile only as much as needed to run the tests
+            # install only as much as needed to run the tests
             install=["cargo test --test io_write_all_buf --no-fail-fast --no-run"],
+            # no build step, cargo test will build the relevant packages
             test_cmd="cargo test --test io_write_all_buf --no-fail-fast",
         ),
         "6838": RustAdapter(

@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import re
 from typing import Callable, List, Optional
 
@@ -15,17 +15,15 @@ from swebench.harness.utils import (
 )
 
 
-@dataclass
+@dataclass(kw_only=True)
 class PythonAdapter(Adapter):
     python: str
-    install: str
     test_cmd: str
     log_parser: Callable[[str], dict[str, str]]
-    pre_install: Optional[str] = None
+    pre_install: List[str] = field(default_factory=list)
     packages: Optional[str] = None
-    pip_packages: Optional[List[str]] = None
+    pip_packages: Optional[List[str]] = None  # similar to env_install in other adapters
     no_use_env: bool = False
-    eval_commands: Optional[List[str]] = None
 
     @property
     def language(self):
@@ -62,12 +60,7 @@ class PythonAdapter(Adapter):
             setup_commands.append(MAP_REPO_TO_INSTALL[repo])
 
         # Run pre-install set up if provided
-        if self.pre_install:
-            for pre_install in self.pre_install:
-                setup_commands.append(pre_install)
-
-        if self.install:
-            setup_commands.append(self.install)
+        setup_commands.extend(self.install)
         return setup_commands
 
     def make_env_script_list(self, instance: SWEbenchInstance, env_name: str):
@@ -179,8 +172,7 @@ class PythonAdapter(Adapter):
             "source /opt/miniconda3/bin/activate",
             f"conda activate {env_name}",
         ]
-        if self.install:
-            eval_commands.append(self.install)
+        eval_commands.extend(self.install)
         eval_commands += [
             reset_tests_command,
             apply_test_patch_command,

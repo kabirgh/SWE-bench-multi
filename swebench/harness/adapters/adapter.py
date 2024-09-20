@@ -1,12 +1,18 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Callable, List
+from dataclasses import dataclass, field
+import re
+from typing import Callable, List, Optional
 
-from swebench.harness.constants import SWEbenchInstance
+from swebench.harness.constants import DIFF_MODIFIED_FILE_REGEX, SWEbenchInstance
 
 
-@dataclass
+@dataclass(kw_only=True)
 class Adapter(ABC):
+    test_cmd: str
+    install: List[str] = field(default_factory=list)
+    build: List[str] = field(default_factory=list)
+    eval_commands: List[str] = field(default_factory=list)
+
     @property
     @abstractmethod
     def language(self) -> str:
@@ -18,24 +24,44 @@ class Adapter(ABC):
         pass
 
     @abstractmethod
-    def make_repo_script_list(
-        self,
-        repo: str,
-        repo_directory: str,
-        base_commit: str,
-        env_name: str,
-    ) -> List[str]:
+    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
         pass
 
-    @abstractmethod
     def make_env_script_list(
         self,
         instance: SWEbenchInstance,
         env_name: str,
-    ) -> List[str]:
-        pass
+        repo_directory: Optional[str] = None,
+    ):
+        """
+        Creates the list of commands to set up the environment for testing.
+        This is the setup script for the environment image.
+        Unlike python, where the dependencies are enumerated and installed in
+        the conda environment without downloading the repository, we use a
+        generic install command. So we return an empty list here and handle
+        environment setup in the instance image, in therepo script list.
+        """
+        return []
 
-    @abstractmethod
+    def make_repo_script_list(
+        self, repo: str, repo_directory: str, base_commit: str, _env_name: str
+    ):
+        """
+        Create a list of bash commands to set up the repository for testing.
+        This is the setup script for the instance image.
+        """
+        setup_commands = [
+            f"git clone -o origin https://github.com/{repo} {repo_directory}",
+            f"chmod -R 777 {repo_directory}",  # So nonroot user can run tests
+            f"cd {repo_directory}",
+            f"git reset --hard {base_commit}",
+            # Remove the remote so the agent won't see newer commits.
+            "git remote remove origin",
+        ]
+        setup_commands.extend(self.install)
+        setup_commands.extend(self.build)
+        return setup_commands
+
     def make_eval_script_list(
         self,
         instance: SWEbenchInstance,
@@ -43,9 +69,29 @@ class Adapter(ABC):
         repo_directory: str,
         base_commit: str,
         test_patch: str,
-    ) -> List[str]:
-        pass
+    ):
+        """
+        Applies the test patch and runs the tests.
+        """
+        HEREDOC_DELIMITER = "EOF_114329324912"
+        test_files = re.findall(DIFF_MODIFIED_FILE_REGEX, test_patch)
+        # Reset test files to the state they should be in before the patch.
+        reset_tests_command = f"git checkout {base_commit} {' '.join(test_files)}"
+        apply_test_patch_command = (
+            f"git apply -v - <<'{HEREDOC_DELIMITER}'\n{test_patch}\n{HEREDOC_DELIMITER}"
+        )
 
-    @abstractmethod
-    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
-        pass
+        return [
+            f"cd {repo_directory}",
+            *self.eval_commands,
+            f"git config --global --add safe.directory {repo_directory}",  # for nonroot user
+            f"cd {repo_directory}",
+            "git status",  # This is just informational, so we have a record
+            # "git show",
+            f"git diff {base_commit}",
+            reset_tests_command,
+            apply_test_patch_command,
+            *self.build,
+            self.test_cmd,
+            reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
+        ]
