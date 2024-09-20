@@ -33,36 +33,6 @@ class PythonAdapter(Adapter):
     def base_image_name(self):
         return "ubuntu:22.04"
 
-    def make_repo_script_list(
-        self,
-        repo: str,
-        repo_directory: str,
-        base_commit: str,
-        env_name: str,
-    ):
-        """
-        Create a list of bash commands to set up the repository for testing.
-        This is the setup script for the instance image.
-        """
-        setup_commands = [
-            f"git clone -o origin https://github.com/{repo} {repo_directory}",
-            f"chmod -R 777 {repo_directory}",  # So nonroot user can run tests
-            f"cd {repo_directory}",
-            f"git reset --hard {base_commit}",
-            # Remove the remote so the agent won't see newer commits.
-            "git remote remove origin",
-            # Make sure conda is available for later use
-            "source /opt/miniconda3/bin/activate",
-            f"conda activate {env_name}",
-            'echo "Current environment: $CONDA_DEFAULT_ENV"',
-        ]
-        if repo in MAP_REPO_TO_INSTALL:
-            setup_commands.append(MAP_REPO_TO_INSTALL[repo])
-
-        # Run pre-install set up if provided
-        setup_commands.extend(self.install)
-        return setup_commands
-
     def make_env_script_list(self, instance: SWEbenchInstance, env_name: str):
         """
         Creates the list of commands to set up the conda environment for testing.
@@ -130,6 +100,36 @@ class PythonAdapter(Adapter):
             cmd = f"python -m pip install {pip_packages}"
             reqs_commands.append(cmd)
         return reqs_commands
+
+    def make_repo_script_list(
+        self,
+        repo: str,
+        repo_directory: str,
+        base_commit: str,
+        env_name: str,
+    ):
+        """
+        Create a list of bash commands to set up the repository for testing.
+        This is the setup script for the instance image.
+        """
+        setup_commands = [
+            f"git clone -o origin https://github.com/{repo} {repo_directory}",
+            f"chmod -R 777 {repo_directory}",  # So nonroot user can run tests
+            f"cd {repo_directory}",
+            f"git reset --hard {base_commit}",
+            # Remove the remote so the agent won't see newer commits.
+            "git remote remove origin",
+            # Make sure conda is available for later use
+            "source /opt/miniconda3/bin/activate",
+            f"conda activate {env_name}",
+            'echo "Current environment: $CONDA_DEFAULT_ENV"',
+        ]
+        if repo in MAP_REPO_TO_INSTALL:
+            setup_commands.append(MAP_REPO_TO_INSTALL[repo])
+
+        setup_commands.extend(self.pre_install)
+        setup_commands.extend(self.install)
+        return setup_commands
 
     def make_eval_script_list(
         self,
