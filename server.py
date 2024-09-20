@@ -43,7 +43,10 @@ class PRExplorerHandler(SimpleHTTPRequestHandler):
                     ):
                         repo_name = os.path.basename(root)
                         repos.append(repo_name)
-            self.send_cacheable_response(json.dumps(repos))
+            self.send_response(200)
+            self.send_header("Content-type", "text/html")
+            self.end_headers()
+            self.wfile.write(json.dumps(repos).encode())
             return
         elif self.path.startswith("/instances/"):
             repo = self.path[11:]  # Remove leading /instances/
