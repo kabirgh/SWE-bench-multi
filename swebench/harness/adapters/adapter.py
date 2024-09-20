@@ -9,6 +9,7 @@ from swebench.harness.constants import DIFF_MODIFIED_FILE_REGEX, SWEbenchInstanc
 @dataclass(kw_only=True)
 class Adapter(ABC):
     test_cmd: str
+    pre_install: List[str] = field(default_factory=list)
     install: List[str] = field(default_factory=list)
     build: List[str] = field(default_factory=list)
     eval_commands: List[str] = field(default_factory=list)
@@ -51,13 +52,14 @@ class Adapter(ABC):
         This is the setup script for the instance image.
         """
         setup_commands = [
-            f"git clone -o origin https://github.com/{repo} {repo_directory}",
+            f"git clone --recurse-submodules -o origin https://github.com/{repo} {repo_directory}",
             f"chmod -R 777 {repo_directory}",  # So nonroot user can run tests
             f"cd {repo_directory}",
             f"git reset --hard {base_commit}",
             # Remove the remote so the agent won't see newer commits.
             "git remote remove origin",
         ]
+        setup_commands.extend(self.pre_install)
         setup_commands.extend(self.install)
         setup_commands.extend(self.build)
         return setup_commands
