@@ -1,16 +1,11 @@
-import argparse
 import json
 from swebench.harness.constants import TestStatus
-from swebench.harness.adapters.go_adapter import (
-    _log_parser as log_parser,
+from swebench.harness.adapters.javascript_adapter import (
+    jest_log_parser as log_parser,
 )
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Test a log parser on a log file.")
-    parser.add_argument("test_output", help="Path to the test output file")
-    args = parser.parse_args()
-
-    with open(args.test_output, "r") as f:
+    with open("swebench/scripts/test_input.txt", "r") as f:
         log = f.read()
 
     test_status_map = log_parser(log)
