@@ -1,4 +1,4 @@
-# IF you change the base image, you need to rebuild all images (run with --force_rebuild)
+# If you change the base image, you need to rebuild all images (run with --force_rebuild)
 _DOCKERFILE_BASE_JAVASCRIPT = r"""
 FROM --platform={platform} {base_image_name}
 
