@@ -82,6 +82,13 @@
             white-space: pre-wrap;
             word-wrap: break-word;
         }
+        .repo-item {
+            display: flex;
+            align-items: center;
+        }
+        .repo-checkbox {
+            margin-right: 5px;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -137,8 +144,26 @@
             Object.keys(allData).forEach(repo => {
                 const repoItem = document.createElement('div');
                 repoItem.className = 'repo-item';
-                repoItem.textContent = repo;
-                repoItem.onclick = () => displayPullRequests(repo);
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'repo-checkbox';
+                checkbox.checked = localStorage.getItem(`repo_seen_${repo}`) === 'true';
+                checkbox.onclick = (e) => {
+                    e.stopPropagation();
+                    localStorage.setItem(`repo_seen_${repo}`, e.target.checked);
+                };
+
+                const repoText = document.createElement('span');
+                repoText.textContent = repo;
+
+                repoItem.appendChild(checkbox);
+                repoItem.appendChild(repoText);
+                repoItem.onclick = (e) => {
+                    if (e.target !== checkbox) {
+                        displayPullRequests(repo);
+                    }
+                };
                 repoList.appendChild(repoItem);
             });
         }
