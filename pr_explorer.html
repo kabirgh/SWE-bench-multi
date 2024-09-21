@@ -113,12 +113,12 @@
             const jsonFiles = [];
 
             // Get all dataset/<repo>/<repo>-task-instances.jsonl files
-            fetch('/list_files', { cache: 'force-cache' })
+            fetch('/list_files')
                 .then(response => response.json())
                 .then(files => {
                     files.forEach(file => {
                         promises.push(
-                            fetch(`/instances/${file}`, { cache: 'force-cache' })
+                            fetch(`/instances/${file}`)
                                 .then(response => response.json())
                                 .then(data => {
                                     allData[data.repo_short] = data;
