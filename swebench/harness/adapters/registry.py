@@ -8,6 +8,7 @@ from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
     JavaScriptAdapter,
     jest_log_parser,
+    vitest_log_parser,
 )
 from swebench.harness.adapters.rust_adapter import RustAdapter
 from swebench.harness.constants import TEST_PYTEST
@@ -204,7 +205,35 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             pre_install=["corepack enable pnpm"],
             install=["pnpm i"],
             build=["pnpm run build compiler-sfc"],
-            log_parser=jest_log_parser,
+            log_parser=vitest_log_parser,
+        ),
+        "11870": JavaScriptAdapter(
+            version="20",
+            test_cmd="pnpm run test packages/runtime-core/__tests__/helpers/renderList.spec.ts --no-watch --reporter=verbose",
+            pre_install=["corepack enable pnpm"],
+            install=["pnpm i"],
+            log_parser=vitest_log_parser,
+        ),
+        "11739": JavaScriptAdapter(
+            version="20",
+            test_cmd='pnpm run test packages/runtime-core/__tests__/hydration.spec.ts --no-watch --reporter=verbose -t "mismatch handling"',
+            pre_install=["corepack enable pnpm"],
+            install=["pnpm i"],
+            log_parser=vitest_log_parser,
+        ),
+        "11915": JavaScriptAdapter(
+            version="20",
+            test_cmd='pnpm run test packages/compiler-core/__tests__/parse.spec.ts --no-watch --reporter=verbose -t "Element"',
+            pre_install=["corepack enable pnpm"],
+            install=["pnpm i"],
+            log_parser=vitest_log_parser,
+        ),
+        "11589": JavaScriptAdapter(
+            version="20",
+            test_cmd="pnpm run test packages/runtime-core/__tests__/apiWatch.spec.ts --no-watch --reporter=verbose",
+            pre_install=["corepack enable pnpm"],
+            install=["pnpm i"],
+            log_parser=vitest_log_parser,
         ),
     },
 }

@@ -1,77 +1,112 @@
 
-> @3.5.4 test /root/vue
-> vitest "packages/compiler-sfc/__tests__/compileStyle.spec.ts" "--no-watch" "--reporter=verbose"
+> @3.5.0-beta.1 test /root/vue
+> vitest "packages/runtime-core/__tests__/apiWatch.spec.ts" "--no-watch" "--reporter=verbose"
 
 
  RUN  v2.0.5 /root/vue
 
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > simple selectors
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > descendent selector
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > nesting selector
- × packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > nesting selector with atrule and comment
-   → expected 'h1 {\n&[data-v-test] {\ncolor: red\n}…' to match 'h1 {\n&[data-v-test] {\ncolor: red\n/…'
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > multiple selectors
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > pseudo class
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > pseudo element
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > spaces before pseudo element
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > ::v-deep
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > ::v-slotted
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > ::v-global
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > :is() and :where() with multiple selectors
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > :is() and :where() in compound selectors
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > media query
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > supports query
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > scoped keyframes
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > spaces after selector
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > deprecated syntax > ::v-deep as combinator
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > deprecated syntax > >>> (deprecated syntax)
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > deprecated syntax > /deep/ (deprecated syntax)
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC CSS modules > should include resulting classes object in result
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC CSS modules > postcss-modules options
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > scss @import 433ms
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > scss respect user-defined string options.additionalData
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > scss respect user-defined function options.additionalData
- ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > should mount scope on correct selector when have universal selector
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > effect
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: getter
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: ref
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: array
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not call functions inside a reactive source array
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not unwrap refs in a reactive source array
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire if watched getter result did not change
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: computed ref
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching primitive with deep: true
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > directly watching reactive object (with automatic deep: true)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > directly watching reactive object with explicit deep: false
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > directly watching reactive array with explicit deep: false
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching shallow reactive array with deep: false
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should still respect deep: true on shallowReactive source
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: undefined initial values and immediate: true
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: readonly array
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: reactive object (with automatic deep: true)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn invalid watch source
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn invalid watch source: multiple sources
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > stopping the watcher (effect)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > stopping the watcher (with source)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > cleanup registration (effect)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > cleanup registration (with source)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush timing: pre (default)
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush timing: post
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchPostEffect
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush timing: sync
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchSyncEffect
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire on component unmount w/ flush: post
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire on component unmount w/ flush: pre
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire on child component unmount w/ flush: pre
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: pre watcher in child component should not fire before parent update
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: pre watcher watching props should fire before child update
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: pre triggered in component setup should be buffered and called before mounted
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: post watcher should fire after template refs updated
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > deep
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching deep ref
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > deep with symbols
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > immediate
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > immediate: triggers when initial value is null
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > immediate: triggers when initial value is undefined
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn immediate option when using effect
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn and not respect deep option when using effect
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > onTrack
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > onTrigger
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should work sync
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should force trigger on triggerRef when watching a shallow ref
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should force trigger on triggerRef when watching multiple sources: shallow ref array
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should force trigger on triggerRef with toRef from reactive
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchEffect should not recursively trigger itself
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > computed refs should not trigger watch if value has no change
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > $watch should always register its effects with its own instance
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > this.$watch should pass `this.proxy` to watch source as the first argument
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not leak `this.proxy` to setup()
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > pre watcher callbacks should not track dependencies
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching keypath
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching sources: ref<any[]>
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: computed
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watch should not register in owner component if created inside detached scope
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchEffect should keep running if created in a detached scope
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch'
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with deep'
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with flush: s…'
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with flush: p…'
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with immediate'
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > OnCleanup also needs to be cleaned，
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching reactive depth
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching ref depth
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching array depth
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > pause / resume
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > shallowReactive
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching reactive with deep: false
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > effect should be removed from scope's effects after it is stopped
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > sync watcher should not be batched
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchEffect should not fire on computed deps that did not change
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > circular reference
+ ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watch immediate error in effect scope should be catched by onErrorCaptured
+ × packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should be executed correctly
+   → expected '21' to be '12' // Object.is equality
 
 ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
 
- FAIL  packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > nesting selector with atrule and comment
-AssertionError: expected 'h1 {\n&[data-v-test] {\ncolor: red\n}…' to match 'h1 {\n&[data-v-test] {\ncolor: red\n/…'
+ FAIL  packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should be executed correctly
+AssertionError: expected '21' to be '12' // Object.is equality
 
-- Expected
-+ Received
+Expected: "12"
+Received: "21"
 
-  h1 {
-  &[data-v-test] {
-  color: red
-+ }
-  /*background-color: pink;*/
-- }
-  @media only screen and (max-width: 800px) {
-- &[data-v-test] {
--   background-color: green
-- }
-+   background-color: green;
-  .bar[data-v-test] { color: white
-  }
-  }
-  .foo[data-v-test] { color: red;
-  }
-  }
-
- ❯ packages/compiler-sfc/__tests__/compileStyle.spec.ts:63:7
-     61| }`,
-     62|       ),
-     63|     ).toMatch(
-       |       ^
-     64|       `h1 {
-     65| &[data-v-test] {
+ ❯ packages/runtime-core/__tests__/apiWatch.spec.ts:1885:17
+    1883|     expect(foo).toBe('')
+    1884|     v.value++
+    1885|     expect(foo).toBe('12')
+       |                 ^
+    1886|   })
+    1887| })
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
 
  Test Files  1 failed (1)
-      Tests  1 failed | 25 passed (26)
-   Start at  23:43:12
-   Duration  3.75s (transform 2.20s, setup 37ms, collect 2.66s, tests 541ms, environment 1ms, prepare 169ms)
+      Tests  1 failed | 78 passed (79)
+   Start at  01:24:57
+   Duration  2.91s (transform 1.88s, setup 48ms, collect 2.20s, tests 159ms, environment 0ms, prepare 148ms)
 
  ELIFECYCLE  Test failed. See above for more details.

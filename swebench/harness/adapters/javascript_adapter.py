@@ -40,8 +40,7 @@ def jest_log_parser(log: str) -> dict[str, str]:
     """
     test_status_map = {}
 
-    # Optional parentheses around duration because vitest might print it like that
-    pattern = r"^\s*(✓|✕|×|○)\s(.+?)(?:\s\(?(\d+\s*m?s)\)?)?$"
+    pattern = r"^\s*(✓|✕|○)\s(.+?)(?:\s\((\d+\s*m?s)\))?$"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
@@ -50,8 +49,30 @@ def jest_log_parser(log: str) -> dict[str, str]:
             if status_symbol == "✓":
                 test_status_map[test_name] = TestStatus.PASSED.value
             # second symbol handles vitest output too
-            elif status_symbol in ("✕", "×"):
+            elif status_symbol == "✕":
                 test_status_map[test_name] = TestStatus.FAILED.value
             elif status_symbol == "○":
+                test_status_map[test_name] = TestStatus.SKIPPED.value
+    return test_status_map
+
+
+def vitest_log_parser(log: str) -> dict[str, str]:
+    """
+    Parser for test logs generated with vitest. Assumes --reporter=verbose flag.
+    """
+    test_status_map = {}
+
+    pattern = r"^\s*(✓|×|↓)\s(.+?)(?:\s(\d+\s*m?s?|\[skipped\]))?$"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            status_symbol, test_name, _duration_or_skipped = match.groups()
+            if status_symbol == "✓":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            # second symbol handles vitest output too
+            elif status_symbol == "×":
+                test_status_map[test_name] = TestStatus.FAILED.value
+            elif status_symbol == "↓":
                 test_status_map[test_name] = TestStatus.SKIPPED.value
     return test_status_map
