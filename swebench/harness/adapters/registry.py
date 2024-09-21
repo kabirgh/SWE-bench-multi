@@ -1,6 +1,7 @@
 from swebench.harness.adapters.adapter import Adapter
 from swebench.harness.adapters.cplusplus_adapter import (
     CPlusPlusAdapter,
+    jq_log_parser,
     redis_log_parser,
 )
 from swebench.harness.adapters.go_adapter import GoAdapter
@@ -235,5 +236,20 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=["pnpm i"],
             log_parser=vitest_log_parser,
         ),
+    },
+    "jqlang/jq": {
+        **{
+            k: CPlusPlusAdapter(
+                build=[
+                    "autoreconf -i",
+                    "./configure --with-oniguruma=builtin",
+                    "make clean",
+                    "make -j8",
+                ],
+                test_cmd="make check",
+                log_parser=jq_log_parser,
+            )
+            for k in ["2839", "2650", "2681", "2658", "2750"]
+        }
     },
 }

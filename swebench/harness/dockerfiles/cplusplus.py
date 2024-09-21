@@ -13,7 +13,9 @@ build-essential \
 libtool \
 automake \
 autoconf \
-tcl \ # for redis
+tcl \
+bison \
+flex \
 && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos 'dog' nonroot

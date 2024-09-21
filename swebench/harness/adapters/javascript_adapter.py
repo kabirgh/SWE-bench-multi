@@ -48,7 +48,6 @@ def jest_log_parser(log: str) -> dict[str, str]:
             status_symbol, test_name, _duration = match.groups()
             if status_symbol == "✓":
                 test_status_map[test_name] = TestStatus.PASSED.value
-            # second symbol handles vitest output too
             elif status_symbol == "✕":
                 test_status_map[test_name] = TestStatus.FAILED.value
             elif status_symbol == "○":
@@ -70,7 +69,6 @@ def vitest_log_parser(log: str) -> dict[str, str]:
             status_symbol, test_name, _duration_or_skipped = match.groups()
             if status_symbol == "✓":
                 test_status_map[test_name] = TestStatus.PASSED.value
-            # second symbol handles vitest output too
             elif status_symbol == "×":
                 test_status_map[test_name] = TestStatus.FAILED.value
             elif status_symbol == "↓":

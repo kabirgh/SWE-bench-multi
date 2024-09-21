@@ -79,3 +79,25 @@ def redis_cluster_test_log_parser(log: str) -> dict[str, str]:
                 test_status_map[test_name] = TestStatus.SKIPPED.value
 
     return test_status_map
+
+
+def jq_log_parser(log: str) -> dict[str, str]:
+    """
+    Args:
+        log (str): log content
+    Returns:
+        dict: test case to test status mapping
+    """
+    test_status_map = {}
+
+    pattern = r"^\s*(PASS|FAIL):\s(.+)$"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            status, test_name = match.groups()
+            if status == "PASS":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            elif status == "FAIL":
+                test_status_map[test_name] = TestStatus.FAILED.value
+    return test_status_map
