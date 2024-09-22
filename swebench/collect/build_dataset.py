@@ -57,6 +57,8 @@ def create_instance(
         instance["related_issues"] = pull["related_issues"]
     if "body" in pull:
         instance["body"] = pull["body"]
+    if "title" in pull:
+        instance["title"] = pull["title"]
     return instance
 
 

@@ -43,20 +43,9 @@
             width: 75%;
             height: 100%;
             display: flex;
-            flex-direction: column;
             padding: 10px;
             box-sizing: border-box;
             overflow: hidden;
-        }
-        #repo-list, #pr-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-        }
-        #pr-header {
-            margin-bottom: 10px;
         }
         #descriptions {
             display: flex;
@@ -68,7 +57,7 @@
             padding: 10px;
             border: 1px solid #ccc;
             overflow-y: auto;
-            max-height: calc(100vh - 100px);
+            height: 100%;
         }
         .repo-item, .pr-item {
             cursor: pointer;
@@ -99,7 +88,6 @@
             <div id="pr-list"></div>
         </div>
         <div id="main-content">
-            <div id="pr-header"></div>
             <div id="descriptions">
                 <div id="issue-description"></div>
                 <div id="pr-description"></div>
@@ -110,7 +98,6 @@
     <script>
         const repoList = document.getElementById('repo-list');
         const prList = document.getElementById('pr-list');
-        const prHeader = document.getElementById('pr-header');
         const prDescription = document.getElementById('pr-description');
         const issueDescription = document.getElementById('issue-description');
         let allData = {};
@@ -192,16 +179,13 @@
 
         function displayPRDetails(instance) {
             const issue = instance.related_issues[0];
-            prHeader.innerHTML = `
-                <h2>${issue.title}</h2>
-            `;
             issueDescription.innerHTML = `
-                <h2>Issue</h2>
+                <h2>${issue.title}</h2>
                 <p><a href="${issue.url}" target="_blank"><i>${issue.url}</i></a></p>
                 <div>${marked.parse(issue.body)}</div>
             `;
             prDescription.innerHTML = `
-                <h2>PR</h2>
+                <h2>${instance.title || 'PR'}</h2>
                 <p><a href="${instance.url}" target="_blank"><i>${instance.url}</i></a></p>
                 <div>${marked.parse(instance.body)}</div>
             `;
