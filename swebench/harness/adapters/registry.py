@@ -46,29 +46,29 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     },
     "caddyserver/caddy": {
         "6411": GoAdapter(
-            version="1.23.0",
+            version="1.23",
             install=["go mod tidy"],
-            # no build step, go test will build the relevant packages
             test_cmd='go test -v . -run "TestReplacerNew*"',
         ),
         "6345": GoAdapter(
-            version="1.23.0",
-            install=["go mod tidy"],
+            version="1.23",
+            # compile the test binary, which downloads relevant packages. faster than go mod tidy
+            install=["go test -c ./caddytest/integration/..."],
             test_cmd="go test -v ./caddytest/integration/...",
         ),
         "6115": GoAdapter(
-            version="1.23.0",
-            install=["go mod tidy"],
+            version="1.23",
+            install=["go test -c ./modules/caddyhttp/reverseproxy/..."],
             test_cmd="go test -v ./modules/caddyhttp/reverseproxy/...",
         ),
         "6051": GoAdapter(
-            version="1.23.0",
-            install=["go mod tidy"],
+            version="1.23",
+            install=["go test -c ./caddyconfig/caddyfile/..."],
             test_cmd="go test -v ./caddyconfig/caddyfile/...",
         ),
         "5404": GoAdapter(
-            version="1.20.14",
-            install=["go mod tidy"],
+            version="1.20",
+            install=["go test -c ./caddyconfig/caddyfile/..."],
             test_cmd="go test -v ./caddyconfig/caddyfile/...",
         ),
     },
