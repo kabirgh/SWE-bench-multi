@@ -12,7 +12,6 @@ Write to a jsonl file in the given format for a given patch
 import json
 import argparse
 from urllib.parse import urlparse
-from unidiff import PatchSet
 
 from swebench.collect.utils import extract_patches
 
@@ -60,6 +59,9 @@ if __name__ == "__main__":
     parser.add_argument("url", help="GitHub PR URL")
     parser.add_argument("target_file", help="File to write patch to")
     args = parser.parse_args()
+
+    if args.url.endswith("/files"):
+        args.url = args.url[:-6]
 
     repo_id, pr_number = extract_pr_info(args.url)
     patch_url = args.url + ".diff"

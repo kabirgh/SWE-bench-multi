@@ -486,8 +486,10 @@ def extract_patches(pull: dict, repo: Repo | None) -> tuple[str, str]:
             test_word in hunk.path
             for test_word in ["test", "e2e", "integration", ".spec."]
         ):
+            print(f"Adding test patch: {hunk.path}")
             patch_test += str(hunk)
         else:
+            print(f"Adding fix patch: {hunk.path}")
             patch_fix += str(hunk)
     return patch_fix, patch_test
 
