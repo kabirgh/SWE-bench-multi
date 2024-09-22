@@ -1,102 +1,39 @@
-yarn run v1.22.22
-$ jest packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts
-jest-haste-map: duplicate manual mock found: chalk
-  The following files share their name; please delete one of them:
-    * <rootDir>/packages/docusaurus-logger/src/__mocks__/chalk.js
-    * <rootDir>/packages/docusaurus-logger/lib/__mocks__/chalk.js
-
-FAIL packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts
-  replaceMarkdownLinks
-    ✓ does basic replace (12 ms)
-    ✓ replaces two links on the same line (2 ms)
-    ✓ replaces reference style Markdown links (2 ms)
-    ✓ resolves absolute and relative links differently (4 ms)
-    ✓ ignores links in HTML comments (4 ms)
-    ✓ ignores links in fenced blocks (1 ms)
-    ✓ ignores links in inline code (2 ms)
-    ✓ replaces links with same title as URL (1 ms)
-    ✓ replaces multiple links on same line (1 ms)
-    ✓ replaces Markdown links with spaces (1 ms)
-    ✕ does not replace non-Markdown links (8 ms)
-    ✕ handles stray spaces (4 ms)
-    ✓ handles link titles (1 ms)
-    ✓ preserves query/hash (2 ms)
-
-  ● replaceMarkdownLinks › does not replace non-Markdown links
-
-    expect(received).toEqual(expected) // deep equality
-
-    - Expected  -  2
-    + Received  + 11
-
-    @@ -1,9 +1,18 @@
-      Object {
-    -   "brokenMarkdownLinks": Array [],
-    +   "brokenMarkdownLinks": Array [
-    +     Object {
-    +       "contentPaths": Object {
-    +         "contentPath": "docs",
-    +         "contentPathLocalized": "i18n/docs-localized",
-    +       },
-    +       "filePath": "docs/file.md",
-    +       "link": "https://example.com/file_(1).md",
-    +     },
-    +   ],
-        "newContent": "
-    - [asset](./file.md_asset/1.png)
-    + [asset](/docs/file_asset/1.png)
-      [URL](<https://example.com/file_(1).md>)
-      [not a link]((foo)
-      [not a link](foo bar)
-      [not a link]: foo bar
-      [not a link]: (foo
-
-      309 |         fileString: input,
-      310 |       }),
-    > 311 |     ).toEqual({
-          |       ^
-      312 |       newContent: input,
-      313 |       brokenMarkdownLinks: [],
-      314 |     });
-
-      at Object.toEqual (packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts:311:7)
-
-  ● replaceMarkdownLinks › handles stray spaces
-
-    expect(received).toMatchSnapshot()
-
-    Snapshot name: `replaceMarkdownLinks handles stray spaces 1`
-
-    - Snapshot  - 1
-    + Received  + 1
-
-      {
-        "brokenMarkdownLinks": [],
-        "newContent": "
-    - [URL]( /docs/file )
-    + [URL]( ./file.md )
-      [ref]:  /docs/file
-      ",
-      }
-
-      332 | `,
-      333 |       }),
-    > 334 |     ).toMatchSnapshot();
-          |       ^
-      335 |   });
-      336 |
-      337 |   it('handles link titles', () => {
-
-      at Object.toMatchSnapshot (packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts:334:7)
-
- › 1 snapshot failed.
-Snapshot Summary
- › 1 snapshot failed from 1 test suite. Inspect your code changes or run `yarn test -u` to update them.
-
-Test Suites: 1 failed, 1 total
-Tests:       2 failed, 12 passed, 14 total
-Snapshots:   1 failed, 12 passed, 13 total
-Time:        0.699 s, estimated 1 s
-Ran all test suites matching /packages\/docusaurus-utils\/src\/__tests__\/markdownLinks.test.ts/i.
-error Command failed with exit code 1.
-info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+=== RUN   TestEvaluations
+=== RUN   TestEvaluations/testdata/aggregators.test
+=== RUN   TestEvaluations/testdata/at_modifier.test
+=== RUN   TestEvaluations/testdata/collision.test
+=== RUN   TestEvaluations/testdata/functions.test
+    test.go:115:
+        	Error Trace:	/root/prometheus/promql/promqltest/test.go:115
+        	            				/root/prometheus/promql/promqltest/test.go:108
+        	Error:      	Received unexpected error:
+        	            	error in eval sort_by_label(http_requests, "instance") (line 525): expected metric {__name__="http_requests", group="production", instance="0", job="api-server"} with [100.000000] at position 3 but was at 1
+        	Test:       	TestEvaluations/testdata/functions.test
+=== RUN   TestEvaluations/testdata/histograms.test
+=== RUN   TestEvaluations/testdata/limit.test
+=== RUN   TestEvaluations/testdata/literals.test
+=== RUN   TestEvaluations/testdata/native_histograms.test
+=== RUN   TestEvaluations/testdata/operators.test
+=== RUN   TestEvaluations/testdata/range_queries.test
+=== RUN   TestEvaluations/testdata/selectors.test
+=== RUN   TestEvaluations/testdata/staleness.test
+=== RUN   TestEvaluations/testdata/subquery.test
+=== RUN   TestEvaluations/testdata/trig_functions.test
+--- FAIL: TestEvaluations (2.44s)
+    --- PASS: TestEvaluations/testdata/aggregators.test (0.36s)
+    --- PASS: TestEvaluations/testdata/at_modifier.test (0.10s)
+    --- PASS: TestEvaluations/testdata/collision.test (0.04s)
+    --- FAIL: TestEvaluations/testdata/functions.test (0.35s)
+    --- PASS: TestEvaluations/testdata/histograms.test (0.15s)
+    --- PASS: TestEvaluations/testdata/limit.test (0.04s)
+    --- PASS: TestEvaluations/testdata/literals.test (0.03s)
+    --- PASS: TestEvaluations/testdata/native_histograms.test (0.52s)
+    --- PASS: TestEvaluations/testdata/operators.test (0.26s)
+    --- PASS: TestEvaluations/testdata/range_queries.test (0.17s)
+    --- PASS: TestEvaluations/testdata/selectors.test (0.17s)
+    --- PASS: TestEvaluations/testdata/staleness.test (0.04s)
+    --- PASS: TestEvaluations/testdata/subquery.test (0.17s)
+    --- PASS: TestEvaluations/testdata/trig_functions.test (0.04s)
+FAIL
+FAIL	github.com/prometheus/prometheus/promql	2.493s
+FAIL

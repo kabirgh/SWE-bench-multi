@@ -284,4 +284,31 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             log_parser=jest_log_parser,
         ),
     },
+    "prometheus/prometheus": {
+        "14861": GoAdapter(
+            version="1.23",
+            install=["go test -c ./promql"],
+            test_cmd='go test -v ./promql -run "^TestEngine"',
+        ),
+        "13845": GoAdapter(
+            version="1.23",
+            install=["go test -c ./promql ./model/labels"],
+            test_cmd='go test -v ./promql ./model/labels -run "^(TestRangeQuery|TestLabels)"',
+        ),
+        "14655": GoAdapter(
+            version="1.23",
+            install=["go test -c ./promql"],
+            test_cmd='go test -v ./promql -run "^TestEvaluations"',
+        ),
+        "12874": GoAdapter(
+            version="1.23",
+            install=["go test -c ./tsdb"],
+            test_cmd='go test -v ./tsdb -run "^TestHead"',
+        ),
+        "11859": GoAdapter(
+            version="1.23",
+            install=["go test -c ./tsdb"],
+            test_cmd='go test -v ./tsdb -run "^TestSnapshot"',
+        ),
+    },
 }
