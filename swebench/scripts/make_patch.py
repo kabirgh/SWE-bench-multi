@@ -23,7 +23,13 @@ def extract_pr_info(url: str):
 
 
 def make_patch(url: str):
-    fix, _test = extract_patches({"diff_url": url}, None)
+    fix, test = extract_patches({"diff_url": url}, None)
+    if fix == "":
+        print("ERROR: No fix patch found. Exiting")
+        exit(1)
+    if test == "":
+        print("ERROR: No test patch found. Exiting")
+        exit(1)
     return fix
 
 
