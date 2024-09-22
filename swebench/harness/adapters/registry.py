@@ -53,23 +53,23 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "6345": GoAdapter(
             version="1.23",
             # compile the test binary, which downloads relevant packages. faster than go mod tidy
-            install=["go test -c ./caddytest/integration/..."],
-            test_cmd="go test -v ./caddytest/integration/...",
+            install=["go test -c ./caddytest/integration"],
+            test_cmd="go test -v ./caddytest/integration",
         ),
         "6115": GoAdapter(
             version="1.23",
-            install=["go test -c ./modules/caddyhttp/reverseproxy/..."],
-            test_cmd="go test -v ./modules/caddyhttp/reverseproxy/...",
+            install=["go test -c ./modules/caddyhttp/reverseproxy"],
+            test_cmd="go test -v ./modules/caddyhttp/reverseproxy",
         ),
         "6051": GoAdapter(
             version="1.23",
-            install=["go test -c ./caddyconfig/caddyfile/..."],
-            test_cmd="go test -v ./caddyconfig/caddyfile/...",
+            install=["go test -c ./caddyconfig/caddyfile"],
+            test_cmd="go test -v ./caddyconfig/caddyfile",
         ),
         "5404": GoAdapter(
             version="1.20",
-            install=["go test -c ./caddyconfig/caddyfile/..."],
-            test_cmd="go test -v ./caddyconfig/caddyfile/...",
+            install=["go test -c ./caddyconfig/caddyfile"],
+            test_cmd="go test -v ./caddyconfig/caddyfile",
         ),
     },
     "babel/babel": {
@@ -175,28 +175,28 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "hashicorp/terraform": {
         "35611": GoAdapter(
             version="1.23",
-            install=["go mod tidy"],
-            test_cmd='go test -v ./internal/terraform/... -run "^TestContext2Apply_provisioner"',
+            install=["go test -c ./internal/terraform"],
+            test_cmd='go test -v ./internal/terraform -run "^TestContext2Apply_provisioner"',
         ),
         "35543": GoAdapter(
             version="1.23",
-            install=["go mod tidy"],
-            test_cmd='go test -v ./internal/terraform/... -run "^TestContext2Plan_import"',
+            install=["go test -c ./internal/terraform"],
+            test_cmd='go test -v ./internal/terraform -run "^TestContext2Plan_import"',
         ),
         "34900": GoAdapter(
             version="1.22",
-            install=["go mod tidy"],
-            test_cmd='go test -v ./internal/terraform/... -run "(^TestContext2Apply|^TestContext2Plan).*[Ss]ensitive"',
+            install=["go test -c ./internal/terraform"],
+            test_cmd='go test -v ./internal/terraform -run "(^TestContext2Apply|^TestContext2Plan).*[Ss]ensitive"',
         ),
         "34580": GoAdapter(
             version="1.21",
-            install=["go mod tidy"],
-            test_cmd='go test -v ./internal/command/... -run "^TestFmt"',
+            install=["go test -c ./internal/command"],
+            test_cmd='go test -v ./internal/command -run "^TestFmt"',
         ),
         "34814": GoAdapter(
             version="1.22",
-            install=["go mod tidy"],
-            test_cmd="go test -v ./internal/builtin/provisioners/remote-exec/...",
+            install=["go test -c ./internal/builtin/provisioners/remote-exec"],
+            test_cmd="go test -v ./internal/builtin/provisioners/remote-exec",
         ),
     },
     "vuejs/core": {
