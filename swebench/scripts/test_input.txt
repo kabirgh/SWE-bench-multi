@@ -1,136 +1,102 @@
-make  check-recursive
-make[1]: Entering directory '/root/jq'
-Making check in modules/oniguruma
-make[2]: Entering directory '/root/jq/modules/oniguruma'
-Making check in src
-make[3]: Entering directory '/root/jq/modules/oniguruma/src'
-make[3]: Leaving directory '/root/jq/modules/oniguruma/src'
-Making check in test
-make[3]: Entering directory '/root/jq/modules/oniguruma/test'
-make  test_utf8 test_syntax test_options testc testcu test_regset test_back
-make[4]: Entering directory '/root/jq/modules/oniguruma/test'
-make[4]: 'test_utf8' is up to date.
-make[4]: 'test_syntax' is up to date.
-make[4]: 'test_options' is up to date.
-make[4]: 'testc' is up to date.
-make[4]: 'testcu' is up to date.
-make[4]: 'test_regset' is up to date.
-make[4]: 'test_back' is up to date.
-make[4]: Leaving directory '/root/jq/modules/oniguruma/test'
-make  check-TESTS
-make[4]: Entering directory '/root/jq/modules/oniguruma/test'
-make[5]: Entering directory '/root/jq/modules/oniguruma/test'
-PASS: test_utf8
-PASS: test_syntax
-PASS: test_options
-PASS: testc
-PASS: testcu
-PASS: test_regset
-PASS: test_back
-============================================================================
-Testsuite summary for onig 6.9.8
-============================================================================
-# TOTAL: 7
-# PASS:  7
-# SKIP:  0
-# XFAIL: 0
-# FAIL:  0
-# XPASS: 0
-# ERROR: 0
-============================================================================
-make[5]: Leaving directory '/root/jq/modules/oniguruma/test'
-make[4]: Leaving directory '/root/jq/modules/oniguruma/test'
-make[3]: Leaving directory '/root/jq/modules/oniguruma/test'
-Making check in sample
-make[3]: Entering directory '/root/jq/modules/oniguruma/sample'
-make  encode listcap names simple sql syntax user_property callout echo count bug_fix regset scan callback_each_match
-make[4]: Entering directory '/root/jq/modules/oniguruma/sample'
-make[4]: 'encode' is up to date.
-make[4]: 'listcap' is up to date.
-make[4]: 'names' is up to date.
-make[4]: 'simple' is up to date.
-make[4]: 'sql' is up to date.
-make[4]: 'syntax' is up to date.
-make[4]: 'user_property' is up to date.
-make[4]: 'callout' is up to date.
-make[4]: 'echo' is up to date.
-make[4]: 'count' is up to date.
-make[4]: 'bug_fix' is up to date.
-make[4]: 'regset' is up to date.
-make[4]: 'scan' is up to date.
-make[4]: 'callback_each_match' is up to date.
-make[4]: Leaving directory '/root/jq/modules/oniguruma/sample'
-make  check-TESTS
-make[4]: Entering directory '/root/jq/modules/oniguruma/sample'
-make[5]: Entering directory '/root/jq/modules/oniguruma/sample'
-PASS: encode
-PASS: listcap
-PASS: names
-PASS: simple
-PASS: sql
-PASS: syntax
-PASS: user_property
-PASS: callout
-PASS: echo
-PASS: count
-PASS: bug_fix
-PASS: regset
-PASS: scan
-PASS: callback_each_match
-============================================================================
-Testsuite summary for onig 6.9.8
-============================================================================
-# TOTAL: 14
-# PASS:  14
-# SKIP:  0
-# XFAIL: 0
-# FAIL:  0
-# XPASS: 0
-# ERROR: 0
-============================================================================
-make[5]: Leaving directory '/root/jq/modules/oniguruma/sample'
-make[4]: Leaving directory '/root/jq/modules/oniguruma/sample'
-make[3]: Leaving directory '/root/jq/modules/oniguruma/sample'
-make[3]: Entering directory '/root/jq/modules/oniguruma'
-make[3]: Nothing to be done for 'check-am'.
-make[3]: Leaving directory '/root/jq/modules/oniguruma'
-make[2]: Leaving directory '/root/jq/modules/oniguruma'
-make[2]: Entering directory '/root/jq'
-make  tests/man.test
-make[3]: Entering directory '/root/jq'
-make[3]: 'tests/man.test' is up to date.
-make[3]: Leaving directory '/root/jq'
-make  check-TESTS
-make[3]: Entering directory '/root/jq'
-make[4]: Entering directory '/root/jq'
-PASS: tests/optionaltest
-PASS: tests/mantest
-FAIL: tests/jqtest
-PASS: tests/shtest
-PASS: tests/utf8test
-PASS: tests/base64test
-PASS: tests/onigtest
-PASS: tests/manonigtest
-============================================================================
-Testsuite summary for jq 1.6-315-g98f709d-dirty
-============================================================================
-# TOTAL: 8
-# PASS:  7
-# SKIP:  0
-# XFAIL: 0
-# FAIL:  1
-# XPASS: 0
-# ERROR: 0
-============================================================================
-See ./test-suite.log
-Please report to https://github.com/jqlang/jq/issues
-============================================================================
-make[4]: *** [Makefile:1301: test-suite.log] Error 1
-make[4]: Leaving directory '/root/jq'
-make[3]: *** [Makefile:1409: check-TESTS] Error 2
-make[3]: Leaving directory '/root/jq'
-make[2]: *** [Makefile:1695: check-am] Error 2
-make[2]: Leaving directory '/root/jq'
-make[1]: *** [Makefile:1186: check-recursive] Error 1
-make[1]: Leaving directory '/root/jq'
-make: *** [Makefile:1697: check] Error 2
+yarn run v1.22.22
+$ jest packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts
+jest-haste-map: duplicate manual mock found: chalk
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/docusaurus-logger/src/__mocks__/chalk.js
+    * <rootDir>/packages/docusaurus-logger/lib/__mocks__/chalk.js
+
+FAIL packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts
+  replaceMarkdownLinks
+    ✓ does basic replace (12 ms)
+    ✓ replaces two links on the same line (2 ms)
+    ✓ replaces reference style Markdown links (2 ms)
+    ✓ resolves absolute and relative links differently (4 ms)
+    ✓ ignores links in HTML comments (4 ms)
+    ✓ ignores links in fenced blocks (1 ms)
+    ✓ ignores links in inline code (2 ms)
+    ✓ replaces links with same title as URL (1 ms)
+    ✓ replaces multiple links on same line (1 ms)
+    ✓ replaces Markdown links with spaces (1 ms)
+    ✕ does not replace non-Markdown links (8 ms)
+    ✕ handles stray spaces (4 ms)
+    ✓ handles link titles (1 ms)
+    ✓ preserves query/hash (2 ms)
+
+  ● replaceMarkdownLinks › does not replace non-Markdown links
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  2
+    + Received  + 11
+
+    @@ -1,9 +1,18 @@
+      Object {
+    -   "brokenMarkdownLinks": Array [],
+    +   "brokenMarkdownLinks": Array [
+    +     Object {
+    +       "contentPaths": Object {
+    +         "contentPath": "docs",
+    +         "contentPathLocalized": "i18n/docs-localized",
+    +       },
+    +       "filePath": "docs/file.md",
+    +       "link": "https://example.com/file_(1).md",
+    +     },
+    +   ],
+        "newContent": "
+    - [asset](./file.md_asset/1.png)
+    + [asset](/docs/file_asset/1.png)
+      [URL](<https://example.com/file_(1).md>)
+      [not a link]((foo)
+      [not a link](foo bar)
+      [not a link]: foo bar
+      [not a link]: (foo
+
+      309 |         fileString: input,
+      310 |       }),
+    > 311 |     ).toEqual({
+          |       ^
+      312 |       newContent: input,
+      313 |       brokenMarkdownLinks: [],
+      314 |     });
+
+      at Object.toEqual (packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts:311:7)
+
+  ● replaceMarkdownLinks › handles stray spaces
+
+    expect(received).toMatchSnapshot()
+
+    Snapshot name: `replaceMarkdownLinks handles stray spaces 1`
+
+    - Snapshot  - 1
+    + Received  + 1
+
+      {
+        "brokenMarkdownLinks": [],
+        "newContent": "
+    - [URL]( /docs/file )
+    + [URL]( ./file.md )
+      [ref]:  /docs/file
+      ",
+      }
+
+      332 | `,
+      333 |       }),
+    > 334 |     ).toMatchSnapshot();
+          |       ^
+      335 |   });
+      336 |
+      337 |   it('handles link titles', () => {
+
+      at Object.toMatchSnapshot (packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts:334:7)
+
+ › 1 snapshot failed.
+Snapshot Summary
+ › 1 snapshot failed from 1 test suite. Inspect your code changes or run `yarn test -u` to update them.
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 12 passed, 14 total
+Snapshots:   1 failed, 12 passed, 13 total
+Time:        0.699 s, estimated 1 s
+Ran all test suites matching /packages\/docusaurus-utils\/src\/__tests__\/markdownLinks.test.ts/i.
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
