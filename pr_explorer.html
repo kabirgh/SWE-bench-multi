@@ -141,7 +141,7 @@
 
         function displayRepositories() {
             repoList.innerHTML = '<h3>Repositories</h3>';
-            Object.keys(allData).forEach(repo => {
+            Object.keys(allData).sort().forEach(repo => {
                 const repoItem = document.createElement('div');
                 repoItem.className = 'repo-item';
 
