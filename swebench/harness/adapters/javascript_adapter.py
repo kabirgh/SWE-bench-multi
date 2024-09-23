@@ -5,7 +5,7 @@ from typing import Callable
 from swebench.harness.constants import TestStatus
 from swebench.harness.adapters.adapter import Adapter
 
-JEST_JSON_JQ_TRANSFORM = """jq -r '.testResults[].assertionResults[] | "[" + (.status | ascii_upcase) + "] " + ((.ancestorTitles | join(" / ")) + (if .ancestorTitles | length > 0 then " / " else "" end) + .title)'"""
+JEST_JSON_JQ_TRANSFORM = """jq -r '.testResults[].assertionResults[] | "[" + (.status | ascii_upcase) + "] " + ((.ancestorTitles | join(" > ")) + (if .ancestorTitles | length > 0 then " > " else "" end) + .title)'"""
 
 
 @dataclass
@@ -31,9 +31,7 @@ class JavaScriptAdapter(Adapter):
 
 def jest_log_parser(log: str) -> dict[str, str]:
     """
-    Parser for test logs generated with Jest or vitest. Assumes --verbose flag
-    but not --json. We could use --json but the test output contains extraneous
-    lines, so parsing is not as straightforward.
+    Parser for test logs generated with Jest. Assumes --verbose flag.
 
     Args:
         log (str): log content

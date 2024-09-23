@@ -1,7 +1,8 @@
+from collections import defaultdict
 import json
 from swebench.harness.constants import TestStatus
-from swebench.harness.adapters.javascript_adapter import (
-    jest_log_parser as log_parser,
+from swebench.harness.adapters.adapter import (
+    tap_log_parser as log_parser,
 )
 
 if __name__ == "__main__":
@@ -9,16 +10,21 @@ if __name__ == "__main__":
         log = f.read()
 
     test_status_map = log_parser(log)
+
     results = {
-        "FAIL_TO_PASS": [
-            test
-            for test, status in test_status_map.items()
-            if status == TestStatus.FAILED.value
-        ],
-        "PASS_TO_PASS": [
-            test
-            for test, status in test_status_map.items()
-            if status == TestStatus.PASSED.value
-        ],
+        "FAIL_TO_PASS": [],
+        "PASS_TO_PASS": [],
+        "FAIL_TO_FAIL": [],
     }
+
+    for test, status in test_status_map.items():
+        if status == TestStatus.FAILED.value:
+            # only for three.js, should be commented out for other log formats
+            if "# TODO" in test:
+                results["FAIL_TO_FAIL"].append(test)
+            else:
+                results["FAIL_TO_PASS"].append(test)
+        elif status == TestStatus.PASSED.value:
+            results["PASS_TO_PASS"].append(test)
+
     print(json.dumps(results))

@@ -1,4 +1,4 @@
-from swebench.harness.adapters.adapter import Adapter
+from swebench.harness.adapters.adapter import Adapter, tap_log_parser
 from swebench.harness.adapters.cplusplus_adapter import (
     CPlusPlusAdapter,
     jq_log_parser,
@@ -7,9 +7,7 @@ from swebench.harness.adapters.cplusplus_adapter import (
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
-    JEST_JSON_JQ_TRANSFORM,
     JavaScriptAdapter,
-    jest_json_log_parser,
     jest_log_parser,
     vitest_log_parser,
 )
@@ -311,6 +309,33 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="1.23",
             install=["go test -c ./tsdb"],
             test_cmd='go test -v ./tsdb -run "^TestSnapshot"',
+        ),
+    },
+    "mrdoob/three.js": {
+        "27395": JavaScriptAdapter(
+            version="20",
+            # --ignore-scripts is used to avoid downloading chrome for puppeteer
+            install=["npm install --ignore-scripts"],
+            test_cmd="npx qunit test/unit/src/math/Sphere.tests.js",
+            log_parser=tap_log_parser,
+        ),
+        "26589": JavaScriptAdapter(
+            version="20",
+            install=["npm install --ignore-scripts"],
+            test_cmd="npx qunit test/unit/src/objects/Line.tests.js test/unit/src/objects/Mesh.tests.js test/unit/src/objects/Points.tests.js",
+            log_parser=tap_log_parser,
+        ),
+        "25687": JavaScriptAdapter(
+            version="20",
+            install=["npm install --ignore-scripts"],
+            test_cmd='npx qunit test/unit/src/core/Object3D.tests.js -f "/json|clone|copy/i"',
+            log_parser=tap_log_parser,
+        ),
+        "": JavaScriptAdapter(
+            version="20",
+            install=["npm install --ignore-scripts"],
+            test_cmd="",
+            log_parser=tap_log_parser,
         ),
     },
 }

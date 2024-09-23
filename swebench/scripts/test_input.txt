@@ -1,76 +1,204 @@
-FAIL __tests__/Set.ts
-  Set
-    ✓ accepts array of values (10ms)
-    ✓ accepts array-like of values (1ms)
-    ✓ accepts string, an array-like collection (1ms)
-    ✓ accepts sequence of values (2ms)
-    ✓ accepts a keyed Seq as a set of entries (5ms)
-    ✓ accepts object keys (1ms)
-    ✓ accepts sequence keys (2ms)
-    ✓ accepts explicit values (1ms)
-    ✓ converts back to JS array (1ms)
-    ✓ converts back to JS object
-    ✓ maps no-ops return the same reference (1ms)
-    ✕ maps should produce new set if values changed (7ms)
-    ✓ unions an unknown collection of Sets (2ms)
-    ✓ intersects an unknown collection of Sets (2ms)
-    ✕ iterates values
-    ✓ unions two sets (1ms)
-    ✓ returns self when union results in no-op (1ms)
-    ✓ returns arg when union results in no-op
-    ✓ unions a set and another collection and returns a set (4ms)
-    ✓ is persistent to adds (2ms)
-    ✓ is persistent to deletes (1ms)
-    ✓ deletes down to empty set
-    ✓ unions multiple sets (2ms)
-    ✓ intersects multiple sets
-    ✓ diffs multiple sets (1ms)
-    ✓ expresses value equality with set sequences (3ms)
-    ✓ can use union in a withMutation (1ms)
-    ✓ can determine if an array is a subset (1ms)
-    ✓ can use intersect after add or union in a withMutation
-    ✓ can count entries that satisfy a predicate (2ms)
-    accepts Symbol as entry #579
-      ✓ operates on small number of symbols, preserving set uniqueness
-      ✓ operates on a large number of symbols, maintaining obj uniqueness (2ms)
-    "size" should correctly reflect the number of elements in a Set
-      deduplicating custom classes that invoke fromJS() as part of equality check
-        ✓ with mutations (2ms)
-        ✓ without mutations (1ms)
-
-  ● Set › maps should produce new set if values changed
-
-    expect(received).toBe(expected) // Object.is equality
-
-    Expected: false
-    Received: true
-
-      91 |     const s = Set.of('a', 'b', 'c');
-      92 |     expect(s.toObject()).toEqual({ a: 'a', b: 'b', c: 'c' });
-    > 93 |   });
-         |      ^
-      94 |
-      95 |   it('maps no-ops return the same reference', () => {
-      96 |     const s = Set([1, 2, 3]);
-
-      at Object.it (__tests__/Set.ts:93:26)
-
-  ● Set › iterates values
-
-    TypeError: jest.genMockFunction is not a function
-
-      113 |
-      114 |   it('unions an unknown collection of Sets', () => {
-    > 115 |     const abc = Set(['a', 'b', 'c']);
-          |                               ^
-      116 |     const cat = Set(['c', 'a', 't']);
-      117 |     expect(Set.union([abc, cat]).toArray()).toEqual(['c', 'a', 't', 'b']);
-      118 |     expect(Set.union([abc])).toBe(abc);
-
-      at Object.it (__tests__/Set.ts:115:31)
-
-Test Suites: 1 failed, 1 total
-Tests:       2 failed, 32 passed, 34 total
-Snapshots:   0 total
-Time:        1.938s, estimated 2s
-Ran all test suites matching /__tests__\/Set.ts/i.
+TAP version 13
+not ok 1 Core > Object3D > toJSON
+  ---
+  message: JSON is as expected
+  severity: failed
+  actual  : {
+  "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "object": {
+    "uuid": "0A1E4F43-CB5B-4097-8F82-DC2969C0B8C2",
+    "type": "Object3D",
+    "name": "a's name",
+    "castShadow": true,
+    "receiveShadow": true,
+    "visible": false,
+    "userData": {
+      "foo": "bar"
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "children": [
+      {
+        "uuid": "5D4E9AE8-DA61-4912-A575-71A5BE3D72CD",
+        "type": "Object3D",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "children": [
+          {
+            "uuid": "B43854B3-E970-4E85-BD41-AAF8D7BFA189",
+            "type": "Object3D",
+            "layers": 1,
+            "matrix": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+  expected: {
+  "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "object": {
+    "uuid": "0A1E4F43-CB5B-4097-8F82-DC2969C0B8C2",
+    "type": "Object3D",
+    "name": "a's name",
+    "castShadow": true,
+    "receiveShadow": true,
+    "visible": false,
+    "userData": {
+      "foo": "bar"
+    },
+    "layers": 1,
+    "matrix": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "children": [
+      {
+        "uuid": "5D4E9AE8-DA61-4912-A575-71A5BE3D72CD",
+        "type": "Object3D",
+        "layers": 1,
+        "matrix": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "children": [
+          {
+            "uuid": "B43854B3-E970-4E85-BD41-AAF8D7BFA189",
+            "type": "Object3D",
+            "layers": 1,
+            "matrix": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1,
+              0,
+              0,
+              0,
+              0,
+              1
+            ],
+            "up": [
+              0,
+              1,
+              0
+            ]
+          }
+        ],
+        "up": [
+          0,
+          1,
+          0
+        ]
+      }
+    ],
+    "up": [
+      1,
+      0,
+      0
+    ]
+  }
+}
+  stack: |
+        at Object.<anonymous> (file:///root/three.js/test/unit/src/core/Object3D.tests.js:1313:11)
+  ...
+ok 2 Core > Object3D > clone
+ok 3 Core > Object3D > copy
+1..3
+# pass 2
+# skip 0
+# todo 0
+# fail 1

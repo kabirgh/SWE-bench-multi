@@ -3,7 +3,11 @@ from dataclasses import dataclass, field
 import re
 from typing import Callable, List, Optional
 
-from swebench.harness.constants import DIFF_MODIFIED_FILE_REGEX, SWEbenchInstance
+from swebench.harness.constants import (
+    DIFF_MODIFIED_FILE_REGEX,
+    SWEbenchInstance,
+    TestStatus,
+)
 
 
 @dataclass(kw_only=True)
@@ -97,3 +101,29 @@ class Adapter(ABC):
             self.test_cmd,
             reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
         ]
+
+
+def tap_log_parser(log: str) -> dict[str, str]:
+    """
+    Parser for test logs generated with TAP
+
+    Args:
+        log (str): log content
+    Returns:
+        dict: test case to test status mapping
+    """
+    test_status_map = {}
+
+    # Pattern to match TAP result lines
+    pattern = r"^(ok|not ok) (\d+) (.+)$"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            status, _test_number, test_name = match.groups()
+            if status == "ok":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            elif status == "not ok":
+                test_status_map[test_name] = TestStatus.FAILED.value
+
+    return test_status_map
