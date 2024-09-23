@@ -7,7 +7,9 @@ from swebench.harness.adapters.cplusplus_adapter import (
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
+    JEST_JSON_JQ_TRANSFORM,
     JavaScriptAdapter,
+    jest_json_log_parser,
     jest_log_parser,
     vitest_log_parser,
 )
@@ -311,6 +313,22 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             test_cmd='go test -v ./tsdb -run "^TestSnapshot"',
         ),
     },
+    "immutable-js/immutable-js": {
+        "2006": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            build=["npm run build"],
+            test_cmd="npx jest __tests__/Range.ts --verbose",
+            log_parser=jest_log_parser,
+        ),
+        "2005": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            build=["npm run build"],
+            test_cmd=f"npx jest __tests__/OrderedMap.ts __tests__/OrderedSet.ts --silent --json | {JEST_JSON_JQ_TRANSFORM}",
+            log_parser=jest_json_log_parser,
+        ),
+    },
     "mrdoob/three.js": {
         "27395": JavaScriptAdapter(
             version="20",
@@ -329,12 +347,6 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="20",
             install=["npm install --ignore-scripts"],
             test_cmd='npx qunit test/unit/src/core/Object3D.tests.js -f "/json|clone|copy/i"',
-            log_parser=tap_log_parser,
-        ),
-        "": JavaScriptAdapter(
-            version="20",
-            install=["npm install --ignore-scripts"],
-            test_cmd="",
             log_parser=tap_log_parser,
         ),
     },
