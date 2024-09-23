@@ -251,7 +251,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 test_cmd="make check",
                 log_parser=jq_log_parser,
             )
-            for k in ["2839", "2650", "2681", "2658", "2750"]
+            for k in ["2839", "2650", "2235", "2658", "2750"]
         }
     },
     "facebook/docusaurus": {
