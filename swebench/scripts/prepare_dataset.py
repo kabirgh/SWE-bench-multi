@@ -68,7 +68,30 @@ for predictions_file in glob.glob(
 # Sort predictions by instance_id
 all_predictions.sort(key=lambda x: x["instance_id"])
 
+# Write full predictions
 with open(os.path.join(output_dir, "predictions.json"), "w+") as f:
     json.dump(all_predictions, f, indent=2)
 
+# Create empty predictions
+empty_predictions = []
+empty_patch = """diff --git a/empty.txt b/empty.txt
+new file mode 100644
+index 0000000..e69de29
+--- /dev/null
++++ b/empty.txt
+"""
+for pred in all_predictions:
+    empty_predictions.append(
+        {
+            "instance_id": pred["instance_id"],
+            "model_name_or_path": "empty",
+            "model_patch": empty_patch,
+        }
+    )
+
+# Write empty predictions
+with open(os.path.join(output_dir, "empty_predictions.json"), "w+") as f:
+    json.dump(empty_predictions, f, indent=2)
+
 print(f"Merged {len(all_predictions)} predictions into {output_dir}/predictions.json")
+print(f"Created empty predictions file: {output_dir}/empty_predictions.json")
