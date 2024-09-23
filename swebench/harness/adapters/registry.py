@@ -313,39 +313,4 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             test_cmd='go test -v ./tsdb -run "^TestSnapshot"',
         ),
     },
-    "immutable-js/immutable-js": {
-        "2006": JavaScriptAdapter(
-            version="20",
-            install=["npm install"],
-            build=["npm run build"],
-            test_cmd="npx jest __tests__/Range.ts --verbose",
-            log_parser=jest_log_parser,
-        ),
-        "2005": JavaScriptAdapter(
-            version="20",
-            install=["npm install"],
-            build=["npm run build"],
-            test_cmd=f"npx jest __tests__/OrderedMap.ts __tests__/OrderedSet.ts --silent --json | {JEST_JSON_JQ_TRANSFORM}",
-            log_parser=jest_json_log_parser,
-        ),
-        "1556": JavaScriptAdapter(
-            version="20",
-            install=[
-                "npm install",
-                # install higher jest version to fix test runner
-                "npm install jest@23.6.0",
-            ],
-            # docker node:8 cant be used because the debian version is long past
-            # EOL, and later node versions cause build errors
-            pre_install=[
-                'export NVM_DIR="$HOME/.nvm"',
-                '[ -s "$NVM_DIR/nvm.sh" ] && \\. "$NVM_DIR/nvm.sh"',
-                "nvm install 8",
-                "nvm use 8",
-            ],
-            build=["npm run build"],
-            test_cmd="npx jest __tests__/Seq.ts --verbose",
-            log_parser=jest_log_parser,
-        ),
-    },
 }
