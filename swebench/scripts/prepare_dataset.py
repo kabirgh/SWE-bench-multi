@@ -20,8 +20,8 @@ for instances_file in glob.glob(
             instance = json.loads(line.strip())
             all_instances.append(instance)
 
-# Sort instances by repo, then version, to ensure consistent ordering
-all_instances.sort(key=lambda x: (x["repo"], x["version"]))
+# Sort instances to ensure consistent ordering
+all_instances.sort(key=lambda x: x["instance_id"])
 
 # Output directory
 output_dir = os.path.join(input_dir, "all")
@@ -55,3 +55,20 @@ with open(output_file, "w+") as f, open(output_file_all, "w+") as f_all:
         f_all.write(json.dumps(instance) + "\n")
 
 print(f"Merged {len(all_instances)} instances into {output_file} and {output_file_all}")
+
+# Next merge predictions.json files
+all_predictions = []
+
+for predictions_file in glob.glob(
+    os.path.join(input_dir, "*", "verified", "predictions.json")
+):
+    with open(predictions_file, "r") as f:
+        all_predictions.extend(json.load(f))
+
+# Sort predictions by instance_id
+all_predictions.sort(key=lambda x: x["instance_id"])
+
+with open(os.path.join(output_dir, "predictions.json"), "w+") as f:
+    json.dump(all_predictions, f, indent=2)
+
+print(f"Merged {len(all_predictions)} predictions into {output_dir}/predictions.json")
