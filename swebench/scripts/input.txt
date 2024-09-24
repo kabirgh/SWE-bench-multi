@@ -1,112 +1,47 @@
 
-> @3.5.0-beta.1 test /root/vue
-> vitest "packages/runtime-core/__tests__/apiWatch.spec.ts" "--no-watch" "--reporter=verbose"
+START:
+[32m24 09 2024 15:14:48.961:INFO [esbuild]: [39mCompiling...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m24 09 2024 15:14:51.287:INFO [esbuild]: [39mCompiling done (2s)
+[32m24 09 2024 15:14:51.292:INFO [karma-server]: [39mKarma v6.3.16 server started at http://localhost:9876/
+[32m24 09 2024 15:14:51.293:INFO [launcher]: [39mLaunching browsers ChromeNoSandboxHeadless with concurrency 2
+[32m24 09 2024 15:14:51.298:INFO [launcher]: [39mStarting browser Chrome
+[32m24 09 2024 15:14:51.934:INFO [Chrome Headless 129.0.0.0 (Linux x86_64)]: [39mConnected on socket BINbPipbHI1uSdl1AAAB with id 24128813
+  useId
+    ✔ keeps the id consistent after an update
+    ✔ ids are unique according to dom-depth
+    ✔ ids are unique across siblings
+    ✔ correctly handles new elements
+    ✔ matches with rts
+    ✔ matches with rts after hydration
+    ✔ should be unique across Fragments
+    ✔ should match implicite Fragments with RTS
+    ✔ should skip component top level Fragment child
+    ✔ should skip over HTML
+    ✔ should reset for each renderToString roots
+    ✔ should work with conditional components
+    ✖ should return a unique id across invocations of render
+
+Finished in 0.034 secs / 0.012 secs @ 15:14:52 GMT+0000 (Coordinated Universal Time)
+
+SUMMARY:
+✔ 12 tests completed
+✖ 1 test failed
+
+FAILED TESTS:
+  useId
+    ✖ should return a unique id across invocations of render
+      Chrome Headless 129.0.0.0 (Linux x86_64)
+    AssertionError: expected '<div><div>My id is P0-0</div><div>My id is P0-0</div></div>' to equal '<div><div>My id is P0-0</div><div>My id is P0-1</div></div>'
+
+      + expected - actual
+
+      -<div><div>My id is P0-0</div><div>My id is P0-0</div></div>
+      +<div><div>My id is P0-0</div><div>My id is P0-1</div></div>
+
+    at Context.<anonymous> (hooks/test/browser/useId.test.js:455:32)
 
 
- RUN  v2.0.5 /root/vue
 
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > effect
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: getter
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: ref
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: array
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not call functions inside a reactive source array
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not unwrap refs in a reactive source array
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire if watched getter result did not change
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching single source: computed ref
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching primitive with deep: true
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > directly watching reactive object (with automatic deep: true)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > directly watching reactive object with explicit deep: false
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > directly watching reactive array with explicit deep: false
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching shallow reactive array with deep: false
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should still respect deep: true on shallowReactive source
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: undefined initial values and immediate: true
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: readonly array
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: reactive object (with automatic deep: true)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn invalid watch source
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn invalid watch source: multiple sources
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > stopping the watcher (effect)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > stopping the watcher (with source)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > cleanup registration (effect)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > cleanup registration (with source)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush timing: pre (default)
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush timing: post
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchPostEffect
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush timing: sync
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchSyncEffect
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire on component unmount w/ flush: post
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire on component unmount w/ flush: pre
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not fire on child component unmount w/ flush: pre
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: pre watcher in child component should not fire before parent update
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: pre watcher watching props should fire before child update
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: pre triggered in component setup should be buffered and called before mounted
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > flush: post watcher should fire after template refs updated
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > deep
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching deep ref
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > deep with symbols
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > immediate
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > immediate: triggers when initial value is null
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > immediate: triggers when initial value is undefined
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn immediate option when using effect
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > warn and not respect deep option when using effect
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > onTrack
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > onTrigger
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should work sync
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should force trigger on triggerRef when watching a shallow ref
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should force trigger on triggerRef when watching multiple sources: shallow ref array
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should force trigger on triggerRef with toRef from reactive
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchEffect should not recursively trigger itself
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > computed refs should not trigger watch if value has no change
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > $watch should always register its effects with its own instance
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > this.$watch should pass `this.proxy` to watch source as the first argument
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should not leak `this.proxy` to setup()
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > pre watcher callbacks should not track dependencies
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching keypath
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching sources: ref<any[]>
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching multiple sources: computed
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watch should not register in owner component if created inside detached scope
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchEffect should keep running if created in a detached scope
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch'
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with deep'
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with flush: s…'
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with flush: p…'
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > 'only trigger once watch with immediate'
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > OnCleanup also needs to be cleaned，
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching reactive depth
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching ref depth
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching array depth
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > pause / resume
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > shallowReactive
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watching reactive with deep: false
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > effect should be removed from scope's effects after it is stopped
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > sync watcher should not be batched
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watchEffect should not fire on computed deps that did not change
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > circular reference
- ✓ packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > watch immediate error in effect scope should be catched by onErrorCaptured
- × packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should be executed correctly
-   → expected '21' to be '12' // Object.is equality
-
-⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
-
- FAIL  packages/runtime-core/__tests__/apiWatch.spec.ts > api: watch > should be executed correctly
-AssertionError: expected '21' to be '12' // Object.is equality
-
-Expected: "12"
-Received: "21"
-
- ❯ packages/runtime-core/__tests__/apiWatch.spec.ts:1885:17
-    1883|     expect(foo).toBe('')
-    1884|     v.value++
-    1885|     expect(foo).toBe('12')
-       |                 ^
-    1886|   })
-    1887| })
-
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
-
- Test Files  1 failed (1)
-      Tests  1 failed | 78 passed (79)
-   Start at  17:55:20
-   Duration  2.87s (transform 1.81s, setup 62ms, collect 2.13s, tests 150ms, environment 0ms, prepare 121ms)
-
- ELIFECYCLE  Test failed. See above for more details.

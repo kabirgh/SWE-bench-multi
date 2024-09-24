@@ -11,6 +11,7 @@ from swebench.harness.adapters.javascript_adapter import (
     JavaScriptAdapter,
     jest_json_log_parser,
     jest_log_parser,
+    karma_log_parser,
     vitest_log_parser,
 )
 from swebench.harness.adapters.rust_adapter import RustAdapter
@@ -348,6 +349,38 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=["npm install --ignore-scripts"],
             test_cmd='npx qunit test/unit/src/core/Object3D.tests.js -f "/json|clone|copy/i"',
             log_parser=tap_log_parser,
+        ),
+    },
+    "preactjs/preact": {
+        "4152": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/components.test.js"',
+            log_parser=karma_log_parser,
+        ),
+        "4316": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/events.test.js"',
+            log_parser=karma_log_parser,
+        ),
+        "4245": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="hooks/test/browser/useId.test.js"',
+            log_parser=karma_log_parser,
+        ),
+        "4182": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="hooks/test/browser/errorBoundary.test.js"',
+            log_parser=karma_log_parser,
+        ),
+        "4436": JavaScriptAdapter(
+            version="20",
+            install=["npm install"],
+            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/refs.test.js"',
+            log_parser=karma_log_parser,
         ),
     },
 }

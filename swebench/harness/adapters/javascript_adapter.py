@@ -95,3 +95,52 @@ def vitest_log_parser(log: str) -> dict[str, str]:
             elif status_symbol == "↓":
                 test_status_map[test_name] = TestStatus.SKIPPED.value
     return test_status_map
+
+
+def karma_log_parser(log: str) -> dict[str, str]:
+    """
+    Parser for test logs generated with Karma. Handles duplicate test names in
+    different describe blocks. Logic is brittle.
+    """
+    test_status_map = {}
+    current_indent = -1
+    current_suite = []
+    started = False
+
+    pattern = r"^(\s*)?([✔✖])?\s(.*)$"
+
+    for line in log.split("\n"):
+        if line.startswith("SUMMARY:"):
+            # Individual test logs end here
+            return test_status_map
+
+        if "Starting browser" in line:
+            started = True
+            continue
+
+        if not started:
+            continue
+
+        match = re.match(pattern, line)
+        if match:
+            indent, status, name = match.groups()
+
+            if indent and not status:
+                new_indent = len(indent)
+                if new_indent > current_indent:
+                    current_indent = new_indent
+                    current_suite.append(name)
+                elif new_indent < current_indent:
+                    current_indent = new_indent
+                    current_suite.pop()
+                    continue
+
+            if status in ("✔", "✖"):
+                full_test_name = " > ".join(current_suite + [name])
+                test_status_map[full_test_name] = (
+                    TestStatus.PASSED.value
+                    if status == "✔"
+                    else TestStatus.FAILED.value
+                )
+
+    return test_status_map
