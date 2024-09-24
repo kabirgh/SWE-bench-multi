@@ -56,42 +56,27 @@ with open(output_file, "w+") as f, open(output_file_all, "w+") as f_all:
 
 print(f"Merged {len(all_instances)} instances into {output_file} and {output_file_all}")
 
-# Next merge predictions.json files
-all_predictions = []
-
-for predictions_file in glob.glob(
-    os.path.join(input_dir, "*", "verified", "predictions.json")
-):
-    with open(predictions_file, "r") as f:
-        all_predictions.extend(json.load(f))
-
-# Sort predictions by instance_id
-all_predictions.sort(key=lambda x: x["instance_id"])
-
-# Write full predictions
-with open(os.path.join(output_dir, "predictions.json"), "w+") as f:
-    json.dump(all_predictions, f, indent=2)
-
-# Create empty predictions
-empty_predictions = []
+# Next create dummy_predictions.json file to check if tests fail before patch is applied
 empty_patch = """diff --git a/empty.txt b/empty.txt
 new file mode 100644
 index 0000000..e69de29
 --- /dev/null
 +++ b/empty.txt
 """
-for pred in all_predictions:
-    empty_predictions.append(
+dummy_predictions = []
+for instance in all_instances:
+    dummy_predictions.append(
         {
-            "instance_id": pred["instance_id"],
+            "instance_id": instance["instance_id"],
             "model_name_or_path": "empty",
             "model_patch": empty_patch,
         }
     )
 
 # Write empty predictions
-with open(os.path.join(output_dir, "empty_predictions.json"), "w+") as f:
-    json.dump(empty_predictions, f, indent=2)
+with open(os.path.join(output_dir, "dummy_predictions.json"), "w+") as f:
+    json.dump(dummy_predictions, f, indent=2)
 
-print(f"Merged {len(all_predictions)} predictions into {output_dir}/predictions.json")
-print(f"Created empty predictions file: {output_dir}/empty_predictions.json")
+print(
+    f"Created predictions file to apply dummy patch: {output_dir}/dummy_predictions.json"
+)
