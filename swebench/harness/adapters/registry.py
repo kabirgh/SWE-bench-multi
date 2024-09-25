@@ -496,13 +496,20 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseWithDefaultTimezone",
             ],
         ),
-        "1495": JavaMavenAdapter(
+        "2061": JavaMavenAdapter(
             version="11",
-            # Test file doesn't exist yet, so let the test command download and run dependencies
-            install=[],
+            install=[
+                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest,com.google.gson.internal.bind.JsonTreeReaderTest -q"
+            ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.EnumWithObfuscatedTest",
+                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testHasNextEndOfDocument",
+                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testHasNext_endOfDocument",
+                # PASS_TO_PASS
+                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyObject",
+                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyArray",
+                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject",
+                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
             ],
         ),
     },
