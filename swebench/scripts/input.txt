@@ -1,47 +1,210 @@
+Executing: mvn test -B -pl gson -Dtest=com.google.gson.functional.EnumWithObfuscatedTest
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.8-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 52, column 15
+[WARNING] 'build.plugins.plugin.version' for com.github.wvengen:proguard-maven-plugin is missing. @ line 104, column 15
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.8.8-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ gson ---
+[INFO]
+[INFO] --- templating-maven-plugin:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /root/gson/gson/target/generated-sources/java-templates
+[INFO] Source directory: /root/gson/gson/target/generated-sources/java-templates added.
+[INFO]
+[INFO] --- maven-resources-plugin:2.7:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.8.1:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 74 source files to /root/gson/gson/target/classes
+[INFO] /root/gson/gson/src/main/java/com/google/gson/JsonArray.java: Some input files use or override a deprecated API.
+[INFO] /root/gson/gson/src/main/java/com/google/gson/JsonArray.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- maven-compiler-plugin:3.8.1:compile (base-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 73 source files to /root/gson/gson/target/classes
+[INFO] /root/gson/gson/src/main/java/com/google/gson/JsonArray.java: Some input files use or override a deprecated API.
+[INFO] /root/gson/gson/src/main/java/com/google/gson/JsonArray.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- bnd-maven-plugin:5.3.0:bnd-process (default) @ gson ---
+[WARNING] /root/gson/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO]
+[INFO] --- maven-resources-plugin:2.7:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO]
+[INFO] --- maven-compiler-plugin:3.8.1:testCompile (default-testCompile) @ gson ---
+[WARNING] Can't extract module name from plexus-container-default-1.0-alpha-8.jar: plexus.container.default: Invalid module name: 'default' is not a Java identifier
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 104 source files to /root/gson/gson/target/test-classes
+[INFO] /root/gson/gson/src/test/java/com/google/gson/JsonObjectTest.java: Some input files use or override a deprecated API.
+[INFO] /root/gson/gson/src/test/java/com/google/gson/JsonObjectTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- copy-rename-maven-plugin:1.0:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /root/gson/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /root/gson/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /root/gson/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /root/gson/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO]
+[INFO] --- proguard-maven-plugin:2.6.1:proguard (default) @ gson ---
+[INFO] execute ProGuard [-injars, '/root/gson/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/root/gson/gson/target/test-classes-obfuscated-outjar', -include, '/root/gson/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/root/gson/gson/target/classes', -libraryjars, '/usr/lib/jvm/java-11-openjdk-amd64/jmods/java.base.jmod', -printmapping, '/root/gson/gson/target/proguard_map.txt', -printseeds, '/root/gson/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/net/sf/proguard/proguard-base/6.2.2/proguard-base-6.2.2.jar]
+ [proguard] ProGuard, version 6.2.2
+ [proguard] Reading program directory [/root/gson/gson/target/test-classes-obfuscated-injar] (filtered)
+ [proguard] Reading library directory [/root/gson/gson/target/classes] (filtered)
+ [proguard] Reading library jmod [/usr/lib/jvm/java-11-openjdk-amd64/jmods/java.base.jmod] (filtered)
+ [proguard] Note: duplicate definition of library class [module-info]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.BasicImageReader$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.BasicImageReader$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.BasicImageReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache$BufferReference]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageBufferCache]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageHeader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageLocation]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$Directory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$LinkNode]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$Node]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$Resource]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$SharedImageReader$LocationVisitor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader$SharedImageReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReaderFactory$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageReaderFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageStream]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageStrings]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.ImageStringsReader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.NativeImageBuffer$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.NativeImageBuffer]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.CompressIndexes]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.CompressedResourceHeader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.Decompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressor$StringsProvider]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressorFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ResourceDecompressorRepository]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.SignatureParser$ParseResult]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.SignatureParser]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.StringSharingDecompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.StringSharingDecompressorFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ZipDecompressor]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jimage.decompressor.ZipDecompressorFactory]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.ExplodedImage$PathNode]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.ExplodedImage]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtDirectoryStream$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtDirectoryStream]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributeView$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributeView$AttrID]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributeView]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileAttributes]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileStore]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystem$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystem]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystemProvider$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystemProvider$JrtFsLoader]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtFileSystemProvider]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtPath$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtPath$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtPath]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.JrtUtils]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.SystemImage$1]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.SystemImage$2]
+ [proguard] Note: duplicate definition of library class [jdk.internal.jrtfs.SystemImage]
+ [proguard] Note: there were 58 duplicate class definitions.
+ [proguard]       (http://proguard.sourceforge.net/manual/troubleshooting.html#duplicateclass)
+ [proguard] Preparing output directory [/root/gson/gson/target/test-classes-obfuscated-outjar] (filtered)
+ [proguard]   Copying resources from program directory [/root/gson/gson/target/test-classes-obfuscated-injar] (filtered)
+[INFO]
+[INFO] --- maven-resources-plugin:2.7:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 2 resources
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ gson ---
+[INFO] Surefire report directory: /root/gson/gson/target/surefire-reports
 
-START:
-[32m24 09 2024 15:14:48.961:INFO [esbuild]: [39mCompiling...
-Browserslist: caniuse-lite is outdated. Please run:
-  npx update-browserslist-db@latest
-  Why you should do it regularly: https://github.com/browserslist/update-db#readme
-[32m24 09 2024 15:14:51.287:INFO [esbuild]: [39mCompiling done (2s)
-[32m24 09 2024 15:14:51.292:INFO [karma-server]: [39mKarma v6.3.16 server started at http://localhost:9876/
-[32m24 09 2024 15:14:51.293:INFO [launcher]: [39mLaunching browsers ChromeNoSandboxHeadless with concurrency 2
-[32m24 09 2024 15:14:51.298:INFO [launcher]: [39mStarting browser Chrome
-[32m24 09 2024 15:14:51.934:INFO [Chrome Headless 129.0.0.0 (Linux x86_64)]: [39mConnected on socket BINbPipbHI1uSdl1AAAB with id 24128813
-  useId
-    ✔ keeps the id consistent after an update
-    ✔ ids are unique according to dom-depth
-    ✔ ids are unique across siblings
-    ✔ correctly handles new elements
-    ✔ matches with rts
-    ✔ matches with rts after hydration
-    ✔ should be unique across Fragments
-    ✔ should match implicite Fragments with RTS
-    ✔ should skip component top level Fragment child
-    ✔ should skip over HTML
-    ✔ should reset for each renderToString roots
-    ✔ should work with conditional components
-    ✖ should return a unique id across invocations of render
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.google.gson.functional.EnumWithObfuscatedTest
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.094 sec <<< FAILURE!
+testEnumClassWithObfuscated(com.google.gson.functional.EnumWithObfuscatedTest)  Time elapsed: 0.071 sec  <<< FAILURE!
+java.lang.AssertionError: AssertionError (GSON 2.8.8-SNAPSHOT): java.lang.NoSuchFieldException: MALE
+	at com.google.gson.Gson.fromJson(Gson.java:949)
+	at com.google.gson.Gson.fromJson(Gson.java:897)
+	at com.google.gson.Gson.fromJson(Gson.java:846)
+	at com.google.gson.Gson.fromJson(Gson.java:817)
+	at com.google.gson.functional.EnumWithObfuscatedTest.testEnumClassWithObfuscated(Unknown Source)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:177)
+	at junit.framework.TestCase.runBare(TestCase.java:142)
+	at junit.framework.TestResult$1.protect(TestResult.java:122)
+	at junit.framework.TestResult.runProtected(TestResult.java:142)
+	at junit.framework.TestResult.run(TestResult.java:125)
+	at junit.framework.TestCase.run(TestCase.java:130)
+	at junit.framework.TestSuite.runTest(TestSuite.java:241)
+	at junit.framework.TestSuite.run(TestSuite.java:236)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:90)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+Caused by: java.lang.AssertionError: java.lang.NoSuchFieldException: MALE
+	at com.google.gson.internal.bind.TypeAdapters$EnumTypeAdapter.<init>(TypeAdapters.java:792)
+	at com.google.gson.internal.bind.TypeAdapters$30.create(TypeAdapters.java:818)
+	at com.google.gson.Gson.getAdapter(Gson.java:458)
+	at com.google.gson.Gson.fromJson(Gson.java:931)
+	... 29 more
+Caused by: java.lang.NoSuchFieldException: MALE
+	at java.base/java.lang.Class.getField(Class.java:1999)
+	at com.google.gson.internal.bind.TypeAdapters$EnumTypeAdapter.<init>(TypeAdapters.java:781)
+	... 32 more
 
-Finished in 0.034 secs / 0.012 secs @ 15:14:52 GMT+0000 (Coordinated Universal Time)
 
-SUMMARY:
-✔ 12 tests completed
-✖ 1 test failed
+Results :
 
-FAILED TESTS:
-  useId
-    ✖ should return a unique id across invocations of render
-      Chrome Headless 129.0.0.0 (Linux x86_64)
-    AssertionError: expected '<div><div>My id is P0-0</div><div>My id is P0-0</div></div>' to equal '<div><div>My id is P0-0</div><div>My id is P0-1</div></div>'
+Failed tests:   testEnumClassWithObfuscated(com.google.gson.functional.EnumWithObfuscatedTest): AssertionError (GSON 2.8.8-SNAPSHOT): java.lang.NoSuchFieldException: MALE
 
-      + expected - actual
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
 
-      -<div><div>My id is P0-0</div><div>My id is P0-0</div></div>
-      +<div><div>My id is P0-0</div><div>My id is P0-1</div></div>
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.804 s
+[INFO] Finished at: 2024-09-25T20:56:00Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test (default-test) on project gson: There are test failures.
+[ERROR]
+[ERROR] Please refer to /root/gson/gson/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
 
-    at Context.<anonymous> (hooks/test/browser/useId.test.js:455:32)
-
-
+****************************************
 

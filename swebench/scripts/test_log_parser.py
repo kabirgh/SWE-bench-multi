@@ -1,7 +1,7 @@
 import json
 from swebench.harness.constants import TestStatus
-from swebench.harness.adapters.javascript_adapter import (
-    karma_log_parser as log_parser,
+from swebench.harness.adapters.java_adapter import (
+    _maven_log_parser as log_parser,
 )
 
 if __name__ == "__main__":

@@ -6,6 +6,10 @@ from swebench.harness.dockerfiles.go import (
     _DOCKERFILE_BASE_GO,
     _DOCKERFILE_INSTANCE_GO,
 )
+from swebench.harness.dockerfiles.java import (
+    _DOCKERFILE_BASE_JAVA,
+    _DOCKERFILE_INSTANCE_JAVA,
+)
 from swebench.harness.dockerfiles.javascript import (
     _DOCKERFILE_BASE_JAVASCRIPT,
     _DOCKERFILE_INSTANCE_JAVASCRIPT,
@@ -59,21 +63,26 @@ def get_dockerfile_instance(platform: str, env_image_name: str, language: str | 
 
 
 _dockerfiles = {
+    "python": {
+        "base": _DOCKERFILE_BASE_PYTHON,
+        "env": _DOCKERFILE_ENV_PYTHON,
+        "instance": _DOCKERFILE_INSTANCE_PYTHON,
+    },
     "go": {
         "base": _DOCKERFILE_BASE_GO,
         # No env needed for go repos, return base since rest of code expects env to be built
         "env": _DOCKERFILE_BASE_GO,
         "instance": _DOCKERFILE_INSTANCE_GO,
     },
+    "java": {
+        "base": _DOCKERFILE_BASE_JAVA,
+        "env": _DOCKERFILE_BASE_JAVA,  # Skip env
+        "instance": _DOCKERFILE_INSTANCE_JAVA,
+    },
     "javascript": {
         "base": _DOCKERFILE_BASE_JAVASCRIPT,
         "env": _DOCKERFILE_BASE_JAVASCRIPT,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_JAVASCRIPT,
-    },
-    "python": {
-        "base": _DOCKERFILE_BASE_PYTHON,
-        "env": _DOCKERFILE_ENV_PYTHON,
-        "instance": _DOCKERFILE_INSTANCE_PYTHON,
     },
     "c++": {
         "base": _DOCKERFILE_BASE_CPLUSPLUS,
