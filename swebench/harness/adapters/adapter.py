@@ -12,7 +12,7 @@ from swebench.harness.constants import (
 
 @dataclass(kw_only=True)
 class Adapter(ABC):
-    test_cmd: str
+    test: List[str]
     pre_install: List[str] = field(default_factory=list)
     install: List[str] = field(default_factory=list)
     build: List[str] = field(default_factory=list)
@@ -98,7 +98,7 @@ class Adapter(ABC):
             reset_tests_command,
             apply_test_patch_command,
             *self.build,
-            self.test_cmd,
+            *self.test,
             reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
         ]
 

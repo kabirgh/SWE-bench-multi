@@ -5,6 +5,7 @@ from swebench.harness.adapters.cplusplus_adapter import (
     redis_log_parser,
 )
 from swebench.harness.adapters.go_adapter import GoAdapter
+from swebench.harness.adapters.java_adapter import MavenJavaAdapter
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
     JEST_JSON_JQ_TRANSFORM,
@@ -28,7 +29,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                     "python -m pip install -v --no-use-pep517 --no-build-isolation -e ."
                 ],
                 pip_packages=["cython", "numpy==1.19.2", "setuptools", "scipy==1.5.2"],
-                test_cmd=TEST_PYTEST,
+                test=[TEST_PYTEST],
                 log_parser=MAP_REPO_TO_PARSER["scikit-learn/scikit-learn"],
             )
             for k in ["0.20", "0.21", "0.22"]
@@ -41,7 +42,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                     "python -m pip install -v --no-use-pep517 --no-build-isolation -e ."
                 ],
                 pip_packages=["cython", "setuptools", "numpy", "scipy"],
-                test_cmd=TEST_PYTEST,
+                test=[TEST_PYTEST],
                 log_parser=MAP_REPO_TO_PARSER["scikit-learn/scikit-learn"],
             )
             for k in ["1.3", "1.4"]
@@ -51,62 +52,64 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "6411": GoAdapter(
             version="1.23",
             install=["go mod tidy"],
-            test_cmd='go test -v . -run "TestReplacerNew*"',
+            test=['go test -v . -run "TestReplacerNew*"'],
         ),
         "6345": GoAdapter(
             version="1.23",
             # compile the test binary, which downloads relevant packages. faster than go mod tidy
             install=["go test -c ./caddytest/integration"],
-            test_cmd="go test -v ./caddytest/integration",
+            test=["go test -v ./caddytest/integration"],
         ),
         "6115": GoAdapter(
             version="1.23",
             install=["go test -c ./modules/caddyhttp/reverseproxy"],
-            test_cmd="go test -v ./modules/caddyhttp/reverseproxy",
+            test=["go test -v ./modules/caddyhttp/reverseproxy"],
         ),
         "6051": GoAdapter(
             version="1.23",
             install=["go test -c ./caddyconfig/caddyfile"],
-            test_cmd="go test -v ./caddyconfig/caddyfile",
+            test=["go test -v ./caddyconfig/caddyfile"],
         ),
         "5404": GoAdapter(
             version="1.20",
             install=["go test -c ./caddyconfig/caddyfile"],
-            test_cmd="go test -v ./caddyconfig/caddyfile",
+            test=["go test -v ./caddyconfig/caddyfile"],
         ),
     },
     "babel/babel": {
         "14532": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn jest babel-generator --verbose",
+            test=["yarn jest babel-generator --verbose"],
             install=["make bootstrap"],
             build=["make build"],
             log_parser=jest_log_parser,
         ),
         "13928": JavaScriptAdapter(
             version="20",
-            test_cmd='yarn jest babel-parser -t "arrow" --verbose',
+            test=['yarn jest babel-parser -t "arrow" --verbose'],
             install=["make bootstrap"],
             build=["make build"],
             log_parser=jest_log_parser,
         ),
         "15649": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn jest packages/babel-traverse/test/scope.js --verbose",
+            test=["yarn jest packages/babel-traverse/test/scope.js --verbose"],
             install=["make bootstrap"],
             build=["make build"],
             log_parser=jest_log_parser,
         ),
         "15445": JavaScriptAdapter(
             version="20",
-            test_cmd='yarn jest packages/babel-generator/test/index.js -t "generation " --verbose',
+            test=[
+                'yarn jest packages/babel-generator/test/index.js -t "generation " --verbose'
+            ],
             install=["make bootstrap"],
             build=["make build"],
             log_parser=jest_log_parser,
         ),
         "16130": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn jest babel-helpers --verbose",
+            test=["yarn jest babel-helpers --verbose"],
             install=["make bootstrap"],
             build=["make build"],
             log_parser=jest_log_parser,
@@ -116,31 +119,37 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "13115": CPlusPlusAdapter(
             install=["make distclean", "make"],
             build=["make"],
-            test_cmd="TERM=dumb ./runtest --durable --single unit/scripting",
+            test=["TERM=dumb ./runtest --durable --single unit/scripting"],
             log_parser=redis_log_parser,
         ),
         "12472": CPlusPlusAdapter(
             install=["make distclean", "make"],
             build=["make"],
-            test_cmd='TERM=dumb ./runtest --durable --single unit/acl --only "/.*ACL GETUSER.*"',
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/acl --only "/.*ACL GETUSER.*"'
+            ],
             log_parser=redis_log_parser,
         ),
         "12272": CPlusPlusAdapter(
             install=["make distclean", "make"],
             build=["make"],
-            test_cmd='TERM=dumb ./runtest --durable --single unit/type/string --only "/.*(GETRANGE|SETRANGE).*"',
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/type/string --only "/.*(GETRANGE|SETRANGE).*"'
+            ],
             log_parser=redis_log_parser,
         ),
         "11734": CPlusPlusAdapter(
             install=["make distclean", "make"],
             build=["make"],
-            test_cmd="TERM=dumb ./runtest --durable --single unit/bitops",
+            test=["TERM=dumb ./runtest --durable --single unit/bitops"],
             log_parser=redis_log_parser,
         ),
         "10764": CPlusPlusAdapter(
             install=["make distclean", "make"],
             build=["make"],
-            test_cmd='TERM=dumb ./runtest --durable --single unit/type/zset --only "BZMPOP"',
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/type/zset --only "BZMPOP"'
+            ],
             log_parser=redis_log_parser,
         ),
     },
@@ -150,62 +159,70 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             # install only as much as needed to run the tests
             install=["cargo test --test io_write_all_buf --no-fail-fast --no-run"],
             # no build step, cargo test will build the relevant packages
-            test_cmd="cargo test --test io_write_all_buf --no-fail-fast",
+            test=["cargo test --test io_write_all_buf --no-fail-fast"],
         ),
         "6838": RustAdapter(
             version="1.81",
             install=["cargo test --test uds_stream --no-fail-fast --no-run"],
-            test_cmd="cargo test --test uds_stream --no-fail-fast",
+            test=["cargo test --test uds_stream --no-fail-fast"],
         ),
         "6752": RustAdapter(
             version="1.81",
             install=["cargo test --test time_delay_queue --no-fail-fast --no-run"],
-            test_cmd="cargo test --test time_delay_queue --no-fail-fast",
+            test=["cargo test --test time_delay_queue --no-fail-fast"],
         ),
         "4867": RustAdapter(
             version="1.81",
             install=["cargo test --test sync_broadcast --no-fail-fast --no-run"],
-            test_cmd="cargo test --test sync_broadcast --no-fail-fast",
+            test=["cargo test --test sync_broadcast --no-fail-fast"],
         ),
         "4898": RustAdapter(
             version="1.81",
             install=[
                 'RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics --no-run'
             ],
-            test_cmd='RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics',
+            test=[
+                'RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics'
+            ],
         ),
     },
     "hashicorp/terraform": {
         "35611": GoAdapter(
             version="1.23",
             install=["go test -c ./internal/terraform"],
-            test_cmd='go test -v ./internal/terraform -run "^TestContext2Apply_provisioner"',
+            test=[
+                'go test -v ./internal/terraform -run "^TestContext2Apply_provisioner"'
+            ],
         ),
         "35543": GoAdapter(
             version="1.23",
             install=["go test -c ./internal/terraform"],
-            test_cmd='go test -v ./internal/terraform -run "^TestContext2Plan_import"',
+            test=['go test -v ./internal/terraform -run "^TestContext2Plan_import"'],
         ),
         "34900": GoAdapter(
             version="1.22",
             install=["go test -c ./internal/terraform"],
-            test_cmd='go test -v ./internal/terraform -run "(^TestContext2Apply|^TestContext2Plan).*[Ss]ensitive"',
+            test=[
+                'go test -v ./internal/terraform -run "(^TestContext2Apply|^TestContext2Plan).*[Ss]ensitive"'
+            ],
         ),
         "34580": GoAdapter(
             version="1.21",
             install=["go test -c ./internal/command"],
-            test_cmd='go test -v ./internal/command -run "^TestFmt"',
+            test=['go test -v ./internal/command -run "^TestFmt"'],
         ),
         "34814": GoAdapter(
             version="1.22",
             install=["go test -c ./internal/builtin/provisioners/remote-exec"],
-            test_cmd="go test -v ./internal/builtin/provisioners/remote-exec",
+            test=["go test -v ./internal/builtin/provisioners/remote-exec"],
         ),
     },
     "vuejs/core": {
         "11899": JavaScriptAdapter(
             version="20",
-            test_cmd="pnpm run test packages/compiler-sfc/__tests__/compileStyle.spec.ts --no-watch --reporter=verbose",
+            test=[
+                "pnpm run test packages/compiler-sfc/__tests__/compileStyle.spec.ts --no-watch --reporter=verbose"
+            ],
             pre_install=["corepack enable pnpm"],
             install=["pnpm i"],
             build=["pnpm run build compiler-sfc"],
@@ -213,28 +230,36 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         ),
         "11870": JavaScriptAdapter(
             version="20",
-            test_cmd="pnpm run test packages/runtime-core/__tests__/helpers/renderList.spec.ts --no-watch --reporter=verbose",
+            test=[
+                "pnpm run test packages/runtime-core/__tests__/helpers/renderList.spec.ts --no-watch --reporter=verbose"
+            ],
             pre_install=["corepack enable pnpm"],
             install=["pnpm i"],
             log_parser=vitest_log_parser,
         ),
         "11739": JavaScriptAdapter(
             version="20",
-            test_cmd='pnpm run test packages/runtime-core/__tests__/hydration.spec.ts --no-watch --reporter=verbose -t "mismatch handling"',
+            test=[
+                'pnpm run test packages/runtime-core/__tests__/hydration.spec.ts --no-watch --reporter=verbose -t "mismatch handling"'
+            ],
             pre_install=["corepack enable pnpm"],
             install=["pnpm i"],
             log_parser=vitest_log_parser,
         ),
         "11915": JavaScriptAdapter(
             version="20",
-            test_cmd='pnpm run test packages/compiler-core/__tests__/parse.spec.ts --no-watch --reporter=verbose -t "Element"',
+            test=[
+                'pnpm run test packages/compiler-core/__tests__/parse.spec.ts --no-watch --reporter=verbose -t "Element"'
+            ],
             pre_install=["corepack enable pnpm"],
             install=["pnpm i"],
             log_parser=vitest_log_parser,
         ),
         "11589": JavaScriptAdapter(
             version="20",
-            test_cmd="pnpm run test packages/runtime-core/__tests__/apiWatch.spec.ts --no-watch --reporter=verbose",
+            test=[
+                "pnpm run test packages/runtime-core/__tests__/apiWatch.spec.ts --no-watch --reporter=verbose"
+            ],
             pre_install=["corepack enable pnpm"],
             install=["pnpm i"],
             log_parser=vitest_log_parser,
@@ -249,7 +274,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                     "make clean",
                     "make -j8",
                 ],
-                test_cmd="make check",
+                test=["make check"],
                 log_parser=jq_log_parser,
             )
             for k in ["2839", "2650", "2235", "2658", "2750"]
@@ -258,31 +283,41 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "facebook/docusaurus": {
         "10309": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn test packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts --verbose",
+            test=[
+                "yarn test packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts --verbose"
+            ],
             install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "10130": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn test packages/docusaurus/src/server/__tests__/brokenLinks.test.ts --verbose",
+            test=[
+                "yarn test packages/docusaurus/src/server/__tests__/brokenLinks.test.ts --verbose"
+            ],
             install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "9897": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn test packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts --verbose",
+            test=[
+                "yarn test packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts --verbose"
+            ],
             install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "9183": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn test packages/docusaurus-theme-classic/src/__tests__/options.test.ts --verbose",
+            test=[
+                "yarn test packages/docusaurus-theme-classic/src/__tests__/options.test.ts --verbose"
+            ],
             install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "8927": JavaScriptAdapter(
             version="20",
-            test_cmd="yarn test packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts --verbose",
+            test=[
+                "yarn test packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts --verbose"
+            ],
             install=["yarn install"],
             log_parser=jest_log_parser,
         ),
@@ -291,27 +326,29 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "14861": GoAdapter(
             version="1.23",
             install=["go test -c ./promql"],
-            test_cmd='go test -v ./promql -run "^TestEngine"',
+            test=['go test -v ./promql -run "^TestEngine"'],
         ),
         "13845": GoAdapter(
             version="1.23",
             install=["go test -c ./promql ./model/labels"],
-            test_cmd='go test -v ./promql ./model/labels -run "^(TestRangeQuery|TestLabels)"',
+            test=[
+                'go test -v ./promql ./model/labels -run "^(TestRangeQuery|TestLabels)"'
+            ],
         ),
         "14655": GoAdapter(
             version="1.23",
             install=["go test -c ./promql"],
-            test_cmd='go test -v ./promql -run "^TestEvaluations"',
+            test=['go test -v ./promql -run "^TestEvaluations"'],
         ),
         "12874": GoAdapter(
             version="1.23",
             install=["go test -c ./tsdb"],
-            test_cmd='go test -v ./tsdb -run "^TestHead"',
+            test=['go test -v ./tsdb -run "^TestHead"'],
         ),
         "11859": GoAdapter(
             version="1.23",
             install=["go test -c ./tsdb"],
-            test_cmd='go test -v ./tsdb -run "^TestSnapshot"',
+            test=['go test -v ./tsdb -run "^TestSnapshot"'],
         ),
     },
     "immutable-js/immutable-js": {
@@ -319,14 +356,16 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="20",
             install=["npm install"],
             build=["npm run build"],
-            test_cmd="npx jest __tests__/Range.ts --verbose",
+            test=["npx jest __tests__/Range.ts --verbose"],
             log_parser=jest_log_parser,
         ),
         "2005": JavaScriptAdapter(
             version="20",
             install=["npm install"],
             build=["npm run build"],
-            test_cmd=f"npx jest __tests__/OrderedMap.ts __tests__/OrderedSet.ts --silent --json | {JEST_JSON_JQ_TRANSFORM}",
+            test=[
+                f"npx jest __tests__/OrderedMap.ts __tests__/OrderedSet.ts --silent --json | {JEST_JSON_JQ_TRANSFORM}"
+            ],
             log_parser=jest_json_log_parser,
         ),
     },
@@ -335,19 +374,23 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="20",
             # --ignore-scripts is used to avoid downloading chrome for puppeteer
             install=["npm install --ignore-scripts"],
-            test_cmd="npx qunit test/unit/src/math/Sphere.tests.js",
+            test=["npx qunit test/unit/src/math/Sphere.tests.js"],
             log_parser=tap_log_parser,
         ),
         "26589": JavaScriptAdapter(
             version="20",
             install=["npm install --ignore-scripts"],
-            test_cmd="npx qunit test/unit/src/objects/Line.tests.js test/unit/src/objects/Mesh.tests.js test/unit/src/objects/Points.tests.js",
+            test=[
+                "npx qunit test/unit/src/objects/Line.tests.js test/unit/src/objects/Mesh.tests.js test/unit/src/objects/Points.tests.js"
+            ],
             log_parser=tap_log_parser,
         ),
         "25687": JavaScriptAdapter(
             version="20",
             install=["npm install --ignore-scripts"],
-            test_cmd='npx qunit test/unit/src/core/Object3D.tests.js -f "/json|clone|copy/i"',
+            test=[
+                'npx qunit test/unit/src/core/Object3D.tests.js -f "/json|clone|copy/i"'
+            ],
             log_parser=tap_log_parser,
         ),
     },
@@ -355,31 +398,41 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "4152": JavaScriptAdapter(
             version="20",
             install=["npm install"],
-            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/components.test.js"',
+            test=[
+                'COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/components.test.js"'
+            ],
             log_parser=karma_log_parser,
         ),
         "4316": JavaScriptAdapter(
             version="20",
             install=["npm install"],
-            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/events.test.js"',
+            test=[
+                'COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/events.test.js"'
+            ],
             log_parser=karma_log_parser,
         ),
         "4245": JavaScriptAdapter(
             version="20",
             install=["npm install"],
-            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="hooks/test/browser/useId.test.js"',
+            test=[
+                'COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="hooks/test/browser/useId.test.js"'
+            ],
             log_parser=karma_log_parser,
         ),
         "4182": JavaScriptAdapter(
             version="20",
             install=["npm install"],
-            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="hooks/test/browser/errorBoundary.test.js"',
+            test=[
+                'COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="hooks/test/browser/errorBoundary.test.js"'
+            ],
             log_parser=karma_log_parser,
         ),
         "4436": JavaScriptAdapter(
             version="20",
             install=["npm install"],
-            test_cmd='COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/refs.test.js"',
+            test=[
+                'COVERAGE=false BABEL_NO_MODULES=true npx karma start karma.conf.js --single-run --grep="test/browser/refs.test.js"'
+            ],
             log_parser=karma_log_parser,
         ),
     },

@@ -18,7 +18,6 @@ from swebench.harness.utils import (
 @dataclass(kw_only=True)
 class PythonAdapter(Adapter):
     python: str
-    test_cmd: str
     log_parser: Callable[[str], dict[str, str]]
     pre_install: List[str] = field(default_factory=list)
     packages: Optional[str] = None
@@ -151,7 +150,7 @@ class PythonAdapter(Adapter):
         )
         test_command = " ".join(
             [
-                self.test_cmd,
+                *self.test,
                 *get_test_directives(instance),
             ]
         )

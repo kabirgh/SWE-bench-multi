@@ -8,7 +8,6 @@ from swebench.harness.adapters.adapter import Adapter
 
 @dataclass(kw_only=True)
 class CPlusPlusAdapter(Adapter):
-    test_cmd: str
     log_parser: Callable[[str], dict[str, str]]
 
     @property
