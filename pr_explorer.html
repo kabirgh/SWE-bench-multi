@@ -157,7 +157,11 @@
 
         function displayPullRequests(repo) {
             const repoData = allData[repo];
-            const repoUrl = `https://github.com/${repo}`;
+            if (!repoData || repoData.issues.length === 0) {
+                console.log("No issues found for repo", repo);
+                return;
+            }
+            const repoUrl = `https://github.com/${repoData.issues[0].repo}`;
 
             prList.innerHTML = `<h3><a href="${repoUrl}" target="_blank">${repo}</a></h3>`;
             repoData.issues.forEach((instance) => {
