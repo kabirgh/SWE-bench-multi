@@ -50,7 +50,7 @@ class Repo:
             try:
                 values = func(**kwargs)
                 return values
-            except HTTP403ForbiddenError as e:
+            except HTTP403ForbiddenError:
                 while True:
                     rl = self.api.rate_limit.get()
                     logger.info(

@@ -9,7 +9,6 @@ Write to a jsonl file in the given format for a given patch
 ```
 """
 
-import json
 import argparse
 from urllib.parse import urlparse
 

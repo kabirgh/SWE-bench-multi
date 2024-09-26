@@ -505,7 +505,7 @@ def main(
         openai_inference(**inference_args)
     else:
         raise ValueError(f"Invalid model name or path {model_name_or_path}")
-    logger.info(f"Done!")
+    logger.info("Done!")
 
 
 if __name__ == "__main__":

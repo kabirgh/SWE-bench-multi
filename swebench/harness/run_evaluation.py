@@ -299,7 +299,7 @@ def run_instances(
                 try:
                     # Update progress bar, check if instance ran successfully
                     future.result()
-                except Exception as e:
+                except Exception:
                     traceback.print_exc()
                     continue
     print("All instances run.")

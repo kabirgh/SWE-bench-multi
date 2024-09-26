@@ -1,4 +1,4 @@
-import argparse, glob, json, logging, os, re, requests, subprocess, sys
+import argparse, glob, json, logging, os, re, requests, subprocess
 
 from multiprocessing import Pool, Manager
 
