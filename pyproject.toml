@@ -6,5 +6,6 @@ build-backend = 'setuptools.build_meta'
 # Pyflakes
 select = ["F"]
 
+# Not working, don't know why
 [tool.ruff.lint.flake8-implicit-str-concat]
 allow-multiline = false

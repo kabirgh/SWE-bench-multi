@@ -35,6 +35,7 @@
         #pr-list {
             flex: 1;
             overflow-y: auto;
+            overflow-x: hidden;
             padding: 10px;
             border: 1px solid #ccc;
             margin-bottom: 10px;
@@ -77,6 +78,23 @@
         }
         .repo-checkbox {
             margin-right: 5px;
+        }
+        .pr-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .pr-checkbox {
+            flex-shrink: 0;
+            margin-right: 5px;
+            margin-top: 3px;
+        }
+        .pr-text {
+            flex: 1;
+            min-width: 0;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -171,9 +189,24 @@
                 }
                 const prItem = document.createElement('div');
                 prItem.className = 'pr-item';
-                prItem.innerHTML = `${instance.related_issues[0].title} (<a href="${instance.url}" target="_blank">PR #${instance.pull_number}</a>)`;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.className = 'pr-checkbox';
+                checkbox.checked = localStorage.getItem(`pr_seen_${instance.instance_id}`) === 'true';
+                checkbox.onclick = (e) => {
+                    e.stopPropagation();
+                    localStorage.setItem(`pr_seen_${instance.instance_id}`, e.target.checked);
+                };
+
+                const prText = document.createElement('span');
+                prText.className = 'pr-text';
+                prText.innerHTML = `${instance.related_issues[0].title} (<a href="${instance.url}" target="_blank">PR #${instance.pull_number}</a>)`;
+
+                prItem.appendChild(checkbox);
+                prItem.appendChild(prText);
                 prItem.onclick = (e) => {
-                    if (e.target.tagName !== 'A') {
+                    if (e.target !== checkbox && e.target.tagName !== 'A') {
                         displayPRDetails(instance);
                     }
                 };
