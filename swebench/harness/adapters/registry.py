@@ -443,19 +443,20 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=[
                 "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest -q"
             ],
+            # TODO: mvnd?
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testByteSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testShortSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testIntSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testLongSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testFloatSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testDoubleSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testByteSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testShortSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testIntSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testLongSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testFloatSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testDoubleSerialization",
                 # PASS_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedInASingleElementArraySerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testReallyLongValuesSerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveLongAutoboxedSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedInASingleElementArraySerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testReallyLongValuesSerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveLongAutoboxedSerialization",
             ],
         ),
         "2024": JavaMavenAdapter(
@@ -465,9 +466,9 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.FieldNamingTest#testUpperCaseWithUnderscores",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicySerialization",
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicyDeserialiation",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.FieldNamingTest#testUpperCaseWithUnderscores",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicySerialization",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicyDeserialiation",
             ],
         ),
         "2479": JavaMavenAdapter(
@@ -477,10 +478,10 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeAdapterForObjectAndJsonElements",
-                "mvn test -B -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeHierarchyAdapterJsonElements",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeAdapterForObjectAndJsonElements",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeHierarchyAdapterJsonElements",
                 # PASS_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.GsonBuilderTest#testModificationAfterCreate",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testModificationAfterCreate",
             ],
         ),
         "2134": JavaMavenAdapter(
@@ -490,10 +491,10 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidDay",
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidMonth",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidDay",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidMonth",
                 # PASS_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseWithDefaultTimezone",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseWithDefaultTimezone",
             ],
         ),
         "2061": JavaMavenAdapter(
@@ -503,13 +504,85 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testHasNextEndOfDocument",
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testHasNext_endOfDocument",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testHasNextEndOfDocument",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testHasNext_endOfDocument",
                 # PASS_TO_PASS
-                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyObject",
-                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyArray",
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject",
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyObject",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyArray",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject",
+                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
+            ],
+        ),
+    },
+    "apache/druid": {
+        "15402": JavaMavenAdapter(
+            version="11",
+            install=[
+                "mvn test -B -pl processing -test=org.apache.druid.query.groupby.GroupByQueryQueryToolChestTest -q"
+            ],
+            test=[
+                # FAIL_TO_PASS
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.query.groupby.GroupByQueryQueryToolChestTest#testCacheStrategy",
+                # PASS_TO_PASS
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.query.groupby.GroupByQueryQueryToolChestTest#testResultLevelCacheKeyWithSubTotalsSpec",
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.query.groupby.GroupByQueryQueryToolChestTest#testMultiColumnCacheStrategy",
+            ],
+        ),
+        "14092": JavaMavenAdapter(
+            version="11",
+            install=[
+                "mvn clean install -B -pl processing,cloud/aws-common,cloud/gcp-common -DskipTests -am",
+                "mvn test -B -T 1C -pl server -Dtest=org.apache.druid.discovery.DruidLeaderClientTest -q",
+            ],
+            test=[
+                # FAIL_TO_PASS
+                "mvn test -B -T 1C -pl server -Dtest=org.apache.druid.discovery.DruidLeaderClientTest#test503ResponseFromServerAndCacheRefresh",
+                # PASS_TO_PASS
+                "mvn test -B -T 1C -pl server -Dtest=org.apache.druid.discovery.DruidLeaderClientTest#testServerFailureAndRedirect",
+            ],
+        ),
+        "14136": JavaMavenAdapter(
+            version="11",
+            install=[
+                "mvn test -B -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest -q",
+            ],
+            test=[
+                # FAIL_TO_PASS
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest#testOverlapSecondContainsFirstZeroLengthInterval",
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest#testOverlapSecondContainsFirstZeroLengthInterval2",
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest#testOverlapSecondContainsFirstZeroLengthInterval3",
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest#testOverlapSecondContainsFirstZeroLengthInterval4",
+                # PASS_TO_PASS
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest#testOverlapFirstContainsSecond",
+                "mvn test -B -T 1C -pl processing -Dtest=org.apache.druid.timeline.VersionedIntervalTimelineTest#testOverlapSecondContainsFirst",
+            ],
+        ),
+        "13704": JavaMavenAdapter(
+            version="11",
+            install=[
+                # Update the pom.xml to use the correct version of the resource bundle. See https://github.com/apache/druid/pull/14054
+                r"sed -i 's/<resourceBundle>org.apache.apache.resources:apache-jar-resource-bundle:1.5-SNAPSHOT<\/resourceBundle>/<resourceBundle>org.apache.apache.resources:apache-jar-resource-bundle:1.5<\/resourceBundle>/' pom.xml",
+                "mvn clean install -B -pl processing -DskipTests -am",
+            ],
+            test=[
+                # FAIL_TO_PASS
+                "mvn test -B -pl processing -Dtest=org.apache.druid.query.aggregation.post.ArithmeticPostAggregatorTest#testPow",
+                # PASS_TO_PASS
+                "mvn test -B -pl processing -Dtest=org.apache.druid.query.aggregation.post.ArithmeticPostAggregatorTest#testDiv",
+                "mvn test -B -pl processing -Dtest=org.apache.druid.query.aggregation.post.ArithmeticPostAggregatorTest#testQuotient",
+            ],
+        ),
+        "16875": JavaMavenAdapter(
+            version="11",
+            install=[
+                "mvn clean install -B -pl server -DskipTests -am",
+            ],
+            test=[
+                # FAIL_TO_PASS
+                "mvn test -B -pl server -Dtest=org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest#testMonitorWithPeon",
+                # PASS_TO_PASS
+                "mvn test -B -pl server -Dtest=org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest#testMonitorWithNulls",
+                "mvn test -B -pl server -Dtest=org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest#testMonitorIndexer",
             ],
         ),
     },
