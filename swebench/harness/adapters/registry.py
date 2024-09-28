@@ -586,4 +586,51 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
         ),
     },
+    "uutils/coreutils": {
+        "6690": RustAdapter(
+            version="1.81",
+            install=[
+                "cargo test --no-run -- test_cp_cp test_cp_same_file test_cp_multiple_files test_cp_single_file test_cp_no_file",
+            ],
+            test=[
+                "cargo test --no-fail-fast -- test_cp_cp test_cp_same_file test_cp_multiple_files test_cp_single_file test_cp_no_file",
+            ],
+        ),
+        "6731": RustAdapter(
+            version="1.81",
+            install=[
+                "cargo test backslash --no-run",
+            ],
+            test=[
+                "cargo test backslash --no-fail-fast",
+            ],
+        ),
+        "6575": RustAdapter(
+            version="1.81",
+            install=[
+                "cargo test cksum --no-run",
+            ],
+            test=[
+                "cargo test cksum --no-fail-fast",
+            ],
+        ),
+        "6682": RustAdapter(
+            version="1.81",
+            install=[
+                "cargo test mkdir --no-run",
+            ],
+            test=[
+                "cargo test mkdir --no-fail-fast",
+            ],
+        ),
+        "6377": RustAdapter(
+            version="1.81",
+            install=[
+                "cargo test test_env --no-run",
+            ],
+            test=[
+                "cargo test test_env --no-fail-fast",
+            ],
+        ),
+    },
 }

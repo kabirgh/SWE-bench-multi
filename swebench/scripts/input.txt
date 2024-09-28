@@ -1,402 +1,183 @@
-Executing: mvn test -B -pl server -Dtest=org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest#testMonitorWithPeon
-[INFO] Scanning for projects...
-[INFO]
-[INFO] -------------------< org.apache.druid:druid-server >--------------------
-[INFO] Building druid-server 31.0.0-SNAPSHOT
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO]
-[INFO] --- maven-checkstyle-plugin:3.0.0:check (validate) @ druid-server ---
-[INFO] Starting audit...
-Audit done.
-[INFO]
-[INFO] >>> maven-pmd-plugin:3.16.0:check (validate) > :pmd @ druid-server >>>
-[INFO]
-[INFO] --- maven-pmd-plugin:3.16.0:pmd (pmd) @ druid-server ---
-[INFO] PMD version: 6.42.0
-[INFO]
-[INFO] <<< maven-pmd-plugin:3.16.0:check (validate) < :pmd @ druid-server <<<
-[INFO]
-[INFO]
-[INFO] --- maven-pmd-plugin:3.16.0:check (validate) @ druid-server ---
-[INFO] PMD version: 6.42.0
-[INFO]
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (enforce-maven-version) @ druid-server ---
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (enforce-java-version) @ druid-server ---
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (default-cli) @ druid-server ---
-[INFO]
-[INFO] --- git-commit-id-plugin:4.9.10:revision (default) @ druid-server ---
-[INFO]
-[INFO] --- jacoco-maven-plugin:0.8.7:prepare-agent (prepare-agent) @ druid-server ---
-[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/root/druid/server/target/jacoco.exec,excludes=org/apache/druid/metadata/BasicDataSourceExt.class:org/apache/druid/server/QueryResponse.class:org/apache/druid/curator/CuratorModule.class:org/apache/druid/server/SubqueryGuardrailHelperProvider.class
-[INFO]
-[INFO] --- maven-remote-resources-plugin:1.7.0:process (process-resource-bundles) @ druid-server ---
-[INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
-[INFO] Copying 3 resources from 1 bundle.
-[INFO]
-[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ druid-server ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] skip non existing resourceDirectory /root/druid/server/src/main/resources
-[INFO] Copying 3 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ druid-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO]
-[INFO] --- forbiddenapis:3.2:check (compile) @ druid-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe-1.8
-[INFO] Reading bundled API signatures: jdk-system-out
-[INFO] Reading API signatures: /root/druid/codestyle/joda-time-forbidden-apis.txt
-[INFO] Reading API signatures: /root/druid/codestyle/druid-forbidden-apis.txt
-[INFO] Loading classes to check...
-[INFO] Scanning classes for violations...
-[INFO] Scanned 1218 class file(s) for forbidden API invocations (in 1.23s), 0 error(s).
-[INFO]
-[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ druid-server ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] Copying 8 resources
-[INFO] Copying 3 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ druid-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO]
-[INFO] --- forbiddenapis:3.2:testCheck (testCompile) @ druid-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe-1.8
-[INFO] Reading API signatures: /root/druid/codestyle/joda-time-forbidden-apis.txt
-[INFO] Reading API signatures: /root/druid/codestyle/druid-forbidden-apis.txt
-[INFO] Loading classes to check...
-[INFO] Scanning classes for violations...
-[INFO] Scanned 939 class file(s) for forbidden API invocations (in 1.43s), 0 error(s).
-[INFO]
-[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ druid-server ---
-[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
-[INFO]
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.513 s <<< FAILURE! -- in org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon -- Time elapsed: 0.480 s <<< ERROR!
-com.google.inject.ConfigurationException:
-Guice configuration errors:
+   Compiling coreutils v0.0.26 (/root/coreutils)
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> src/uu/seq/src/seq.rs:18:7
+   |
+18 | #[cfg(fuzzing)]
+   |       ^^^^^^^
+   |
+   = help: expected names are: `clippy`, `debug_assertions`, `doc`, `docsrs`, `doctest`, `feature`, `miri`, `overflow_checks`, `panic`, `proc_macro`, `relocation_model`, `rustfmt`, `sanitize`, `sanitizer_cfi_generalize_pointers`, `sanitizer_cfi_normalize_integers`, `target_abi`, `target_arch`, `target_endian`, `target_env`, `target_family`, `target_feature`, `target_has_atomic`, `target_has_atomic_equal_alignment`, `target_has_atomic_load_store`, `target_os`, `target_pointer_width`, `target_thread_local`, `target_vendor`, `test`, `ub_checks`, `unix`, and `windows`
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+   = note: `#[warn(unexpected_cfgs)]` on by default
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+warning: unexpected `cfg` condition name: `fuzzing`
+  --> src/uu/seq/src/seq.rs:20:11
+   |
+20 | #[cfg(not(fuzzing))]
+   |           ^^^^^^^
+   |
+   = help: consider using a Cargo feature instead
+   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
+            [lints.rust]
+            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
+   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
+   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
 
-1 error
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1045)
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1004)
-	at com.google.inject.internal.InjectorImpl.getInstance(InjectorImpl.java:1054)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitor.<init>(WorkerTaskCountStatsMonitor.java:55)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon(WorkerTaskCountStatsMonitorTest.java:327)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+warning: `uu_seq` (lib) generated 2 warnings
+warning: unexpected `cfg` condition value: `expensive_tests`
+    --> tests/common/util.rs:3319:20
+     |
+3319 |     #[cfg_attr(not(feature = "expensive_tests"), ignore)]
+     |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     |
+     = note: expected values for `feature` are: `arch`, `base32`, `base64`, `basename`, `basenc`, `cat`, `chcon`, `chgrp`, `chmod`, `chown`, `chroot`, `cksum`, `comm`, `cp`, `csplit`, `cut`, `date`, `dd`, `default`, `df`, `dir`, `dircolors`, `dirname`, `du`, `echo`, `env`, `expand`, `expr`, `factor`, `false`, `feat_Tier1`, `feat_acl`, `feat_common_core`, `feat_os_macos`, and `feat_os_unix` and 95 more
+     = help: consider adding `expensive_tests` as a feature in `Cargo.toml`
+     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+     = note: `#[warn(unexpected_cfgs)]` on by default
 
-[INFO] Running org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.014 s <<< FAILURE! -- in org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon -- Time elapsed: 0.010 s <<< ERROR!
-com.google.inject.ConfigurationException:
-Guice configuration errors:
+warning: `coreutils` (test "test_util_name") generated 1 warning
+warning: `coreutils` (test "tests") generated 1 warning (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.41s
+     Running unittests src/bin/coreutils.rs (target/debug/deps/coreutils-2444b61d74ce5dec)
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+running 0 tests
 
-1 error
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1045)
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1004)
-	at com.google.inject.internal.InjectorImpl.getInstance(InjectorImpl.java:1054)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitor.<init>(WorkerTaskCountStatsMonitor.java:55)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon(WorkerTaskCountStatsMonitorTest.java:327)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-[INFO] Running org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.013 s <<< FAILURE! -- in org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon -- Time elapsed: 0.009 s <<< ERROR!
-com.google.inject.ConfigurationException:
-Guice configuration errors:
+     Running tests/test_util_name.rs (target/debug/deps/test_util_name-f0879f8cf36f0844)
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+running 0 tests
 
-1 error
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1045)
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1004)
-	at com.google.inject.internal.InjectorImpl.getInstance(InjectorImpl.java:1054)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitor.<init>(WorkerTaskCountStatsMonitor.java:55)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon(WorkerTaskCountStatsMonitorTest.java:327)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 79 filtered out; finished in 0.00s
 
-[INFO] Running org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.016 s <<< FAILURE! -- in org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[ERROR] org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon -- Time elapsed: 0.013 s <<< ERROR!
-com.google.inject.ConfigurationException:
-Guice configuration errors:
+     Running tests/tests.rs (target/debug/deps/tests-c8a90e3153f4b0ab)
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+running 62 tests
+test test_env::test_combined_file_set_unset ... ok
+test test_env::test_combined_file_set ... ok
+test test_env::test_empty_name ... ok
+test test_env::test_debug1_part_of_string_arg ... ok
+test test_env::test_change_directory ... ok
+test test_env::test_echo ... ok
+test test_env::test_debug_2 ... ok
+test test_env::test_debug_1 ... ok
+test test_env::test_env_arg_ignore_signal_empty ... FAILED
+test test_env::test_env_arg_ignore_signal_special_signals ... FAILED
+test test_env::test_debug2_part_of_string_arg ... ok
+test test_env::test_env_arg_ignore_signal_invalid_signals ... FAILED
+test test_env::test_env_help ... ok
+test test_env::test_env_version ... ok
+test test_env::test_fail_change_directory ... ok
+test test_env::test_env_with_empty_executable_double_quotes ... ok
+test test_env::test_env_with_empty_executable_single_quotes ... ok
+test test_env::test_env_overwrite_arg0 ... ok
+test test_env::test_fail_null_with_program ... ok
+test test_env::test_file_option ... ok
+test test_env::test_env_arg_argv0_overwrite ... ok
+test test_env::test_gnu_e20 ... ok
+test test_env::test_raw_string_parser::test_ascii_only_take_one_look_at_correct_data_and_end_behavior ... ok
+test test_env::test_raw_string_parser::test_deal_with_invalid_encoding ... ok
+test test_env::test_raw_string_parser::test_multi_byte_codes_look_at_remaining_start_middle_end ... ok
+test test_env::test_raw_string_parser::test_multi_byte_codes_put_one_ascii_start_middle_end_try_invalid_ascii ... ok
+test test_env::test_invalid_arg ... ok
+test test_env::test_raw_string_parser::test_multi_byte_codes_put_string_utf8_start_middle_end ... ok
+test test_env::test_raw_string_parser::test_multi_byte_codes_skip_multiple_ascii_bounded_good_and_bad ... ok
+test test_env::test_raw_string_parser::test_multi_byte_codes_skip_one_take_one_skip_until_ascii_char_or_end ... ok
+test test_env::test_raw_string_parser::test_multi_byte_codes_take_one_look_at_correct_data_and_end_behavior ... ok
+test test_env::test_null_delimiter ... ok
+test test_env::test_multiple_name_value_pairs ... ok
+test test_env::test_ignore_environment ... ok
+test test_env::test_split_string_into_args_debug_output_whitespace_handling ... ok
+test test_env::test_single_name_value_pair ... ok
+test test_env::test_split_string_into_args_long_option_whitespace_handling ... ok
+test test_env::test_split_string_into_args_one_argument ... ok
+test test_env::test_split_string_into_args_one_argument_no_quotes ... ok
+test test_env::test_split_string_into_args_s_escaped_c_not_allowed ... ok
+test test_env::tests_split_iterator::join_followed_by_split_is_identity ... ok
+test test_env::tests_split_iterator::split_ ... ok
+test test_env::tests_split_iterator::split_carriage_return ... ok
+test test_env::tests_split_iterator::split_comments ... ok
+test test_env::tests_split_iterator::split_double_quotes ... ok
+test test_env::tests_split_iterator::split_empty ... ok
+test test_env::tests_split_iterator::split_error_fail_with_unknown_escape_sequences ... ok
+test test_env::tests_split_iterator::split_errors ... ok
+test test_env::tests_split_iterator::split_initial_whitespace_is_removed ... ok
+test test_env::tests_split_iterator::split_single_quotes ... ok
+test test_env::tests_split_iterator::split_trailing_backslash ... ok
+test test_env::tests_split_iterator::split_trailing_whitespace_is_removed ... ok
+test test_env::test_split_string_into_args_s_escaping_challenge ... ok
+test test_env::tests_split_iterator::split_unquoted ... ok
+test test_env::tests_split_iterator::test_join ... ok
+test test_env::tests_split_iterator::test_quote ... ok
+test test_env::test_unset_variable ... ok
+test test_env::test_split_string_into_args_s_whitespace_handling ... ok
+test test_env::test_unset_invalid_variables ... ok
+test test_env::test_env_arg_argv0_overwrite_mixed_with_string_args ... ok
+test test_env::test_env_parsing_errors ... ok
+test test_env::test_env_arg_ignore_signal_valid_signals ... FAILED
 
-1 error
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1045)
-	at com.google.inject.internal.InjectorImpl.getProvider(InjectorImpl.java:1004)
-	at com.google.inject.internal.InjectorImpl.getInstance(InjectorImpl.java:1054)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitor.<init>(WorkerTaskCountStatsMonitor.java:55)
-	at org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon(WorkerTaskCountStatsMonitorTest.java:327)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+failures:
 
-[INFO]
-[INFO] Results:
-[INFO]
-[ERROR] Errors:
-[ERROR] org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest.testMonitorWithPeon
-[ERROR]   Run 1: WorkerTaskCountStatsMonitorTest.testMonitorWithPeon:327 » Configuration Guice configuration errors:
+---- test_env::test_env_arg_ignore_signal_empty stdout ----
+run: /root/coreutils/target/debug/coreutils env --ignore-signal= echo hello
+thread 'test_env::test_env_arg_ignore_signal_empty' panicked at tests/by-util/test_env.rs:874:10:
+Command was expected to succeed. code: 125
+stdout =
+ stderr = env: error: unexpected argument '--ignore-signal' found
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+  tip: to pass '--ignore-signal' as a value, use '-- --ignore-signal'
 
-1 error
-[ERROR]   Run 2: WorkerTaskCountStatsMonitorTest.testMonitorWithPeon:327 » Configuration Guice configuration errors:
+Usage: /root/coreutils/target/debug/coreutils env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+For more information, try '--help'.
+env: use -[v]S to pass options in shebang lines
 
-1 error
-[ERROR]   Run 3: WorkerTaskCountStatsMonitorTest.testMonitorWithPeon:327 » Configuration Guice configuration errors:
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+---- test_env::test_env_arg_ignore_signal_special_signals stdout ----
+run: /root/coreutils/target/debug/coreutils env --ignore-signal=stop echo hello
+thread 'test_env::test_env_arg_ignore_signal_special_signals' panicked at tests/by-util/test_env.rs:818:10:
+'env: error: unexpected argument '--ignore-signal' found
 
-1 error
-[ERROR]   Run 4: WorkerTaskCountStatsMonitorTest.testMonitorWithPeon:327 » Configuration Guice configuration errors:
+  tip: to pass '--ignore-signal' as a value, use '-- --ignore-signal'
 
-1) No implementation for org.apache.druid.server.metrics.IndexerTaskCountStatsProvider was bound.
-  while locating org.apache.druid.server.metrics.IndexerTaskCountStatsProvider
+Usage: /root/coreutils/target/debug/coreutils env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
 
-1 error
-[INFO]
-[INFO]
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  24.307 s
-[INFO] Finished at: 2024-09-27T15:40:04Z
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project druid-server:
-[ERROR]
-[ERROR] Please refer to /root/druid/server/target/surefire-reports for the individual test results.
-[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
-[ERROR] -> [Help 1]
-[ERROR]
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR]
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+For more information, try '--help'.
+env: use -[v]S to pass options in shebang lines
+' does not contain 'env: failed to set signal action for signal 19: Invalid argument'
 
-****************************************
+---- test_env::test_env_arg_ignore_signal_invalid_signals stdout ----
+run: /root/coreutils/target/debug/coreutils env --ignore-signal=banana
+thread 'test_env::test_env_arg_ignore_signal_invalid_signals' panicked at tests/by-util/test_env.rs:790:10:
+'env: error: unexpected argument '--ignore-signal' found
 
-Executing: mvn test -B -pl server -Dtest=org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest#testMonitorWithNulls
-[INFO] Scanning for projects...
-[INFO]
-[INFO] -------------------< org.apache.druid:druid-server >--------------------
-[INFO] Building druid-server 31.0.0-SNAPSHOT
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO]
-[INFO] --- maven-checkstyle-plugin:3.0.0:check (validate) @ druid-server ---
-[INFO] Starting audit...
-Audit done.
-[INFO]
-[INFO] >>> maven-pmd-plugin:3.16.0:check (validate) > :pmd @ druid-server >>>
-[INFO]
-[INFO] --- maven-pmd-plugin:3.16.0:pmd (pmd) @ druid-server ---
-[INFO] PMD version: 6.42.0
-[INFO]
-[INFO] <<< maven-pmd-plugin:3.16.0:check (validate) < :pmd @ druid-server <<<
-[INFO]
-[INFO]
-[INFO] --- maven-pmd-plugin:3.16.0:check (validate) @ druid-server ---
-[INFO] PMD version: 6.42.0
-[INFO]
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (enforce-maven-version) @ druid-server ---
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (enforce-java-version) @ druid-server ---
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (default-cli) @ druid-server ---
-[INFO]
-[INFO] --- git-commit-id-plugin:4.9.10:revision (default) @ druid-server ---
-[INFO]
-[INFO] --- jacoco-maven-plugin:0.8.7:prepare-agent (prepare-agent) @ druid-server ---
-[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/root/druid/server/target/jacoco.exec,excludes=org/apache/druid/metadata/BasicDataSourceExt.class:org/apache/druid/server/QueryResponse.class:org/apache/druid/curator/CuratorModule.class:org/apache/druid/server/SubqueryGuardrailHelperProvider.class
-[INFO]
-[INFO] --- maven-remote-resources-plugin:1.7.0:process (process-resource-bundles) @ druid-server ---
-[INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
-[INFO] Copying 3 resources from 1 bundle.
-[INFO]
-[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ druid-server ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] skip non existing resourceDirectory /root/druid/server/src/main/resources
-[INFO] Copying 3 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ druid-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO]
-[INFO] --- forbiddenapis:3.2:check (compile) @ druid-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe-1.8
-[INFO] Reading bundled API signatures: jdk-system-out
-[INFO] Reading API signatures: /root/druid/codestyle/joda-time-forbidden-apis.txt
-[INFO] Reading API signatures: /root/druid/codestyle/druid-forbidden-apis.txt
-[INFO] Loading classes to check...
-[INFO] Scanning classes for violations...
-[INFO] Scanned 1218 class file(s) for forbidden API invocations (in 1.37s), 0 error(s).
-[INFO]
-[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ druid-server ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] Copying 8 resources
-[INFO] Copying 3 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ druid-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO]
-[INFO] --- forbiddenapis:3.2:testCheck (testCompile) @ druid-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe-1.8
-[INFO] Reading API signatures: /root/druid/codestyle/joda-time-forbidden-apis.txt
-[INFO] Reading API signatures: /root/druid/codestyle/druid-forbidden-apis.txt
-[INFO] Loading classes to check...
-[INFO] Scanning classes for violations...
-[INFO] Scanned 939 class file(s) for forbidden API invocations (in 1.17s), 0 error(s).
-[INFO]
-[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ druid-server ---
-[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
-[INFO]
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.458 s -- in org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[INFO]
-[INFO] Results:
-[INFO]
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-[INFO]
-[INFO]
-[INFO] --- animal-sniffer-maven-plugin:1.23:check (check-java-api) @ druid-server ---
-[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  28.126 s
-[INFO] Finished at: 2024-09-27T15:40:34Z
-[INFO] ------------------------------------------------------------------------
+  tip: to pass '--ignore-signal' as a value, use '-- --ignore-signal'
 
-****************************************
+Usage: /root/coreutils/target/debug/coreutils env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
 
-Executing: mvn test -B -pl server -Dtest=org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest#testMonitorIndexer
-[INFO] Scanning for projects...
-[INFO]
-[INFO] -------------------< org.apache.druid:druid-server >--------------------
-[INFO] Building druid-server 31.0.0-SNAPSHOT
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO]
-[INFO] --- maven-checkstyle-plugin:3.0.0:check (validate) @ druid-server ---
-[INFO] Starting audit...
-Audit done.
-[INFO]
-[INFO] >>> maven-pmd-plugin:3.16.0:check (validate) > :pmd @ druid-server >>>
-[INFO]
-[INFO] --- maven-pmd-plugin:3.16.0:pmd (pmd) @ druid-server ---
-[INFO] PMD version: 6.42.0
-[INFO]
-[INFO] <<< maven-pmd-plugin:3.16.0:check (validate) < :pmd @ druid-server <<<
-[INFO]
-[INFO]
-[INFO] --- maven-pmd-plugin:3.16.0:check (validate) @ druid-server ---
-[INFO] PMD version: 6.42.0
-[INFO]
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (enforce-maven-version) @ druid-server ---
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (enforce-java-version) @ druid-server ---
-[INFO]
-[INFO] --- maven-enforcer-plugin:3.0.0:enforce (default-cli) @ druid-server ---
-[INFO]
-[INFO] --- git-commit-id-plugin:4.9.10:revision (default) @ druid-server ---
-[INFO]
-[INFO] --- jacoco-maven-plugin:0.8.7:prepare-agent (prepare-agent) @ druid-server ---
-[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/root/druid/server/target/jacoco.exec,excludes=org/apache/druid/metadata/BasicDataSourceExt.class:org/apache/druid/server/QueryResponse.class:org/apache/druid/curator/CuratorModule.class:org/apache/druid/server/SubqueryGuardrailHelperProvider.class
-[INFO]
-[INFO] --- maven-remote-resources-plugin:1.7.0:process (process-resource-bundles) @ druid-server ---
-[INFO] Preparing remote bundle org.apache.apache.resources:apache-jar-resource-bundle:1.5
-[INFO] Copying 3 resources from 1 bundle.
-[INFO]
-[INFO] --- maven-resources-plugin:3.2.0:resources (default-resources) @ druid-server ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] skip non existing resourceDirectory /root/druid/server/src/main/resources
-[INFO] Copying 3 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ druid-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO]
-[INFO] --- forbiddenapis:3.2:check (compile) @ druid-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe-1.8
-[INFO] Reading bundled API signatures: jdk-system-out
-[INFO] Reading API signatures: /root/druid/codestyle/joda-time-forbidden-apis.txt
-[INFO] Reading API signatures: /root/druid/codestyle/druid-forbidden-apis.txt
-[INFO] Loading classes to check...
-[INFO] Scanning classes for violations...
-[INFO] Scanned 1218 class file(s) for forbidden API invocations (in 1.32s), 0 error(s).
-[INFO]
-[INFO] --- maven-resources-plugin:3.2.0:testResources (default-testResources) @ druid-server ---
-[INFO] Using 'UTF-8' encoding to copy filtered resources.
-[INFO] Using 'UTF-8' encoding to copy filtered properties files.
-[INFO] Copying 8 resources
-[INFO] Copying 3 resources
-[INFO]
-[INFO] --- maven-compiler-plugin:3.11.0:testCompile (default-testCompile) @ druid-server ---
-[INFO] Nothing to compile - all classes are up to date
-[INFO]
-[INFO] --- forbiddenapis:3.2:testCheck (testCompile) @ druid-server ---
-[INFO] Scanning for classes to check...
-[INFO] Reading bundled API signatures: jdk-unsafe-1.8
-[INFO] Reading API signatures: /root/druid/codestyle/joda-time-forbidden-apis.txt
-[INFO] Reading API signatures: /root/druid/codestyle/druid-forbidden-apis.txt
-[INFO] Loading classes to check...
-[INFO] Scanning classes for violations...
-[INFO] Scanned 939 class file(s) for forbidden API invocations (in 1.24s), 0 error(s).
-[INFO]
-[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ druid-server ---
-[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
-[INFO]
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.611 s -- in org.apache.druid.server.metrics.WorkerTaskCountStatsMonitorTest
-[INFO]
-[INFO] Results:
-[INFO]
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
-[INFO]
-[INFO]
-[INFO] --- animal-sniffer-maven-plugin:1.23:check (check-java-api) @ druid-server ---
-[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD SUCCESS
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  27.668 s
-[INFO] Finished at: 2024-09-27T15:41:04Z
-[INFO] ------------------------------------------------------------------------
+For more information, try '--help'.
+env: use -[v]S to pass options in shebang lines
+' does not contain 'env: 'banana': invalid signal'
 
-****************************************
+---- test_env::test_env_arg_ignore_signal_valid_signals stdout ----
+run: /root/coreutils/target/debug/coreutils env --ignore-signal=int sleep 1000
+thread 'test_env::test_env_arg_ignore_signal_valid_signals' panicked at tests/by-util/test_env.rs:854:9:
+assertion failed: target.is_alive()
 
+
+failures:
+    test_env::test_env_arg_ignore_signal_empty
+    test_env::test_env_arg_ignore_signal_invalid_signals
+    test_env::test_env_arg_ignore_signal_special_signals
+    test_env::test_env_arg_ignore_signal_valid_signals
+
+test result: FAILED. 58 passed; 4 failed; 0 ignored; 0 measured; 2995 filtered out; finished in 0.63s
+
+error: test failed, to rerun pass `--test tests`
+error: 1 target failed:
+    `--test tests`
