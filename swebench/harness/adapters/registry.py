@@ -598,39 +598,53 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         ),
         "6731": RustAdapter(
             version="1.81",
-            install=[
-                "cargo test backslash --no-run",
-            ],
-            test=[
-                "cargo test backslash --no-fail-fast",
-            ],
+            install=["cargo test backslash --no-run"],
+            test=["cargo test backslash --no-fail-fast"],
         ),
         "6575": RustAdapter(
             version="1.81",
-            install=[
-                "cargo test cksum --no-run",
-            ],
-            test=[
-                "cargo test cksum --no-fail-fast",
-            ],
+            install=["cargo test cksum --no-run"],
+            test=["cargo test cksum --no-fail-fast"],
         ),
         "6682": RustAdapter(
             version="1.81",
-            install=[
-                "cargo test mkdir --no-run",
-            ],
-            test=[
-                "cargo test mkdir --no-fail-fast",
-            ],
+            install=["cargo test mkdir --no-run"],
+            test=["cargo test mkdir --no-fail-fast"],
         ),
         "6377": RustAdapter(
             version="1.81",
-            install=[
-                "cargo test test_env --no-run",
-            ],
-            test=[
-                "cargo test test_env --no-fail-fast",
-            ],
+            install=["cargo test test_env --no-run"],
+            test=["cargo test test_env --no-fail-fast"],
+        ),
+    },
+    "nushell/nushell": {
+        "13246": RustAdapter(
+            version="1.77",
+            install=["cargo test -p nu-command --no-run --test main find::"],
+            build=["cargo build"],
+            test=["cargo test -p nu-command --no-fail-fast --test main find::"],
+        ),
+        "12950": RustAdapter(
+            version="1.77",
+            install=["cargo test external_arguments --no-run"],
+            test=["cargo test external_arguments --no-fail-fast"],
+        ),
+        "12901": RustAdapter(
+            version="1.77",
+            install=["cargo test --no-run shell::env"],
+            test=["cargo test --no-fail-fast shell::env"],
+        ),
+        "13831": RustAdapter(
+            version="1.79",
+            install=["cargo test -p nu-command --no-run split_column"],
+            build=["cargo build"],
+            test=["cargo test -p nu-command --no-fail-fast split_column"],
+        ),
+        "13605": RustAdapter(
+            version="1.78",
+            install=["cargo test -p nu-command --no-run ls::"],
+            build=["cargo build"],
+            test=["cargo test -p nu-command --no-fail-fast ls::"],
         ),
     },
 }

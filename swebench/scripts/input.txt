@@ -1,183 +1,84 @@
-   Compiling coreutils v0.0.26 (/root/coreutils)
-warning: unexpected `cfg` condition name: `fuzzing`
-  --> src/uu/seq/src/seq.rs:18:7
-   |
-18 | #[cfg(fuzzing)]
-   |       ^^^^^^^
-   |
-   = help: expected names are: `clippy`, `debug_assertions`, `doc`, `docsrs`, `doctest`, `feature`, `miri`, `overflow_checks`, `panic`, `proc_macro`, `relocation_model`, `rustfmt`, `sanitize`, `sanitizer_cfi_generalize_pointers`, `sanitizer_cfi_normalize_integers`, `target_abi`, `target_arch`, `target_endian`, `target_env`, `target_family`, `target_feature`, `target_has_atomic`, `target_has_atomic_equal_alignment`, `target_has_atomic_load_store`, `target_os`, `target_pointer_width`, `target_thread_local`, `target_vendor`, `test`, `ub_checks`, `unix`, and `windows`
-   = help: consider using a Cargo feature instead
-   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
-            [lints.rust]
-            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
-   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
-   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
-   = note: `#[warn(unexpected_cfgs)]` on by default
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.65s
+     Running unittests src/lib.rs (target/debug/deps/nu_command-c93ed1ca027da2d2)
 
-warning: unexpected `cfg` condition name: `fuzzing`
-  --> src/uu/seq/src/seq.rs:20:11
-   |
-20 | #[cfg(not(fuzzing))]
-   |           ^^^^^^^
-   |
-   = help: consider using a Cargo feature instead
-   = help: or consider adding in `Cargo.toml` the `check-cfg` lint config for the lint:
-            [lints.rust]
-            unexpected_cfgs = { level = "warn", check-cfg = ['cfg(fuzzing)'] }
-   = help: or consider adding `println!("cargo::rustc-check-cfg=cfg(fuzzing)");` to the top of the `build.rs`
-   = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+running 2 tests
+test sort_utils::tests::test_sort_value ... ok
+test sort_utils::tests::test_sort_value_in_place ... ok
 
-warning: `uu_seq` (lib) generated 2 warnings
-warning: unexpected `cfg` condition value: `expensive_tests`
-    --> tests/common/util.rs:3319:20
-     |
-3319 |     #[cfg_attr(not(feature = "expensive_tests"), ignore)]
-     |                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-     |
-     = note: expected values for `feature` are: `arch`, `base32`, `base64`, `basename`, `basenc`, `cat`, `chcon`, `chgrp`, `chmod`, `chown`, `chroot`, `cksum`, `comm`, `cp`, `csplit`, `cut`, `date`, `dd`, `default`, `df`, `dir`, `dircolors`, `dirname`, `du`, `echo`, `env`, `expand`, `expr`, `factor`, `false`, `feat_Tier1`, `feat_acl`, `feat_common_core`, `feat_os_macos`, and `feat_os_unix` and 95 more
-     = help: consider adding `expensive_tests` as a feature in `Cargo.toml`
-     = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
-     = note: `#[warn(unexpected_cfgs)]` on by default
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 405 filtered out; finished in 0.00s
 
-warning: `coreutils` (test "test_util_name") generated 1 warning
-warning: `coreutils` (test "tests") generated 1 warning (1 duplicate)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 11.41s
-     Running unittests src/bin/coreutils.rs (target/debug/deps/coreutils-2444b61d74ce5dec)
+     Running tests/main.rs (target/debug/deps/main-6388b50a6fd74b3e)
 
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-     Running tests/test_util_name.rs (target/debug/deps/test_util_name-f0879f8cf36f0844)
-
-running 0 tests
-
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 79 filtered out; finished in 0.00s
-
-     Running tests/tests.rs (target/debug/deps/tests-c8a90e3153f4b0ab)
-
-running 62 tests
-test test_env::test_combined_file_set_unset ... ok
-test test_env::test_combined_file_set ... ok
-test test_env::test_empty_name ... ok
-test test_env::test_debug1_part_of_string_arg ... ok
-test test_env::test_change_directory ... ok
-test test_env::test_echo ... ok
-test test_env::test_debug_2 ... ok
-test test_env::test_debug_1 ... ok
-test test_env::test_env_arg_ignore_signal_empty ... FAILED
-test test_env::test_env_arg_ignore_signal_special_signals ... FAILED
-test test_env::test_debug2_part_of_string_arg ... ok
-test test_env::test_env_arg_ignore_signal_invalid_signals ... FAILED
-test test_env::test_env_help ... ok
-test test_env::test_env_version ... ok
-test test_env::test_fail_change_directory ... ok
-test test_env::test_env_with_empty_executable_double_quotes ... ok
-test test_env::test_env_with_empty_executable_single_quotes ... ok
-test test_env::test_env_overwrite_arg0 ... ok
-test test_env::test_fail_null_with_program ... ok
-test test_env::test_file_option ... ok
-test test_env::test_env_arg_argv0_overwrite ... ok
-test test_env::test_gnu_e20 ... ok
-test test_env::test_raw_string_parser::test_ascii_only_take_one_look_at_correct_data_and_end_behavior ... ok
-test test_env::test_raw_string_parser::test_deal_with_invalid_encoding ... ok
-test test_env::test_raw_string_parser::test_multi_byte_codes_look_at_remaining_start_middle_end ... ok
-test test_env::test_raw_string_parser::test_multi_byte_codes_put_one_ascii_start_middle_end_try_invalid_ascii ... ok
-test test_env::test_invalid_arg ... ok
-test test_env::test_raw_string_parser::test_multi_byte_codes_put_string_utf8_start_middle_end ... ok
-test test_env::test_raw_string_parser::test_multi_byte_codes_skip_multiple_ascii_bounded_good_and_bad ... ok
-test test_env::test_raw_string_parser::test_multi_byte_codes_skip_one_take_one_skip_until_ascii_char_or_end ... ok
-test test_env::test_raw_string_parser::test_multi_byte_codes_take_one_look_at_correct_data_and_end_behavior ... ok
-test test_env::test_null_delimiter ... ok
-test test_env::test_multiple_name_value_pairs ... ok
-test test_env::test_ignore_environment ... ok
-test test_env::test_split_string_into_args_debug_output_whitespace_handling ... ok
-test test_env::test_single_name_value_pair ... ok
-test test_env::test_split_string_into_args_long_option_whitespace_handling ... ok
-test test_env::test_split_string_into_args_one_argument ... ok
-test test_env::test_split_string_into_args_one_argument_no_quotes ... ok
-test test_env::test_split_string_into_args_s_escaped_c_not_allowed ... ok
-test test_env::tests_split_iterator::join_followed_by_split_is_identity ... ok
-test test_env::tests_split_iterator::split_ ... ok
-test test_env::tests_split_iterator::split_carriage_return ... ok
-test test_env::tests_split_iterator::split_comments ... ok
-test test_env::tests_split_iterator::split_double_quotes ... ok
-test test_env::tests_split_iterator::split_empty ... ok
-test test_env::tests_split_iterator::split_error_fail_with_unknown_escape_sequences ... ok
-test test_env::tests_split_iterator::split_errors ... ok
-test test_env::tests_split_iterator::split_initial_whitespace_is_removed ... ok
-test test_env::tests_split_iterator::split_single_quotes ... ok
-test test_env::tests_split_iterator::split_trailing_backslash ... ok
-test test_env::tests_split_iterator::split_trailing_whitespace_is_removed ... ok
-test test_env::test_split_string_into_args_s_escaping_challenge ... ok
-test test_env::tests_split_iterator::split_unquoted ... ok
-test test_env::tests_split_iterator::test_join ... ok
-test test_env::tests_split_iterator::test_quote ... ok
-test test_env::test_unset_variable ... ok
-test test_env::test_split_string_into_args_s_whitespace_handling ... ok
-test test_env::test_unset_invalid_variables ... ok
-test test_env::test_env_arg_argv0_overwrite_mixed_with_string_args ... ok
-test test_env::test_env_parsing_errors ... ok
-test test_env::test_env_arg_ignore_signal_valid_signals ... FAILED
+running 49 tests
+test commands::ls::list_a_directory_not_exists ... ok
+test commands::ls::does_not_fail_if_glob_matches_empty_directory ... ok
+test commands::ls::list_empty_string ... ok
+test commands::ls::fails_when_glob_doesnt_match ... ok
+test commands::ls::list_directory_contains_invalid_utf8 ... ok
+test commands::ls::list_all_columns ... ok
+test commands::ls::list_inside_glob_metachars_dir ... ok
+test commands::ls::glob_with_hidden_directory ... ok
+test commands::ls::list_unknown_flag ... ok
+test commands::ls::list_files_from_two_parents_up_using_multiple_dots ... ok
+test commands::ls::list_inside_tilde_glob_metachars_dir ... ok
+test commands::ls::fails_with_ls_to_dir_without_permission ... ok
+test commands::ls::list_flag_false ... ok
+test commands::ls::lists_all_files_in_directories_from_stream ... ok
+test commands::ls::list_symlink_with_full_path ... FAILED
+test commands::ls::lists_all_hidden_files_when_glob_contains_dot ... ok
+test commands::ls::list_ignores_ansi ... ok
+test commands::ls::lists_all_hidden_files_when_glob_does_not_contain_dot ... ok
+test commands::ls::lists_hidden_file_when_explicitly_specified ... ok
+test commands::ls::lists_files_including_starting_with_dot ... ok
+test commands::ls::lists_regular_files ... ok
+test commands::ls::lists_regular_files_using_asterisk_wildcard ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_01 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_02 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_03 ... ok
+test commands::ls::list_with_multiple_path ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_04 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_05 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_08 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_09 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_06 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_07 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_10 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_12 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_11 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_13 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_15 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_14 ... ok
+test commands::ls::list_with_tilde ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_16 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_17 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_18 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_20 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_21 ... ok
+test commands::ls::lists_regular_files_using_question_mark::case_19 ... ok
+test commands::ls::lists_regular_files_using_question_mark_wildcard ... ok
+test commands::ls::lists_with_directory_flag ... ok
+test commands::ls::lists_with_directory_flag_without_argument ... ok
+test commands::ls::lists_regular_files_in_special_folder ... ok
 
 failures:
 
----- test_env::test_env_arg_ignore_signal_empty stdout ----
-run: /root/coreutils/target/debug/coreutils env --ignore-signal= echo hello
-thread 'test_env::test_env_arg_ignore_signal_empty' panicked at tests/by-util/test_env.rs:874:10:
-Command was expected to succeed. code: 125
-stdout =
- stderr = env: error: unexpected argument '--ignore-signal' found
+---- commands::ls::list_symlink_with_full_path stdout ----
+=== stderr
 
-  tip: to pass '--ignore-signal' as a value, use '-- --ignore-signal'
+=== stderr
 
-Usage: /root/coreutils/target/debug/coreutils env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
-
-For more information, try '--help'.
-env: use -[v]S to pass options in shebang lines
-
+thread 'commands::ls::list_symlink_with_full_path' panicked at crates/nu-command/tests/commands/ls.rs:830:9:
+assertion `left == right` failed
+  left: "test_file.txt"
+ right: "/tmp/.tmpLdDzav/list_symlink_with_full_path/test_file.txt"
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
----- test_env::test_env_arg_ignore_signal_special_signals stdout ----
-run: /root/coreutils/target/debug/coreutils env --ignore-signal=stop echo hello
-thread 'test_env::test_env_arg_ignore_signal_special_signals' panicked at tests/by-util/test_env.rs:818:10:
-'env: error: unexpected argument '--ignore-signal' found
-
-  tip: to pass '--ignore-signal' as a value, use '-- --ignore-signal'
-
-Usage: /root/coreutils/target/debug/coreutils env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
-
-For more information, try '--help'.
-env: use -[v]S to pass options in shebang lines
-' does not contain 'env: failed to set signal action for signal 19: Invalid argument'
-
----- test_env::test_env_arg_ignore_signal_invalid_signals stdout ----
-run: /root/coreutils/target/debug/coreutils env --ignore-signal=banana
-thread 'test_env::test_env_arg_ignore_signal_invalid_signals' panicked at tests/by-util/test_env.rs:790:10:
-'env: error: unexpected argument '--ignore-signal' found
-
-  tip: to pass '--ignore-signal' as a value, use '-- --ignore-signal'
-
-Usage: /root/coreutils/target/debug/coreutils env [OPTION]... [-] [NAME=VALUE]... [COMMAND [ARG]...]
-
-For more information, try '--help'.
-env: use -[v]S to pass options in shebang lines
-' does not contain 'env: 'banana': invalid signal'
-
----- test_env::test_env_arg_ignore_signal_valid_signals stdout ----
-run: /root/coreutils/target/debug/coreutils env --ignore-signal=int sleep 1000
-thread 'test_env::test_env_arg_ignore_signal_valid_signals' panicked at tests/by-util/test_env.rs:854:9:
-assertion failed: target.is_alive()
-
 
 failures:
-    test_env::test_env_arg_ignore_signal_empty
-    test_env::test_env_arg_ignore_signal_invalid_signals
-    test_env::test_env_arg_ignore_signal_special_signals
-    test_env::test_env_arg_ignore_signal_valid_signals
+    commands::ls::list_symlink_with_full_path
 
-test result: FAILED. 58 passed; 4 failed; 0 ignored; 0 measured; 2995 filtered out; finished in 0.63s
+test result: FAILED. 48 passed; 1 failed; 0 ignored; 0 measured; 1574 filtered out; finished in 0.40s
 
-error: test failed, to rerun pass `--test tests`
+error: test failed, to rerun pass `-p nu-command --test main`
 error: 1 target failed:
-    `--test tests`
+    `-p nu-command --test main`
