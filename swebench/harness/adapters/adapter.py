@@ -17,6 +17,7 @@ class Adapter(ABC):
     install: List[str] = field(default_factory=list)
     build: List[str] = field(default_factory=list)
     eval_commands: List[str] = field(default_factory=list)
+    dockerfile_key_override: Optional[str] = None
 
     @property
     @abstractmethod
@@ -31,6 +32,10 @@ class Adapter(ABC):
     @abstractmethod
     def get_log_parser(self) -> Callable[[str], dict[str, str]]:
         pass
+
+    @property
+    def dockerfile_key(self) -> str:
+        return self.dockerfile_key_override or self.language
 
     def make_env_script_list(
         self,

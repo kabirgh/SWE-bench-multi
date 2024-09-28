@@ -20,7 +20,7 @@ class CPlusPlusAdapter(Adapter):
         Returns:
             str: the "real" base image for the dockerfile, e.g. golang:1.23 or ubuntu:22.04
         """
-        return "ubuntu:22.04"  # Reuse the same base image as python
+        return "ubuntu:22.04"
 
     def get_log_parser(self) -> Callable[[str], dict[str, str]]:
         return self.log_parser

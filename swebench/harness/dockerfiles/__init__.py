@@ -28,7 +28,7 @@ from swebench.harness.dockerfiles.rust import (
 def get_dockerfile_base(
     platform: str,
     arch: str,
-    language: str | None,
+    dockerfile_key: str | None,
     base_image_name: str | None,
 ):
     if arch == "arm64":
@@ -39,25 +39,30 @@ def get_dockerfile_base(
     if not base_image_name:
         base_image_name = "ubuntu:22.04"
 
-    print(f"Getting dockerfile base for {language} on {platform} {arch}")
-    return _dockerfiles[language or "python"]["base"].format(
+    print(f"Getting dockerfile base for {dockerfile_key} on {platform} {arch}")
+    return _dockerfiles[dockerfile_key or "python"]["base"].format(
         platform=platform, conda_arch=conda_arch, base_image_name=base_image_name
     )
 
 
 def get_dockerfile_env(
-    platform: str, arch: str, language: str | None, base_image_name: str | None
+    platform: str, arch: str, dockerfile_key: str | None, base_image_name: str | None
 ) -> str:
     if not base_image_name:
         base_image_name = "ubuntu:22.04"
 
-    return _dockerfiles[language or "python"]["env"].format(
-        platform=platform, arch=arch, language=language, base_image_name=base_image_name
+    return _dockerfiles[dockerfile_key or "python"]["env"].format(
+        platform=platform,
+        arch=arch,
+        dockerfile_key=dockerfile_key,
+        base_image_name=base_image_name,
     )
 
 
-def get_dockerfile_instance(platform: str, env_image_name: str, language: str | None):
-    return _dockerfiles[language or "python"]["instance"].format(
+def get_dockerfile_instance(
+    platform: str, env_image_name: str, dockerfile_key: str | None
+):
+    return _dockerfiles[dockerfile_key or "python"]["instance"].format(
         platform=platform, env_image_name=env_image_name
     )
 
