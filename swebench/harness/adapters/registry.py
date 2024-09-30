@@ -668,7 +668,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 ),
                 install=["ant deps"],
                 # Note: PASS_TO_PASS only contains the tests relevant to the
-                # instance, not all tests that should pass
+                # instance, not all tests that pass
                 test=["ant test.instance"],
             )
             for k in ["3312", "3697", "3326", "3674"]
