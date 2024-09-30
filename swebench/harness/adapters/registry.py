@@ -5,7 +5,11 @@ from swebench.harness.adapters.cplusplus_adapter import (
     redis_log_parser,
 )
 from swebench.harness.adapters.go_adapter import GoAdapter
-from swebench.harness.adapters.java_adapter import JavaMavenAdapter
+from swebench.harness.adapters.java_adapter import (
+    JavaAntAdapter,
+    JavaMavenAdapter,
+    make_lombok_pre_install_script,
+)
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
     JEST_JSON_JQ_TRANSFORM,
@@ -646,5 +650,28 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             build=["cargo build"],
             test=["cargo test -p nu-command --no-fail-fast ls::"],
         ),
+    },
+    "projectlombok/lombok": {
+        "3602": JavaAntAdapter(
+            version="11",
+            pre_install=make_lombok_pre_install_script(
+                ["lombok.bytecode.TestPostCompiler"]
+            ),
+            install=["ant deps"],
+            test=["ant test.instance"],
+        ),
+        **{
+            k: JavaAntAdapter(
+                version="11",
+                pre_install=make_lombok_pre_install_script(
+                    ["lombok.transform.TestWithDelombok"]
+                ),
+                install=["ant deps"],
+                # Note: PASS_TO_PASS only contains the tests relevant to the
+                # instance, not all tests that should pass
+                test=["ant test.instance"],
+            )
+            for k in ["3312", "3697", "3326", "3674"]
+        },
     },
 }

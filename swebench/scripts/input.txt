@@ -1,84 +1,45 @@
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.65s
-     Running unittests src/lib.rs (target/debug/deps/nu_command-c93ed1ca027da2d2)
-
-running 2 tests
-test sort_utils::tests::test_sort_value ... ok
-test sort_utils::tests::test_sort_value_in_place ... ok
-
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 405 filtered out; finished in 0.00s
-
-     Running tests/main.rs (target/debug/deps/main-6388b50a6fd74b3e)
-
-running 49 tests
-test commands::ls::list_a_directory_not_exists ... ok
-test commands::ls::does_not_fail_if_glob_matches_empty_directory ... ok
-test commands::ls::list_empty_string ... ok
-test commands::ls::fails_when_glob_doesnt_match ... ok
-test commands::ls::list_directory_contains_invalid_utf8 ... ok
-test commands::ls::list_all_columns ... ok
-test commands::ls::list_inside_glob_metachars_dir ... ok
-test commands::ls::glob_with_hidden_directory ... ok
-test commands::ls::list_unknown_flag ... ok
-test commands::ls::list_files_from_two_parents_up_using_multiple_dots ... ok
-test commands::ls::list_inside_tilde_glob_metachars_dir ... ok
-test commands::ls::fails_with_ls_to_dir_without_permission ... ok
-test commands::ls::list_flag_false ... ok
-test commands::ls::lists_all_files_in_directories_from_stream ... ok
-test commands::ls::list_symlink_with_full_path ... FAILED
-test commands::ls::lists_all_hidden_files_when_glob_contains_dot ... ok
-test commands::ls::list_ignores_ansi ... ok
-test commands::ls::lists_all_hidden_files_when_glob_does_not_contain_dot ... ok
-test commands::ls::lists_hidden_file_when_explicitly_specified ... ok
-test commands::ls::lists_files_including_starting_with_dot ... ok
-test commands::ls::lists_regular_files ... ok
-test commands::ls::lists_regular_files_using_asterisk_wildcard ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_01 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_02 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_03 ... ok
-test commands::ls::list_with_multiple_path ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_04 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_05 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_08 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_09 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_06 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_07 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_10 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_12 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_11 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_13 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_15 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_14 ... ok
-test commands::ls::list_with_tilde ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_16 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_17 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_18 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_20 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_21 ... ok
-test commands::ls::lists_regular_files_using_question_mark::case_19 ... ok
-test commands::ls::lists_regular_files_using_question_mark_wildcard ... ok
-test commands::ls::lists_with_directory_flag ... ok
-test commands::ls::lists_with_directory_flag_without_argument ... ok
-test commands::ls::lists_regular_files_in_special_folder ... ok
-
-failures:
-
----- commands::ls::list_symlink_with_full_path stdout ----
-=== stderr
-
-=== stderr
-
-thread 'commands::ls::list_symlink_with_full_path' panicked at crates/nu-command/tests/commands/ls.rs:830:9:
-assertion `left == right` failed
-  left: "test_file.txt"
- right: "/tmp/.tmpLdDzav/list_symlink_with_full_path/test_file.txt"
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    commands::ls::list_symlink_with_full_path
-
-test result: FAILED. 48 passed; 1 failed; 0 ignored; 0 measured; 1574 filtered out; finished in 0.40s
-
-error: test failed, to rerun pass `-p nu-command --test main`
-error: 1 target failed:
-    `-p nu-command --test main`
+    [junit] [PASS] javac-NonNullWithAlternateException.java(lombok.transform.TestWithDelombok)
+    [junit] [FAIL] javac-StandardExceptionWithConstructor.java(lombok.transform.TestWithDelombok)
+    [junit] Difference in StandardExceptionWithConstructor.java on line 7 expected:<		this([(java.lang.String) null, (java.lang.Throwable)] null);> but was:<		this([null,] null);>
+    [junit] [FAIL] javac-StandardExceptions.java(lombok.transform.TestWithDelombok)
+    [junit] Difference in StandardExceptions.java on line 5 expected:<		this([(java.lang.String) null, (java.lang.Throwable)] null);> but was:<		this([null,] null);>
+    [junit] ***** StandardExceptionWithConstructor.java *****
+    [junit] Difference in StandardExceptionWithConstructor.java on line 7 expected:<		this([(java.lang.String) null, (java.lang.Throwable)] null);> but was:<		this([null,] null);>
+    [junit] public class StandardExceptionWithConstructor extends Exception {
+    [junit] 	public StandardExceptionWithConstructor(Integer x, Integer y) {
+    [junit] 	public StandardExceptionWithConstructor() {
+    [junit] 	public StandardExceptionWithConstructor(final java.lang.String message) {
+    [junit] 	public StandardExceptionWithConstructor(final java.lang.Throwable cause) {
+    [junit] 	public StandardExceptionWithConstructor(final java.lang.String message, final java.lang.Throwable cause) {
+    [junit] public class StandardExceptionWithConstructor extends Exception {
+    [junit] 	public StandardExceptionWithConstructor(Integer x, Integer y) {
+    [junit] 	public StandardExceptionWithConstructor() {
+    [junit] 	public StandardExceptionWithConstructor(final java.lang.String message) {
+    [junit] 	public StandardExceptionWithConstructor(final java.lang.Throwable cause) {
+    [junit] 	public StandardExceptionWithConstructor(final java.lang.String message, final java.lang.Throwable cause) {
+    [junit] 3 ERROR reference to StandardExceptionWithConstructor is ambiguous
+    [junit]   both constructor StandardExceptionWithConstructor(java.lang.Integer,java.lang.Integer) in StandardExceptionWithConstructor and constructor StandardExceptionWithConstructor(java.lang.String,java.lang.Throwable) in StandardExceptionWithConstructor match
+    [junit] ***** StandardExceptions.java *****
+    [junit] Difference in StandardExceptions.java on line 5 expected:<		this([(java.lang.String) null, (java.lang.Throwable)] null);> but was:<		this([null,] null);>
+    [junit] class EmptyException extends Exception {
+    [junit] 	public EmptyException() {
+    [junit] 	public EmptyException(final java.lang.String message) {
+    [junit] 	public EmptyException(final java.lang.Throwable cause) {
+    [junit] 	public EmptyException(final java.lang.String message, final java.lang.Throwable cause) {
+    [junit] class NoArgsException extends Exception {
+    [junit] 	public NoArgsException() {
+    [junit] 	protected NoArgsException(final java.lang.String message) {
+    [junit] 	protected NoArgsException(final java.lang.Throwable cause) {
+    [junit] 	protected NoArgsException(final java.lang.String message, final java.lang.Throwable cause) {
+    [junit] class EmptyException extends Exception {
+    [junit] 	public EmptyException() {
+    [junit] 	public EmptyException(final java.lang.String message) {
+    [junit] 	public EmptyException(final java.lang.Throwable cause) {
+    [junit] 	public EmptyException(final java.lang.String message, final java.lang.Throwable cause) {
+    [junit] class NoArgsException extends Exception {
+    [junit] 	public NoArgsException() {
+    [junit] 	protected NoArgsException(final java.lang.String message) {
+    [junit] 	protected NoArgsException(final java.lang.Throwable cause) {
+    [junit] 	protected NoArgsException(final java.lang.String message, final java.lang.Throwable cause) {
+    [junit] Exception in thread "main" java.lang.NoClassDefFoundError: org/eclipse/jdt/internal/compiler/env/ICompilationUnit
+    [junit] Caused by: java.lang.ClassNotFoundException: org.eclipse.jdt.internal.compiler.env.ICompilationUnit

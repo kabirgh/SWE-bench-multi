@@ -9,6 +9,7 @@ RUN apt update && apt install -y \
 wget \
 git \
 build-essential \
+ant \
 && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos 'dog' nonroot

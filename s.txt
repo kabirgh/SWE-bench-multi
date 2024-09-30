@@ -1,0 +1,12 @@
+{ head -n -1 buildScripts/tests.ant.xml; echo '<target name="test.instance" depends="test.compile, test.formatter.compile" description="Runs test cases for the swe-bench instance">
+      <junit printsummary="yes" fork="true" forkmode="once" haltonfailure="no">
+        <formatter classname="lombok.ant.SimpleTestFormatter" usefile="false" unless="tests.quiet" />
+        <classpath location="build/ant" />
+        <classpath refid="cp.test" />
+        <classpath refid="cp.stripe" />
+        <classpath refid="packing.basedirs.path" />
+        <classpath location="build/tests" />
+        <classpath location="build/teststubs" />
+        <test name="lombok.transform.TestWithDelombok" />
+      </junit>
+    </target>'; tail -n 1 buildScripts/tests.ant.xml; } > temp_file && mv temp_file buildScripts/tests.ant.xml
