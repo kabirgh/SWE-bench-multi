@@ -719,7 +719,3 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         ),
     },
 }
-
-with open("s.txt", "w") as f:
-    for l in make_lucene_pre_install_script():
-        f.write(l + "\n")
