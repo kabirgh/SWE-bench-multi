@@ -1,543 +1,725 @@
-Checksum mismatch, will attempt to re-download gradle-wrapper.jar
-/root/lucene/gradle/wrapper/gradle-wrapper.jar
-Downloading gradle-wrapper.jar from https://raw.githubusercontent.com/gradle/gradle/v7.6.0/gradle/wrapper/gradle-wrapper.jar
-Downloading https://services.gradle.org/distributions/gradle-7.6-bin.zip
-...........10%............20%...........30%............40%............50%...........60%............70%............80%...........90%............100%
-
-Welcome to Gradle 7.6!
-
-Here are the highlights of this release:
- - Added support for Java 19.
- - Introduced `--rerun` flag for individual task rerun.
- - Improved dependency block for test suites to be strongly typed.
- - Added a pluggable system for Java toolchains provisioning.
-
-For more details see https://docs.gradle.org/7.6/release-notes.html
-
-Starting a Gradle Daemon (subsequent builds will be faster)
-> Task :buildSrc:compileJava
-> Task :buildSrc:compileGroovy NO-SOURCE
-> Task :buildSrc:processResources NO-SOURCE
-> Task :buildSrc:classes
-> Task :buildSrc:jar
-> Task :buildSrc:assemble
-> Task :buildSrc:compileTestJava NO-SOURCE
-> Task :buildSrc:compileTestGroovy NO-SOURCE
-> Task :buildSrc:processTestResources NO-SOURCE
-> Task :buildSrc:testClasses UP-TO-DATE
-> Task :buildSrc:test NO-SOURCE
-> Task :buildSrc:check UP-TO-DATE
-> Task :buildSrc:build
-
-> Task :randomizationInfo
-Running tests with randomization seed: tests.seed=FCCE19146700CB65
-
-> Task :errorProneSkipped
-WARNING: errorprone disabled (skipped on builds not running inside CI environments, pass -Pvalidation.errorprone=true to enable)
-
-> Task :lucene:codecs:processResources
-> Task :lucene:core:processResources
-> Task :lucene:analysis:common:processResources
-> Task :lucene:test-framework:processResources
-> Task :lucene:analysis:kuromoji:processResources
-> Task :lucene:analysis:morfologik:processResources
-> Task :lucene:analysis:icu:processResources
-> Task :lucene:analysis:opennlp:processResources
-> Task :lucene:analysis:phonetic:processResources
-> Task :lucene:analysis:smartcn:processResources
-> Task :lucene:analysis:stempel:processResources
-> Task :lucene:analysis.tests:processTestResources
-> Task :lucene:analysis:nori:processResources
-> Task :lucene:facet:processResources NO-SOURCE
-> Task :lucene:memory:processResources NO-SOURCE
-> Task :lucene:backward-codecs:processResources
-> Task :lucene:queries:processResources NO-SOURCE
-> Task :lucene:highlighter:processResources NO-SOURCE
-> Task :lucene:sandbox:processResources
-> Task :lucene:queryparser:processResources
-> Task :lucene:spatial3d:processResources NO-SOURCE
-> Task :lucene:spatial-extras:processResources NO-SOURCE
-> Task :lucene:benchmark:processResources NO-SOURCE
-> Task :lucene:benchmark:processTestResources
-> Task :lucene:grouping:processResources NO-SOURCE
-> Task :lucene:classification:processResources NO-SOURCE
-> Task :lucene:classification:processTestResources
-> Task :lucene:backward-codecs:processTestResources
-> Task :lucene:codecs:processTestResources
-> Task :lucene:expressions:processResources
-> Task :lucene:demo:processResources NO-SOURCE
-> Task :lucene:demo:processTestResources
-> Task :lucene:join:processResources NO-SOURCE
-> Task :lucene:misc:processResources NO-SOURCE
-> Task :lucene:suggest:processResources
-> Task :lucene:luke:processResources
-> Task :lucene:monitor:processResources NO-SOURCE
-> Task :lucene:replicator:processResources NO-SOURCE
-> Task :lucene:distribution.tests:compileJava NO-SOURCE
-> Task :lucene:distribution.tests:processResources NO-SOURCE
-> Task :lucene:distribution.tests:classes UP-TO-DATE
-> Task :lucene:core.tests:compileJava
-> Task :lucene:core.tests:processResources NO-SOURCE
-> Task :lucene:core.tests:classes
-> Task :lucene:core.tests:processTestResources
-> Task :lucene:expressions:processTestResources
-> Task :lucene:facet:processTestResources
-> Task :lucene:grouping:processTestResources
-> Task :lucene:highlighter:processTestResources
-> Task :lucene:join:processTestResources
-> Task :lucene:luke:processTestResources
-> Task :lucene:memory:processTestResources
-> Task :lucene:misc:processTestResources
-> Task :lucene:monitor:processTestResources
-> Task :lucene:queries:processTestResources
-> Task :lucene:queryparser:processTestResources
-> Task :lucene:replicator:processTestResources
-> Task :lucene:sandbox:processTestResources
-> Task :lucene:spatial-test-fixtures:processResources NO-SOURCE
-> Task :lucene:spatial-extras:processTestResources
-> Task :lucene:spatial-test-fixtures:processTestResources NO-SOURCE
-> Task :lucene:spatial3d:processTestResources
-> Task :lucene:suggest:processTestResources
-> Task :lucene:test-framework:processTestResources
-> Task :lucene:analysis:common:processTestResources
-> Task :lucene:analysis:icu:processTestResources
-> Task :lucene:analysis:kuromoji:processTestResources
-> Task :lucene:analysis:morfologik:processTestResources
-> Task :lucene:analysis:morfologik.tests:processTestResources
-> Task :lucene:analysis:nori:processTestResources
-> Task :lucene:analysis:opennlp:processTestResources
-> Task :lucene:analysis:phonetic:processTestResources
-> Task :lucene:analysis:smartcn:processTestResources
-> Task :lucene:analysis:stempel:processTestResources
-> Task :gitStatus
-> Task :lucene:core.tests:jar
-> Task :lucene:distribution.tests:compileTestJava
-> Task :lucene:distribution.tests:processTestResources
-> Task :lucene:distribution.tests:testClasses
-
-> Task :lucene:core:compileJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:core:classes
-> Task :lucene:core:compileMain19Java
-> Task :lucene:core:compileMain20Java
-> Task :lucene:core:processMain19Resources NO-SOURCE
-> Task :lucene:core:main19Classes
-> Task :lucene:core:processMain20Resources NO-SOURCE
-> Task :lucene:core:main20Classes
-> Task :lucene:core:jar
-
-> Task :lucene:facet:compileJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:codecs:compileJava
-> Task :lucene:codecs:classes
-> Task :lucene:backward-codecs:compileJava
-> Task :lucene:backward-codecs:classes
-> Task :lucene:codecs:jar
-> Task :lucene:backward-codecs:jar
-> Task :lucene:memory:compileJava
-> Task :lucene:memory:classes
-> Task :lucene:memory:jar
-> Task :lucene:facet:classes
-> Task :lucene:facet:jar
-
-> Task :lucene:queries:compileJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:queries:classes
-> Task :lucene:queries:jar
-> Task :lucene:spatial3d:compileJava
-
-> Task :lucene:sandbox:compileJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:sandbox:classes
-> Task :lucene:sandbox:jar
-> Task :lucene:highlighter:compileJava
-> Task :lucene:highlighter:classes
-> Task :lucene:highlighter:jar
-> Task :lucene:spatial3d:classes
-> Task :lucene:spatial3d:jar
-
-> Task :lucene:analysis:common:compileJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:analysis:common:classes
-> Task :lucene:analysis:common:jar
-> Task :lucene:spatial-extras:compileJava
-> Task :lucene:analysis:kuromoji:compileJava
-> Task :lucene:analysis:kuromoji:classes
-> Task :lucene:queryparser:compileJava
-> Task :lucene:test-framework:compileJava
-> Task :lucene:test-framework:classes
-> Task :lucene:analysis:morfologik:compileJava
-> Task :lucene:analysis:morfologik:classes
-> Task :lucene:analysis:morfologik:jar
-> Task :lucene:analysis:kuromoji:jar
-> Task :lucene:test-framework:jar
-> Task :lucene:analysis:icu:compileJava
-> Task :lucene:analysis:icu:classes
-> Task :lucene:analysis:icu:jar
-> Task :lucene:analysis:phonetic:compileJava
-> Task :lucene:analysis:phonetic:classes
-> Task :lucene:analysis:phonetic:jar
-> Task :lucene:analysis:nori:compileJava
-> Task :lucene:analysis:nori:classes
-> Task :lucene:analysis:opennlp:compileJava
-> Task :lucene:analysis:opennlp:classes
-> Task :lucene:analysis:smartcn:compileJava
-> Task :lucene:analysis:smartcn:classes
-> Task :lucene:analysis:opennlp:jar
-> Task :lucene:analysis:stempel:compileJava
-> Task :lucene:analysis:stempel:classes
-> Task :lucene:analysis:stempel:jar
-> Task :lucene:queryparser:classes
-> Task :lucene:queryparser:jar
-> Task :lucene:spatial-extras:classes
-> Task :lucene:analysis:smartcn:jar
-> Task :lucene:spatial-extras:jar
-> Task :lucene:analysis:nori:jar
-> Task :lucene:grouping:compileJava
-> Task :lucene:grouping:classes
-> Task :lucene:grouping:jar
-> Task :lucene:classification:compileJava
-> Task :lucene:classification:classes
-> Task :lucene:classification:jar
-> Task :lucene:analysis.tests:compileTestJava
-> Task :lucene:analysis.tests:testClasses
-> Task :lucene:analysis.tests:testJar
-
-> Task :lucene:analysis.tests:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:analysis.tests:wipeTaskTemp
-> Task :lucene:classification:compileTestJava
-> Task :lucene:classification:testClasses
-
-> Task :lucene:classification:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:classification:wipeTaskTemp
-> Task :lucene:backward-codecs:compileTestJava
-> Task :lucene:backward-codecs:testClasses
-> Task :lucene:codecs:compileTestJava
-> Task :lucene:codecs:testClasses
-> Task :lucene:benchmark:compileJava
-> Task :lucene:benchmark:classes
-> Task :lucene:benchmark:jar
-
-> Task :lucene:codecs:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:codecs:wipeTaskTemp
-
-> Task :lucene:backward-codecs:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:backward-codecs:wipeTaskTemp
-> Task :lucene:core.tests:compileTestJava
-> Task :lucene:core.tests:testClasses
-> Task :lucene:core.tests:testJar
-
-> Task :lucene:core.tests:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:core.tests:wipeTaskTemp
-> Task :lucene:benchmark:compileTestJava
-> Task :lucene:benchmark:testClasses
-
-> Task :lucene:benchmark:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:benchmark:wipeTaskTemp
-
-> Task :lucene:expressions:compileJava
-Note: /root/lucene/lucene/expressions/src/java/org/apache/lucene/expressions/js/JavascriptCompiler.java uses or overrides a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:expressions:classes
-> Task :lucene:expressions:jar
-> Task :lucene:join:compileJava
-> Task :lucene:join:classes
-> Task :lucene:join:jar
-> Task :lucene:misc:compileJava
-> Task :lucene:misc:classes
-> Task :lucene:misc:jar
-> Task :lucene:demo:compileJava
-> Task :lucene:demo:classes
-> Task :lucene:demo:jar
-> Task :lucene:demo:compileTestJava
-> Task :lucene:demo:testClasses
-
-> Task :lucene:demo:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:demo:wipeTaskTemp
-> Task :lucene:monitor:compileJava
-> Task :lucene:monitor:classes
-> Task :lucene:monitor:jar
-> Task :lucene:replicator:compileJava
-> Task :lucene:replicator:classes
-> Task :lucene:replicator:jar
-> Task :lucene:suggest:compileJava
-> Task :lucene:suggest:classes
-> Task :lucene:suggest:jar
-> Task :lucene:expressions:compileTestJava
-> Task :lucene:expressions:testClasses
-
-> Task :lucene:expressions:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:expressions:wipeTaskTemp
-> Task :lucene:grouping:compileTestJava
-> Task :lucene:grouping:testClasses
-
-> Task :lucene:grouping:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:grouping:wipeTaskTemp
-
-> Task :lucene:facet:compileTestJava
-Note: /root/lucene/lucene/facet/src/test/org/apache/lucene/facet/taxonomy/TestTaxonomyFacetAssociations.java uses or overrides a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:facet:testClasses
-> Task :lucene:luke:compileJava
-> Task :lucene:luke:classes
-> Task :lucene:luke:jar
-> Task :lucene:distribution:assembleBinaryDirForTests
-
-> Task :lucene:distribution.tests:test
-Testing binary distribution at: /root/lucene/lucene/distribution/build/packages/lucene-10.0.0-SNAPSHOT-itests
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:distribution.tests:wipeTaskTemp
-
-> Task :lucene:highlighter:compileTestJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:highlighter:testClasses
-
-> Task :lucene:highlighter:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:highlighter:wipeTaskTemp
-
-> Task :lucene:facet:test
-WARNING: A command line option has enabled the Security Manager
-WARNING: The Security Manager is deprecated and will be removed in a future release
-
-org.apache.lucene.facet.TestDrillSideways > testSometimesInvalidDrillDown PASSED
-
-> Task :lucene:join:compileTestJava
-> Task :lucene:join:testClasses
-
-> Task :lucene:join:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:join:wipeTaskTemp
-> Task :lucene:luke:compileTestJava
-> Task :lucene:luke:testClasses
-
-> Task :lucene:luke:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:luke:wipeTaskTemp
-
-> Task :lucene:memory:compileTestJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:memory:testClasses
-
-> Task :lucene:memory:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:memory:wipeTaskTemp
-> Task :lucene:misc:compileTestJava
-> Task :lucene:misc:testClasses
-
-> Task :lucene:misc:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:misc:wipeTaskTemp
-
-> Task :lucene:monitor:compileTestJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:monitor:testClasses
-
-> Task :lucene:monitor:test
-
----------------------------------------------------------------
-|  Results: SUCCESS (0 tests, 0 passed, 0 failed, 0 skipped)  |
----------------------------------------------------------------
-
-> Task :lucene:facet:test
-
-org.apache.lucene.facet.TestDrillSideways > testScorer PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testBasicWithCollectorManager PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testNoCaching PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testMultipleRequestsPerDim PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testExtendedDrillSidewaysResult PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testDrillSidewaysSearchUseCorrectIterator FAILED
-    java.lang.AssertionError
-        at __randomizedtesting.SeedInfo.seed([FCCE19146700CB65:1BAC6A6C8936E5B2]:0)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.codecs.lucene90.Lucene90PostingsReader$EverythingEnum.nextPosition(Lucene90PostingsReader.java:978)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.ExactPhraseMatcher.nextMatch(ExactPhraseMatcher.java:135)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.PhraseScorer$1.matches(PhraseScorer.java:58)
-        at org.apache.lucene.facet.DrillSidewaysScorer.doQueryFirstScoringSingleDim(DrillSidewaysScorer.java:178)
-        at org.apache.lucene.facet.DrillSidewaysScorer.doQueryFirstScoring(DrillSidewaysScorer.java:208)
-        at org.apache.lucene.facet.DrillSidewaysScorer.score(DrillSidewaysScorer.java:151)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.BulkScorer.score(BulkScorer.java:38)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:740)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:658)
-        at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:652)
-        at org.apache.lucene.facet.DrillSideways.searchSequentially(DrillSideways.java:418)
-        at org.apache.lucene.facet.DrillSideways.search(DrillSideways.java:354)
-        at org.apache.lucene.facet.DrillSideways.search(DrillSideways.java:234)
-        at org.apache.lucene.facet.DrillSideways.search(DrillSideways.java:220)
-        at org.apache.lucene.facet.TestDrillSideways.testDrillSidewaysSearchUseCorrectIterator(TestDrillSideways.java:2087)
-
-org.apache.lucene.facet.TestDrillSideways STANDARD_ERROR
-    NOTE: reproduce with: gradlew test --tests TestDrillSideways.testDrillSidewaysSearchUseCorrectIterator -Dtests.seed=FCCE19146700CB65 -Dtests.locale=rwk-Latn-TZ -Dtests.timezone=Africa/Bissau -Dtests.asserts=true -Dtests.file.encoding=UTF-8
-
-org.apache.lucene.facet.TestDrillSideways > testRandom PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testBasic PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testNoDrillDownFacetCollection PASSED
-
-org.apache.lucene.facet.TestDrillSideways > testEmptyIndex PASSED
-
-org.apache.lucene.facet.TestDrillSideways STANDARD_ERROR
-    NOTE: leaving temporary files on disk at: /root/lucene/lucene/facet/build/tmp/tests-tmp/lucene.facet.TestDrillSideways_FCCE19146700CB65-001
-    NOTE: test params are: codec=Asserting(Lucene95): {$full_path$=BlockTreeOrds(blocksize=128), $facets=PostingsFormat(name=LuceneFixedGap), field=PostingsFormat(name=Direct), dim2=PostingsFormat(name=Direct), dim1=BlockTreeOrds(blocksize=128), dim0=PostingsFormat(name=LuceneFixedGap), id=PostingsFormat(name=LuceneVarGapDocFreqInterval), content=BlockTreeOrds(blocksize=128)}, docValues:{$full_path$=DocValuesFormat(name=Asserting), $facets=DocValuesFormat(name=Lucene90), dim2=DocValuesFormat(name=Asserting), dim1=DocValuesFormat(name=Lucene90), dim0=DocValuesFormat(name=Lucene90), id=DocValuesFormat(name=Lucene90), $parent_ndv$=DocValuesFormat(name=Lucene90)}, maxPointsInLeafNode=88, maxMBSortInHeap=6.370686741708569, sim=Asserting(RandomSimilarity(queryNorm=false): {$facets=IB SPL-DZ(0.3), field=DFR I(F)L2, content=F1LOG}), locale=rwk-Latn-TZ, timezone=Africa/Bissau
-    NOTE: Linux 6.8.0-45-generic amd64/Ubuntu 17.0.12 (64-bit)/cpus=1,threads=1,free=301840960,total=347078656
-    NOTE: All tests run in this JVM: [TestDrillSideways]
-
-org.apache.lucene.facet.TestDrillSideways > test suite's output saved to /root/lucene/lucene/facet/build/test-results/test/outputs/OUTPUT-org.apache.lucene.facet.TestDrillSideways.txt, copied below:
-   >     java.lang.AssertionError
-   >         at __randomizedtesting.SeedInfo.seed([FCCE19146700CB65:1BAC6A6C8936E5B2]:0)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.codecs.lucene90.Lucene90PostingsReader$EverythingEnum.nextPosition(Lucene90PostingsReader.java:978)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.ExactPhraseMatcher.nextMatch(ExactPhraseMatcher.java:135)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.PhraseScorer$1.matches(PhraseScorer.java:58)
-   >         at org.apache.lucene.facet.DrillSidewaysScorer.doQueryFirstScoringSingleDim(DrillSidewaysScorer.java:178)
-   >         at org.apache.lucene.facet.DrillSidewaysScorer.doQueryFirstScoring(DrillSidewaysScorer.java:208)
-   >         at org.apache.lucene.facet.DrillSidewaysScorer.score(DrillSidewaysScorer.java:151)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.BulkScorer.score(BulkScorer.java:38)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:740)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:658)
-   >         at org.apache.lucene.core@10.0.0-SNAPSHOT/org.apache.lucene.search.IndexSearcher.search(IndexSearcher.java:652)
-   >         at org.apache.lucene.facet.DrillSideways.searchSequentially(DrillSideways.java:418)
-   >         at org.apache.lucene.facet.DrillSideways.search(DrillSideways.java:354)
-   >         at org.apache.lucene.facet.DrillSideways.search(DrillSideways.java:234)
-   >         at org.apache.lucene.facet.DrillSideways.search(DrillSideways.java:220)
-   >         at org.apache.lucene.facet.TestDrillSideways.testDrillSidewaysSearchUseCorrectIterator(TestDrillSideways.java:2087)
-  2> NOTE: reproduce with: gradlew test --tests TestDrillSideways.testDrillSidewaysSearchUseCorrectIterator -Dtests.seed=FCCE19146700CB65 -Dtests.locale=rwk-Latn-TZ -Dtests.timezone=Africa/Bissau -Dtests.asserts=true -Dtests.file.encoding=UTF-8
-  2> NOTE: leaving temporary files on disk at: /root/lucene/lucene/facet/build/tmp/tests-tmp/lucene.facet.TestDrillSideways_FCCE19146700CB65-001
-  2> NOTE: test params are: codec=Asserting(Lucene95): {$full_path$=BlockTreeOrds(blocksize=128), $facets=PostingsFormat(name=LuceneFixedGap), field=PostingsFormat(name=Direct), dim2=PostingsFormat(name=Direct), dim1=BlockTreeOrds(blocksize=128), dim0=PostingsFormat(name=LuceneFixedGap), id=PostingsFormat(name=LuceneVarGapDocFreqInterval), content=BlockTreeOrds(blocksize=128)}, docValues:{$full_path$=DocValuesFormat(name=Asserting), $facets=DocValuesFormat(name=Lucene90), dim2=DocValuesFormat(name=Asserting), dim1=DocValuesFormat(name=Lucene90), dim0=DocValuesFormat(name=Lucene90), id=DocValuesFormat(name=Lucene90), $parent_ndv$=DocValuesFormat(name=Lucene90)}, maxPointsInLeafNode=88, maxMBSortInHeap=6.370686741708569, sim=Asserting(RandomSimilarity(queryNorm=false): {$facets=IB SPL-DZ(0.3), field=DFR I(F)L2, content=F1LOG}), locale=rwk-Latn-TZ, timezone=Africa/Bissau
-  2> NOTE: Linux 6.8.0-45-generic amd64/Ubuntu 17.0.12 (64-bit)/cpus=1,threads=1,free=301840960,total=347078656
-  2> NOTE: All tests run in this JVM: [TestDrillSideways]
-
-:lucene:facet:test (FAILURE): 11 test(s), 1 failure(s)
-
------------------------------------------------------------------
-|  Results: FAILURE (11 tests, 10 passed, 1 failed, 0 skipped)  |
------------------------------------------------------------------
-
-11 tests completed, 1 failed
-
-> Task :lucene:monitor:wipeTaskTemp
-> Task :lucene:facet:test FAILED
-> Task :lucene:facet:wipeTaskTemp
-
-> Task :lucene:queries:compileTestJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-> Task :lucene:queryparser:compileTestJava
-
-> Task :lucene:core:compileTestJava
-Note: Some input files use or override a deprecated API.
-Note: Recompile with -Xlint:deprecation for details.
-
-ERROR: The following test(s) have failed:
-  - org.apache.lucene.facet.TestDrillSideways.testDrillSidewaysSearchUseCorrectIterator (:lucene:facet)
-    Test output: /root/lucene/lucene/facet/build/test-results/test/outputs/OUTPUT-org.apache.lucene.facet.TestDrillSideways.txt
-    Reproduce with: gradlew :lucene:facet:test --tests "org.apache.lucene.facet.TestDrillSideways.testDrillSidewaysSearchUseCorrectIterator" -Ptests.jvms=4 "-Ptests.jvmargs=-XX:TieredStopAtLevel=1 -XX:+UseParallelGC -XX:ActiveProcessorCount=1" -Ptests.seed=FCCE19146700CB65 -Ptests.gui=false -Ptests.file.encoding=ISO-8859-1
-
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':lucene:facet:test'.
-> There were failing tests. See the results at: file:///root/lucene/lucene/facet/build/test-results/test/
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-
-* Get more help at https://help.gradle.org
-
-BUILD FAILED in 3m 41s
-183 actionable tasks: 183 executed
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch develop
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   include/nlohmann/detail/conversions/to_json.hpp
+	modified:   single_include/nlohmann/json.hpp
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 3780b41dd070436f3f55327b0a88f27a52e2dfa8
+diff --git a/include/nlohmann/detail/conversions/to_json.hpp b/include/nlohmann/detail/conversions/to_json.hpp
+index e39b7797..562089c3 100644
+--- a/include/nlohmann/detail/conversions/to_json.hpp
++++ b/include/nlohmann/detail/conversions/to_json.hpp
+@@ -320,7 +320,8 @@ template<typename BasicJsonType, typename EnumType,
+ inline void to_json(BasicJsonType& j, EnumType e) noexcept
+ {
+     using underlying_type = typename std::underlying_type<EnumType>::type;
+-    external_constructor<value_t::number_integer>::construct(j, static_cast<underlying_type>(e));
++    static constexpr value_t integral_value_t = std::is_unsigned<underlying_type>::value ? value_t::number_unsigned : value_t::number_integer;
++    external_constructor<integral_value_t>::construct(j, static_cast<underlying_type>(e));
+ }
+ #endif  // JSON_DISABLE_ENUM_SERIALIZATION
+
+diff --git a/single_include/nlohmann/json.hpp b/single_include/nlohmann/json.hpp
+index 8b72ea65..b191bb91 100644
+--- a/single_include/nlohmann/json.hpp
++++ b/single_include/nlohmann/json.hpp
+@@ -5697,7 +5697,8 @@ template<typename BasicJsonType, typename EnumType,
+ inline void to_json(BasicJsonType& j, EnumType e) noexcept
+ {
+     using underlying_type = typename std::underlying_type<EnumType>::type;
+-    external_constructor<value_t::number_integer>::construct(j, static_cast<underlying_type>(e));
++    static constexpr value_t integral_value_t = std::is_unsigned<underlying_type>::value ? value_t::number_unsigned : value_t::number_integer;
++    external_constructor<integral_value_t>::construct(j, static_cast<underlying_type>(e));
+ }
+ #endif  // JSON_DISABLE_ENUM_SERIALIZATION
+
++ git checkout 3780b41dd070436f3f55327b0a88f27a52e2dfa8 tests/src/unit-udt.cpp
+Updated 0 paths from 18eed0f6
++ git apply -v -
+Checking patch tests/src/unit-udt.cpp...
+Applied patch tests/src/unit-udt.cpp cleanly.
++ mkdir -p build
++ cd build
++ cmake ..
+-- Using the multi-header code from /testbed/include/
+-- Operating system: Linux-6.8.0-45-generic; Linux d0bbf38bb015 6.8.0-45-generic #45-Ubuntu SMP PREEMPT_DYNAMIC Fri Aug 30 12:02:04 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+-- Compiler: c++ (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0; Copyright (C) 2021 Free Software Foundation, Inc.; This is free software; see the source for copying conditions.  There is NO; warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+-- Testing standards: 11 14 17 20 23
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /testbed/build
++ make test-udt_cpp11
+Consolidate compiler generated dependencies of target test_main
+[ 50%] Built target test_main
+Consolidate compiler generated dependencies of target test-udt_cpp11
+[100%] Building CXX object tests/CMakeFiles/test-udt_cpp11.dir/src/unit-udt.cpp.o
+[100%] Linking CXX executable test-udt_cpp11
+[100%] Built target test-udt_cpp11
++ cd ..
++ echo '--- TEST XML START ---'
++ ./build/tests/test-udt_cpp11 -s -r=xml
+--- TEST XML START ---
+<?xml version="1.0" encoding="UTF-8"?>
+<doctest binary="./build/tests/test-udt_cpp11" version="2.4.11">
+  <Options order_by="file" rand_seed="0" first="0" last="4294967295" abort_after="0" subcase_filter_levels="2147483647" case_sensitive="false" no_throw="false" no_skip="false"/>
+  <TestSuite name="udt">
+    <TestCase name="basic usage" filename="/testbed/tests/src/unit-udt.cpp" line="230">
+      <SubCase name="conversion to json via free-functions" filename="/testbed/tests/src/unit-udt.cpp" line="247">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="249">
+          <Original>
+            json(a) == json(23)
+          </Original>
+          <Expanded>
+            23 == 23
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="250">
+          <Original>
+            json(n) == json("theo")
+          </Original>
+          <Expanded>
+            "theo" == "theo"
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="251">
+          <Original>
+            json(c) == json("France")
+          </Original>
+          <Expanded>
+            "France" == "France"
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="252">
+          <Original>
+            json(sfinae_addict) == R"({"name":"theo", "age":23, "country":"France"})"_json
+          </Original>
+          <Expanded>
+            {"age":23,"country":"France","name":"theo"} == {"age":23,"country":"France","name":"theo"}
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="253">
+          <Original>
+            json("Paris") == json(addr)
+          </Original>
+          <Expanded>
+            "Paris" == "Paris"
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="254">
+          <Original>
+            json(cpp_programmer) == R"({"person" : {"age":23, "name":"theo", "country":"France"}, "address":"Paris"})"_json
+          </Original>
+          <Expanded>
+            {"address":"Paris","person":{"age":23,"country":"France","name":"theo"}} == {"address":"Paris","person":{"age":23,"country":"France","name":"theo"}}
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="256">
+          <Original>
+            json(large_id) == json(static_cast&lt;std::uint64_t>(1) &lt;&lt; 63)
+          </Original>
+          <Expanded>
+            9223372036854775808 == 9223372036854775808
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="257">
+          <Original>
+            json(large_id) > 0u
+          </Original>
+          <Expanded>
+            9223372036854775808 >  0
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="258">
+          <Original>
+            to_string(json(large_id)) == "9223372036854775808"
+          </Original>
+          <Expanded>
+            9223372036854775808 == 9223372036854775808
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="259">
+          <Original>
+            json(large_id).is_number_unsigned()
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="261">
+          <Original>
+            json(book) == R"({"name":"C++", "id":42, "contacts" : [{"person" : {"age":23, "name":"theo", "country":"France"}, "address":"Paris"}, {"person" : {"age":42, "country":"中华人民共和国", "name":"王芳"}, "address":"Paris"}]})"_json
+          </Original>
+          <Expanded>
+            {"contacts":[{"address":"Paris","person":{"age":23,"country":"France","name":"theo"}},{"address":"Paris","person":{"age":42,"country":"中华人民共和国","name":"王芳"}}],"id":42,"name":"C++"} == {"contacts":[{"address":"Paris","person":{"age":23,"country":"France","name":"theo"}},{"address":"Paris","person":{"age":42,"country":"中华人民共和国","name":"王芳"}}],"id":42,"name":"C++"}
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="conversion from json via free-functions" filename="/testbed/tests/src/unit-udt.cpp" line="267">
+        <SubCase name="via explicit calls to get" filename="/testbed/tests/src/unit-udt.cpp" line="271">
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="287">
+            <Original>
+              age == a
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="288">
+            <Original>
+              name == n
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="289">
+            <Original>
+              country == c
+            </Original>
+            <Expanded>
+              1 == 1
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="290">
+            <Original>
+              address == addr
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="291">
+            <Original>
+              person == sfinae_addict
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="292">
+            <Original>
+              contact == cpp_programmer
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="293">
+            <Original>
+              contacts == book.m_contacts
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="294">
+            <Original>
+              book_name == udt::name{"C++"}
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="295">
+            <Original>
+              book_id == book.m_book_id
+            </Original>
+            <Expanded>
+              42 == 42
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="296">
+            <Original>
+              book == parsed_book
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <SubCase name="conversion from json via free-functions" filename="/testbed/tests/src/unit-udt.cpp" line="267">
+        <SubCase name="via explicit calls to get_to" filename="/testbed/tests/src/unit-udt.cpp" line="299">
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="305">
+            <Original>
+              person_json.get_to(person) == sfinae_addict
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="309">
+            <Original>
+              name.m_val == "new name"
+            </Original>
+            <Expanded>
+              new name == new name
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <SubCase name="conversion from json via free-functions" filename="/testbed/tests/src/unit-udt.cpp" line="267">
+        <SubCase name="implicit conversions" filename="/testbed/tests/src/unit-udt.cpp" line="313">
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="327">
+            <Original>
+              age == a
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="328">
+            <Original>
+              name == n
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="329">
+            <Original>
+              country == c
+            </Original>
+            <Expanded>
+              1 == 1
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="330">
+            <Original>
+              address == addr
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="331">
+            <Original>
+              person == sfinae_addict
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="332">
+            <Original>
+              contact == cpp_programmer
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="333">
+            <Original>
+              contacts == book.m_contacts
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="334">
+            <Original>
+              book_name == udt::name{"C++"}
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="335">
+            <Original>
+              book_id == static_cast&lt;udt::book_id>(42u)
+            </Original>
+            <Expanded>
+              42 == 42
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="336">
+            <Original>
+              book == parsed_book
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <OverallResultsAsserts successes="33" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="adl_serializer specialization" filename="/testbed/tests/src/unit-udt.cpp" line="397">
+      <SubCase name="partial specialization" filename="/testbed/tests/src/unit-udt.cpp" line="399">
+        <SubCase name="to_json" filename="/testbed/tests/src/unit-udt.cpp" line="401">
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="406">
+            <Original>
+              j.is_null()
+            </Original>
+            <Expanded>
+              true
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK_FALSE" filename="/testbed/tests/src/unit-udt.cpp" line="410">
+            <Original>
+              j.is_null()
+            </Original>
+            <Expanded>
+              false
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="412">
+            <Original>
+              j.get&lt;udt::person>() == *optPerson
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <SubCase name="partial specialization" filename="/testbed/tests/src/unit-udt.cpp" line="399">
+        <SubCase name="from_json" filename="/testbed/tests/src/unit-udt.cpp" line="415">
+          <Expression success="true" type="REQUIRE" filename="/testbed/tests/src/unit-udt.cpp" line="421">
+            <Original>
+              optPerson
+            </Original>
+            <Expanded>
+              0x5fdde7cf8780
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="422">
+            <Original>
+              *optPerson == person
+            </Original>
+            <Expanded>
+              {?} == {?}
+            </Expanded>
+          </Expression>
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="426">
+            <Original>
+              !optPerson
+            </Original>
+            <Expanded>
+              true
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <SubCase name="total specialization" filename="/testbed/tests/src/unit-udt.cpp" line="430">
+        <SubCase name="to_json" filename="/testbed/tests/src/unit-udt.cpp" line="432">
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="437">
+            <Original>
+              j.get&lt;int>() == 4242
+            </Original>
+            <Expanded>
+              4242 == 4242
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <SubCase name="total specialization" filename="/testbed/tests/src/unit-udt.cpp" line="430">
+        <SubCase name="from_json" filename="/testbed/tests/src/unit-udt.cpp" line="440">
+          <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="444">
+            <Original>
+              lt.number == "4242"
+            </Original>
+            <Expanded>
+              4242 == 4242
+            </Expanded>
+          </Expression>
+        </SubCase>
+      </SubCase>
+      <OverallResultsAsserts successes="8" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="even supported types can be specialized" filename="/testbed/tests/src/unit-udt.cpp" line="473">
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="476">
+        <Original>
+          j.dump() == R"("hijacked!")"
+        </Original>
+        <Expanded>
+          "hijacked!" == "hijacked!"
+        </Expanded>
+      </Expression>
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="479">
+        <Original>
+          (f == std::vector&lt;float> {4.0, 5.0, 6.0})
+        </Original>
+        <Expanded>
+          true
+        </Expanded>
+      </Expression>
+      <OverallResultsAsserts successes="2" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="Non-copyable types" filename="/testbed/tests/src/unit-udt.cpp" line="512">
+      <SubCase name="to_json" filename="/testbed/tests/src/unit-udt.cpp" line="514">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="519">
+          <Original>
+            j.is_null()
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK_FALSE" filename="/testbed/tests/src/unit-udt.cpp" line="523">
+          <Original>
+            j.is_null()
+          </Original>
+          <Expanded>
+            false
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="525">
+          <Original>
+            j.get&lt;udt::person>() == *optPerson
+          </Original>
+          <Expanded>
+            {?} == {?}
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="from_json" filename="/testbed/tests/src/unit-udt.cpp" line="528">
+        <Expression success="true" type="REQUIRE" filename="/testbed/tests/src/unit-udt.cpp" line="534">
+          <Original>
+            optPerson
+          </Original>
+          <Expanded>
+            {?}
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="535">
+          <Original>
+            *optPerson == person
+          </Original>
+          <Expanded>
+            {?} == {?}
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="539">
+          <Original>
+            !optPerson
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <OverallResultsAsserts successes="6" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="custom serializer for pods" filename="/testbed/tests/src/unit-udt.cpp" line="653">
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="664">
+        <Original>
+          p == p2
+        </Original>
+        <Expanded>
+          begin: 42, middle: /, end: 42 == begin: 42, middle: /, end: 42
+        </Expanded>
+      </Expression>
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="669">
+        <Original>
+          np == np2
+        </Original>
+        <Expanded>
+          {?} == {?}
+        </Expanded>
+      </Expression>
+      <OverallResultsAsserts successes="2" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="custom serializer that does adl by default" filename="/testbed/tests/src/unit-udt.cpp" line="693">
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="700">
+        <Original>
+          j.dump() == cj.dump()
+        </Original>
+        <Expanded>
+          {"age":23,"country":"France","name":"theo"} == {"age":23,"country":"France","name":"theo"}
+        </Expanded>
+      </Expression>
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="702">
+        <Original>
+          me == j.get&lt;udt::person>()
+        </Original>
+        <Expanded>
+          {?} == {?}
+        </Expanded>
+      </Expression>
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="703">
+        <Original>
+          me == cj.get&lt;udt::person>()
+        </Original>
+        <Expanded>
+          {?} == {?}
+        </Expanded>
+      </Expression>
+      <OverallResultsAsserts successes="3" failures="0" test_case_success="true"/>
+    </TestCase>
+  </TestSuite>
+  <TestSuite>
+    <TestCase name="different basic_json types conversions" filename="/testbed/tests/src/unit-udt.cpp" line="706">
+      <SubCase name="null" filename="/testbed/tests/src/unit-udt.cpp" line="708">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="712">
+          <Original>
+            cj == nullptr
+          </Original>
+          <Expanded>
+            null == nullptr
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="boolean" filename="/testbed/tests/src/unit-udt.cpp" line="715">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="719">
+          <Original>
+            cj == true
+          </Original>
+          <Expanded>
+            true == true
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="discarded" filename="/testbed/tests/src/unit-udt.cpp" line="722">
+        <Expression success="true" type="CHECK_NOTHROW" filename="/testbed/tests/src/unit-udt.cpp" line="726">
+          <Original>
+            cj = j
+          </Original>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="727">
+          <Original>
+            cj.type() == custom_json::value_t::discarded
+          </Original>
+          <Expanded>
+            9 == 9
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="array" filename="/testbed/tests/src/unit-udt.cpp" line="730">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="734">
+          <Original>
+            (cj == std::vector&lt;int> {1, 2, 3})
+          </Original>
+          <Expanded>
+            true
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="integer" filename="/testbed/tests/src/unit-udt.cpp" line="737">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="741">
+          <Original>
+            cj == 42
+          </Original>
+          <Expanded>
+            42 == 42
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="float" filename="/testbed/tests/src/unit-udt.cpp" line="744">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="748">
+          <Original>
+            cj == 42.0
+          </Original>
+          <Expanded>
+            42.0 == 42
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="unsigned" filename="/testbed/tests/src/unit-udt.cpp" line="751">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="755">
+          <Original>
+            cj == 42u
+          </Original>
+          <Expanded>
+            42 == 42
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="string" filename="/testbed/tests/src/unit-udt.cpp" line="758">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="762">
+          <Original>
+            cj == "forty-two"
+          </Original>
+          <Expanded>
+            "forty-two" == forty-two
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="binary" filename="/testbed/tests/src/unit-udt.cpp" line="765">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="769">
+          <Original>
+            cj.get_binary().subtype() == 42
+          </Original>
+          <Expanded>
+            42 == 42
+          </Expanded>
+        </Expression>
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="772">
+          <Original>
+            cv == v
+          </Original>
+          <Expanded>
+            {?} == {?}
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="object" filename="/testbed/tests/src/unit-udt.cpp" line="775">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="780">
+          <Original>
+            cj == m
+          </Original>
+          <Expanded>
+            {"forty":"two"} == {?}
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <SubCase name="get&lt;custom_json>" filename="/testbed/tests/src/unit-udt.cpp" line="783">
+        <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="787">
+          <Original>
+            cj == 42
+          </Original>
+          <Expanded>
+            42 == 42
+          </Expanded>
+        </Expression>
+      </SubCase>
+      <OverallResultsAsserts successes="13" failures="0" test_case_success="true"/>
+    </TestCase>
+  </TestSuite>
+  <TestSuite name="udt">
+    <TestCase name="an incomplete type does not trigger a compiler error in non-evaluated context" filename="/testbed/tests/src/unit-udt.cpp" line="805">
+      <OverallResultsAsserts successes="0" failures="0" test_case_success="true"/>
+    </TestCase>
+  </TestSuite>
+  <TestSuite>
+    <TestCase name="Issue #924" filename="/testbed/tests/src/unit-udt.cpp" line="828">
+      <Expression success="true" type="CHECK_NOTHROW" filename="/testbed/tests/src/unit-udt.cpp" line="833">
+        <Original>
+          j.get&lt;Evil>()
+        </Original>
+      </Expression>
+      <Expression success="true" type="CHECK_NOTHROW" filename="/testbed/tests/src/unit-udt.cpp" line="834">
+        <Original>
+          j.get&lt;std::vector&lt;Evil>>()
+        </Original>
+      </Expression>
+      <Expression success="true" type="CHECK" filename="/testbed/tests/src/unit-udt.cpp" line="838">
+        <Original>
+          e.m_i >= 0
+        </Original>
+        <Expanded>
+          4 >= 0
+        </Expanded>
+      </Expression>
+      <OverallResultsAsserts successes="3" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="Issue #1237" filename="/testbed/tests/src/unit-udt.cpp" line="841">
+      <OverallResultsAsserts successes="0" failures="0" test_case_success="true"/>
+    </TestCase>
+    <TestCase name="compatible array type, without iterator type alias" filename="/testbed/tests/src/unit-udt.cpp" line="871">
+      <OverallResultsAsserts successes="0" failures="0" test_case_success="true"/>
+    </TestCase>
+  </TestSuite>
+  <OverallResultsAsserts successes="70" failures="0"/>
+  <OverallResultsTestCases successes="11" failures="0" skipped="0"/>
+</doctest>
++ echo '--- TEST XML END ---'
++ git checkout 3780b41dd070436f3f55327b0a88f27a52e2dfa8 tests/src/unit-udt.cpp
+--- TEST XML END ---
+Updated 1 path from 18eed0f6

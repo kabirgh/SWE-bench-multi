@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import re
 from typing import Callable
+import xml.etree.ElementTree as ET
 
 from swebench.harness.constants import TestStatus
 from swebench.harness.adapters.adapter import Adapter
@@ -12,7 +13,7 @@ class CPlusPlusAdapter(Adapter):
 
     @property
     def language(self):
-        return "c++"
+        return "cpp"
 
     @property
     def base_image_name(self):
@@ -99,4 +100,41 @@ def jq_log_parser(log: str) -> dict[str, str]:
                 test_status_map[test_name] = TestStatus.PASSED.value
             elif status == "FAIL":
                 test_status_map[test_name] = TestStatus.FAILED.value
+    return test_status_map
+
+
+def doctest_log_parser(log: str) -> dict[str, str]:
+    """
+    Assumes test binary runs with -s -r=xml.
+    """
+    test_status_map = {}
+
+    # Extract XML content
+    start_tag = "<doctest"
+    end_tag = "</doctest>"
+    start_index = log.find(start_tag)
+    end_index = (
+        log.find(end_tag, start_index) + len(end_tag) if start_index != -1 else -1
+    )
+
+    if start_index != -1 and end_index != -1:
+        xml_string = log[start_index:end_index]
+        root = ET.fromstring(xml_string)
+
+        for testcase in root.findall(".//TestCase"):
+            testcase_name = testcase.get("name")
+            for subcase in testcase.findall(".//SubCase"):
+                subcase_name = subcase.get("name")
+                name = f"{testcase_name} > {subcase_name}"
+
+                expressions = subcase.findall(".//Expression")
+                subcase_passed = all(
+                    expr.get("success") == "true" for expr in expressions
+                )
+
+                if subcase_passed:
+                    test_status_map[name] = TestStatus.PASSED.value
+                else:
+                    test_status_map[name] = TestStatus.FAILED.value
+
     return test_status_map

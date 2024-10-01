@@ -16,6 +16,7 @@ autoconf \
 tcl \
 bison \
 flex \
+cmake \
 && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos 'dog' nonroot

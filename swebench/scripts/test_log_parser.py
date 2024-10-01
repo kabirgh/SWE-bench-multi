@@ -1,7 +1,7 @@
 import json
 from swebench.harness.constants import TestStatus
-from swebench.harness.adapters.java_adapter import (
-    gradle_custom_log_parser as log_parser,
+from swebench.harness.adapters.cplusplus_adapter import (
+    doctest_log_parser as log_parser,
 )
 
 if __name__ == "__main__":

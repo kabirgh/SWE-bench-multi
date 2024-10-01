@@ -89,7 +89,7 @@ _dockerfiles = {
         "env": _DOCKERFILE_BASE_JAVASCRIPT,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_JAVASCRIPT,
     },
-    "c++": {
+    "cpp": {
         "base": _DOCKERFILE_BASE_CPLUSPLUS,
         "env": _DOCKERFILE_BASE_CPLUSPLUS,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_CPLUSPLUS,

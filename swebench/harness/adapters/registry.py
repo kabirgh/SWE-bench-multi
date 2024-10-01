@@ -1,6 +1,7 @@
 from swebench.harness.adapters.adapter import Adapter, tap_log_parser
 from swebench.harness.adapters.cplusplus_adapter import (
     CPlusPlusAdapter,
+    doctest_log_parser,
     jq_log_parser,
     redis_log_parser,
 )
@@ -717,5 +718,18 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             test=["./gradlew test --tests org.apache.lucene.facet.TestDrillSideways"],
             log_parser=gradle_custom_log_parser,
         ),
+    },
+    "nlohmann/json": {
+        "4237": CPlusPlusAdapter(
+            build=[
+                "mkdir -p build",
+                "cd build",
+                "cmake ..",
+                "make test-udt_cpp11",
+                "cd ..",
+            ],
+            test=["./build/tests/test-udt_cpp11 -s -r=xml"],
+            log_parser=doctest_log_parser,
+        )
     },
 }
