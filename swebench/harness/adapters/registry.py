@@ -6,9 +6,12 @@ from swebench.harness.adapters.cplusplus_adapter import (
 )
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.java_adapter import (
-    JavaAntAdapter,
+    JavaAdapter,
     JavaMavenAdapter,
+    ant_log_parser,
+    gradle_custom_log_parser,
     make_lombok_pre_install_script,
+    make_lucene_pre_install_script,
 )
 from swebench.harness.adapters.python_adapter import PythonAdapter
 from swebench.harness.adapters.javascript_adapter import (
@@ -652,16 +655,17 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         ),
     },
     "projectlombok/lombok": {
-        "3602": JavaAntAdapter(
+        "3602": JavaAdapter(
             version="11",
             pre_install=make_lombok_pre_install_script(
                 ["lombok.bytecode.TestPostCompiler"]
             ),
             install=["ant deps"],
             test=["ant test.instance"],
+            log_parser=ant_log_parser,
         ),
         **{
-            k: JavaAntAdapter(
+            k: JavaAdapter(
                 version="11",
                 pre_install=make_lombok_pre_install_script(
                     ["lombok.transform.TestWithDelombok"]
@@ -670,8 +674,52 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 # Note: PASS_TO_PASS only contains the tests relevant to the
                 # instance, not all tests that pass
                 test=["ant test.instance"],
+                log_parser=ant_log_parser,
             )
             for k in ["3312", "3697", "3326", "3674"]
         },
     },
+    "apache/lucene": {
+        "13494": JavaAdapter(
+            version="21",
+            pre_install=make_lucene_pre_install_script(),
+            # No install script, download dependencies and compile in the test phase
+            test=[
+                "./gradlew test --tests org.apache.lucene.facet.TestStringValueFacetCounts"
+            ],
+            log_parser=gradle_custom_log_parser,
+        ),
+        "13704": JavaAdapter(
+            version="21",
+            pre_install=make_lucene_pre_install_script(),
+            test=[
+                "./gradlew test --tests org.apache.lucene.search.TestLatLonDocValuesQueries"
+            ],
+            log_parser=gradle_custom_log_parser,
+        ),
+        "13301": JavaAdapter(
+            version="21",
+            pre_install=make_lucene_pre_install_script(),
+            test=[
+                "./gradlew test --tests TestXYPoint.testEqualsAndHashCode -Dtests.seed=3ABEFE4D876DD310 -Dtests.nightly=true -Dtests.locale=es-419 -Dtests.timezone=Asia/Ulaanbaatar -Dtests.asserts=true -Dtests.file.encoding=UTF-8"
+            ],
+            log_parser=gradle_custom_log_parser,
+        ),
+        "12626": JavaAdapter(
+            version="21",
+            pre_install=make_lucene_pre_install_script(),
+            test=["./gradlew test --tests org.apache.lucene.index.TestIndexWriter"],
+            log_parser=gradle_custom_log_parser,
+        ),
+        "12212": JavaAdapter(
+            version="17",
+            pre_install=make_lucene_pre_install_script(),
+            test=["./gradlew test --tests org.apache.lucene.facet.TestDrillSideways"],
+            log_parser=gradle_custom_log_parser,
+        ),
+    },
 }
+
+with open("s.txt", "w") as f:
+    for l in make_lucene_pre_install_script():
+        f.write(l + "\n")

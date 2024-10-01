@@ -8,6 +8,23 @@ from swebench.harness.adapters.adapter import Adapter
 
 
 @dataclass(kw_only=True)
+class JavaAdapter(Adapter):
+    version: str
+    log_parser: Callable[[str], dict[str, str]]
+
+    @property
+    def language(self):
+        return "java"
+
+    @property
+    def base_image_name(self):
+        return f"eclipse-temurin:{self.version}"
+
+    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
+        return self.log_parser
+
+
+@dataclass(kw_only=True)
 class JavaMavenAdapter(Adapter):
     version: str
 
@@ -63,9 +80,8 @@ def _maven_log_parser(log: str) -> dict[str, str]:
 
 def make_lombok_pre_install_script(tests: List[str]) -> List[str]:
     """
-    There's no way to run individual tests
-    out of the box, so the adapter modifies the xml file that defines test
-    scripts in the pre-install phase.
+    There's no way to run individual tests out of the box, so this script
+    modifies the xml file that defines test scripts in the pre-install phase.
     """
     xml = rf"""
     <target name="test.instance" depends="test.compile, test.formatter.compile" description="Runs test cases for the swe-bench instance">
@@ -89,23 +105,7 @@ def make_lombok_pre_install_script(tests: List[str]) -> List[str]:
     ]
 
 
-@dataclass(kw_only=True)
-class JavaAntAdapter(Adapter):
-    version: str
-
-    @property
-    def language(self):
-        return "java"
-
-    @property
-    def base_image_name(self):
-        return f"eclipse-temurin:{self.version}"
-
-    def get_log_parser(self) -> Callable[[str], dict[str, str]]:
-        return _ant_log_parser
-
-
-def _ant_log_parser(log: str) -> dict[str, str]:
+def ant_log_parser(log: str) -> dict[str, str]:
     test_status_map = {}
 
     pattern = r"^\s*\[junit\]\s+\[(PASS|FAIL|ERR)\]\s+(.*)$"
@@ -118,4 +118,82 @@ def _ant_log_parser(log: str) -> dict[str, str]:
                 test_status_map[test_name] = TestStatus.PASSED.value
             elif status in ["FAIL", "ERR"]:
                 test_status_map[test_name] = TestStatus.FAILED.value
+
+    return test_status_map
+
+
+def make_lucene_pre_install_script() -> List[str]:
+    """
+    There's no way to run individual tests out of the box, so this script
+    modifies the gradle file that defines test output in the pre-install phase.
+    """
+    gradle_file = "gradle/testing/defaults-tests.gradle"
+
+    new_content = """testLogging {
+  showStandardStreams = true
+  // set options for log level LIFECYCLE
+  events TestLogEvent.FAILED,
+         TestLogEvent.PASSED,
+         TestLogEvent.SKIPPED,
+         TestLogEvent.STANDARD_OUT
+  exceptionFormat TestExceptionFormat.FULL
+  showExceptions true
+  showCauses true
+  showStackTraces true
+
+  // set options for log level DEBUG and INFO
+  debug {
+      events TestLogEvent.STARTED,
+             TestLogEvent.FAILED,
+             TestLogEvent.PASSED,
+             TestLogEvent.SKIPPED,
+             TestLogEvent.STANDARD_ERROR,
+             TestLogEvent.STANDARD_OUT
+      exceptionFormat TestExceptionFormat.FULL
+  }
+  info.events = debug.events
+  info.exceptionFormat = debug.exceptionFormat
+
+  afterSuite { desc, result ->
+      if (!desc.parent) { // will match the outermost suite
+          def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} passed, ${result.failedTestCount} failed, ${result.skippedTestCount} skipped)"
+          def startItem = '|  ', endItem = '  |'
+          def repeatLength = startItem.length() + output.length() + endItem.length()
+          println('\\n' + ('-' * repeatLength) + '\\n' + startItem + output + endItem + '\\n' + ('-' * repeatLength))
+      }
+  }
+}"""
+
+    return [
+        f"""
+sed -i '
+/testLogging {{/,/}}/{{
+  /testLogging {{/r /dev/stdin
+  d
+}}
+' {gradle_file} << 'EOF'
+{new_content}
+EOF
+""".strip()
+    ]
+
+
+def gradle_custom_log_parser(log: str) -> dict[str, str]:
+    """
+    Parser for test logs generated with 'gradle test'. Assumes that the lucene
+    pre-install script has run.
+    """
+    test_status_map = {}
+
+    pattern = r"^([^>].+)\s+(PASSED|FAILED)$"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            test_name, status = match.groups()
+            if status == "PASSED":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            elif status == "FAILED":
+                test_status_map[test_name] = TestStatus.FAILED.value
+
     return test_status_map
