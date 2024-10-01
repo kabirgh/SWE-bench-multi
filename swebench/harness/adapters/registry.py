@@ -685,7 +685,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             pre_install=make_lucene_pre_install_script(),
             # No install script, download dependencies and compile in the test phase
             test=[
-                "./gradlew test --tests org.apache.lucene.facet.TestStringValueFacetCounts"
+                "./gradlew test --tests org.apache.lucene.facet.TestStringValueFacetCounts",
             ],
             log_parser=gradle_custom_log_parser,
         ),
@@ -693,7 +693,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="21",
             pre_install=make_lucene_pre_install_script(),
             test=[
-                "./gradlew test --tests org.apache.lucene.search.TestLatLonDocValuesQueries"
+                "./gradlew test --tests org.apache.lucene.search.TestLatLonDocValuesQueries",
             ],
             log_parser=gradle_custom_log_parser,
         ),
@@ -701,7 +701,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="21",
             pre_install=make_lucene_pre_install_script(),
             test=[
-                "./gradlew test --tests TestXYPoint.testEqualsAndHashCode -Dtests.seed=3ABEFE4D876DD310 -Dtests.nightly=true -Dtests.locale=es-419 -Dtests.timezone=Asia/Ulaanbaatar -Dtests.asserts=true -Dtests.file.encoding=UTF-8"
+                "./gradlew test --tests TestXYPoint.testEqualsAndHashCode -Dtests.seed=3ABEFE4D876DD310 -Dtests.nightly=true -Dtests.locale=es-419 -Dtests.timezone=Asia/Ulaanbaatar -Dtests.asserts=true -Dtests.file.encoding=UTF-8",
             ],
             log_parser=gradle_custom_log_parser,
         ),

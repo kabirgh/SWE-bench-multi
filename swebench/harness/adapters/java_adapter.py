@@ -81,7 +81,8 @@ def _maven_log_parser(log: str) -> dict[str, str]:
 def make_lombok_pre_install_script(tests: List[str]) -> List[str]:
     """
     There's no way to run individual tests out of the box, so this script
-    modifies the xml file that defines test scripts in the pre-install phase.
+    modifies the xml file that defines test scripts to run individual tests with
+    `ant test.instance`.
     """
     xml = rf"""
     <target name="test.instance" depends="test.compile, test.formatter.compile" description="Runs test cases for the swe-bench instance">
@@ -124,8 +125,8 @@ def ant_log_parser(log: str) -> dict[str, str]:
 
 def make_lucene_pre_install_script() -> List[str]:
     """
-    There's no way to run individual tests out of the box, so this script
-    modifies the gradle file that defines test output in the pre-install phase.
+    This script modifies the gradle config to print all test results, including
+    passing tests.
     """
     gradle_file = "gradle/testing/defaults-tests.gradle"
 
