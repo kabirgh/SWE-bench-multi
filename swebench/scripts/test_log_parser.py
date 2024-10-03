@@ -1,7 +1,7 @@
 import json
 from swebench.harness.constants import TestStatus
-from swebench.harness.adapters.cplusplus_adapter import (
-    doctest_log_parser as log_parser,
+from swebench.harness.adapters.go_adapter import (
+    _log_parser as log_parser,
 )
 
 if __name__ == "__main__":

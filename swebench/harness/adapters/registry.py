@@ -730,6 +730,33 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             test=["./build/tests/test-udt_cpp11 -s -r=xml"],
             log_parser=doctest_log_parser,
-        )
+        ),
+    },
+    "gohugoio/hugo": {
+        "12768": GoAdapter(
+            version="1.23",
+            install=["go test -c ./markup/goldmark/blockquotes/..."],
+            test=["go test -v ./markup/goldmark/blockquotes/..."],
+        ),
+        "12579": GoAdapter(
+            version="1.23",
+            install=['go test -c ./resources/page/... -run "^TestGroupBy"'],
+            test=['go test -v ./resources/page/... -run "^TestGroupBy"'],
+        ),
+        "12562": GoAdapter(
+            version="1.23",
+            install=['go test -c ./hugolib/... -run "^TestGetPage[^/]"'],
+            test=['go test -v ./hugolib/... -run "^TestGetPage[^/]"'],
+        ),
+        "12448": GoAdapter(
+            version="1.23",
+            install=['go test -c ./hugolib/... -run "^TestRebuild"'],
+            test=['go test -v ./hugolib/... -run "^TestRebuild"'],
+        ),
+        "12343": GoAdapter(
+            version="1.23",
+            install=['go test -c ./resources/page/... -run "^Test.*Permalink"'],
+            test=['go test -v ./resources/page/... -run "^Test.*Permalink"'],
+        ),
     },
 }
