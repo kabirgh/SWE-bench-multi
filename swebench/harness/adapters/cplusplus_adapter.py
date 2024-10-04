@@ -138,3 +138,48 @@ def doctest_log_parser(log: str) -> dict[str, str]:
                     test_status_map[name] = TestStatus.FAILED.value
 
     return test_status_map
+
+
+def systemd_test_log_parser(log: str) -> dict[str, str]:
+    test_status_map = {}
+    tests_started = False
+    current_test_name = None
+    current_test_status = TestStatus.PASSED.value
+
+    test_name_pattern = r"^/\*\s*(.+?)\s*\*/$"
+    test_fail_string = "Assertion failed"
+    test_logs_ended_string = "Full log written to"
+
+    for line in log.split("\n"):
+        if "✀" in line:
+            tests_started = True
+            continue
+
+        if not tests_started:
+            continue
+
+        test_name_match = re.match(test_name_pattern, line.strip())
+        # New test
+        if test_name_match:
+            # Save the status of the previous test
+            if current_test_name is not None:
+                test_status_map[current_test_name] = current_test_status
+
+            # Get the new test name
+            current_test_name = test_name_match.groups()[0]
+            # Reset current test status to pass
+            current_test_status = TestStatus.PASSED.value
+            continue
+
+        # Only set the test status to failed if we see the fail string
+        if test_fail_string in line:
+            current_test_status = TestStatus.FAILED.value
+            continue
+
+        # Save results of the last test
+        if test_logs_ended_string in line:
+            test_status_map[current_test_name] = current_test_status
+            break
+
+    return test_status_map
+

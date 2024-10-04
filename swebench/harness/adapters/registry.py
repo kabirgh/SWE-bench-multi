@@ -4,6 +4,7 @@ from swebench.harness.adapters.cplusplus_adapter import (
     doctest_log_parser,
     jq_log_parser,
     redis_log_parser,
+    systemd_test_log_parser,
 )
 from swebench.harness.adapters.go_adapter import GoAdapter
 from swebench.harness.adapters.java_adapter import (
@@ -758,5 +759,15 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=['go test -c ./resources/page/... -run "^Test.*Permalink"'],
             test=['go test -v ./resources/page/... -run "^Test.*Permalink"'],
         ),
+    },
+    "systemd/systemd": {
+        "34480": CPlusPlusAdapter(
+            build=[
+                "meson setup build",
+                "ninja -C build test-seccomp",
+            ],
+            test=["meson test -C build -v test-seccomp"],
+            log_parser=systemd_test_log_parser,
+        )
     },
 }
