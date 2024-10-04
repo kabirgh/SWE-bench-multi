@@ -71,7 +71,7 @@ class Adapter(ABC):
         ]
         setup_commands.extend(self.pre_install)
         setup_commands.extend(self.install)
-        setup_commands.extend(self.build)
+        # setup_commands.extend(self.build)
         return setup_commands
 
     def make_eval_script_list(
@@ -105,7 +105,7 @@ class Adapter(ABC):
             apply_test_patch_command,
             *self.build,
             *self.test,
-            reset_tests_command,  # Revert tests after done, leave the repo in the same state as before
+            reset_tests_command,  # Revert tests after done, leave the repo in the same state as before (except for build artifacts)
         ]
 
 
