@@ -828,5 +828,20 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             log_parser=micropython_test_log_parser,
             clone_submodules=False,
         ),
+        "10095": CPlusPlusAdapter(
+            pre_install=[
+                "python -m venv .venv",
+                "source .venv/bin/activate",
+                # https://github.com/micropython/micropython/issues/10951
+                "sed -i 's/uint mp_import_stat/mp_import_stat_t mp_import_stat/' mpy-cross/main.c",
+            ],
+            build=["source ./tools/ci.sh", "ci_unix_build_helper VARIANT=standard"],
+            test=[
+                "cd tests",
+                "MICROPY_CPYTHON3=python3 MICROPY_MICROPYTHON=../ports/unix/build-standard/micropython ./run-tests.py -i basics/fun",
+            ],
+            log_parser=micropython_test_log_parser,
+            clone_submodules=False,
+        ),
     },
 }

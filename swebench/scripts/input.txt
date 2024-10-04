@@ -1,25 +1,26 @@
-pass  basics/int_big_or2.py
-pass  basics/int_big1.py
-pass  float/int_big_float.py
-pass  basics/int_big_add.py
-pass  basics/int_big_or3.py
-pass  basics/int_big_and.py
-pass  basics/int_big_pow.py
-pass  basics/int_big_and2.py
-pass  basics/int_big_rshift.py
-pass  basics/int_big_unary.py
-pass  basics/int_big_and3.py
-pass  basics/int_big_xor.py
-pass  basics/int_big_cmp.py
-pass  basics/int_big_xor2.py
-pass  basics/int_big_div.py
-FAIL  basics/int_big_error.py
-pass  basics/int_big_xor3.py
-pass  basics/int_big_zeroone.py
-pass  basics/int_big_lshift.py
-pass  basics/int_big_mod.py
-pass  basics/int_big_mul.py
-pass  basics/int_big_or.py
-22 tests performed (6998 individual testcases)
-21 tests passed
-1 tests failed: int_big_error
+pass  basics/fun_defargs.py
+pass  basics/fun1.py
+pass  basics/fun_defargs2.py
+pass  basics/fun2.py
+pass  basics/fun_error.py
+pass  basics/fun3.py
+pass  basics/fun_error2.py
+pass  basics/fun_annotations.py
+pass  basics/fun_globals.py
+FAIL  basics/fun_calldblstar.py
+pass  basics/fun_kwargs.py
+pass  basics/fun_calldblstar2.py
+pass  basics/fun_kwonly.py
+pass  basics/fun_calldblstar3.py
+pass  basics/fun_kwonlydef.py
+pass  basics/fun_calldblstar4.py
+pass  basics/fun_kwvarargs.py
+pass  basics/fun_callstar.py
+pass  basics/fun_largestate.py
+pass  basics/fun_callstardblstar.py
+pass  basics/fun_name.py
+pass  basics/fun_str.py
+pass  basics/fun_varargs.py
+23 tests performed (168 individual testcases)
+22 tests passed
+1 tests failed: fun_calldblstar
