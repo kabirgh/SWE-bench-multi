@@ -1,6 +1,7 @@
 import json
 import glob
 import os
+from collections import defaultdict
 
 # Directory containing the repo-specific instance files
 input_dir = os.path.join("dataset")
@@ -9,6 +10,9 @@ print(f"Full input directory path: {os.path.abspath(input_dir)}")
 
 # List to store all instances
 all_instances = []
+
+# Dictionary to store instance counts for each repo
+repo_instance_counts = defaultdict(int)
 
 # Find all instances.jsonl files in subdirectories
 for instances_file in glob.glob(
@@ -19,6 +23,8 @@ for instances_file in glob.glob(
             # Parse each line as JSON and add to the list
             instance = json.loads(line.strip())
             all_instances.append(instance)
+            # Count instances for each repo
+            repo_instance_counts[instance["repo"]] += 1
 
 # Sort instances to ensure consistent ordering
 all_instances.sort(key=lambda x: x["instance_id"])
@@ -55,6 +61,11 @@ with open(output_file, "w+") as f, open(output_file_all, "w+") as f_all:
         f_all.write(json.dumps(instance) + "\n")
 
 print(f"Merged {len(all_instances)} instances into {output_file} and {output_file_all}")
+
+# Print the number of instances in each repo file
+# print("\nNumber of instances in each repo:")
+# for repo, count in repo_instance_counts.items():
+#     print(f"{repo}: {count}")
 
 # Next create dummy_predictions.json file to check if tests fail before patch is applied
 empty_patch = """diff --git a/empty.txt b/empty.txt
