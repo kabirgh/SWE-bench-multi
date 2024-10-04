@@ -542,7 +542,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
         "15402": JavaMavenAdapter(
             version="11",
             install=[
-                "mvn test -B -pl processing -test=org.apache.druid.query.groupby.GroupByQueryQueryToolChestTest -q"
+                "mvn test -B -pl processing -Dtest=org.apache.druid.query.groupby.GroupByQueryQueryToolChestTest -q"
             ],
             test=[
                 # FAIL_TO_PASS
