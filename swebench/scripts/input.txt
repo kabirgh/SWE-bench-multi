@@ -1,26 +1,95 @@
-pass  basics/fun_defargs.py
-pass  basics/fun1.py
-pass  basics/fun_defargs2.py
-pass  basics/fun2.py
-pass  basics/fun_error.py
-pass  basics/fun3.py
-pass  basics/fun_error2.py
-pass  basics/fun_annotations.py
-pass  basics/fun_globals.py
-FAIL  basics/fun_calldblstar.py
-pass  basics/fun_kwargs.py
-pass  basics/fun_calldblstar2.py
-pass  basics/fun_kwonly.py
-pass  basics/fun_calldblstar3.py
-pass  basics/fun_kwonlydef.py
-pass  basics/fun_calldblstar4.py
-pass  basics/fun_kwvarargs.py
-pass  basics/fun_callstar.py
-pass  basics/fun_largestate.py
-pass  basics/fun_callstardblstar.py
-pass  basics/fun_name.py
-pass  basics/fun_str.py
-pass  basics/fun_varargs.py
-23 tests performed (168 individual testcases)
-22 tests passed
-1 tests failed: fun_calldblstar
+Cleanup: may take some time... OK
+Starting test server at port 21079
+[ready]: 4144720
+Testing unit/type/stream
+[ready]: 4144721
+[ready]: 4144719
+[ready]: 4144725
+[ready]: 4144718
+[ready]: 4144722
+[ready]: 4144724
+[ready]: 4144727
+[ready]: 4144728
+[ready]: 4144723
+[ready]: 4144729
+[ready]: 4144726
+[ready]: 4144730
+[ready]: 4144731
+[ready]: 4144732
+[ready]: 4144733
+[skip]: XADD can add entries into a stream that XRANGE can fetch
+[skip]: XADD IDs are incremental
+[skip]: XADD IDs are incremental when ms is the same as well
+[skip]: XADD IDs correctly report an error when overflowing
+[skip]: XADD auto-generated sequence is incremented for last ID
+[skip]: XADD auto-generated sequence is zero for future timestamp ID
+[skip]: XADD auto-generated sequence can't be smaller than last ID
+[skip]: XADD auto-generated sequence can't overflow
+[skip]: XADD 0-* should succeed
+[skip]: XADD with MAXLEN option
+[skip]: XADD with MAXLEN option and the '=' argument
+[skip]: XADD with MAXLEN option and the '~' argument
+[skip]: XADD with NOMKSTREAM option
+[skip]: XADD with MINID option
+[ok]: XTRIM with MINID option (4 ms)
+[err]: XTRIM with MINID option, big delta from master record in tests/unit/type/stream.tcl
+Expected '' to be equal to '{1641544570597-0 {f v}} {1641544570597-1 {f v}}' (context: type eval line 7 cmd {assert_equal [r XRANGE mystream - +] {{1641544570597-0 {f v}} {1641544570597-1 {f v}}}} proc ::test)
+[skip]: XADD mass insertion and XLEN
+[skip]: XADD with ID 0-0
+[skip]: XADD with LIMIT delete entries no more than limit
+[skip]: XRANGE COUNT works as expected
+[skip]: XREVRANGE COUNT works as expected
+[skip]: XRANGE can be used to iterate the whole stream
+[skip]: XREVRANGE returns the reverse of XRANGE
+[skip]: XRANGE exclusive ranges
+[skip]: XREAD with non empty stream
+[skip]: Non blocking XREAD with empty streams
+[skip]: XREAD with non empty second stream
+[skip]: Blocking XREAD waiting new data
+[skip]: Blocking XREAD waiting old data
+[skip]: Blocking XREAD will not reply with an empty array
+[skip]: Blocking XREAD for stream that ran dry (issue #5299)
+[skip]: XREAD: XADD + DEL should not awake client
+[skip]: XREAD: XADD + DEL + LPUSH should not awake client
+[skip]: XREAD with same stream name multiple times should work
+[skip]: XREAD + multiple XADD inside transaction
+[skip]: XDEL basic test
+[skip]: XDEL fuzz test
+[skip]: XRANGE fuzzing
+[skip]: XREVRANGE regression test for issue #5006
+[skip]: XREAD streamID edge (no-blocking)
+[skip]: XREAD streamID edge (blocking)
+[skip]: XADD streamID edge
+[ok]: XTRIM with MAXLEN option basic test (237 ms)
+[skip]: XADD with LIMIT consecutive calls
+[ok]: XTRIM with ~ is limited (19 ms)
+[ok]: XTRIM without ~ is not limited (18 ms)
+[ok]: XTRIM without ~ and with LIMIT (20 ms)
+[ok]: XTRIM with LIMIT delete entries no more than limit (1 ms)
+[skip]: XADD with MAXLEN > xlen can propagate correctly
+[skip]: XADD with MINID > lastid can propagate correctly
+[skip]: XADD with ~ MAXLEN can propagate correctly
+[skip]: XADD with ~ MAXLEN and LIMIT can propagate correctly
+[skip]: XADD with ~ MINID can propagate correctly
+[skip]: XADD with ~ MINID and LIMIT can propagate correctly
+[ok]: XTRIM with ~ MAXLEN can propagate correctly (38 ms)
+[skip]: XADD can CREATE an empty stream
+[skip]: XSETID can set a specific ID
+[skip]: XSETID cannot SETID with smaller ID
+[skip]: XSETID cannot SETID on non-existent key
+[skip]: Empty stream can be rewrite into AOF correctly
+[skip]: Stream can be rewrite into AOF correctly after XDEL lastid
+[skip]: XGROUP HELP should not have unexpected options
+[skip]: XINFO HELP should not have unexpected options
+[1/1 done]: unit/type/stream (3 seconds)
+
+                   The End
+
+Execution time of different units:
+  3 seconds - unit/type/stream
+
+!!! WARNING The following tests failed:
+
+*** [err]: XTRIM with MINID option, big delta from master record in tests/unit/type/stream.tcl
+Expected '' to be equal to '{1641544570597-0 {f v}} {1641544570597-1 {f v}}' (context: type eval line 7 cmd {assert_equal [r XRANGE mystream - +] {{1641544570597-0 {f v}} {1641544570597-1 {f v}}}} proc ::test)
+Cleanup: may take some time... OK

@@ -1,7 +1,7 @@
 import json
 from swebench.harness.constants import TestStatus
 from swebench.harness.adapters.cplusplus_adapter import (
-    micropython_test_log_parser as log_parser,
+    redis_log_parser as log_parser,
 )
 
 if __name__ == "__main__":

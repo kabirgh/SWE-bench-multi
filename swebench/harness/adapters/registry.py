@@ -127,38 +127,52 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     },
     "redis/redis": {
         "13115": CPlusPlusAdapter(
-            install=["make distclean", "make"],
-            build=["make"],
+            build=["make distclean", "make"],
             test=["TERM=dumb ./runtest --durable --single unit/scripting"],
             log_parser=redis_log_parser,
         ),
         "12472": CPlusPlusAdapter(
-            install=["make distclean", "make"],
-            build=["make"],
+            build=["make distclean", "make"],
             test=[
                 'TERM=dumb ./runtest --durable --single unit/acl --only "/.*ACL GETUSER.*"'
             ],
             log_parser=redis_log_parser,
         ),
         "12272": CPlusPlusAdapter(
-            install=["make distclean", "make"],
-            build=["make"],
+            build=["make distclean", "make"],
             test=[
                 'TERM=dumb ./runtest --durable --single unit/type/string --only "/.*(GETRANGE|SETRANGE).*"'
             ],
             log_parser=redis_log_parser,
         ),
         "11734": CPlusPlusAdapter(
-            install=["make distclean", "make"],
-            build=["make"],
+            build=["make distclean", "make"],
             test=["TERM=dumb ./runtest --durable --single unit/bitops"],
             log_parser=redis_log_parser,
         ),
         "10764": CPlusPlusAdapter(
-            install=["make distclean", "make"],
-            build=["make"],
+            build=["make distclean", "make"],
             test=[
                 'TERM=dumb ./runtest --durable --single unit/type/zset --only "BZMPOP"'
+            ],
+            log_parser=redis_log_parser,
+        ),
+        "10095": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/type/list --only "/.*(LPOP|RPOP)"'
+            ],
+            log_parser=redis_log_parser,
+        ),
+        "9733": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=["TERM=dumb ./runtest --durable --single unit/introspection-2"],
+            log_parser=redis_log_parser,
+        ),
+        "10068": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/type/stream --only "/*XTRIM*"'
             ],
             log_parser=redis_log_parser,
         ),

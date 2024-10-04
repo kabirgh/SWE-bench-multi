@@ -36,7 +36,7 @@ def redis_log_parser(log: str) -> dict[str, str]:
     """
     test_status_map = {}
 
-    pattern = r"^\[(ok|err)\]:\s(.+?)(?:\s\((\d+\s*m?s)\))?$"
+    pattern = r"^\[(ok|err|skip|ignore)\]:\s(.+?)(?:\s\((\d+\s*m?s)\))?$"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
