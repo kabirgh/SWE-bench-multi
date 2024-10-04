@@ -282,7 +282,7 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                     "autoreconf -i",
                     "./configure --with-oniguruma=builtin",
                     "make clean",
-                    "make -j8",
+                    "make -j$(nproc)",
                 ],
                 test=["make check"],
                 log_parser=jq_log_parser,
