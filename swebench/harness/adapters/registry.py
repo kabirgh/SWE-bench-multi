@@ -3,6 +3,7 @@ from swebench.harness.adapters.cplusplus_adapter import (
     CPlusPlusAdapter,
     doctest_log_parser,
     jq_log_parser,
+    micropython_test_log_parser,
     redis_log_parser,
     systemd_test_log_parser,
 )
@@ -769,5 +770,63 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             test=["meson test -C build -v test-seccomp"],
             log_parser=systemd_test_log_parser,
         )
+    },
+    "micropython/micropython": {
+        "15898": CPlusPlusAdapter(
+            pre_install=["python -m venv .venv", "source .venv/bin/activate"],
+            build=[
+                "source ./tools/ci.sh",
+                "ci_unix_build_helper VARIANT=standard",
+                "gcc -shared -o tests/ports/unix/ffi_lib.so tests/ports/unix/ffi_lib.c",
+            ],
+            test=[
+                "cd tests",
+                "MICROPY_CPYTHON3=python3 MICROPY_MICROPYTHON=../ports/unix/build-standard/micropython ./run-tests.py -i string_format",
+            ],
+            log_parser=micropython_test_log_parser,
+            clone_submodules=False,
+        ),
+        "13569": CPlusPlusAdapter(
+            pre_install=["python -m venv .venv", "source .venv/bin/activate"],
+            build=[
+                "source ./tools/ci.sh",
+                "ci_unix_build_helper VARIANT=standard",
+                "gcc -shared -o tests/ports/unix/ffi_lib.so tests/ports/unix/ffi_lib.c",
+            ],
+            test=[
+                "cd tests",
+                "MICROPY_CPYTHON3=python3 MICROPY_MICROPYTHON=../ports/unix/build-standard/micropython ./run-tests.py -i try",
+            ],
+            log_parser=micropython_test_log_parser,
+            clone_submodules=False,
+        ),
+        "13039": CPlusPlusAdapter(
+            pre_install=["python -m venv .venv", "source .venv/bin/activate"],
+            build=[
+                "source ./tools/ci.sh",
+                "ci_unix_build_helper VARIANT=standard",
+                "gcc -shared -o tests/unix/ffi_lib.so tests/unix/ffi_lib.c",
+            ],
+            test=[
+                "cd tests",
+                "MICROPY_CPYTHON3=python3 MICROPY_MICROPYTHON=../ports/unix/build-standard/micropython ./run-tests.py -i slice",
+            ],
+            log_parser=micropython_test_log_parser,
+            clone_submodules=False,
+        ),
+        "12158": CPlusPlusAdapter(
+            pre_install=["python -m venv .venv", "source .venv/bin/activate"],
+            build=[
+                "source ./tools/ci.sh",
+                "ci_unix_build_helper VARIANT=standard",
+                "gcc -shared -o tests/unix/ffi_lib.so tests/unix/ffi_lib.c",
+            ],
+            test=[
+                "cd tests",
+                "MICROPY_CPYTHON3=python3 MICROPY_MICROPYTHON=../ports/unix/build-standard/micropython ./run-tests.py -d thread",
+            ],
+            log_parser=micropython_test_log_parser,
+            clone_submodules=False,
+        ),
     },
 }

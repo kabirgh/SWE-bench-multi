@@ -18,6 +18,7 @@ class Adapter(ABC):
     build: List[str] = field(default_factory=list)
     eval_commands: List[str] = field(default_factory=list)
     dockerfile_key_override: Optional[str] = None
+    clone_submodules: bool = True
 
     @property
     @abstractmethod
@@ -61,7 +62,7 @@ class Adapter(ABC):
         This is the setup script for the instance image.
         """
         setup_commands = [
-            f"git clone --recurse-submodules -o origin https://github.com/{repo} {repo_directory}",
+            f"git clone {'--recurse-submodules ' if self.clone_submodules else ''}-o origin https://github.com/{repo} {repo_directory}",
             f"chmod -R 777 {repo_directory}",  # So nonroot user can run tests
             f"cd {repo_directory}",
             f"git reset --hard {base_commit}",

@@ -183,3 +183,21 @@ def systemd_test_log_parser(log: str) -> dict[str, str]:
 
     return test_status_map
 
+
+def micropython_test_log_parser(log: str) -> dict[str, str]:
+    test_status_map = {}
+
+    pattern = r"^(pass|FAIL|skip)\s+(.+)$"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            status, test_name = match.groups()
+            if status == "pass":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            elif status == "FAIL":
+                test_status_map[test_name] = TestStatus.FAILED.value
+            elif status == "skip":
+                test_status_map[test_name] = TestStatus.SKIPPED.value
+
+    return test_status_map
