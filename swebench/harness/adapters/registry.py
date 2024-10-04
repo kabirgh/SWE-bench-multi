@@ -307,42 +307,42 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "facebook/docusaurus": {
         "10309": JavaScriptAdapter(
             version="20",
+            install=["yarn install"],
             test=[
                 "yarn test packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts --verbose"
             ],
-            install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "10130": JavaScriptAdapter(
             version="20",
+            install=["yarn install"],
             test=[
                 "yarn test packages/docusaurus/src/server/__tests__/brokenLinks.test.ts --verbose"
             ],
-            install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "9897": JavaScriptAdapter(
             version="20",
+            install=["yarn install"],
             test=[
                 "yarn test packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts --verbose"
             ],
-            install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "9183": JavaScriptAdapter(
             version="20",
+            install=["yarn install"],
             test=[
                 "yarn test packages/docusaurus-theme-classic/src/__tests__/options.test.ts --verbose"
             ],
-            install=["yarn install"],
             log_parser=jest_log_parser,
         ),
         "8927": JavaScriptAdapter(
             version="20",
+            install=["yarn install"],
             test=[
                 "yarn test packages/docusaurus-utils/src/__tests__/markdownLinks.test.ts --verbose"
             ],
-            install=["yarn install"],
             log_parser=jest_log_parser,
         ),
     },
