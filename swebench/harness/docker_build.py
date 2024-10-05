@@ -244,7 +244,7 @@ def get_env_configs_to_build(
                 remove_image(client, test_spec.env_image_key, "quiet")
                 image_exists = False
         except docker.errors.ImageNotFound:
-            pass
+            print(f"Environment image {test_spec.env_image_key} not found")
         if not image_exists:
             # Add the environment image to the list of images to build
             image_scripts[test_spec.env_image_key] = {
