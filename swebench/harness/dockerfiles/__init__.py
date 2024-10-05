@@ -92,7 +92,7 @@ _dockerfiles = {
     },
     "javascript": {
         "base": _DOCKERFILE_BASE_JAVASCRIPT,
-        "env": _DOCKERFILE_ENV_JAVASCRIPT,
+        "env": _DOCKERFILE_BASE_JAVASCRIPT,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_JAVASCRIPT,
     },
     "cpp": {
