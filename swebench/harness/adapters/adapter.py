@@ -16,6 +16,7 @@ class Adapter(ABC):
     pre_install: List[str] = field(default_factory=list)
     install: List[str] = field(default_factory=list)
     build: List[str] = field(default_factory=list)
+    setup_env: List[str] = field(default_factory=list)
     eval_commands: List[str] = field(default_factory=list)
     dockerfile_key_override: Optional[str] = None
     clone_submodules: bool = True
@@ -45,14 +46,14 @@ class Adapter(ABC):
         repo_directory: Optional[str] = None,
     ):
         """
-        Creates the list of commands to set up the environment for testing.
-        This is the setup script for the environment image.
-        Unlike python, where the dependencies are enumerated and installed in
-        the conda environment without downloading the repository, we use a
-        generic install command. So we return an empty list here and handle
-        environment setup in the instance image, in therepo script list.
+        Creates the list of commands to set up the environment for testing. This
+        is the setup script for the environment image. Unlike python, where the
+        dependencies are enumerated and installed in the conda environment
+        without downloading the repository, we use a generic install command. So
+        most adapters will not set setup_env and instead handle
+        environment setup in the instance image, in the repo script list.
         """
-        return []
+        return self.setup_env
 
     def make_repo_script_list(
         self, repo: str, repo_directory: str, base_commit: str, _env_name: str

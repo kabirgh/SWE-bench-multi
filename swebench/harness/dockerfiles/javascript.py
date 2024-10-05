@@ -28,6 +28,16 @@ ENV CHROME_PATH /usr/bin/google-chrome
 RUN adduser --disabled-password --gecos 'dog' nonroot
 """
 
+_DOCKERFILE_ENV_JAVASCRIPT = r"""FROM --platform={platform} {base_image_name}
+
+COPY ./setup_env.sh /root/
+RUN chmod +x /root/setup_env.sh
+RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+
+# Persistent cache for yarn packages
+VOLUME /usr/local/share/.cache/yarn
+"""
+
 _DOCKERFILE_INSTANCE_JAVASCRIPT = r"""FROM --platform={platform} {env_image_name}
 
 COPY ./setup_repo.sh /root/
