@@ -12,7 +12,6 @@ from swebench.harness.dockerfiles.java import (
 )
 from swebench.harness.dockerfiles.javascript import (
     _DOCKERFILE_BASE_JAVASCRIPT,
-    _DOCKERFILE_ENV_JAVASCRIPT,
     _DOCKERFILE_INSTANCE_JAVASCRIPT,
 )
 from swebench.harness.dockerfiles.python import (
