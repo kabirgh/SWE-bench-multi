@@ -1,6 +1,6 @@
 # If you change the base image, you need to rebuild all images (run with --force_rebuild)
 _DOCKERFILE_BASE_RUST = r"""
-FROM --platform={platform} {base_image_name}
+FROM --platform={platform} {starting_image_name}
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC

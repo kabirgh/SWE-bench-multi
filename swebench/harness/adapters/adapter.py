@@ -27,7 +27,7 @@ class Adapter(ABC):
 
     @property
     @abstractmethod
-    def base_image_name(self) -> str:
+    def starting_image_name(self) -> str:
         pass
 
     @abstractmethod

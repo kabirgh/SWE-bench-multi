@@ -17,7 +17,7 @@ class JavaAdapter(Adapter):
         return "java"
 
     @property
-    def base_image_name(self):
+    def starting_image_name(self):
         return f"eclipse-temurin:{self.version}"
 
     def get_log_parser(self) -> Callable[[str], dict[str, str]]:
@@ -33,7 +33,7 @@ class JavaMavenAdapter(Adapter):
         return "java"
 
     @property
-    def base_image_name(self):
+    def starting_image_name(self):
         return f"maven:3.9-eclipse-temurin-{self.version}"
 
     def get_log_parser(self) -> Callable[[str], dict[str, str]]:

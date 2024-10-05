@@ -69,10 +69,15 @@ class TestSpec:
             + "\n"
         )
 
+    def adapter_common_key(self):
+        if self.adapter:
+            return f"{self.adapter.starting_image_name.replace(':', '_')}.{self.adapter.dockerfile_key}"
+        raise ValueError("Adapter not found")
+
     @property
     def base_image_key(self):
         if self.adapter:
-            return f"sweb.base.{self.arch}.{self.adapter.base_image_name.replace(':', '_')}.{self.adapter.dockerfile_key}:latest"
+            return f"sweb.base.{self.arch}.{self.adapter_common_key()}:latest"
         return f"sweb.base.{self.arch}:latest"
 
     @property
@@ -89,19 +94,21 @@ class TestSpec:
         val = hash_value[:22]  # 22 characters is still very likely to be unique
 
         if self.adapter:
-            return f"sweb.env.{self.arch}.{self.adapter.base_image_name.replace(':', '_')}.{self.adapter.dockerfile_key}.{val}:latest"
+            return f"sweb.env.{self.arch}.{self.adapter_common_key()}.{val}:latest"
         return f"sweb.env.{self.arch}.{val}:latest"
 
     @property
     def instance_image_key(self):
         if self.adapter:
-            return f"sweb.eval.{self.arch}.{self.adapter.base_image_name.replace(':', '_')}.{self.adapter.dockerfile_key}.{self.instance_id}:latest"
+            return f"sweb.eval.{self.arch}.{self.adapter_common_key()}.{self.instance_id}:latest"
         return f"sweb.eval.{self.arch}.{self.instance_id}:latest"
 
     def get_instance_container_name(self, run_id=None):
         name = f"sweb.eval.{self.instance_id}"
         if self.adapter:
-            name = f"sweb.eval.{self.arch}.{self.adapter.base_image_name.replace(':', '_')}.{self.adapter.dockerfile_key}.{self.instance_id}"
+            name = (
+                f"sweb.eval.{self.arch}.{self.adapter_common_key()}.{self.instance_id}"
+            )
         if run_id:
             name = f"{name}.{self.instance_id}"
         return name
@@ -112,7 +119,7 @@ class TestSpec:
             self.platform,
             self.arch,
             self.adapter.dockerfile_key if self.adapter else None,
-            self.adapter.base_image_name if self.adapter else None,
+            self.adapter.starting_image_name if self.adapter else None,
         )
 
     @property
@@ -121,15 +128,15 @@ class TestSpec:
             self.platform,
             self.arch,
             self.adapter.dockerfile_key if self.adapter else None,
-            self.adapter.base_image_name if self.adapter else None,
+            self.base_image_key,
         )
 
     @property
     def instance_dockerfile(self) -> str:
         return get_dockerfile_instance(
             self.platform,
-            self.env_image_key,
             self.adapter.dockerfile_key if self.adapter else None,
+            self.env_image_key,
         )
 
     @property

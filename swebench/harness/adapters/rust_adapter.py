@@ -15,10 +15,10 @@ class RustAdapter(Adapter):
         return "rust"
 
     @property
-    def base_image_name(self):
+    def starting_image_name(self):
         """
         Returns:
-            str: the "real" base image for the dockerfile, e.g. golang:1.23 or ubuntu:22.04
+            str: the starting image for the dockerfile, e.g. golang:1.23 or ubuntu:22.04
         """
         return f"rust:{self.version}"
 

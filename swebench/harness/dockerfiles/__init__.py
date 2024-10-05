@@ -29,24 +29,29 @@ def get_dockerfile_base(
     platform: str,
     arch: str,
     dockerfile_key: str | None,
-    base_image_name: str | None,
+    starting_image_name: str | None,
 ):
     if arch == "arm64":
         conda_arch = "aarch64"
     else:
         conda_arch = arch
 
-    if not base_image_name:
-        base_image_name = "ubuntu:22.04"
+    if not starting_image_name:
+        starting_image_name = "ubuntu:22.04"
 
     print(f"Getting dockerfile base for {dockerfile_key} on {platform} {arch}")
     return _dockerfiles[dockerfile_key or "python"]["base"].format(
-        platform=platform, conda_arch=conda_arch, base_image_name=base_image_name
+        platform=platform,
+        conda_arch=conda_arch,
+        starting_image_name=starting_image_name,
     )
 
 
 def get_dockerfile_env(
-    platform: str, arch: str, dockerfile_key: str | None, base_image_name: str | None
+    platform: str,
+    arch: str,
+    dockerfile_key: str | None,
+    base_image_name: str | None,
 ) -> str:
     if not base_image_name:
         base_image_name = "ubuntu:22.04"
@@ -60,7 +65,7 @@ def get_dockerfile_env(
 
 
 def get_dockerfile_instance(
-    platform: str, env_image_name: str, dockerfile_key: str | None
+    platform: str, dockerfile_key: str | None, env_image_name: str
 ):
     return _dockerfiles[dockerfile_key or "python"]["instance"].format(
         platform=platform, env_image_name=env_image_name

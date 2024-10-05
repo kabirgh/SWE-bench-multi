@@ -29,7 +29,7 @@ class PythonAdapter(Adapter):
         return "python"
 
     @property
-    def base_image_name(self):
+    def starting_image_name(self):
         return "ubuntu:22.04"
 
     def make_env_script_list(self, instance: SWEbenchInstance, env_name: str):
