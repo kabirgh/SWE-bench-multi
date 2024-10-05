@@ -1,0 +1,121 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/compiler-sfc/src/style/pluginScoped.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 706d4ac1d0210b2d9134b3228280187fe02fc971
+diff --git a/packages/compiler-sfc/src/style/pluginScoped.ts b/packages/compiler-sfc/src/style/pluginScoped.ts
+index 6a588b56..b0224cf2 100644
+--- a/packages/compiler-sfc/src/style/pluginScoped.ts
++++ b/packages/compiler-sfc/src/style/pluginScoped.ts
+@@ -233,16 +233,12 @@ function rewriteSelector(
+ 
+   if (rule.nodes.some(node => node.type === 'rule')) {
+     const deep = (rule as any).__deep
+-    const decls = rule.nodes.filter(node => node.type === 'decl')
+-    if (!deep && decls.length) {
+-      for (const decl of decls) {
+-        rule.removeChild(decl)
++    if (!deep) {
++      extractAndWrapNodes(rule)
++      const atruleNodes = rule.nodes.filter(node => node.type === 'atrule')
++      for (const atnode of atruleNodes) {
++        extractAndWrapNodes(atnode)
+       }
+-      const hostRule = new Rule({
+-        nodes: decls,
+-        selector: '&',
+-      })
+-      rule.prepend(hostRule)
+     }
+     shouldInject = deep
+   }
+@@ -286,5 +282,22 @@ function isSpaceCombinator(node: selectorParser.Node) {
+   return node.type === 'combinator' && /^\s+$/.test(node.value)
+ }
+ 
++function extractAndWrapNodes(parentNode: Rule | AtRule) {
++  if (!parentNode.nodes) return
++  const nodes = parentNode.nodes.filter(
++    node => node.type === 'decl' || node.type === 'comment',
++  )
++  if (nodes.length) {
++    for (const node of nodes) {
++      parentNode.removeChild(node)
++    }
++    const wrappedRule = new Rule({
++      nodes: nodes,
++      selector: '&',
++    })
++    parentNode.prepend(wrappedRule)
++  }
++}
++
+ scopedPlugin.postcss = true
+ export default scopedPlugin
++ git checkout 706d4ac1d0210b2d9134b3228280187fe02fc971 packages/compiler-sfc/__tests__/compileStyle.spec.ts
+Updated 0 paths from 89a8df40
++ git apply -v -
+Checking patch packages/compiler-sfc/__tests__/compileStyle.spec.ts...
+Applied patch packages/compiler-sfc/__tests__/compileStyle.spec.ts cleanly.
++ pnpm run build compiler-sfc
+
+> @3.5.4 build /testbed
+> node scripts/build.js "compiler-sfc"
+
+[36m
+[1m/testbed/packages/compiler-sfc/src/index.ts[22m → [1mpackages/compiler-sfc/dist/compiler-sfc.cjs.js[22m...[39m
+[32mcreated [1mpackages/compiler-sfc/dist/compiler-sfc.cjs.js[22m in [1m2.5s[22m[39m
+[36m
+[1m/testbed/packages/compiler-sfc/src/index.ts[22m → [1mpackages/compiler-sfc/dist/compiler-sfc.esm-browser.js[22m...[39m
+[32mcreated [1mpackages/compiler-sfc/dist/compiler-sfc.esm-browser.js[22m in [1m5.4s[22m[39m
+
+
++ pnpm run test packages/compiler-sfc/__tests__/compileStyle.spec.ts --no-watch --reporter=verbose
+
+> @3.5.4 test /testbed
+> vitest "packages/compiler-sfc/__tests__/compileStyle.spec.ts" "--no-watch" "--reporter=verbose"
+
+
+ RUN  v2.0.5 /testbed
+
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > simple selectors
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > descendent selector
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > nesting selector
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > nesting selector with atrule and comment
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > multiple selectors
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > pseudo class
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > pseudo element
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > spaces before pseudo element
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > ::v-deep
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > ::v-slotted
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > ::v-global
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > :is() and :where() with multiple selectors
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > :is() and :where() in compound selectors
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > media query
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > supports query
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > scoped keyframes
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > spaces after selector
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > deprecated syntax > ::v-deep as combinator
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > deprecated syntax > >>> (deprecated syntax)
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC scoped CSS > deprecated syntax > /deep/ (deprecated syntax)
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC CSS modules > should include resulting classes object in result
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC CSS modules > postcss-modules options
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > scss @import 491ms
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > scss respect user-defined string options.additionalData
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > scss respect user-defined function options.additionalData
+ ✓ packages/compiler-sfc/__tests__/compileStyle.spec.ts > SFC style preprocessors > should mount scope on correct selector when have universal selector
+
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+   Start at  13:19:06
+   Duration  3.40s (transform 1.92s, setup 39ms, collect 2.29s, tests 614ms, environment 0ms, prepare 108ms)
+
++ git checkout 706d4ac1d0210b2d9134b3228280187fe02fc971 packages/compiler-sfc/__tests__/compileStyle.spec.ts
+Updated 1 path from 89a8df40

@@ -1,0 +1,63 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/diff/index.js
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	benchmarks/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 66cb6a78776b263a2fe4d1283426e699961095d2
+diff --git a/src/diff/index.js b/src/diff/index.js
+index a76c1f62..17254a32 100644
+--- a/src/diff/index.js
++++ b/src/diff/index.js
+@@ -271,6 +271,9 @@ export function diff(
+ 				excessDomChildren[excessDomChildren.indexOf(oldDom)] = null;
+ 				// ^ could possibly be simplified to:
+ 				// excessDomChildren.length = 0;
++			} else {
++				newVNode._dom = oldVNode._dom;
++				newVNode._children = oldVNode._children;
+ 			}
+ 			options._catchError(e, newVNode, oldVNode);
+ 		}
++ git checkout 66cb6a78776b263a2fe4d1283426e699961095d2 hooks/test/browser/errorBoundary.test.js
+Updated 0 paths from 56f1c98b
++ git apply -v -
+Checking patch hooks/test/browser/errorBoundary.test.js...
+Applied patch hooks/test/browser/errorBoundary.test.js cleanly.
++ COVERAGE=false
++ BABEL_NO_MODULES=true
++ npx karma start karma.conf.js --single-run --grep=hooks/test/browser/errorBoundary.test.js
+
+START:
+[32m04 10 2024 12:50:51.817:INFO [esbuild]: [39mCompiling...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m04 10 2024 12:50:54.168:INFO [esbuild]: [39mCompiling done (2s)
+[32m04 10 2024 12:50:54.171:INFO [karma-server]: [39mKarma v6.3.16 server started at http://localhost:9876/
+[32m04 10 2024 12:50:54.172:INFO [launcher]: [39mLaunching browsers ChromeNoSandboxHeadless with concurrency 2
+[32m04 10 2024 12:50:54.175:INFO [launcher]: [39mStarting browser Chrome
+[32m04 10 2024 12:50:55.139:INFO [Chrome Headless 129.0.0.0 (Linux x86_64)]: [39mConnected on socket LIONjE29fNRmWzc8AAAB with id 63091972
+  errorBoundary
+    ✔ catches errors
+    ✔ calls the errorBoundary callback
+    ✔ returns error
+    ✔ does not leave a stale closure
+    ✔ does not invoke old effects when a cleanup callback throws an error and is handled
+    ✔ should not duplicate in lists where an item throws and the parent catches and returns a differing type
+
+Finished in 0.016 secs / 0.009 secs @ 12:50:55 GMT+0000 (Coordinated Universal Time)
+
+SUMMARY:
+✔ 6 tests completed
++ git checkout 66cb6a78776b263a2fe4d1283426e699961095d2 hooks/test/browser/errorBoundary.test.js
+Updated 1 path from 56f1c98b

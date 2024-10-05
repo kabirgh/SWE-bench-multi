@@ -1,0 +1,146 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   docs/querying/functions.md
+	modified:   promql/functions.go
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	docs/querying/functions.md.orig
+	promql.test
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 1435c8ae4aa1041592778018ba62fc3058a9ad3d
+diff --git a/docs/querying/functions.md b/docs/querying/functions.md
+index bf2701b88..e13628c5c 100644
+--- a/docs/querying/functions.md
++++ b/docs/querying/functions.md
+@@ -619,7 +619,7 @@ Like `sort`, `sort_desc` only affects the results of instant queries, as range q
+ 
+ **This function has to be enabled via the [feature flag](../feature_flags.md#experimental-promql-functions) `--enable-feature=promql-experimental-functions`.**
+ 
+-`sort_by_label(v instant-vector, label string, ...)` returns vector elements sorted by their label values and sample value in case of label values being equal, in ascending order.
++`sort_by_label(v instant-vector, label string, ...)` returns vector elements sorted by the values of the given labels in ascending order. In case these label values are equal, elements are sorted by their full label sets.
+ 
+ Please note that the sort by label functions only affect the results of instant queries, as range query results always have a fixed output ordering.
+ 
+diff --git a/promql/functions.go b/promql/functions.go
+index 2af06c174..61a2dd076 100644
+--- a/promql/functions.go
++++ b/promql/functions.go
+@@ -406,17 +406,22 @@ func funcSortDesc(vals []parser.Value, args parser.Expressions, enh *EvalNodeHel
+ 
+ // === sort_by_label(vector parser.ValueTypeVector, label parser.ValueTypeString...) (Vector, Annotations) ===
+ func funcSortByLabel(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) (Vector, annotations.Annotations) {
+-	// In case the labels are the same, NaN should sort to the bottom, so take
+-	// ascending sort with NaN first and reverse it.
+-	var anno annotations.Annotations
+-	vals[0], anno = funcSort(vals, args, enh)
++	// First, sort by the full label set. This ensures a consistent ordering in case sorting by the
++	// labels provided as arguments is not conclusive.
++	slices.SortFunc(vals[0].(Vector), func(a, b Sample) int {
++		return labels.Compare(a.Metric, b.Metric)
++	})
++
+ 	labels := stringSliceFromArgs(args[1:])
++	// Next, sort by the labels provided as arguments.
+ 	slices.SortFunc(vals[0].(Vector), func(a, b Sample) int {
+-		// Iterate over each given label
++		// Iterate over each given label.
+ 		for _, label := range labels {
+ 			lv1 := a.Metric.Get(label)
+ 			lv2 := b.Metric.Get(label)
+ 
++			// If we encounter multiple samples with the same label values, the sorting which was
++			// performed in the first step will act as a "tie breaker".
+ 			if lv1 == lv2 {
+ 				continue
+ 			}
+@@ -431,22 +436,27 @@ func funcSortByLabel(vals []parser.Value, args parser.Expressions, enh *EvalNode
+ 		return 0
+ 	})
+ 
+-	return vals[0].(Vector), anno
++	return vals[0].(Vector), nil
+ }
+ 
+ // === sort_by_label_desc(vector parser.ValueTypeVector, label parser.ValueTypeString...) (Vector, Annotations) ===
+ func funcSortByLabelDesc(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) (Vector, annotations.Annotations) {
+-	// In case the labels are the same, NaN should sort to the bottom, so take
+-	// ascending sort with NaN first and reverse it.
+-	var anno annotations.Annotations
+-	vals[0], anno = funcSortDesc(vals, args, enh)
++	// First, sort by the full label set. This ensures a consistent ordering in case sorting by the
++	// labels provided as arguments is not conclusive.
++	slices.SortFunc(vals[0].(Vector), func(a, b Sample) int {
++		return labels.Compare(b.Metric, a.Metric)
++	})
++
+ 	labels := stringSliceFromArgs(args[1:])
++	// Next, sort by the labels provided as arguments.
+ 	slices.SortFunc(vals[0].(Vector), func(a, b Sample) int {
+-		// Iterate over each given label
++		// Iterate over each given label.
+ 		for _, label := range labels {
+ 			lv1 := a.Metric.Get(label)
+ 			lv2 := b.Metric.Get(label)
+ 
++			// If we encounter multiple samples with the same label values, the sorting which was
++			// performed in the first step will act as a "tie breaker".
+ 			if lv1 == lv2 {
+ 				continue
+ 			}
+@@ -461,7 +471,7 @@ func funcSortByLabelDesc(vals []parser.Value, args parser.Expressions, enh *Eval
+ 		return 0
+ 	})
+ 
+-	return vals[0].(Vector), anno
++	return vals[0].(Vector), nil
+ }
+ 
+ // === clamp(Vector parser.ValueTypeVector, min, max Scalar) (Vector, Annotations) ===
++ git checkout 1435c8ae4aa1041592778018ba62fc3058a9ad3d promql/promqltest/testdata/functions.test
+Updated 0 paths from bcf8c7b84
++ git apply -v -
+Checking patch promql/promqltest/testdata/functions.test...
+Applied patch promql/promqltest/testdata/functions.test cleanly.
++ go test -v ./promql -run '^TestEvaluations'
+=== RUN   TestEvaluations
+=== RUN   TestEvaluations/testdata/aggregators.test
+=== RUN   TestEvaluations/testdata/at_modifier.test
+=== RUN   TestEvaluations/testdata/collision.test
+=== RUN   TestEvaluations/testdata/functions.test
+=== RUN   TestEvaluations/testdata/histograms.test
+=== RUN   TestEvaluations/testdata/limit.test
+=== RUN   TestEvaluations/testdata/literals.test
+=== RUN   TestEvaluations/testdata/native_histograms.test
+=== RUN   TestEvaluations/testdata/operators.test
+=== RUN   TestEvaluations/testdata/range_queries.test
+=== RUN   TestEvaluations/testdata/selectors.test
+=== RUN   TestEvaluations/testdata/staleness.test
+=== RUN   TestEvaluations/testdata/subquery.test
+=== RUN   TestEvaluations/testdata/trig_functions.test
+--- PASS: TestEvaluations (2.81s)
+    --- PASS: TestEvaluations/testdata/aggregators.test (0.34s)
+    --- PASS: TestEvaluations/testdata/at_modifier.test (0.12s)
+    --- PASS: TestEvaluations/testdata/collision.test (0.06s)
+    --- PASS: TestEvaluations/testdata/functions.test (0.83s)
+    --- PASS: TestEvaluations/testdata/histograms.test (0.21s)
+    --- PASS: TestEvaluations/testdata/limit.test (0.04s)
+    --- PASS: TestEvaluations/testdata/literals.test (0.02s)
+    --- PASS: TestEvaluations/testdata/native_histograms.test (0.37s)
+    --- PASS: TestEvaluations/testdata/operators.test (0.24s)
+    --- PASS: TestEvaluations/testdata/range_queries.test (0.15s)
+    --- PASS: TestEvaluations/testdata/selectors.test (0.20s)
+    --- PASS: TestEvaluations/testdata/staleness.test (0.04s)
+    --- PASS: TestEvaluations/testdata/subquery.test (0.14s)
+    --- PASS: TestEvaluations/testdata/trig_functions.test (0.04s)
+PASS
+ok  	github.com/prometheus/prometheus/promql	2.841s
++ git checkout 1435c8ae4aa1041592778018ba62fc3058a9ad3d promql/promqltest/testdata/functions.test
+Updated 1 path from bcf8c7b84

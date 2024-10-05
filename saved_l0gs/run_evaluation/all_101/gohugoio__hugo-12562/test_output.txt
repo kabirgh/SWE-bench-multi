@@ -1,0 +1,72 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   hugolib/content_map_page.go
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff c8dac67defbb512877e974814e196782989b8214
+diff --git a/hugolib/content_map_page.go b/hugolib/content_map_page.go
+index 66baea3d1..a8f5b5fd7 100644
+--- a/hugolib/content_map_page.go
++++ b/hugolib/content_map_page.go
+@@ -932,8 +932,8 @@ func newPageMap(i int, s *Site, mcache *dynacache.Cache, pageTrees *pageTrees) *
+ 				LockType: doctree.LockTypeRead,
+ 				Handle: func(s string, n contentNodeI, match doctree.DimensionFlag) (bool, error) {
+ 					p := n.(*pageState)
+-					if p.File() != nil {
+-						add(p.File().FileInfo().Meta().PathInfo.BaseNameNoIdentifier(), p)
++					if p.PathInfo() != nil {
++						add(p.PathInfo().BaseNameNoIdentifier(), p)
+ 					}
+ 					return false, nil
+ 				},
++ git checkout c8dac67defbb512877e974814e196782989b8214 hugolib/pagecollections_test.go
+Updated 0 paths from 310caa9f6
++ git apply -v -
+Checking patch hugolib/pagecollections_test.go...
+Applied patch hugolib/pagecollections_test.go cleanly.
++ go test -v ./hugolib/... -run '^TestGetPage[^/]'
+?   	github.com/gohugoio/hugo/hugolib/paths	[no test files]
+=== RUN   TestGetPageIndexIndex
+--- PASS: TestGetPageIndexIndex (0.03s)
+=== RUN   TestGetPageRelative
+WARN  found no layout file for "html" for kind "page": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+--- PASS: TestGetPageRelative (0.02s)
+=== RUN   TestGetPageIssue11883
+--- PASS: TestGetPageIssue11883 (0.02s)
+=== RUN   TestGetPageIssue12120
+=== PAUSE TestGetPageIssue12120
+=== RUN   TestGetPageBundleToRegular
+--- PASS: TestGetPageBundleToRegular (0.02s)
+=== RUN   TestGetPageMultilingual
+WARN  found no layout file for "html" for kind "page": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "section": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+--- PASS: TestGetPageMultilingual (0.03s)
+=== RUN   TestGetPageContentAdapterBaseIssue12561
+=== PAUSE TestGetPageContentAdapterBaseIssue12561
+=== CONT  TestGetPageIssue12120
+=== CONT  TestGetPageContentAdapterBaseIssue12561
+--- PASS: TestGetPageContentAdapterBaseIssue12561 (0.03s)
+--- PASS: TestGetPageIssue12120 (0.03s)
+PASS
+ok  	github.com/gohugoio/hugo/hugolib	0.306s
+testing: warning: no tests to run
+PASS
+ok  	github.com/gohugoio/hugo/hugolib/doctree	0.145s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/gohugoio/hugo/hugolib/filesystems	0.151s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/gohugoio/hugo/hugolib/pagesfromdata	0.160s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/gohugoio/hugo/hugolib/segments	0.113s [no tests to run]
++ git checkout c8dac67defbb512877e974814e196782989b8214 hugolib/pagecollections_test.go
+Updated 1 path from 310caa9f6

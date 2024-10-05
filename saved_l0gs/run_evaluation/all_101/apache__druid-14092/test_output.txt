@@ -1,0 +1,363 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   server/src/main/java/org/apache/druid/discovery/DruidLeaderClient.java
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 4fffee17761286996a8c43154b72db4bcaafb16d
+diff --git a/server/src/main/java/org/apache/druid/discovery/DruidLeaderClient.java b/server/src/main/java/org/apache/druid/discovery/DruidLeaderClient.java
+index 0679ac39e4..3bc29da40f 100644
+--- a/server/src/main/java/org/apache/druid/discovery/DruidLeaderClient.java
++++ b/server/src/main/java/org/apache/druid/discovery/DruidLeaderClient.java
+@@ -122,6 +122,14 @@ public class DruidLeaderClient
+     return new Request(httpMethod, new URL(StringUtils.format("%s%s", getCurrentKnownLeader(true), urlPath)));
+   }
+ 
++  /**
++   * Executes a Request object aimed at the leader. Throws IOException if the leader cannot be located.
++   * Internal retries with cache invalidation are attempted if 503/504 response is received.
++   *
++   * @param request
++   * @throws IOException
++   * @throws InterruptedException
++   */
+   public StringFullResponseHolder go(Request request) throws IOException, InterruptedException
+   {
+     return go(request, new StringFullResponseHandler(StandardCharsets.UTF_8));
+@@ -129,8 +137,17 @@ public class DruidLeaderClient
+ 
+   /**
+    * Executes a Request object aimed at the leader. Throws IOException if the leader cannot be located.
++   * Internal retries with cache invalidation are attempted if 503/504 response is received.
++   *
++   * @param request
++   * @param responseHandler
++   * @throws IOException
++   * @throws InterruptedException
+    */
+-  public <T, H extends FullResponseHolder<T>> H go(Request request, HttpResponseHandler<H, H> responseHandler)
++  public <T, H extends FullResponseHolder<T>> H go(
++      Request request,
++      HttpResponseHandler<H, H> responseHandler
++  )
+       throws IOException, InterruptedException
+   {
+     Preconditions.checkState(lifecycleLock.awaitStarted(1, TimeUnit.MILLISECONDS));
+@@ -152,38 +169,11 @@ public class DruidLeaderClient
+       catch (IOException | ChannelException ex) {
+         // can happen if the node is stopped.
+         log.warn(ex, "Request[%s] failed.", request.getUrl());
+-
+-        try {
+-          if (request.getUrl().getQuery() == null) {
+-            request = withUrl(
+-                request,
+-                new URL(StringUtils.format("%s%s", getCurrentKnownLeader(false), request.getUrl().getPath()))
+-            );
+-          } else {
+-            request = withUrl(
+-                request,
+-                new URL(StringUtils.format(
+-                    "%s%s?%s",
+-                    getCurrentKnownLeader(false),
+-                    request.getUrl().getPath(),
+-                    request.getUrl().getQuery()
+-                ))
+-            );
+-          }
+-          continue;
+-        }
+-        catch (MalformedURLException e) {
+-          // Not an IOException; this is our own fault.
+-          throw new ISE(
+-              e,
+-              "failed to build url with path[%] and query string [%s].",
+-              request.getUrl().getPath(),
+-              request.getUrl().getQuery()
+-          );
+-        }
++        request = getNewRequestUrlInvalidatingCache(request);
++        continue;
+       }
+-
+-      if (HttpResponseStatus.TEMPORARY_REDIRECT.equals(fullResponseHolder.getResponse().getStatus())) {
++      HttpResponseStatus responseStatus = fullResponseHolder.getResponse().getStatus();
++      if (HttpResponseStatus.TEMPORARY_REDIRECT.equals(responseStatus)) {
+         String redirectUrlStr = fullResponseHolder.getResponse().headers().get("Location");
+         if (redirectUrlStr == null) {
+           throw new IOE("No redirect location is found in response from url[%s].", request.getUrl());
+@@ -213,6 +203,16 @@ public class DruidLeaderClient
+         ));
+ 
+         request = withUrl(request, redirectUrl);
++      } else if (HttpResponseStatus.SERVICE_UNAVAILABLE.equals(responseStatus)
++                 || HttpResponseStatus.GATEWAY_TIMEOUT.equals(responseStatus)) {
++        log.warn(
++            "Request[%s] received a %s response. Attempt %s/%s",
++            request.getUrl(),
++            responseStatus,
++            counter + 1,
++            MAX_RETRIES
++        );
++        request = getNewRequestUrlInvalidatingCache(request);
+       } else {
+         return fullResponseHolder;
+       }
+@@ -295,4 +295,37 @@ public class DruidLeaderClient
+     }
+     return req;
+   }
++
++  private Request getNewRequestUrlInvalidatingCache(Request oldRequest) throws IOException
++  {
++    try {
++      Request newRequest;
++      if (oldRequest.getUrl().getQuery() == null) {
++        newRequest = withUrl(
++            oldRequest,
++            new URL(StringUtils.format("%s%s", getCurrentKnownLeader(false), oldRequest.getUrl().getPath()))
++        );
++      } else {
++        newRequest = withUrl(
++            oldRequest,
++            new URL(StringUtils.format(
++                "%s%s?%s",
++                getCurrentKnownLeader(false),
++                oldRequest.getUrl().getPath(),
++                oldRequest.getUrl().getQuery()
++            ))
++        );
++      }
++      return newRequest;
++    }
++    catch (MalformedURLException e) {
++      // Not an IOException; this is our own fault.
++      throw new ISE(
++          e,
++          "failed to build url with path[%] and query string [%s].",
++          oldRequest.getUrl().getPath(),
++          oldRequest.getUrl().getQuery()
++      );
++    }
++  }
+ }
++ git checkout 4fffee17761286996a8c43154b72db4bcaafb16d server/src/test/java/org/apache/druid/discovery/DruidLeaderClientTest.java
+Updated 0 paths from 63733d3b0b
++ git apply -v -
+Checking patch server/src/test/java/org/apache/druid/discovery/DruidLeaderClientTest.java...
+Applied patch server/src/test/java/org/apache/druid/discovery/DruidLeaderClientTest.java cleanly.
++ mvn test -B -T 1C -pl server -Dtest=org.apache.druid.discovery.DruidLeaderClientTest#test503ResponseFromServerAndCacheRefresh
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] -------------------< org.apache.druid:druid-server >--------------------
+[INFO] Building druid-server 27.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 2 problems were encountered while building the effective model for org.apache.yetus:audience-annotations:jar:0.5.0 during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- checkstyle:3.0.0:check (validate) @ druid-server ---
+[INFO] Starting audit...
+Audit done.
+[INFO] 
+[INFO] >>> pmd:3.16.0:check (validate) > :pmd @ druid-server >>>
+[INFO] 
+[INFO] --- pmd:3.16.0:pmd (pmd) @ druid-server ---
+[INFO] PMD version: 6.42.0
+[INFO] 
+[INFO] <<< pmd:3.16.0:check (validate) < :pmd @ druid-server <<<
+[INFO] 
+[INFO] 
+[INFO] --- pmd:3.16.0:check (validate) @ druid-server ---
+[INFO] PMD version: 6.42.0
+[INFO] 
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (enforce-maven-version) @ druid-server ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (default-cli) @ druid-server ---
+[INFO] 
+[INFO] --- git-commit-id:4.9.10:revision (default) @ druid-server ---
+[INFO] 
+[INFO] --- jacoco:0.8.7:prepare-agent (prepare-agent) @ druid-server ---
+[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/testbed/server/target/jacoco.exec,excludes=org/apache/druid/metadata/BasicDataSourceExt.class:org/apache/druid/server/QueryResponse.class:org/apache/druid/curator/CuratorModule.class
+[INFO] 
+[INFO] --- remote-resources:1.5:process (process-resource-bundles) @ druid-server ---
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ druid-server ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory /testbed/server/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ druid-server ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 737 source files to /testbed/server/target/classes
+[INFO] /testbed/server/src/main/java/org/apache/druid/server/coordinator/duty/EmitClusterStatsAndMetrics.java: Some input files use or override a deprecated API.
+[INFO] /testbed/server/src/main/java/org/apache/druid/server/coordinator/duty/EmitClusterStatsAndMetrics.java: Recompile with -Xlint:deprecation for details.
+[INFO] /testbed/server/src/main/java/org/apache/druid/server/coordinator/CoordinatorDynamicConfig.java: Some input files use unchecked or unsafe operations.
+[INFO] /testbed/server/src/main/java/org/apache/druid/server/coordinator/CoordinatorDynamicConfig.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- forbiddenapis:3.2:check (compile) @ druid-server ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-1.8
+[INFO] Reading bundled API signatures: jdk-system-out
+[INFO] Reading API signatures: /testbed/codestyle/joda-time-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/guava16-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/druid-forbidden-apis.txt
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 1206 class file(s) for forbidden API invocations (in 2.96s), 0 error(s).
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ druid-server ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 8 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ druid-server ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 362 source files to /testbed/server/target/test-classes
+[INFO] /testbed/server/src/test/java/org/apache/druid/server/coordinator/DruidCoordinatorTest.java: Some input files use or override a deprecated API.
+[INFO] /testbed/server/src/test/java/org/apache/druid/server/coordinator/DruidCoordinatorTest.java: Recompile with -Xlint:deprecation for details.
+[INFO] /testbed/server/src/test/java/org/apache/druid/segment/realtime/FireDepartmentTest.java: Some input files use unchecked or unsafe operations.
+[INFO] /testbed/server/src/test/java/org/apache/druid/segment/realtime/FireDepartmentTest.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- forbiddenapis:3.2:testCheck (testCompile) @ druid-server ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-1.8
+[INFO] Reading API signatures: /testbed/codestyle/joda-time-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/guava16-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/druid-forbidden-apis.txt
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 862 class file(s) for forbidden API invocations (in 2.34s), 0 error(s).
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ druid-server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.apache.druid.discovery.DruidLeaderClientTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.864 s - in org.apache.druid.discovery.DruidLeaderClientTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- animal-sniffer:1.17:check (check-java-api) @ druid-server ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  02:39 min (Wall Clock)
+[INFO] Finished at: 2024-10-04T11:38:41Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl server -Dtest=org.apache.druid.discovery.DruidLeaderClientTest#testServerFailureAndRedirect
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] -------------------< org.apache.druid:druid-server >--------------------
+[INFO] Building druid-server 27.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] 2 problems were encountered while building the effective model for org.apache.yetus:audience-annotations:jar:0.5.0 during dependency collection step for project (use -X to see details)
+[INFO] 
+[INFO] --- checkstyle:3.0.0:check (validate) @ druid-server ---
+[INFO] Starting audit...
+Audit done.
+[INFO] 
+[INFO] >>> pmd:3.16.0:check (validate) > :pmd @ druid-server >>>
+[INFO] 
+[INFO] --- pmd:3.16.0:pmd (pmd) @ druid-server ---
+[INFO] PMD version: 6.42.0
+[INFO] 
+[INFO] <<< pmd:3.16.0:check (validate) < :pmd @ druid-server <<<
+[INFO] 
+[INFO] 
+[INFO] --- pmd:3.16.0:check (validate) @ druid-server ---
+[INFO] PMD version: 6.42.0
+[INFO] 
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (enforce-maven-version) @ druid-server ---
+[INFO] 
+[INFO] --- enforcer:3.0.0:enforce (default-cli) @ druid-server ---
+[INFO] 
+[INFO] --- git-commit-id:4.9.10:revision (default) @ druid-server ---
+[INFO] 
+[INFO] --- jacoco:0.8.7:prepare-agent (prepare-agent) @ druid-server ---
+[INFO] jacocoArgLine set to -javaagent:/root/.m2/repository/org/jacoco/org.jacoco.agent/0.8.7/org.jacoco.agent-0.8.7-runtime.jar=destfile=/testbed/server/target/jacoco.exec,excludes=org/apache/druid/metadata/BasicDataSourceExt.class:org/apache/druid/server/QueryResponse.class:org/apache/druid/curator/CuratorModule.class
+[INFO] 
+[INFO] --- remote-resources:1.5:process (process-resource-bundles) @ druid-server ---
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ druid-server ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory /testbed/server/src/main/resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.8.1:compile (default-compile) @ druid-server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- forbiddenapis:3.2:check (compile) @ druid-server ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-1.8
+[INFO] Reading bundled API signatures: jdk-system-out
+[INFO] Reading API signatures: /testbed/codestyle/joda-time-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/guava16-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/druid-forbidden-apis.txt
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 1206 class file(s) for forbidden API invocations (in 2.73s), 0 error(s).
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ druid-server ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 8 resources
+[INFO] Copying 3 resources
+[INFO] 
+[INFO] --- compiler:3.8.1:testCompile (default-testCompile) @ druid-server ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- forbiddenapis:3.2:testCheck (testCompile) @ druid-server ---
+[INFO] Scanning for classes to check...
+[INFO] Reading bundled API signatures: jdk-unsafe-1.8
+[INFO] Reading API signatures: /testbed/codestyle/joda-time-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/guava16-forbidden-apis.txt
+[INFO] Reading API signatures: /testbed/codestyle/druid-forbidden-apis.txt
+[INFO] Loading classes to check...
+[INFO] Scanning classes for violations...
+[INFO] Scanned 862 class file(s) for forbidden API invocations (in 2.10s), 0 error(s).
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ druid-server ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running org.apache.druid.discovery.DruidLeaderClientTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.032 s - in org.apache.druid.discovery.DruidLeaderClientTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- animal-sniffer:1.17:check (check-java-api) @ druid-server ---
+[INFO] Checking unresolved references to org.codehaus.mojo.signature:java18:1.0
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  01:10 min (Wall Clock)
+[INFO] Finished at: 2024-10-04T11:39:56Z
+[INFO] ------------------------------------------------------------------------
++ git checkout 4fffee17761286996a8c43154b72db4bcaafb16d server/src/test/java/org/apache/druid/discovery/DruidLeaderClientTest.java
+Updated 1 path from 63733d3b0b

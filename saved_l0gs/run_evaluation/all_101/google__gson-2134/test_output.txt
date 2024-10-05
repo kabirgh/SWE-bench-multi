@@ -1,0 +1,265 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   gson/src/main/java/com/google/gson/internal/bind/util/ISO8601Utils.java
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 96ab171eb48dcea94fd9b8f425f65c531e6c3aad
+diff --git a/gson/src/main/java/com/google/gson/internal/bind/util/ISO8601Utils.java b/gson/src/main/java/com/google/gson/internal/bind/util/ISO8601Utils.java
+index 99ec679a..02454fe3 100644
+--- a/gson/src/main/java/com/google/gson/internal/bind/util/ISO8601Utils.java
++++ b/gson/src/main/java/com/google/gson/internal/bind/util/ISO8601Utils.java
+@@ -2,7 +2,11 @@ package com.google.gson.internal.bind.util;
+ 
+ import java.text.ParseException;
+ import java.text.ParsePosition;
+-import java.util.*;
++import java.util.Calendar;
++import java.util.Date;
++import java.util.GregorianCalendar;
++import java.util.Locale;
++import java.util.TimeZone;
+ 
+ /**
+  * Utilities methods for manipulating dates in iso8601 format. This is much much faster and GC friendly than using SimpleDateFormat so
+@@ -147,9 +151,10 @@ public class ISO8601Utils
+ 
+             // if the value has no time component (and no time zone), we are done
+             boolean hasT = checkOffset(date, offset, 'T');
+-            
++
+             if (!hasT && (date.length() <= offset)) {
+                 Calendar calendar = new GregorianCalendar(year, month - 1, day);
++                calendar.setLenient(false);
+ 
+                 pos.setIndex(offset);
+                 return calendar.getTime();
++ git checkout 96ab171eb48dcea94fd9b8f425f65c531e6c3aad gson/src/test/java/com/google/gson/internal/bind/util/ISO8601UtilsTest.java
+Updated 0 paths from 9812ced7
++ git apply -v -
+Checking patch gson/src/test/java/com/google/gson/internal/bind/util/ISO8601UtilsTest.java...
+Applied patch gson/src/test/java/com/google/gson/internal/bind/util/ISO8601UtilsTest.java cleanly.
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidDay
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:1.0:enforce (enforce-maven) @ gson ---
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 78 source files to /testbed/gson/target/classes
+[INFO] /testbed/gson/src/main/java/com/google/gson/JsonPrimitive.java: /testbed/gson/src/main/java/com/google/gson/JsonPrimitive.java uses or overrides a deprecated API.
+[INFO] /testbed/gson/src/main/java/com/google/gson/JsonPrimitive.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 110 source files to /testbed/gson/target/test-classes
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.5.3:proguard (default) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.0-beta4/proguard-base-7.2.0-beta4.jar, /root/.m2/repository/com/guardsquare/proguard-core/8.0.3/proguard-core-8.0.3.jar]
+ [proguard] ProGuard, version 7.2.0-beta4
+[INFO] 
+[INFO] --- resources:3.2.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.internal.bind.util.ISO8601UtilsTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.213 s - in com.google.gson.internal.bind.util.ISO8601UtilsTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  23.063 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:20:14Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidMonth
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:1.0:enforce (enforce-maven) @ gson ---
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.5.3:proguard (default) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.0-beta4/proguard-base-7.2.0-beta4.jar, /root/.m2/repository/com/guardsquare/proguard-core/8.0.3/proguard-core-8.0.3.jar]
+ [proguard] ProGuard, version 7.2.0-beta4
+[INFO] 
+[INFO] --- resources:3.2.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.internal.bind.util.ISO8601UtilsTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.192 s - in com.google.gson.internal.bind.util.ISO8601UtilsTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  14.013 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:20:32Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseWithDefaultTimezone
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- enforcer:1.0:enforce (enforce-maven) @ gson ---
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.2.0:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.2.0:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.5.3:proguard (default) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.0-beta4/proguard-base-7.2.0-beta4.jar, /root/.m2/repository/com/guardsquare/proguard-core/8.0.3/proguard-core-8.0.3.jar]
+ [proguard] ProGuard, version 7.2.0-beta4
+[INFO] 
+[INFO] --- resources:3.2.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Using 'UTF-8' encoding to copy filtered properties files.
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.internal.bind.util.ISO8601UtilsTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.24 s - in com.google.gson.internal.bind.util.ISO8601UtilsTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  14.054 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:20:50Z
+[INFO] ------------------------------------------------------------------------
++ git checkout 96ab171eb48dcea94fd9b8f425f65c531e6c3aad gson/src/test/java/com/google/gson/internal/bind/util/ISO8601UtilsTest.java
+Updated 1 path from 9812ced7

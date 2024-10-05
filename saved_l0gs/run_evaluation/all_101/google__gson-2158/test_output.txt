@@ -1,0 +1,762 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   gson/src/main/java/com/google/gson/Gson.java
+	modified:   gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 796193d0326a2f44bc314bf24262732ea3e64014
+diff --git a/gson/src/main/java/com/google/gson/Gson.java b/gson/src/main/java/com/google/gson/Gson.java
+index afdfc31f..bb3e2c77 100644
+--- a/gson/src/main/java/com/google/gson/Gson.java
++++ b/gson/src/main/java/com/google/gson/Gson.java
+@@ -406,7 +406,7 @@ public final class Gson {
+         }
+         double doubleValue = value.doubleValue();
+         checkValidFloatingPoint(doubleValue);
+-        out.value(value);
++        out.value(doubleValue);
+       }
+     };
+   }
+@@ -430,7 +430,10 @@ public final class Gson {
+         }
+         float floatValue = value.floatValue();
+         checkValidFloatingPoint(floatValue);
+-        out.value(value);
++        // For backward compatibility don't call `JsonWriter.value(float)` because that method has
++        // been newly added and not all custom JsonWriter implementations might override it yet
++        Number floatNumber = value instanceof Float ? value : floatValue;
++        out.value(floatNumber);
+       }
+     };
+   }
+diff --git a/gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java b/gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java
+index 84723b17..cb069ae7 100644
+--- a/gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java
++++ b/gson/src/main/java/com/google/gson/internal/bind/TypeAdapters.java
+@@ -194,7 +194,11 @@ public final class TypeAdapters {
+     }
+     @Override
+     public void write(JsonWriter out, Number value) throws IOException {
+-      out.value(value);
++      if (value == null) {
++        out.nullValue();
++      } else {
++        out.value(value.byteValue());
++      }
+     }
+   };
+ 
+@@ -223,7 +227,11 @@ public final class TypeAdapters {
+     }
+     @Override
+     public void write(JsonWriter out, Number value) throws IOException {
+-      out.value(value);
++      if (value == null) {
++        out.nullValue();
++      } else {
++        out.value(value.shortValue());
++      }
+     }
+   };
+ 
+@@ -245,7 +253,11 @@ public final class TypeAdapters {
+     }
+     @Override
+     public void write(JsonWriter out, Number value) throws IOException {
+-      out.value(value);
++      if (value == null) {
++        out.nullValue();
++      } else {
++        out.value(value.intValue());
++      }
+     }
+   };
+   public static final TypeAdapterFactory INTEGER_FACTORY
+@@ -323,7 +335,11 @@ public final class TypeAdapters {
+     }
+     @Override
+     public void write(JsonWriter out, Number value) throws IOException {
+-      out.value(value);
++      if (value == null) {
++        out.nullValue();
++      } else {
++        out.value(value.longValue());
++      }
+     }
+   };
+ 
+@@ -338,7 +354,14 @@ public final class TypeAdapters {
+     }
+     @Override
+     public void write(JsonWriter out, Number value) throws IOException {
+-      out.value(value);
++      if (value == null) {
++        out.nullValue();
++      } else {
++        // For backward compatibility don't call `JsonWriter.value(float)` because that method has
++        // been newly added and not all custom JsonWriter implementations might override it yet
++        Number floatNumber = value instanceof Float ? value : value.floatValue();
++        out.value(floatNumber);
++      }
+     }
+   };
+ 
+@@ -353,7 +376,11 @@ public final class TypeAdapters {
+     }
+     @Override
+     public void write(JsonWriter out, Number value) throws IOException {
+-      out.value(value);
++      if (value == null) {
++        out.nullValue();
++      } else {
++        out.value(value.doubleValue());
++      }
+     }
+   };
+ 
++ git checkout 796193d0326a2f44bc314bf24262732ea3e64014 gson/src/test/java/com/google/gson/functional/PrimitiveTest.java
+Updated 0 paths from b5127187
++ git apply -v -
+Checking patch gson/src/test/java/com/google/gson/functional/PrimitiveTest.java...
+Applied patch gson/src/test/java/com/google/gson/functional/PrimitiveTest.java cleanly.
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testByteSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 78 source files to /testbed/gson/target/classes
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 114 source files to /testbed/gson/target/test-classes
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.225 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  24.961 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:20:23Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testShortSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.404 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.111 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:20:43Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testIntSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.307 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.485 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:20:58Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testLongSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.182 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.840 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:21:11Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testFloatSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.268 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  11.492 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:21:25Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testDoubleSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.313 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.105 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:21:42Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.202 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.655 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:22:00Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedInASingleElementArraySerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.221 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  14.049 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:22:18Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testReallyLongValuesSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.182 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.958 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:22:31Z
+[INFO] ------------------------------------------------------------------------
++ mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveLongAutoboxedSerialization
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO] 
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.9.2-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- templating:1.0.0:filter-sources (filtering-java-templates) @ gson ---
+[INFO] Coping files with filtering to temporary directory.
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] No files needs to be copied to output directory. Up to date: /testbed/gson/target/generated-sources/java-templates
+[INFO] Source directory: /testbed/gson/target/generated-sources/java-templates added.
+[INFO] 
+[INFO] --- resources:3.3.0:resources (default-resources) @ gson ---
+[INFO] skip non existing resourceDirectory /testbed/gson/src/main/resources
+[INFO] 
+[INFO] --- compiler:3.10.1:compile (default-compile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- bnd:6.3.1:bnd-process (default) @ gson ---
+[WARNING] /testbed/gson/bnd.bnd [0:0]: Export com.google.gson,  has 1,  private references [com.google.gson.internal]
+[INFO] 
+[INFO] --- resources:3.3.0:testResources (default-testResources) @ gson ---
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ gson ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- copy-rename:1.0.1:rename (pre-obfuscate-class) @ gson ---
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest.class
+[INFO] Renamed /testbed/gson/target/test-classes/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class to /testbed/gson/target/test-classes-obfuscated-injar/com/google/gson/functional/EnumWithObfuscatedTest$Gender.class
+[INFO] 
+[INFO] --- proguard:2.6.0:proguard (obfuscate-test-class) @ gson ---
+[INFO] execute ProGuard [-injars, '/testbed/gson/target/test-classes-obfuscated-injar'(!META-INF/maven/**,**/*.class), -outjars, '/testbed/gson/target/test-classes-obfuscated-outjar', -include, '/testbed/gson/src/test/resources/testcases-proguard.conf', -libraryjars, '/testbed/gson/target/classes', -libraryjars, '/opt/java/openjdk/jmods/java.base.jmod', -printmapping, '/testbed/gson/target/proguard_map.txt', -printseeds, '/testbed/gson/target/proguard_seed.txt']
+[INFO] proguard jar: [/root/.m2/repository/com/guardsquare/proguard-base/7.2.2/proguard-base-7.2.2.jar, /root/.m2/repository/com/guardsquare/proguard-core/9.0.1/proguard-core-9.0.1.jar]
+ [proguard] ProGuard, version 7.2.2
+[INFO] 
+[INFO] --- resources:3.3.0:copy-resources (post-obfuscate-class) @ gson ---
+[INFO] Copying 2 resources
+[INFO] 
+[INFO] --- surefire:3.0.0-M7:test (default-test) @ gson ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.google.gson.functional.PrimitiveTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.365 s - in com.google.gson.functional.PrimitiveTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.996 s (Wall Clock)
+[INFO] Finished at: 2024-10-04T12:22:49Z
+[INFO] ------------------------------------------------------------------------
++ git checkout 796193d0326a2f44bc314bf24262732ea3e64014 gson/src/test/java/com/google/gson/functional/PrimitiveTest.java
+Updated 1 path from b5127187

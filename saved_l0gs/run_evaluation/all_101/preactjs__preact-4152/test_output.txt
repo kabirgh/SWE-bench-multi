@@ -1,0 +1,141 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/diff/children.js
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	benchmarks/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 9c5a82efcc3dcbd0035c694817a3022d81264687
+diff --git a/src/diff/children.js b/src/diff/children.js
+index 35874a64..9d5d9855 100644
+--- a/src/diff/children.js
++++ b/src/diff/children.js
+@@ -69,7 +69,7 @@ export function diffChildren(
+ 		// or we are rendering a component (e.g. setState) copy the oldVNodes so it can have
+ 		// it's own DOM & etc. pointers
+ 		else if (
+-			typeof childVNode == 'string' ||
++			childVNode.constructor === String ||
+ 			typeof childVNode == 'number' ||
+ 			// eslint-disable-next-line valid-typeof
+ 			typeof childVNode == 'bigint'
++ git checkout 9c5a82efcc3dcbd0035c694817a3022d81264687 test/browser/components.test.js
+Updated 0 paths from eb6ec1b1
++ git apply -v -
+Checking patch test/browser/components.test.js...
+Applied patch test/browser/components.test.js cleanly.
++ COVERAGE=false
++ BABEL_NO_MODULES=true
++ npx karma start karma.conf.js --single-run --grep=test/browser/components.test.js
+
+START:
+[32m04 10 2024 12:48:39.559:INFO [esbuild]: [39mCompiling...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m04 10 2024 12:48:42.570:INFO [esbuild]: [39mCompiling done (3s)
+[32m04 10 2024 12:48:42.575:INFO [karma-server]: [39mKarma v6.3.16 server started at http://localhost:9876/
+[32m04 10 2024 12:48:42.576:INFO [launcher]: [39mLaunching browsers ChromeNoSandboxHeadless with concurrency 2
+[32m04 10 2024 12:48:42.582:INFO [launcher]: [39mStarting browser Chrome
+[32m04 10 2024 12:48:44.143:INFO [Chrome Headless 129.0.0.0 (Linux x86_64)]: [39mConnected on socket 1KYMk7yxbPGtsBAaAAAB with id 56890861
+  Components
+    ✔ should render string
+    ✔ should render number as string
+    ✔ should render a new String()
+    ✔ should render null as empty string
+    ✔ should remove orphaned elements replaced by Components
+    ✔ should remove children when root changes to text node
+    ✔ should maintain order when setting state (that inserts dom-elements)
+    ✔ should not recycle common class children with different keys
+    ✔ should set component._vnode._dom when sCU returns false
+    ✔ should handle hoisted component vnodes without DOM
+    Component construction
+      ✔ should render components
+      ✔ should render functional components
+      ✔ should render components with props
+      ✔ should not crash when setting state in constructor
+      ✔ should not crash when setting state with cb in constructor
+      ✔ should not crash when calling forceUpdate with cb in constructor
+      ✔ should accurately call nested setState callbacks
+      ✔ should initialize props & context but not state in Component constructor
+      ✔ should render Component classes that don't pass args into the Component constructor
+      ✔ should also update the current dom
+      ✔ should not orphan children
+      ✔ should render components that don't pass args into the Component constructor (unistore pattern)
+      ✔ should render components that don't call Component constructor
+      ✔ should render components that don't call Component constructor and don't initialize state
+      ✔ should render components that don't inherit from Component
+      ✔ should render components that don't inherit from Component (unistore pattern)
+      ✔ should render components that don't inherit from Component and don't initialize state
+      ✔ should render class components that inherit from Component without a render method
+    array children
+      ✔ should render DOM element's array children
+      ✔ should render Component's array children
+      ✔ should render Fragment's array children
+      ✔ should render sibling array children
+    props.children
+      ✔ should support passing children as a prop
+      ✔ should be ignored when explicit children exist
+      ✔ should be undefined with no child
+      ✔ should be null with null as a child
+      ✔ should be false with false as a child
+      ✔ should be true with true as a child
+      ✔ should be a string with a text child
+      ✔ should be a string with a number child
+      ✔ should be a VNode with a DOM node child
+      ✔ should be a VNode with a Component child
+      ✔ should be a function with a function child
+      ✔ should be an array with multiple children
+      ✔ should be an array with an array as children
+      ✔ should not flatten sibling and nested arrays
+    High-Order Components
+      ✔ should render wrapper HOCs
+      ✔ should render HOCs with generic children
+      ✔ should render nested functional components
+      ✔ should re-render nested functional components
+      ✔ should re-render nested components
+      ✔ should resolve intermediary functional component
+      ✔ should unmount children of high-order components without unmounting parent
+      ✔ should remount when swapping between HOC child types
+    Component Nesting
+      ✔ should handle lifecycle for no intermediary in component tree
+      ✔ should handle lifecycle for nested intermediary functional components
+      ✔ should render components by depth
+      ✔ should handle lifecycle for nested intermediary elements
+    c.base
+      ✔ should keep c.base up to date if a nested child component changes DOM nodes
+      ✔ should not update sibling c.base if child component changes DOM nodes
+      ✔ should not update parent c.base if child component changes DOM nodes and it is not first child component
+      ✔ should update parent c.base if child component changes DOM nodes and it is first non-null child component
+      ✔ should not update parent c.base if child component changes DOM nodes and a parent is not first child component
+      ✔ should update parent c.base if first child becomes null
+      ✔ should update parent c.base if first child becomes non-null
+      ✔ should update parent c.base if first non-null child becomes null with multiple null siblings
+      ✔ should update parent c.base if a null child returns DOM with multiple null siblings
+      ✔ should update parent c.base to null if last child becomes null
+      ✔ should update parent c.base if last child returns dom
+      ✔ should not update parent if it is a DOM node
+    setState
+      ✔ should not error if called on an unmounted component
+      ✔ setState callbacks should have latest state, even when called in render
+      ✔ should work with readonly state
+    forceUpdate
+      ✔ should not error if called on an unmounted component
+      ✔ should update old dom on forceUpdate in a lifecycle
+      ✔ should skip shouldComponentUpdate when called during render
+      ✔ should break through strict equality optimization
+
+Finished in 0.117 secs / 0.071 secs @ 12:48:44 GMT+0000 (Coordinated Universal Time)
+
+SUMMARY:
+✔ 77 tests completed
++ git checkout 9c5a82efcc3dcbd0035c694817a3022d81264687 test/browser/components.test.js
+Updated 1 path from eb6ec1b1

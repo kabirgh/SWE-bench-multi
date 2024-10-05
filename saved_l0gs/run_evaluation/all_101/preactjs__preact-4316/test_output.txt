@@ -1,0 +1,72 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/diff/props.js
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	benchmarks/
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff b820d8b73eade8bc5b3fbf7e5fe0dd5150de80e2
+diff --git a/src/diff/props.js b/src/diff/props.js
+index 75016c40..142e1444 100644
+--- a/src/diff/props.js
++++ b/src/diff/props.js
+@@ -55,7 +55,12 @@ export function setProperty(dom, name, value, oldValue, isSvg) {
+ 			name !== (name = name.replace(/(PointerCapture)$|Capture$/i, '$1'));
+ 
+ 		// Infer correct casing for DOM built-in events:
+-		if (name.toLowerCase() in dom) name = name.toLowerCase().slice(2);
++		if (
++			name.toLowerCase() in dom ||
++			name === 'onFocusOut' ||
++			name === 'onFocusIn'
++		)
++			name = name.toLowerCase().slice(2);
+ 		else name = name.slice(2);
+ 
+ 		if (!dom._listeners) dom._listeners = {};
++ git checkout b820d8b73eade8bc5b3fbf7e5fe0dd5150de80e2 test/browser/events.test.js
+Updated 0 paths from a6ed2cc5
++ git apply -v -
+Checking patch test/browser/events.test.js...
+Applied patch test/browser/events.test.js cleanly.
++ COVERAGE=false
++ BABEL_NO_MODULES=true
++ npx karma start karma.conf.js --single-run --grep=test/browser/events.test.js
+
+START:
+[32m04 10 2024 12:51:55.593:INFO [esbuild]: [39mCompiling...
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m04 10 2024 12:51:58.259:INFO [esbuild]: [39mCompiling done (2s)
+[32m04 10 2024 12:51:58.265:INFO [karma-server]: [39mKarma v6.3.16 server started at http://localhost:9876/
+[32m04 10 2024 12:51:58.266:INFO [launcher]: [39mLaunching browsers ChromeNoSandboxHeadless with concurrency 2
+[32m04 10 2024 12:51:58.278:INFO [launcher]: [39mStarting browser Chrome
+[32m04 10 2024 12:51:59.632:INFO [Chrome Headless 129.0.0.0 (Linux x86_64)]: [39mConnected on socket 4iRkSBYsESSHDfwtAAAB with id 48971002
+  event handling
+    ✔ should only register on* functions as handlers
+    ✔ should only register truthy values as handlers
+    ✔ should support native event names
+    ✔ should support camel-case event names
+    ✔ should update event handlers
+    ✔ should remove event handlers
+    ✔ should register events not appearing on dom nodes
+    ✔ should use capturing for event props ending with *Capture
+    ✔ should support both capturing and non-capturing events on the same element
+    ✔ should support (got|lost)PointerCapture events
+    ✔ should support camel-case focus event names
+
+Finished in 0.047 secs / 0.021 secs @ 12:52:00 GMT+0000 (Coordinated Universal Time)
+
+SUMMARY:
+✔ 11 tests completed
++ git checkout b820d8b73eade8bc5b3fbf7e5fe0dd5150de80e2 test/browser/events.test.js
+Updated 1 path from a6ed2cc5

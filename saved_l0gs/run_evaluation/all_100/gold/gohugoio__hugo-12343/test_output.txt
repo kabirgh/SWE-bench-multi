@@ -1,0 +1,136 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   resources/page/page_paths.go
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 060cce0a910ffd9dc4e92efbe758fc5f187c3145
+diff --git a/resources/page/page_paths.go b/resources/page/page_paths.go
+index 8052287c6..4826ed5f9 100644
+--- a/resources/page/page_paths.go
++++ b/resources/page/page_paths.go
+@@ -268,6 +268,13 @@ func CreateTargetPaths(d TargetPathDescriptor) (tp TargetPaths) {
+ 		tp.SubResourceBaseTarget = pb.PathDir()
+ 		tp.SubResourceBaseLink = pb.LinkDir()
+ 	}
++
++	// paths.{URL,Path}Escape rely on url.Parse which
++	// will consider # a fragment identifier, so it and
++	// and everything after it will be stripped from
++	// `link`, so we need to escape it first.
++	link = strings.ReplaceAll(link, "#", "%23")
++
+ 	if d.URL != "" {
+ 		tp.Link = paths.URLEscape(link)
+ 	} else {
++ git checkout 060cce0a910ffd9dc4e92efbe758fc5f187c3145
+Note: switching to '060cce0a910ffd9dc4e92efbe758fc5f187c3145'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 060cce0a9 build(deps): bump github.com/pelletier/go-toml/v2 from 2.1.1 to 2.2.0
+M	resources/page/page_paths.go
++ git apply -v -
+Checking patch resources/page/path_integration_test.go...
+Applied patch resources/page/path_integration_test.go cleanly.
++ go test -v ./resources/page/... -run '^Test.*Permalink'
+?   	github.com/gohugoio/hugo/resources/page/page_generate	[no test files]
+?   	github.com/gohugoio/hugo/resources/page/siteidentities	[no test files]
+=== RUN   TestPermalinkExpansion
+=== PAUSE TestPermalinkExpansion
+=== RUN   TestPermalinkExpansionMultiSection
+=== PAUSE TestPermalinkExpansionMultiSection
+=== RUN   TestPermalinkExpansionConcurrent
+=== PAUSE TestPermalinkExpansionConcurrent
+=== RUN   TestPermalinkExpansionSliceSyntax
+=== PAUSE TestPermalinkExpansionSliceSyntax
+=== RUN   TestPermalinkExpansionSectionsRepeated
+=== PAUSE TestPermalinkExpansionSectionsRepeated
+=== RUN   TestHashSignInPermalink
+=== PAUSE TestHashSignInPermalink
+=== RUN   TestPermalinks
+=== PAUSE TestPermalinks
+=== RUN   TestPermalinksOldSetup
+=== PAUSE TestPermalinksOldSetup
+=== RUN   TestPermalinksNestedSections
+=== PAUSE TestPermalinksNestedSections
+=== CONT  TestPermalinkExpansion
+=== RUN   TestPermalinkExpansion/title
+=== RUN   TestPermalinkExpansion/year-month-title
+=== CONT  TestPermalinksOldSetup
+=== CONT  TestPermalinkExpansionSectionsRepeated
+=== CONT  TestHashSignInPermalink
+=== CONT  TestPermalinks
+=== RUN   TestPermalinkExpansion/yearyeardaymonthmonthnamedayweekdayweekdayname
+=== RUN   TestPermalinkExpansion/section
+=== RUN   TestPermalinkExpansion/title#01
+=== RUN   TestPermalinkExpansion/slug
+=== RUN   TestPermalinkExpansion/slugorfilename
+=== RUN   TestPermalinkExpansion/filename
+=== RUN   TestPermalinkExpansion/06-1-2-Monday
+=== RUN   TestPermalinkExpansion/2006_01_02_15_04_05.000
+=== RUN   TestPermalinkExpansion/sections
+=== RUN   TestPermalinkExpansion/sectionslast
+=== RUN   TestPermalinkExpansion/sections0sectionslast
+--- PASS: TestPermalinkExpansion (0.01s)
+    --- PASS: TestPermalinkExpansion/title (0.00s)
+    --- PASS: TestPermalinkExpansion/year-month-title (0.01s)
+    --- PASS: TestPermalinkExpansion/yearyeardaymonthmonthnamedayweekdayweekdayname (0.00s)
+    --- PASS: TestPermalinkExpansion/section (0.00s)
+    --- PASS: TestPermalinkExpansion/title#01 (0.00s)
+    --- PASS: TestPermalinkExpansion/slug (0.00s)
+    --- PASS: TestPermalinkExpansion/slugorfilename (0.00s)
+    --- PASS: TestPermalinkExpansion/filename (0.00s)
+    --- PASS: TestPermalinkExpansion/06-1-2-Monday (0.00s)
+    --- PASS: TestPermalinkExpansion/2006_01_02_15_04_05.000 (0.00s)
+    --- PASS: TestPermalinkExpansion/sections (0.00s)
+    --- PASS: TestPermalinkExpansion/sectionslast (0.00s)
+    --- PASS: TestPermalinkExpansion/sections0sectionslast (0.00s)
+=== CONT  TestPermalinksNestedSections
+=== CONT  TestPermalinkExpansionConcurrent
+=== CONT  TestPermalinkExpansionMultiSection
+--- PASS: TestPermalinkExpansionMultiSection (0.00s)
+=== CONT  TestPermalinkExpansionSliceSyntax
+=== RUN   TestPermalinkExpansionSliceSyntax/Basic
+=== RUN   TestPermalinkExpansionSliceSyntax/Out_of_bounds
+--- PASS: TestPermalinkExpansionSliceSyntax (0.00s)
+    --- PASS: TestPermalinkExpansionSliceSyntax/Basic (0.00s)
+    --- PASS: TestPermalinkExpansionSliceSyntax/Out_of_bounds (0.00s)
+--- PASS: TestPermalinkExpansionConcurrent (0.02s)
+--- PASS: TestHashSignInPermalink (0.03s)
+--- PASS: TestPermalinkExpansionSectionsRepeated (0.04s)
+=== NAME  TestPermalinksNestedSections
+    permalinks_integration_test.go:188: 
+--- PASS: TestPermalinksNestedSections (0.04s)
+=== NAME  TestPermalinksOldSetup
+    permalinks_integration_test.go:135: 
+--- PASS: TestPermalinksOldSetup (0.05s)
+=== NAME  TestPermalinks
+    permalinks_integration_test.go:84: 
+--- PASS: TestPermalinks (0.06s)
+PASS
+ok  	github.com/gohugoio/hugo/resources/page	0.157s
+testing: warning: no tests to run
+PASS
+ok  	github.com/gohugoio/hugo/resources/page/pagemeta	0.097s [no tests to run]
++ git checkout 060cce0a910ffd9dc4e92efbe758fc5f187c3145
+HEAD is now at 060cce0a9 build(deps): bump github.com/pelletier/go-toml/v2 from 2.1.1 to 2.2.0
+M	resources/page/page_paths.go

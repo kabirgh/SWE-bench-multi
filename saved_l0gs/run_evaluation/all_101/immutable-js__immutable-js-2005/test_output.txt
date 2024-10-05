@@ -1,0 +1,128 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   CHANGELOG.md
+	modified:   src/CollectionImpl.js
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 77434b3cbbc8ee21206f4cc6965e1c9b09cc92b6
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+index 5a14dec0..c487c406 100644
+--- a/CHANGELOG.md
++++ b/CHANGELOG.md
+@@ -19,6 +19,8 @@ Dates are formatted as YYYY-MM-DD.
+   - `Collection.isAssociative`: use `isAssociative` directly
+   - `Collection.isOrdered`: use `isOrdered` directly
+ 
++- [BREAKING] Fix issue implementation of `hashCode` for `OrdererMap` and `OrderedSet` where equal objects might not return the same `hashCode` : [#2005](https://github.com/immutable-js/immutable-js/pull/2005)
++
+ - [Internal] Migrating TS type tests from dtslint to [TSTyche](https://tstyche.org/) [#1988](https://github.com/immutable-js/immutable-js/pull/1988) and [#1991](https://github.com/immutable-js/immutable-js/pull/1991) by [@mrazauskas](https://github.com/mrazauskas).
+   Special thanks to [@arnfaldur](https://github.com/arnfaldur) that migrated every type tests to tsd just before that.
+ 
+diff --git a/src/CollectionImpl.js b/src/CollectionImpl.js
+index afa54b69..ac5ba801 100644
+--- a/src/CollectionImpl.js
++++ b/src/CollectionImpl.js
+@@ -750,7 +750,8 @@ function hashCollection(collection) {
+   const ordered = isOrdered(collection);
+   const keyed = isKeyed(collection);
+   let h = ordered ? 1 : 0;
+-  const size = collection.__iterate(
++
++  collection.__iterate(
+     keyed
+       ? ordered
+         ? (v, k) => {
+@@ -767,7 +768,8 @@ function hashCollection(collection) {
+           h = (h + hash(v)) | 0;
+         }
+   );
+-  return murmurHashOfSize(size, h);
++
++  return murmurHashOfSize(collection.size, h);
+ }
+ 
+ function murmurHashOfSize(size, h) {
++ git checkout 77434b3cbbc8ee21206f4cc6965e1c9b09cc92b6 __tests__/OrderedMap.ts __tests__/OrderedSet.ts
+Updated 0 paths from 7cd8bc84
++ git apply -v -
+Checking patch __tests__/OrderedMap.ts...
+Checking patch __tests__/OrderedSet.ts...
+Applied patch __tests__/OrderedMap.ts cleanly.
+Applied patch __tests__/OrderedSet.ts cleanly.
++ npm run build
+
+> immutable@5.0.0-beta.5 build
+> run-s build:*
+
+
+> immutable@5.0.0-beta.5 build:clean
+> rimraf dist
+
+
+> immutable@5.0.0-beta.5 build:dist
+> rollup -c ./resources/rollup-config.mjs
+
+[36m
+[1m/testbed/src/Immutable.js[22m → [1mdist/immutable.js, dist/immutable.min.js, dist/es[22m...[39m
+[1m[33m(!) Circular dependencies[39m[22m
+src/Seq.js -> src/Collection.js -> src/Seq.js
+src/Map.js -> src/Operations.js -> src/Map.js
+src/OrderedMap.js -> src/Map.js -> src/Operations.js -> src/OrderedMap.js
+...and 6 more
+[32mcreated [1mdist/immutable.js, dist/immutable.min.js, dist/es[22m in [1m2.7s[22m[39m
+
+> immutable@5.0.0-beta.5 build:types
+> cpy ./type-definitions/immutable.* dist
+
+
+> immutable@5.0.0-beta.5 build:prepare
+> ./resources/prepare-dist.sh
+
+
+> immutable@5.0.0-beta.5 build:stats
+> node ./resources/dist-stats.mjs
+
+200
+200
+  Raw:           171,671 bytes
+  Min:            65,776 bytes 61.68%              -825 bytes
+  Zip:            18,570 bytes 89.18%              +404 bytes
++ npx jest __tests__/OrderedMap.ts __tests__/OrderedSet.ts --silent --json
++ jq -r '.testResults[].assertionResults[] | "[" + (.status | ascii_upcase) + "] " + ((.ancestorTitles | join(" > ")) + (if .ancestorTitles | length > 0 then " > " else "" end) + .title)'
+PASS __tests__/OrderedMap.ts
+PASS __tests__/OrderedSet.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        3.833 s
+[PASSED] OrderedMap > converts from object
+[PASSED] OrderedMap > constructor provides initial values
+[PASSED] OrderedMap > provides initial values in a mixed order
+[PASSED] OrderedMap > constructor accepts sequences
+[PASSED] OrderedMap > maintains order when new keys are set
+[PASSED] OrderedMap > resets order when a keys is deleted
+[PASSED] OrderedMap > removes correctly
+[PASSED] OrderedMap > respects order for equality
+[PASSED] OrderedMap > respects order when merging
+[PASSED] OrderedMap > performs deleteAll correctly after resizing internal list
+[PASSED] OrderedMap > hashCode should return the same value if the values are the same
+[PASSED] OrderedSet > provides initial values in a mixed order
+[PASSED] OrderedSet > maintains order when new values are added
+[PASSED] OrderedSet > resets order when a value is deleted
+[PASSED] OrderedSet > removes correctly
+[PASSED] OrderedSet > respects order for equality
+[PASSED] OrderedSet > respects order when unioning
+[PASSED] OrderedSet > can be zipped
+[PASSED] OrderedSet > handles `subtract` when Set contains >=32 elements
+[PASSED] OrderedSet > handles consecutive `subtract` invocations
+[PASSED] OrderedSet > keeps the Set ordered when updating a value with .map()
+[PASSED] OrderedSet > hashCode should return the same value if the values are the same
++ git checkout 77434b3cbbc8ee21206f4cc6965e1c9b09cc92b6 __tests__/OrderedMap.ts __tests__/OrderedSet.ts
+Updated 2 paths from 7cd8bc84

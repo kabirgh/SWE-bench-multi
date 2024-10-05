@@ -1,0 +1,142 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/compiler-sfc/src/script/utils.ts
+	modified:   packages/compiler-sfc/src/style/cssVars.ts
+	modified:   packages/runtime-core/src/hydration.ts
+	modified:   packages/shared/src/escapeHtml.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff cb843e0be31f9e563ccfc30eca0c06f2a224b505
+diff --git a/packages/compiler-sfc/src/script/utils.ts b/packages/compiler-sfc/src/script/utils.ts
+index f9b4ad68..39f163c6 100644
+--- a/packages/compiler-sfc/src/script/utils.ts
++++ b/packages/compiler-sfc/src/script/utils.ts
+@@ -121,15 +121,3 @@ export const propNameEscapeSymbolsRE: RegExp =
+ export function getEscapedPropName(key: string): string {
+   return propNameEscapeSymbolsRE.test(key) ? JSON.stringify(key) : key
+ }
+-
+-export const cssVarNameEscapeSymbolsRE: RegExp =
+-  /[ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g
+-
+-export function getEscapedCssVarName(
+-  key: string,
+-  doubleEscape: boolean,
+-): string {
+-  return key.replace(cssVarNameEscapeSymbolsRE, s =>
+-    doubleEscape ? `\\\\${s}` : `\\${s}`,
+-  )
+-}
+diff --git a/packages/compiler-sfc/src/style/cssVars.ts b/packages/compiler-sfc/src/style/cssVars.ts
+index 47bb7c08..0397c7d7 100644
+--- a/packages/compiler-sfc/src/style/cssVars.ts
++++ b/packages/compiler-sfc/src/style/cssVars.ts
+@@ -8,9 +8,9 @@ import {
+   processExpression,
+ } from '@vue/compiler-dom'
+ import type { SFCDescriptor } from '../parse'
+-import { getEscapedCssVarName } from '../script/utils'
+ import type { PluginCreator } from 'postcss'
+ import hash from 'hash-sum'
++import { getEscapedCssVarName } from '@vue/shared'
+ 
+ export const CSS_VARS_HELPER = `useCssVars`
+ 
+diff --git a/packages/runtime-core/src/hydration.ts b/packages/runtime-core/src/hydration.ts
+index 15a460f9..b941635b 100644
+--- a/packages/runtime-core/src/hydration.ts
++++ b/packages/runtime-core/src/hydration.ts
+@@ -18,6 +18,7 @@ import {
+   PatchFlags,
+   ShapeFlags,
+   def,
++  getEscapedCssVarName,
+   includeBooleanAttr,
+   isBooleanAttr,
+   isKnownHtmlAttr,
+@@ -915,7 +916,10 @@ function resolveCssVars(
+   ) {
+     const cssVars = instance.getCssVars()
+     for (const key in cssVars) {
+-      expectedMap.set(`--${key}`, String(cssVars[key]))
++      expectedMap.set(
++        `--${getEscapedCssVarName(key, false)}`,
++        String(cssVars[key]),
++      )
+     }
+   }
+   if (vnode === root && instance.parent) {
+diff --git a/packages/shared/src/escapeHtml.ts b/packages/shared/src/escapeHtml.ts
+index 22ce632e..94d07fd4 100644
+--- a/packages/shared/src/escapeHtml.ts
++++ b/packages/shared/src/escapeHtml.ts
+@@ -50,3 +50,15 @@ const commentStripRE = /^-?>|<!--|-->|--!>|<!-$/g
+ export function escapeHtmlComment(src: string): string {
+   return src.replace(commentStripRE, '')
+ }
++
++export const cssVarNameEscapeSymbolsRE: RegExp =
++  /[ !"#$%&'()*+,./:;<=>?@[\\\]^`{|}~]/g
++
++export function getEscapedCssVarName(
++  key: string,
++  doubleEscape: boolean,
++): string {
++  return key.replace(cssVarNameEscapeSymbolsRE, s =>
++    doubleEscape ? `\\\\${s}` : `\\${s}`,
++  )
++}
++ git checkout cb843e0be31f9e563ccfc30eca0c06f2a224b505 packages/runtime-core/__tests__/hydration.spec.ts
+Updated 0 paths from d5445cfc
++ git apply -v -
+Checking patch packages/runtime-core/__tests__/hydration.spec.ts...
+Applied patch packages/runtime-core/__tests__/hydration.spec.ts cleanly.
++ pnpm run test packages/runtime-core/__tests__/hydration.spec.ts --no-watch --reporter=verbose -t 'mismatch handling'
+
+> @3.5.0-rc.1 test /testbed
+> vitest "packages/runtime-core/__tests__/hydration.spec.ts" "--no-watch" "--reporter=verbose" "-t" "mismatch handling"
+
+
+ RUN  v2.0.5 /testbed
+
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > text node
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > element text content
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > not enough children
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > too many children
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > complete mismatch
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > fragment mismatch removal
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > fragment not enough children
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > fragment too many children
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > Teleport target has empty children
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > comment mismatch (element)
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > comment mismatch (text)
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > class mismatch
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > style mismatch
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > style mismatch when no style attribute is present
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > style mismatch w/ v-show
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > attr mismatch
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > attr special case: textarea value
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > boolean attr handling
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > client value is null or undefined
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > should not warn against object values
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > should not warn on falsy bindings of non-property keys
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > should not warn on non-renderable option values
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > should not warn css v-bind
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > css vars should only be added to expected on component root dom
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > css vars support fallthrough
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > should not warn for directives that mutate DOM in created
+ ✓ packages/runtime-core/__tests__/hydration.spec.ts > SSR hydration > mismatch handling > escape css var name
+
+ Test Files  1 passed (1)
+      Tests  27 passed | 63 skipped (90)
+   Start at  13:17:17
+   Duration  5.57s (transform 3.49s, setup 32ms, collect 4.16s, tests 169ms, environment 647ms, prepare 143ms)
+
++ git checkout cb843e0be31f9e563ccfc30eca0c06f2a224b505 packages/runtime-core/__tests__/hydration.spec.ts
+Updated 1 path from d5445cfc

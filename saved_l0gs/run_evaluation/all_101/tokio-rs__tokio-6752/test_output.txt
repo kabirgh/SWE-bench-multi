@@ -1,0 +1,78 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   tokio-util/src/time/delay_queue.rs
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff ab53bf0c4727ae63c6a3a3d772b7bd837d2f49c3
+diff --git a/tokio-util/src/time/delay_queue.rs b/tokio-util/src/time/delay_queue.rs
+index 2b33e361..55dd311a 100644
+--- a/tokio-util/src/time/delay_queue.rs
++++ b/tokio-util/src/time/delay_queue.rs
+@@ -766,6 +766,12 @@ impl<T> DelayQueue<T> {
+             }
+         }
+ 
++        if self.slab.is_empty() {
++            if let Some(waker) = self.waker.take() {
++                waker.wake();
++            }
++        }
++
+         Expired {
+             key: Key::new(key.index),
+             data: data.inner,
++ git checkout ab53bf0c4727ae63c6a3a3d772b7bd837d2f49c3 tokio-util/tests/time_delay_queue.rs
+Updated 0 paths from 60915bf2
++ git apply -v -
+Checking patch tokio-util/tests/time_delay_queue.rs...
+Applied patch tokio-util/tests/time_delay_queue.rs cleanly.
++ cargo test --test time_delay_queue --no-fail-fast
+   Compiling tokio-util v0.7.11 (/testbed/tokio-util)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.99s
+     Running tests/time_delay_queue.rs (target/debug/deps/time_delay_queue-93be74dbcee5cf4e)
+
+running 33 tests
+test compact_expire_empty ... ok
+test compact_remove_remapped_keys ... ok
+test delay_queue_poll_expired_when_empty ... ok
+test compact_remove_empty ... ok
+test expires_before_last_insert ... ok
+test compact_change_deadline ... ok
+test expire_second_key_when_reset_to_expire_earlier ... ok
+test insert_in_past_after_poll_fires_immediately ... ok
+test insert_before_first_after_poll ... ok
+test insert_in_past_fires_immediately ... ok
+test expire_first_key_when_reset_to_expire_earlier ... ok
+test insert_after_ready_poll ... ok
+test multi_reset ... ok
+test multi_immediate_delays ... ok
+test item_expiry_greater_than_wheel ... ok
+test remove_after_compact ... ok
+test remove_after_compact_poll ... ok
+test peek ... ok
+test remove_at_timer_wheel_threshold ... ok
+test remove_entry ... ok
+test remove_expired_item ... ok
+test reset_first_expiring_item_to_expire_later ... ok
+test repeatedly_reset_entry_inserted_as_expired ... ok
+test reset_entry ... ok
+test reset_earlier_after_slot_starts ... ok
+test reset_later_after_slot_starts ... ok
+test reset_twice ... ok
+test single_short_delay ... ok
+test reset_inserted_expired ... ok
+test single_immediate_delay ... ok
+test reset_much_later ... ok
+test wake_after_remove_last ... ok
+test multi_delay_at_start ... ok
+
+test result: ok. 33 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
++ git checkout ab53bf0c4727ae63c6a3a3d772b7bd837d2f49c3 tokio-util/tests/time_delay_queue.rs
+Updated 1 path from 60915bf2

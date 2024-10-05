@@ -1,0 +1,168 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/docusaurus-utils/src/markdownUtils.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 0589b1475d56b0b541348aa56f201ec7c56c56d5
+diff --git a/packages/docusaurus-utils/src/markdownUtils.ts b/packages/docusaurus-utils/src/markdownUtils.ts
+index ce0766de6c..2fd563c3bb 100644
+--- a/packages/docusaurus-utils/src/markdownUtils.ts
++++ b/packages/docusaurus-utils/src/markdownUtils.ts
+@@ -70,9 +70,9 @@ export function escapeMarkdownHeadingIds(content: string): string {
+ export function unwrapMdxCodeBlocks(content: string): string {
+   // We only support 3/4 backticks on purpose, should be good enough
+   const regexp3 =
+-    /(?<begin>^|\n)```(?<spaces>\x20*)mdx-code-block\n(?<children>.*?)\n```(?<end>\n|$)/gs;
++    /(?<begin>^|\r?\n)```(?<spaces>\x20*)mdx-code-block\r?\n(?<children>.*?)\r?\n```(?<end>\r?\n|$)/gs;
+   const regexp4 =
+-    /(?<begin>^|\n)````(?<spaces>\x20*)mdx-code-block\n(?<children>.*?)\n````(?<end>\n|$)/gs;
++    /(?<begin>^|\r?\n)````(?<spaces>\x20*)mdx-code-block\r?\n(?<children>.*?)\r?\n````(?<end>\r?\n|$)/gs;
+ 
+   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   const replacer = (substring: string, ...args: any[]) => {
++ git checkout 0589b1475d56b0b541348aa56f201ec7c56c56d5 packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts
+Updated 0 paths from 7f31f3f171
++ git apply -v -
+Checking patch packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts...
+Applied patch packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts cleanly.
++ yarn test packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts --verbose
+yarn run v1.22.22
+$ jest packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts --verbose
+jest-haste-map: duplicate manual mock found: chalk
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/docusaurus-logger/lib/__mocks__/chalk.js
+    * <rootDir>/packages/docusaurus-logger/src/__mocks__/chalk.js
+
+  console.error
+    [31m[1m[ERROR][22m Error while parsing Markdown front matter.[39m
+    [31mThis can happen if you use special characters in front matter values (try using double quotes around that value).[39m
+
+      67 | }
+      68 | function error(msg, ...values) {
+    > 69 |     console.error(chalk_1.default.red(`${chalk_1.default.bold('[ERROR]')} ${values.length === 0
+         |             ^
+      70 |         ? stringify(msg)
+      71 |         : interpolate(msg, ...values)}`));
+      72 | }
+
+      at Object.error (packages/docusaurus-logger/lib/index.js:69:13)
+      at Object.error [as parseMarkdownFile] (packages/docusaurus-utils/src/markdownUtils.ts:381:12)
+
+PASS packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts
+  createExcerpt
+    ✓ creates excerpt for text-only content (4 ms)
+    ✓ creates excerpt for regular content with regular title (1 ms)
+    ✓ creates excerpt for regular content with alternate title
+    ✓ creates excerpt for content with h2 heading (1 ms)
+    ✓ creates excerpt for content beginning with blockquote (1 ms)
+    ✓ creates excerpt for content beginning with image (eg. blog post)
+    ✓ creates excerpt for content beginning with admonitions
+    ✓ creates excerpt for content with imports/exports declarations and Markdown markup, as well as Emoji
+    ✓ creates excerpt for content with imports/exports declarations, with CRLF line endings
+    ✓ creates excerpt for heading specified with anchor-id syntax (1 ms)
+    ✓ creates excerpt for content with various code blocks (1 ms)
+    ✓ creates excerpt after multi-line imports
+  parseMarkdownContentTitle
+    ✓ parses markdown h1 title at the top (1 ms)
+    ✓ parses markdown h1 title at the top and remove it
+    ✓ parses markdown h1 title inside backticks at the top and unwrap inline code block (1 ms)
+    ✓ parses markdown h1 title with interspersed backticks at the top and unwrap inline code block (1 ms)
+    ✓ parses markdown h1 title and trim content
+    ✓ parses not parse markdown h1 title and trim content
+    ✓ parses markdown h1 title with fixed anchor-id syntax (1 ms)
+    ✓ parses markdown h1 title with CRLF break (14 ms)
+    ✓ parses markdown h1 setext title with CRLF break (1 ms)
+    ✓ parses markdown h1 title at the top (atx style with closing #) (1 ms)
+    ✓ parses markdown h1 title at the top followed by h2 title (1 ms)
+    ✓ parses only first h1 title
+    ✓ does not parse title that is not at the top (1 ms)
+    ✓ parses markdown h1 alternate title
+    ✓ parses markdown h1 alternate title and remove it
+    ✓ parses markdown h1 title placed after import declarations (1 ms)
+    ✓ parses markdown h1 title placed after various import declarations
+    ✓ parses markdown h1 title placed after various import declarations and remove it (1 ms)
+    ✓ parses markdown h1 alternate title placed after import declarations (1 ms)
+    ✓ parses markdown h1 alternate title placed after import declarations and remove it
+    ✓ parses title-only (1 ms)
+    ✓ does not parse markdown h1 title in the middle of a doc
+    ✓ does not parse markdown h1 alternate title in the middle of the doc (1 ms)
+    ✓ parses markdown h1 title placed after multiple import declarations
+    ✓ parses markdown h1 title placed after multiple import declarations and remove it
+  parseFileContentFrontMatter
+    ✓ can parse front matter (9 ms)
+  parseMarkdownFile
+    ✓ parse markdown with front matter (6 ms)
+    ✓ parse markdown with custom front matter parser (4 ms)
+    ✓ parses first heading as contentTitle (2 ms)
+    ✓ warns about duplicate titles (front matter + markdown) (2 ms)
+    ✓ warns about duplicate titles (front matter + markdown alternate) (2 ms)
+    ✓ does not warn for duplicate title if markdown title is not at the top (2 ms)
+    ✓ deletes only first heading (2 ms)
+    ✓ parses front-matter and ignore h2 (2 ms)
+    ✓ reads front matter only (2 ms)
+    ✓ parses title only (2 ms)
+    ✓ parses title only alternate (2 ms)
+    ✓ warns about duplicate titles (2 ms)
+    ✓ ignores markdown title if its not a first text (2 ms)
+    ✓ deletes only first heading 2 (2 ms)
+    ✓ handles code blocks (7 ms)
+    ✓ throws for invalid front matter (41 ms)
+  parseMarkdownHeadingId
+    ✓ can parse simple heading without id (1 ms)
+    ✓ can parse simple heading with id (1 ms)
+    ✓ can parse heading not ending with the id (1 ms)
+    ✓ can parse heading with multiple id (1 ms)
+    ✓ can parse heading with link and id
+    ✓ can parse heading with only id (1 ms)
+    ✓ does not parse empty id (1 ms)
+    ✓ can parse id with more characters (1 ms)
+    ✓ handles unmatched boundaries (1 ms)
+  escapeMarkdownHeadingIds
+    ✓ can escape simple heading id (1 ms)
+    ✓ can escape level 1-6 heading ids
+    ✓ does not escape level 7 heading id
+    ✓ does not escape non-heading (1 ms)
+    ✓ works for realistic example
+  unwrapMdxCodeBlocks
+    ✓ can unwrap a simple mdx code block (1 ms)
+    ✓ can unwrap a simple mdx code block with CRLF (1 ms)
+    ✓ can unwrap a nested mdx code block (4 ms)
+    ✓ works for realistic example (1 ms)
+    ✓ allow spaces before mdx-code-block info string (1 ms)
+  admonitionTitleToDirectiveLabel
+    ✓ does not transform markdown without any admonition
+    ✓ transform simple admonition (1 ms)
+    ✓ does not transform already transformed admonition
+    ✓ does not transform non-container directives (1 ms)
+    ✓ transforms space indented directives
+    ✓ transforms tab indented directives (1 ms)
+    ✓ transforms directives in quotes
+    ✓ does not transform admonition without title
+    ✓ does not transform non-admonition directive (1 ms)
+    ✓ transform real-world nested messy admonitions
+  writeMarkdownHeadingId
+    ✓ works for simple level-2 heading (1 ms)
+    ✓ works for simple level-3 heading (1 ms)
+    ✓ works for simple level-4 heading
+    ✓ unwraps markdown links (9 ms)
+    ✓ can slugify complex headings (1 ms)
+    ✓ does not duplicate duplicate id
+    ✓ respects existing heading
+    ✓ overwrites heading ID when asked to (1 ms)
+    ✓ maintains casing when asked to (1 ms)
+    ✓ transform the headings (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       93 passed, 93 total
+Snapshots:   18 passed, 18 total
+Time:        1.266 s
+Ran all test suites matching /packages\/docusaurus-utils\/src\/__tests__\/markdownUtils.test.ts/i.
+Done in 3.57s.
++ git checkout 0589b1475d56b0b541348aa56f201ec7c56c56d5 packages/docusaurus-utils/src/__tests__/markdownUtils.test.ts
+Updated 1 path from 7f31f3f171

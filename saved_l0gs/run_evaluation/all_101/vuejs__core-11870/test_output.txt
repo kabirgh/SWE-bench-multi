@@ -1,0 +1,74 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/runtime-core/src/helpers/renderList.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 67d6596d40b1807b9cd8eb0d9282932ea77be3c0
+diff --git a/packages/runtime-core/src/helpers/renderList.ts b/packages/runtime-core/src/helpers/renderList.ts
+index 12b0317b..bbcbcc13 100644
+--- a/packages/runtime-core/src/helpers/renderList.ts
++++ b/packages/runtime-core/src/helpers/renderList.ts
+@@ -1,5 +1,10 @@
+ import type { VNode, VNodeChild } from '../vnode'
+-import { isReactive, shallowReadArray, toReactive } from '@vue/reactivity'
++import {
++  isReactive,
++  isShallow,
++  shallowReadArray,
++  toReactive,
++} from '@vue/reactivity'
+ import { isArray, isObject, isString } from '@vue/shared'
+ import { warn } from '../warning'
+ 
+@@ -63,13 +68,15 @@ export function renderList(
+ 
+   if (sourceIsArray || isString(source)) {
+     const sourceIsReactiveArray = sourceIsArray && isReactive(source)
++    let needsWrap = false
+     if (sourceIsReactiveArray) {
++      needsWrap = !isShallow(source)
+       source = shallowReadArray(source)
+     }
+     ret = new Array(source.length)
+     for (let i = 0, l = source.length; i < l; i++) {
+       ret[i] = renderItem(
+-        sourceIsReactiveArray ? toReactive(source[i]) : source[i],
++        needsWrap ? toReactive(source[i]) : source[i],
+         i,
+         undefined,
+         cached && cached[i],
++ git checkout 67d6596d40b1807b9cd8eb0d9282932ea77be3c0 packages/runtime-core/__tests__/helpers/renderList.spec.ts
+Updated 0 paths from 1fdc2d89
++ git apply -v -
+Checking patch packages/runtime-core/__tests__/helpers/renderList.spec.ts...
+Applied patch packages/runtime-core/__tests__/helpers/renderList.spec.ts cleanly.
++ pnpm run test packages/runtime-core/__tests__/helpers/renderList.spec.ts --no-watch --reporter=verbose
+
+> @3.5.3 test /testbed
+> vitest "packages/runtime-core/__tests__/helpers/renderList.spec.ts" "--no-watch" "--reporter=verbose"
+
+
+ RUN  v2.0.5 /testbed
+
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should render items in an array
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should render characters of a string
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should render integers 1 through N when given a number N
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should warn when given a non-integer N
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should render properties in an object
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should render an item for entry in an iterable
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should return empty array when source is undefined
+ ✓ packages/runtime-core/__tests__/helpers/renderList.spec.ts > renderList > should render items in a reactive array correctly
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  13:17:18
+   Duration  2.29s (transform 1.50s, setup 25ms, collect 1.71s, tests 13ms, environment 0ms, prepare 122ms)
+
++ git checkout 67d6596d40b1807b9cd8eb0d9282932ea77be3c0 packages/runtime-core/__tests__/helpers/renderList.spec.ts
+Updated 1 path from 1fdc2d89

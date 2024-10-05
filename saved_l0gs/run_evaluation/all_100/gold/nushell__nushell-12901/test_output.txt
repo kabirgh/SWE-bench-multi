@@ -1,0 +1,79 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   crates/nu-command/src/system/run_external.rs
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff cc9f41e553333b1ad0aa4185a912f7a52355a238
+diff --git a/crates/nu-command/src/system/run_external.rs b/crates/nu-command/src/system/run_external.rs
+index 2941d80de..b12b89263 100644
+--- a/crates/nu-command/src/system/run_external.rs
++++ b/crates/nu-command/src/system/run_external.rs
+@@ -530,6 +530,9 @@ impl ExternalCommand {
+     }
+ 
+     /// Spawn a command without shelling out to an external shell
++    ///
++    /// Note that this function will not set the cwd or environment variables.
++    /// It only creates the command and adds arguments.
+     pub fn spawn_simple_command(&self, cwd: &str) -> Result<std::process::Command, ShellError> {
+         let (head, _, _) = trim_enclosing_quotes(&self.name.item);
+         let head = nu_path::expand_to_real_path(head)
+@@ -537,6 +540,7 @@ impl ExternalCommand {
+             .to_string();
+ 
+         let mut process = std::process::Command::new(head);
++        process.env_clear();
+ 
+         for (arg, arg_keep_raw) in self.args.iter().zip(self.arg_keep_raw.iter()) {
+             trim_expand_and_apply_arg(&mut process, arg, arg_keep_raw, cwd);
++ git checkout cc9f41e553333b1ad0aa4185a912f7a52355a238 tests/shell/environment/env.rs
+Updated 0 paths from a0e3a8cac
++ git apply -v -
+Checking patch tests/shell/environment/env.rs...
+Applied patch tests/shell/environment/env.rs cleanly.
++ cargo test --no-fail-fast shell::env
+   Compiling nu-command v0.93.1 (/testbed/crates/nu-command)
+   Compiling nu v0.93.1 (/testbed)
+    Finished test [unoptimized + debuginfo] target(s) in 57.17s
+     Running unittests src/main.rs (target/debug/deps/nu-2f492b3014c6995c)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/main.rs (target/debug/deps/main-bbbe0ae92f90713d)
+
+running 22 tests
+test shell::environment::env::env_shorthand_multi_first_with_comma_colons_equals ... ok
+test shell::environment::env::env_shorthand ... ok
+test shell::environment::env::env_assignment_with_match ... ok
+test shell::environment::env::env_assignment_with_if ... ok
+test shell::environment::env::env_shorthand_multi ... ok
+test shell::environment::env::env_shorthand_multi_second_with_comma_colons_equals ... ok
+test shell::environment::env::env_assignment ... ok
+test shell::environment::env::env_shorthand_with_comma_colons_equals ... ok
+test shell::environment::env::env_shorthand_with_interpolation ... ok
+test shell::environment::env::env_var_case_insensitive ... ok
+test shell::environment::env::env_var_not_var ... ok
+test shell::environment::env::env_shorthand_with_equals ... ok
+test shell::environment::env::env_shorthand_with_comma_equals ... ok
+test shell::environment::env::passes_env_from_local_cfg_to_external_process ... ignored
+test shell::environment::env::load_env_file_pwd_env_var_fails ... ok
+test shell::environment::env::load_env_pwd_env_var_fails ... ok
+test shell::environment::env::mutate_env_file_pwd_env_var_fails ... ok
+test shell::environment::env::has_file_pwd ... ok
+test shell::environment::env::passes_with_env_env_var_to_external_process ... ok
+test shell::environment::env::has_file_loc ... ok
+test shell::environment::env::hides_environment_from_child ... ok
+test shell::environment::env::hides_env_in_block ... ok
+
+test result: ok. 21 passed; 0 failed; 1 ignored; 0 measured; 1235 filtered out; finished in 1.95s
+
++ git checkout cc9f41e553333b1ad0aa4185a912f7a52355a238 tests/shell/environment/env.rs
+Updated 1 path from a0e3a8cac

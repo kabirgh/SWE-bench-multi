@@ -1,0 +1,51 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   markup/goldmark/blockquotes/blockquotes.go
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 83235262d06a060bd22c168b3413903667b8aeb6
+diff --git a/markup/goldmark/blockquotes/blockquotes.go b/markup/goldmark/blockquotes/blockquotes.go
+index 2f5629d87..d26c92669 100644
+--- a/markup/goldmark/blockquotes/blockquotes.go
++++ b/markup/goldmark/blockquotes/blockquotes.go
+@@ -237,7 +237,8 @@ var _ hooks.PositionerSourceTargetProvider = (*blockquoteContext)(nil)
+ // https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts
+ // Five types:
+ // [!NOTE], [!TIP], [!WARNING], [!IMPORTANT], [!CAUTION]
+-var gitHubAlertRe = regexp.MustCompile(`^<p>\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION)\]`)
++// Note that GitHub's implementation is case-insensitive.
++var gitHubAlertRe = regexp.MustCompile(`(?i)^<p>\[!(NOTE|TIP|WARNING|IMPORTANT|CAUTION)\]`)
+ 
+ // resolveGitHubAlert returns one of note, tip, warning, important or caution.
+ // An empty string if no match.
++ git checkout 83235262d06a060bd22c168b3413903667b8aeb6 markup/goldmark/blockquotes/blockquotes_integration_test.go
+Updated 0 paths from 9d48fb46a
++ git apply -v -
+<stdin>:10: trailing whitespace.
+> [!nOtE]  
+Checking patch markup/goldmark/blockquotes/blockquotes_integration_test.go...
+Applied patch markup/goldmark/blockquotes/blockquotes_integration_test.go cleanly.
+warning: 1 line adds whitespace errors.
++ go test -v ./markup/goldmark/blockquotes/...
+=== RUN   TestResolveGitHubAlert
+=== PAUSE TestResolveGitHubAlert
+=== RUN   TestBlockquoteHook
+=== PAUSE TestBlockquoteHook
+=== RUN   TestBlockquoteEmptyIssue12756
+=== PAUSE TestBlockquoteEmptyIssue12756
+=== CONT  TestResolveGitHubAlert
+=== CONT  TestBlockquoteEmptyIssue12756
+--- PASS: TestResolveGitHubAlert (0.00s)
+=== CONT  TestBlockquoteHook
+--- PASS: TestBlockquoteHook (0.04s)
+--- PASS: TestBlockquoteEmptyIssue12756 (0.05s)
+PASS
+ok  	github.com/gohugoio/hugo/markup/goldmark/blockquotes	0.131s
++ git checkout 83235262d06a060bd22c168b3413903667b8aeb6 markup/goldmark/blockquotes/blockquotes_integration_test.go
+Updated 1 path from 9d48fb46a

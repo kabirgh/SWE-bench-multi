@@ -1,0 +1,196 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/docusaurus/src/server/brokenLinks.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 02e38d8ccf7811af27a9c15ddbadf4d26cfc0eab
+diff --git a/packages/docusaurus/src/server/brokenLinks.ts b/packages/docusaurus/src/server/brokenLinks.ts
+index 9e940f7b8c..3ee1971f81 100644
+--- a/packages/docusaurus/src/server/brokenLinks.ts
++++ b/packages/docusaurus/src/server/brokenLinks.ts
+@@ -125,7 +125,15 @@ function createBrokenLinksHelper({
+       return false;
+     }
+     const targetPage =
+-      collectedLinks.get(pathname) || collectedLinks.get(decodeURI(pathname));
++      collectedLinks.get(pathname) ??
++      collectedLinks.get(decodeURI(pathname)) ??
++      // The broken link checker should not care about a trailing slash
++      // Those are already covered by the broken pathname checker
++      // See https://github.com/facebook/docusaurus/issues/10116
++      collectedLinks.get(addTrailingSlash(pathname)) ??
++      collectedLinks.get(addTrailingSlash(decodeURI(pathname))) ??
++      collectedLinks.get(removeTrailingSlash(pathname)) ??
++      collectedLinks.get(removeTrailingSlash(decodeURI(pathname)));
+     // link with anchor to a page that does not exist (or did not collect any
+     // link/anchor) is considered as a broken anchor
+     if (!targetPage) {
++ git checkout 02e38d8ccf7811af27a9c15ddbadf4d26cfc0eab packages/docusaurus/src/server/__tests__/brokenLinks.test.ts
+Updated 0 paths from 7d5705365b
++ git apply -v -
+Checking patch packages/docusaurus/src/server/__tests__/brokenLinks.test.ts...
+Applied patch packages/docusaurus/src/server/__tests__/brokenLinks.test.ts cleanly.
++ yarn test packages/docusaurus/src/server/__tests__/brokenLinks.test.ts --verbose
+yarn run v1.22.22
+$ jest packages/docusaurus/src/server/__tests__/brokenLinks.test.ts --verbose
+jest-haste-map: duplicate manual mock found: chalk
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/docusaurus-logger/lib/__mocks__/chalk.js
+    * <rootDir>/packages/docusaurus-logger/src/__mocks__/chalk.js
+
+  console.warn
+    [33m[1m[WARNING][22m Docusaurus found broken links![39m
+    [33m[39m
+    [33mPlease check the pages of your site in the list below, and make sure you don't reference any path that does not exist.[39m
+    [33mNote: it's possible to ignore broken links with the 'onBrokenLinks' Docusaurus configuration, and let the build pass.[39m
+    [33m[39m
+    [33mExhaustive list of all broken links found:[39m
+    [33m- Broken link on source page path = /page1:[39m
+    [33m   -> linking to /page2[39m
+    [33m[39m
+
+      62 | }
+      63 | function warn(msg, ...values) {
+    > 64 |     console.warn(chalk_1.default.yellow(`${chalk_1.default.bold('[WARNING]')} ${values.length === 0
+         |             ^
+      65 |         ? stringify(msg)
+      66 |         : interpolate(msg, ...values)}`));
+      67 | }
+
+      at console.<anonymous> (node_modules/jest-mock/build/index.js:723:23)
+      at warn (packages/docusaurus-logger/lib/index.js:64:13)
+      at reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:371:33)
+      at Object.reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:420:3)
+      at testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:37:5)
+      at Object.testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:701:11)
+
+  console.warn
+    [33m[1m[WARNING][22m Docusaurus found broken anchors![39m
+    [33m[39m
+    [33mPlease check the pages of your site in the list below, and make sure you don't reference any anchor that does not exist.[39m
+    [33mNote: it's possible to ignore broken anchors with the 'onBrokenAnchors' Docusaurus configuration, and let the build pass.[39m
+    [33m[39m
+    [33mExhaustive list of all broken anchors found:[39m
+    [33m- Broken anchor on source page path = /page1:[39m
+    [33m   -> linking to /page1#brokenAnchor[39m
+    [33m[39m
+
+      62 | }
+      63 | function warn(msg, ...values) {
+    > 64 |     console.warn(chalk_1.default.yellow(`${chalk_1.default.bold('[WARNING]')} ${values.length === 0
+         |             ^
+      65 |         ? stringify(msg)
+      66 |         : interpolate(msg, ...values)}`));
+      67 | }
+
+      at console.<anonymous> (node_modules/jest-mock/build/index.js:723:23)
+      at warn (packages/docusaurus-logger/lib/index.js:64:13)
+      at reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:376:35)
+      at Object.reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:420:3)
+      at testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:37:5)
+      at Object.testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:734:11)
+
+  console.warn
+    [33m[1m[WARNING][22m Docusaurus found broken links![39m
+    [33m[39m
+    [33mPlease check the pages of your site in the list below, and make sure you don't reference any path that does not exist.[39m
+    [33mNote: it's possible to ignore broken links with the 'onBrokenLinks' Docusaurus configuration, and let the build pass.[39m
+    [33m[39m
+    [33mExhaustive list of all broken links found:[39m
+    [33m- Broken link on source page path = /page1:[39m
+    [33m   -> linking to /page2[39m
+    [33m[39m
+
+      62 | }
+      63 | function warn(msg, ...values) {
+    > 64 |     console.warn(chalk_1.default.yellow(`${chalk_1.default.bold('[WARNING]')} ${values.length === 0
+         |             ^
+      65 |         ? stringify(msg)
+      66 |         : interpolate(msg, ...values)}`));
+      67 | }
+
+      at console.<anonymous> (node_modules/jest-mock/build/index.js:723:23)
+      at warn (packages/docusaurus-logger/lib/index.js:64:13)
+      at reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:371:33)
+      at Object.reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:420:3)
+      at testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:37:5)
+      at Object.testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:767:11)
+
+  console.warn
+    [33m[1m[WARNING][22m Docusaurus found broken anchors![39m
+    [33m[39m
+    [33mPlease check the pages of your site in the list below, and make sure you don't reference any anchor that does not exist.[39m
+    [33mNote: it's possible to ignore broken anchors with the 'onBrokenAnchors' Docusaurus configuration, and let the build pass.[39m
+    [33m[39m
+    [33mExhaustive list of all broken anchors found:[39m
+    [33m- Broken anchor on source page path = /page1:[39m
+    [33m   -> linking to /page1#brokenAnchor[39m
+    [33m[39m
+
+      62 | }
+      63 | function warn(msg, ...values) {
+    > 64 |     console.warn(chalk_1.default.yellow(`${chalk_1.default.bold('[WARNING]')} ${values.length === 0
+         |             ^
+      65 |         ? stringify(msg)
+      66 |         : interpolate(msg, ...values)}`));
+      67 | }
+
+      at console.<anonymous> (node_modules/jest-mock/build/index.js:723:23)
+      at warn (packages/docusaurus-logger/lib/index.js:64:13)
+      at reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:376:35)
+      at Object.reportBrokenLinks (packages/docusaurus/src/server/brokenLinks.ts:420:3)
+      at testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:37:5)
+      at Object.testBrokenLinks (packages/docusaurus/src/server/__tests__/brokenLinks.test.ts:767:11)
+
+PASS packages/docusaurus/src/server/__tests__/brokenLinks.test.ts
+  handleBrokenLinks
+    ✓ accepts valid link (5 ms)
+    ✓ accepts valid non-exact link (3 ms)
+    ✓ accepts valid non-strict link
+    ✓ accepts valid link to uncollected page
+    ✓ accepts valid link to nested route (1 ms)
+    ✓ accepts valid relative link (1 ms)
+    ✓ accepts valid link with anchor (1 ms)
+    ✓ accepts valid link with anchor reported with hash prefix (1 ms)
+    ✓ accepts valid non-strict link with anchor (1 ms)
+    ✓ accepts valid links and anchors, sparse arrays
+    ✓ accepts valid link and anchor to collected pages that are not in routes
+    ✓ accepts valid link with querystring + anchor
+    ✓ accepts valid link to self (1 ms)
+    ✓ accepts valid link with spaces and encoding (1 ms)
+    ✓ accepts valid link with anchor with spaces and encoding
+    ✓ accepts valid link with empty anchor
+    ✓ rejects broken link (7 ms)
+    ✓ rejects broken link due to strict matching (2 ms)
+    ✓ rejects broken link due to strict exact matching (2 ms)
+    ✓ rejects broken link with anchor (2 ms)
+    ✓ rejects broken link with querystring + anchor (1 ms)
+    ✓ rejects valid link with broken anchor (2 ms)
+    ✓ rejects valid link with broken anchor + query-string (1 ms)
+    ✓ rejects valid link with broken anchor to self (1 ms)
+    ✓ rejects valid link with broken anchor to uncollected page (1 ms)
+    ✓ rejects broken anchor with query-string to uncollected page
+    ✓ can ignore broken links
+    ✓ can ignore broken anchors
+    ✓ can ignore broken anchors but report broken link (1 ms)
+    ✓ can ignore broken link but report broken anchors (1 ms)
+    ✓ can warn for broken links (71 ms)
+    ✓ can warn for broken anchors (6 ms)
+    ✓ can warn for both broken links and anchors (8 ms)
+    ✓ reports frequent broken links differently (4 ms)
+    ✓ is performant and minimize calls to matchRoutes (659 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       35 passed, 35 total
+Snapshots:   16 passed, 16 total
+Time:        2.25 s
+Ran all test suites matching /packages\/docusaurus\/src\/server\/__tests__\/brokenLinks.test.ts/i.
+Done in 4.16s.
++ git checkout 02e38d8ccf7811af27a9c15ddbadf4d26cfc0eab packages/docusaurus/src/server/__tests__/brokenLinks.test.ts
+Updated 1 path from 7d5705365b

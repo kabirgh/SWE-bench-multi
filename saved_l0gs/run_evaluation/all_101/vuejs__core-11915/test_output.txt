@@ -1,0 +1,91 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/compiler-core/src/tokenizer.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff d0b513eb463f580e29378e43d112ff6859aa366e
+diff --git a/packages/compiler-core/src/tokenizer.ts b/packages/compiler-core/src/tokenizer.ts
+index 35c49fa6..329e8b48 100644
+--- a/packages/compiler-core/src/tokenizer.ts
++++ b/packages/compiler-core/src/tokenizer.ts
+@@ -438,7 +438,7 @@ export default class Tokenizer {
+         // We have to parse entities in <title> and <textarea> tags.
+         if (!__BROWSER__ && c === CharCodes.Amp) {
+           this.startEntity()
+-        } else if (c === this.delimiterOpen[0]) {
++        } else if (!this.inVPre && c === this.delimiterOpen[0]) {
+           // We also need to handle interpolation
+           this.state = State.InterpolationOpen
+           this.delimiterIndex = 0
++ git checkout d0b513eb463f580e29378e43d112ff6859aa366e packages/compiler-core/__tests__/parse.spec.ts
+Updated 0 paths from 283c79e6
++ git apply -v -
+Checking patch packages/compiler-core/__tests__/parse.spec.ts...
+Applied patch packages/compiler-core/__tests__/parse.spec.ts cleanly.
++ pnpm run test packages/compiler-core/__tests__/parse.spec.ts --no-watch --reporter=verbose -t Element
+
+> @3.5.4 test /testbed
+> vitest "packages/compiler-core/__tests__/parse.spec.ts" "--no-watch" "--reporter=verbose" "-t" "Element"
+
+
+ RUN  v2.0.5 /testbed
+
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > simple div
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > empty
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > self closing
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > void element
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > self-closing void element
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > template element with directives
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > template element without directives
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > native element with `isNativeTag`
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > native element without `isNativeTag`
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > is casting with `isNativeTag`
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > is casting without `isNativeTag`
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > custom element
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > built-in component
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > slot element
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute with no value
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute with empty value, double quote
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute with empty value, single quote
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute with value, double quote
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute with value, single quote
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute with value, unquoted
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > attribute value with >
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > multiple attributes
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > class attribute should ignore whitespace when parsed
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with no value
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with value
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with argument
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive argument edge case
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive argument edge case (2)
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with dynamic argument
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with a modifier
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with two modifiers
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with argument and modifiers
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with dynamic argument and modifiers
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > directive with no name
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-bind shorthand
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-bind .prop shorthand
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-bind shorthand with modifier
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-on shorthand
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-on shorthand with modifier
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-slot shorthand
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-slot arg containing dots
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-pre
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > v-pre with half-open interpolation
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > self-closing v-pre
+ ✓ packages/compiler-core/__tests__/parse.spec.ts > compiler: parse > Element > end tags are case-insensitive.
+
+ Test Files  1 passed (1)
+      Tests  45 passed | 105 skipped (150)
+   Start at  13:18:59
+   Duration  2.26s (transform 1.55s, setup 37ms, collect 1.68s, tests 39ms, environment 0ms, prepare 158ms)
+
++ git checkout d0b513eb463f580e29378e43d112ff6859aa366e packages/compiler-core/__tests__/parse.spec.ts
+Updated 1 path from 283c79e6

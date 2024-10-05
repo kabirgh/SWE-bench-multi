@@ -1,0 +1,85 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   packages/docusaurus-plugin-content-docs/src/client/docsClientUtils.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 5e9e1d051b2217b95498ecbc10f7e33f64e7a4d3
+diff --git a/packages/docusaurus-plugin-content-docs/src/client/docsClientUtils.ts b/packages/docusaurus-plugin-content-docs/src/client/docsClientUtils.ts
+index f3229ac465..29bb9c0e06 100644
+--- a/packages/docusaurus-plugin-content-docs/src/client/docsClientUtils.ts
++++ b/packages/docusaurus-plugin-content-docs/src/client/docsClientUtils.ts
+@@ -63,14 +63,23 @@ export function getActiveVersion(
+   data: GlobalPluginData,
+   pathname: string,
+ ): GlobalVersion | undefined {
+-  const lastVersion = getLatestVersion(data);
+-  // Last version is a route like /docs/*,
+-  // we need to match it last or it would match /docs/version-1.0/* as well
+-  const orderedVersionsMetadata = [
+-    ...data.versions.filter((version) => version !== lastVersion),
+-    lastVersion,
+-  ];
+-  return orderedVersionsMetadata.find(
++  // Sort paths so that a match-all version like /docs/* is matched last
++  // Otherwise /docs/* would match /docs/1.0.0/* routes
++  // This is simplified but similar to the core sortRoutes() logic
++  const sortedVersions = [...data.versions].sort((a, b) => {
++    if (a.path === b.path) {
++      return 0;
++    }
++    if (a.path.includes(b.path)) {
++      return -1;
++    }
++    if (b.path.includes(a.path)) {
++      return 1;
++    }
++    return 0;
++  });
++
++  return sortedVersions.find(
+     (version) =>
+       !!matchPath(pathname, {
+         path: version.path,
++ git checkout 5e9e1d051b2217b95498ecbc10f7e33f64e7a4d3 packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts
+Updated 0 paths from bb126ab566
++ git apply -v -
+Checking patch packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts...
+Applied patch packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts cleanly.
++ yarn test packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts --verbose
+yarn run v1.22.22
+$ jest packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts --verbose
+jest-haste-map: duplicate manual mock found: chalk
+  The following files share their name; please delete one of them:
+    * <rootDir>/packages/docusaurus-logger/lib/__mocks__/chalk.js
+    * <rootDir>/packages/docusaurus-logger/src/__mocks__/chalk.js
+
+PASS packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts
+  docsClientUtils
+    ✓ getActivePlugin (34 ms)
+    ✓ getLatestVersion (1 ms)
+    ✓ getActiveDocContext (4 ms)
+    ✓ getDocVersionSuggestions (2 ms)
+    getActiveVersion
+      ✓ getActiveVersion for regular docs versions (3 ms)
+      ✓ getActiveVersion is not sensitive to version order (2 ms)
+      ✓ getActiveVersion is not sensitive to isLast attribute (1 ms)
+      ✓ getActiveVersion matches first version when same paths (1 ms)
+      ✓ getActiveVersion without trailing slash
+      ✓ getActiveVersion with trailing slash
+      ✓ getActiveVersion - docs only without trailing slash (1 ms)
+      ✓ getActiveVersion - docs only with trailing slash (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       12 passed, 12 total
+Snapshots:   2 passed, 2 total
+Time:        1.459 s
+Ran all test suites matching /packages\/docusaurus-plugin-content-docs\/src\/client\/__tests__\/docsClientUtils.test.ts/i.
+Done in 3.55s.
++ git checkout 5e9e1d051b2217b95498ecbc10f7e33f64e7a4d3 packages/docusaurus-plugin-content-docs/src/client/__tests__/docsClientUtils.test.ts
+Updated 1 path from bb126ab566

@@ -1,0 +1,125 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   src/Operations.js
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 493afba6ec17d9c999dc5a15ac80c71c6bdba1c3
+diff --git a/src/Operations.js b/src/Operations.js
+index 888f22c6..f50857a0 100644
+--- a/src/Operations.js
++++ b/src/Operations.js
+@@ -408,16 +408,16 @@ export function sliceFactory(collection, begin, end, useKeys) {
+     return collection;
+   }
+ 
+-  const resolvedBegin = resolveBegin(begin, originalSize);
+-  const resolvedEnd = resolveEnd(end, originalSize);
+-
+-  // begin or end will be NaN if they were provided as negative numbers and
++  // begin or end can not be resolved if they were provided as negative numbers and
+   // this collection's size is unknown. In that case, cache first so there is
+   // a known size and these do not resolve to NaN.
+-  if (resolvedBegin !== resolvedBegin || resolvedEnd !== resolvedEnd) {
++  if (typeof originalSize === 'undefined' && (begin < 0 || end < 0)) {
+     return sliceFactory(collection.toSeq().cacheResult(), begin, end, useKeys);
+   }
+ 
++  const resolvedBegin = resolveBegin(begin, originalSize);
++  const resolvedEnd = resolveEnd(end, originalSize);
++
+   // Note: resolvedEnd is undefined when the original sequence's length is
+   // unknown and this slice did not supply an end and should contain all
+   // elements after resolvedBegin.
++ git checkout 493afba6ec17d9c999dc5a15ac80c71c6bdba1c3 __tests__/Range.ts
+Updated 0 paths from 9b55941f
++ git apply -v -
+Checking patch __tests__/Range.ts...
+Applied patch __tests__/Range.ts cleanly.
++ npm run build
+
+> immutable@4.3.6 build
+> run-s build:*
+
+
+> immutable@4.3.6 build:clean
+> rimraf dist
+
+
+> immutable@4.3.6 build:dist
+> rollup -c ./resources/rollup-config.js
+
+
+/testbed/src/Immutable.js → dist/immutable.js...
+(!) Circular dependencies
+src/Seq.js -> src/Collection.js -> src/Seq.js
+src/Map.js -> src/Operations.js -> src/Map.js
+src/OrderedMap.js -> src/Map.js -> src/Operations.js -> src/OrderedMap.js
+...and 6 more
+created dist/immutable.js in 3.2s
+
+> immutable@4.3.6 build:esm
+> rollup -c ./resources/rollup-config-es.js
+
+
+/testbed/src/Immutable.js → dist/immutable.es.js...
+(!) Circular dependencies
+src/Seq.js -> src/Collection.js -> src/Seq.js
+src/Map.js -> src/Operations.js -> src/Map.js
+src/OrderedMap.js -> src/Map.js -> src/Operations.js -> src/OrderedMap.js
+...and 6 more
+created dist/immutable.es.js in 1.1s
+
+> immutable@4.3.6 build:copy
+> cpy ./type-definitions/immutable.* dist
+
+
+> immutable@4.3.6 build:prepare
+> ./resources/prepare-dist.sh
+
+
+> immutable@4.3.6 build:stats
+> node ./resources/dist-stats.mjs
+
+  Raw:           172,888 bytes
+  Min:            65,341 bytes 62.2%            -1,260 bytes
+  Zip:            18,693 bytes 89.18%              +527 bytes
++ npx jest __tests__/Range.ts --verbose
+PASS __tests__/Range.ts
+  Range
+    ✓ fixed range (7 ms)
+    ✓ stepped range (1 ms)
+    ✓ open range (149 ms)
+    ✓ backwards range (1 ms)
+    ✓ empty range (1 ms)
+    ✓ includes first, excludes last (86 ms)
+    ✓ slices the same as array slices (81 ms)
+    ✓ slices range (1 ms)
+    ✓ empty slice of range
+    ✓ slices empty range
+    ✓ stepped range does not land on end (1 ms)
+    ✓ can be float
+    ✓ can be negative
+    ✓ can get from any index in O(1)
+    ✓ can find an index in O(1) (1 ms)
+    ✓ maps values (1 ms)
+    ✓ filters values (1 ms)
+    ✓ partitions values (1 ms)
+    ✓ reduces values
+    ✓ takes and skips values
+    ✓ can describe lazy operations
+    ✓ efficiently chains array methods (1 ms)
+    ✓ sliced sequence works even on filtered sequence (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       23 passed, 23 total
+Snapshots:   0 total
+Time:        3.309 s
+Ran all test suites matching /__tests__\/Range.ts/i.
++ git checkout 493afba6ec17d9c999dc5a15ac80c71c6bdba1c3 __tests__/Range.ts
+Updated 1 path from 9b55941f

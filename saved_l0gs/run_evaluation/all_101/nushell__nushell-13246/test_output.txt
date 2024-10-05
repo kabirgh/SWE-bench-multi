@@ -1,0 +1,302 @@
++ cd /testbed
++ git config --global --add safe.directory /testbed
++ cd /testbed
++ git status
+On branch main
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   crates/nu-command/src/filters/find.rs
+
+no changes added to commit (use "git add" and/or "git commit -a")
++ git diff 46ed69ab126015375d5163972ae321715f34874b
+diff --git a/crates/nu-command/src/filters/find.rs b/crates/nu-command/src/filters/find.rs
+index dfdef6696..af626c1e7 100644
+--- a/crates/nu-command/src/filters/find.rs
++++ b/crates/nu-command/src/filters/find.rs
+@@ -69,9 +69,9 @@ impl Command for Find {
+                 result: None,
+             },
+             Example {
+-                description: "Search and highlight text for a term in a string",
+-                example: r#"'Cargo.toml' | find toml"#,
+-                result: Some(Value::test_string("\u{1b}[37mCargo.\u{1b}[0m\u{1b}[41;37mtoml\u{1b}[0m\u{1b}[37m\u{1b}[0m".to_owned())),
++                description: "Search and highlight text for a term in a string. Note that regular search is case insensitive",
++                example: r#"'Cargo.toml' | find cargo"#,
++                result: Some(Value::test_string("\u{1b}[37m\u{1b}[0m\u{1b}[41;37mCargo\u{1b}[0m\u{1b}[37m.toml\u{1b}[0m".to_owned())),
+             },
+             Example {
+                 description: "Search a number or a file size in a list of numbers",
+@@ -457,9 +457,10 @@ fn find_with_rest_and_highlight(
+ 
+                 let mut output: Vec<Value> = vec![];
+                 for line in lines {
+-                    let line = line?.to_lowercase();
++                    let line = line?;
++                    let lower_val = line.to_lowercase();
+                     for term in &terms {
+-                        if line.contains(term) {
++                        if lower_val.contains(term) {
+                             output.push(Value::string(
+                                 highlight_search_string(
+                                     &line,
++ git checkout 46ed69ab126015375d5163972ae321715f34874b crates/nu-command/tests/commands/find.rs
+Updated 0 paths from 05b59aa23
++ git apply -v -
+Checking patch crates/nu-command/tests/commands/find.rs...
+Applied patch crates/nu-command/tests/commands/find.rs cleanly.
++ cargo build
+ Downloading crates ...
+  Downloaded bincode v1.3.3
+  Downloaded termcolor v1.4.1
+  Downloaded fallible-iterator v0.3.0
+  Downloaded dlib v0.5.2
+  Downloaded tree_magic_mini v3.1.4
+  Downloaded stability v0.2.0
+  Downloaded rust-embed-impl v8.4.0
+  Downloaded lsp-server v0.7.6
+  Downloaded simplelog v0.12.2
+  Downloaded str_indices v0.4.3
+  Downloaded wayland-scanner v0.31.1
+  Downloaded strum v0.26.2
+  Downloaded rust-embed-utils v8.4.0
+  Downloaded doctest-file v1.0.0
+  Downloaded serde_repr v0.1.19
+  Downloaded static_assertions v1.1.0
+  Downloaded wayland-sys v0.31.1
+  Downloaded unicode-truncate v1.0.0
+  Downloaded strum_macros v0.26.2
+  Downloaded wayland-protocols-wlr v0.2.0
+  Downloaded backtrace v0.3.71
+  Downloaded wl-clipboard-rs v0.8.1
+  Downloaded wayland-client v0.31.2
+  Downloaded lsp-types v0.95.1
+  Downloaded reedline v0.32.0
+  Downloaded wayland-protocols v0.31.2
+  Downloaded ropey v1.6.1
+  Downloaded x11rb v0.13.1
+  Downloaded libmimalloc-sys v0.1.38
+  Downloaded object v0.32.2
+  Downloaded petgraph v0.6.4
+  Downloaded ratatui v0.26.3
+  Downloaded x11rb-protocol v0.13.1
+  Downloaded interprocess v2.2.0
+  Downloaded rust-embed v8.4.0
+  Downloaded rusqlite v0.31.0
+  Downloaded gimli v0.28.1
+  Downloaded trash v3.3.1
+  Downloaded libloading v0.8.3
+  Downloaded compact_str v0.7.1
+  Downloaded wayland-backend v0.3.3
+  Downloaded hashlink v0.9.0
+  Downloaded clap_derive v4.5.4
+  Downloaded rustversion v1.0.15
+  Downloaded arboard v3.4.0
+  Downloaded libsqlite3-sys v0.28.0
+  Downloaded addr2line v0.21.0
+  Downloaded anyhow v1.0.82
+  Downloaded derive-new v0.6.0
+  Downloaded backtrace-ext v0.2.1
+  Downloaded scoped-tls v1.0.1
+  Downloaded heck v0.5.0
+  Downloaded downcast-rs v1.2.1
+  Downloaded cassowary v0.3.0
+  Downloaded is_executable v1.0.1
+  Downloaded fixedbitset v0.4.2
+  Downloaded fallible-streaming-iterator v0.1.9
+  Downloaded ctrlc v3.4.4
+  Downloaded rustc-demangle v0.1.23
+  Downloaded fd-lock v4.0.2
+  Downloaded mimalloc v0.1.42
+  Downloaded heck v0.4.1
+  Downloaded castaway v0.2.2
+   Compiling rustix v0.38.34
+   Compiling linux-raw-sys v0.4.13
+   Compiling syn v2.0.60
+   Compiling nix v0.28.0
+   Compiling backtrace v0.3.71
+   Compiling gimli v0.28.1
+   Compiling object v0.32.2
+   Compiling rustc-demangle v0.1.23
+   Compiling smallvec v1.13.2
+   Compiling semver v1.0.22
+   Compiling doctest-file v1.0.0
+   Compiling scopeguard v1.2.0
+   Compiling wayland-sys v0.31.1
+   Compiling libloading v0.8.3
+   Compiling rustversion v1.0.15
+   Compiling dlib v0.5.2
+   Compiling lock_api v0.4.12
+   Compiling parking_lot_core v0.9.10
+   Compiling interprocess v2.2.0
+   Compiling wayland-backend v0.3.3
+   Compiling parking_lot v0.12.2
+   Compiling quick-xml v0.31.0
+   Compiling scoped-tls v1.0.1
+   Compiling downcast-rs v1.2.1
+   Compiling regex-syntax v0.8.3
+   Compiling libsqlite3-sys v0.28.0
+   Compiling heck v0.4.1
+   Compiling fixedbitset v0.4.2
+   Compiling petgraph v0.6.4
+   Compiling hashlink v0.9.0
+   Compiling wayland-scanner v0.31.1
+   Compiling fallible-streaming-iterator v0.1.9
+   Compiling fallible-iterator v0.3.0
+   Compiling addr2line v0.21.0
+   Compiling regex-automata v0.4.6
+   Compiling x11rb-protocol v0.13.1
+   Compiling tree_magic_mini v3.1.4
+   Compiling time v0.3.36
+   Compiling backtrace-ext v0.2.1
+   Compiling regex v1.10.4
+   Compiling parse-zoneinfo v0.3.1
+   Compiling time-macros v0.2.18
+   Compiling chrono-tz-build v0.2.1
+   Compiling serde_derive v1.0.200
+   Compiling thiserror-impl v1.0.59
+   Compiling miette-derive v7.2.0
+   Compiling typetag-impl v0.2.16
+   Compiling nu-derive-value v0.95.1 (/testbed/crates/nu-derive-value)
+   Compiling strum_macros v0.26.2
+   Compiling thiserror v1.0.59
+   Compiling pwd v1.4.0
+   Compiling nu-path v0.95.1 (/testbed/crates/nu-path)
+   Compiling pest v2.7.10
+   Compiling derive-new v0.6.0
+   Compiling openssl-macros v0.1.1
+   Compiling chrono-tz v0.8.6
+   Compiling pest_meta v2.7.10
+   Compiling shadow-rs v0.29.0
+   Compiling rust-embed-utils v8.4.0
+   Compiling castaway v0.2.2
+   Compiling libmimalloc-sys v0.1.38
+   Compiling pest_generator v2.7.10
+   Compiling strum v0.26.2
+   Compiling static_assertions v1.1.0
+   Compiling anyhow v1.0.82
+   Compiling nu-cmd-lang v0.95.1 (/testbed/crates/nu-cmd-lang)
+   Compiling serde v1.0.200
+   Compiling compact_str v0.7.1
+   Compiling rust-embed-impl v8.4.0
+   Compiling stability v0.2.0
+   Compiling pest_derive v2.7.10
+   Compiling serde_repr v0.1.19
+   Compiling unicode-truncate v1.0.0
+   Compiling cassowary v0.3.0
+   Compiling str_indices v0.4.3
+   Compiling is_executable v1.0.1
+   Compiling dialoguer v0.11.0
+   Compiling ropey v1.6.1
+   Compiling notify-debouncer-full v0.3.1
+   Compiling wax v0.6.0
+   Compiling rust-embed v8.4.0
+   Compiling umask v2.1.0
+   Compiling termcolor v1.4.1
+   Compiling heck v0.5.0
+   Compiling nu v0.95.1 (/testbed)
+   Compiling simplelog v0.12.2
+   Compiling mimalloc v0.1.42
+   Compiling bitflags v2.5.0
+   Compiling chrono v0.4.38
+   Compiling serde_json v1.0.116
+   Compiling erased-serde v0.4.4
+   Compiling byte-unit v5.1.4
+   Compiling rmp-serde v1.3.0
+   Compiling bincode v1.3.3
+   Compiling typetag v0.2.16
+   Compiling linked-hash-map v0.5.6
+   Compiling crossterm v0.27.0
+   Compiling nu-json v0.95.1 (/testbed/crates/nu-json)
+   Compiling url v2.5.0
+   Compiling openssl v0.10.64
+   Compiling procfs-core v0.16.0
+   Compiling nu-utils v0.95.1 (/testbed/crates/nu-utils)
+   Compiling chrono-humanize v0.2.3
+   Compiling rusqlite v0.31.0
+   Compiling toml_datetime v0.6.5
+   Compiling serde_spanned v0.6.5
+   Compiling toml_edit v0.22.12
+   Compiling serde_urlencoded v0.7.1
+   Compiling nu-term-grid v0.95.1 (/testbed/crates/nu-term-grid)
+   Compiling ratatui v0.26.3
+   Compiling human-date-parser v0.1.2
+   Compiling terminal_size v0.3.0
+   Compiling xattr v1.3.1
+   Compiling miette v7.2.0
+   Compiling procfs v0.16.0
+   Compiling clap_builder v4.5.2
+   Compiling nu-system v0.95.1 (/testbed/crates/nu-system)
+   Compiling nu-protocol v0.95.1 (/testbed/crates/nu-protocol)
+   Compiling tempfile v3.10.1
+   Compiling x11rb v0.13.1
+   Compiling which v6.0.1
+   Compiling clap v4.5.4
+   Compiling uucore v0.0.26
+   Compiling wayland-client v0.31.2
+   Compiling fd-lock v4.0.2
+   Compiling native-tls v0.2.11
+   Compiling uu_cp v0.0.26
+   Compiling ureq v2.9.7
+   Compiling uu_mkdir v0.0.26
+   Compiling uu_mktemp v0.0.26
+   Compiling uu_mv v0.0.26
+   Compiling uu_uname v0.0.26
+   Compiling uu_whoami v0.0.26
+   Compiling toml v0.8.12
+   Compiling calamine v0.24.0
+   Compiling wayland-protocols v0.31.2
+   Compiling dtparse v2.0.0
+   Compiling wayland-protocols-wlr v0.2.0
+   Compiling trash v3.3.1
+   Compiling lsp-types v0.95.1
+   Compiling lsp-server v0.7.6
+   Compiling csv v1.3.0
+   Compiling wl-clipboard-rs v0.8.1
+   Compiling serde_yaml v0.9.34+deprecated
+   Compiling arboard v3.4.0
+   Compiling ctrlc v3.4.4
+   Compiling reedline v0.32.0
+   Compiling nu-engine v0.95.1 (/testbed/crates/nu-engine)
+   Compiling nu-plugin-protocol v0.95.1 (/testbed/crates/nu-plugin-protocol)
+   Compiling nu-color-config v0.95.1 (/testbed/crates/nu-color-config)
+   Compiling nu-plugin-core v0.95.1 (/testbed/crates/nu-plugin-core)
+   Compiling nu-table v0.95.1 (/testbed/crates/nu-table)
+   Compiling nu-plugin-engine v0.95.1 (/testbed/crates/nu-plugin-engine)
+   Compiling nu-parser v0.95.1 (/testbed/crates/nu-parser)
+   Compiling nu-cmd-plugin v0.95.1 (/testbed/crates/nu-cmd-plugin)
+   Compiling nu-cmd-base v0.95.1 (/testbed/crates/nu-cmd-base)
+   Compiling nuon v0.95.1 (/testbed/crates/nuon)
+   Compiling nu-cli v0.95.1 (/testbed/crates/nu-cli)
+   Compiling nu-command v0.95.1 (/testbed/crates/nu-command)
+   Compiling nu-cmd-extra v0.95.1 (/testbed/crates/nu-cmd-extra)
+   Compiling nu-explore v0.95.1 (/testbed/crates/nu-explore)
+   Compiling nu-lsp v0.95.1 (/testbed/crates/nu-lsp)
+   Compiling nu-std v0.95.1 (/testbed/crates/nu-std)
+    Finished dev [unoptimized + debuginfo] target(s) in 4m 14s
++ cargo test -p nu-command --no-fail-fast --test main find::
+   Compiling nu-command v0.95.1 (/testbed/crates/nu-command)
+    Finished test [unoptimized + debuginfo] target(s) in 44.59s
+     Running tests/main.rs (target/debug/deps/main-0afca0aadad468d6)
+
+running 15 tests
+test commands::find::find_with_filepath_search_with_multiple_patterns ... ok
+test commands::find::find_with_list_search_with_char ... ok
+test commands::find::find_with_filepath_search_with_string ... ok
+test commands::find::find_with_bytestream_search_with_char ... ok
+test commands::find::find_takes_into_account_linebreaks_in_string ... ok
+test commands::find::find_with_list_search_with_number ... ok
+test commands::find::find_in_table_keeps_row_with_single_matched_and_keeps_other_columns ... ok
+test commands::find::find_in_table_only_keep_rows_with_matches_on_selected_columns ... ok
+test commands::find::find_with_list_search_with_string ... ok
+test commands::find::find_with_string_search_with_string_not_found ... ok
+test commands::find::find_with_string_search_with_string ... ok
+test commands::find::inverted_find_with_regex_in_table_keeps_row_if_none_of_the_columns_matches ... ok
+test commands::find::find_in_table_keeps_row_with_multiple_matched_and_keeps_other_columns ... ok
+test commands::find::find_with_regex_in_table_keeps_row_if_one_column_matches ... ok
+test commands::find::inverted_find_in_table_keeps_row_if_none_of_the_selected_columns_matches ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 1539 filtered out; finished in 0.15s
+
++ git checkout 46ed69ab126015375d5163972ae321715f34874b crates/nu-command/tests/commands/find.rs
+Updated 1 path from 05b59aa23
