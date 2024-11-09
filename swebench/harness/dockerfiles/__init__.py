@@ -39,11 +39,13 @@ def get_dockerfile_base(
     if not starting_image_name:
         starting_image_name = "ubuntu:22.04"
 
-    print(f"Getting dockerfile base for {dockerfile_key} on {platform} {arch}")
+    print(
+        f"Getting dockerfile base for {dockerfile_key} starting image {starting_image_name} on {platform} {arch}"
+    )
     return _dockerfiles[dockerfile_key or "python"]["base"].format(
         platform=platform,
         conda_arch=conda_arch,
-        starting_image_name=starting_image_name,
+        image_name=starting_image_name,
     )
 
 
@@ -52,23 +54,32 @@ def get_dockerfile_env(
     arch: str,
     dockerfile_key: str | None,
     base_image_name: str | None,
+    starting_image_name: str | None,
 ) -> str:
     if not base_image_name:
         base_image_name = "ubuntu:22.04"
 
-    return _dockerfiles[dockerfile_key or "python"]["env"].format(
-        platform=platform,
-        arch=arch,
-        dockerfile_key=dockerfile_key,
-        base_image_name=base_image_name,
-    )
+    dockerfiles = _dockerfiles[dockerfile_key or "python"]
+    if "env" in dockerfiles:
+        return dockerfiles["env"].format(
+            platform=platform,
+            arch=arch,
+            dockerfile_key=dockerfile_key,
+            image_name=base_image_name,
+        )
+    else:
+        return dockerfiles["base"].format(
+            platform=platform,
+            arch=arch,
+            image_name=starting_image_name,
+        )
 
 
 def get_dockerfile_instance(
     platform: str, dockerfile_key: str | None, env_image_name: str
 ):
     return _dockerfiles[dockerfile_key or "python"]["instance"].format(
-        platform=platform, env_image_name=env_image_name
+        platform=platform, image_name=env_image_name
     )
 
 
@@ -81,27 +92,22 @@ _dockerfiles = {
     "go": {
         "base": _DOCKERFILE_BASE_GO,
         # No env needed for go repos, return base since rest of code expects env to be built
-        "env": _DOCKERFILE_BASE_GO,
         "instance": _DOCKERFILE_INSTANCE_GO,
     },
     "java": {
         "base": _DOCKERFILE_BASE_JAVA,
-        "env": _DOCKERFILE_BASE_JAVA,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_JAVA,
     },
     "javascript": {
         "base": _DOCKERFILE_BASE_JAVASCRIPT,
-        "env": _DOCKERFILE_BASE_JAVASCRIPT,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_JAVASCRIPT,
     },
     "cpp": {
         "base": _DOCKERFILE_BASE_CPLUSPLUS,
-        "env": _DOCKERFILE_BASE_CPLUSPLUS,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_CPLUSPLUS,
     },
     "rust": {
         "base": _DOCKERFILE_BASE_RUST,
-        "env": _DOCKERFILE_BASE_RUST,  # Skip env
         "instance": _DOCKERFILE_INSTANCE_RUST,
     },
 }

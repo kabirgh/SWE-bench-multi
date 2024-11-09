@@ -45,7 +45,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 """
 
-_DOCKERFILE_INSTANCE_PYTHON = r"""FROM --platform={platform} {env_image_name}
+_DOCKERFILE_INSTANCE_PYTHON = r"""FROM --platform={platform} {image_name}
 
 COPY ./setup_repo.sh /root/
 RUN /bin/bash /root/setup_repo.sh

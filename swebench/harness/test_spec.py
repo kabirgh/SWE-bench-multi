@@ -113,30 +113,36 @@ class TestSpec:
             name = f"{name}.{self.instance_id}"
         return name
 
+    # This code is pretty messy, hard to follow what strings are used for what.
     @property
     def base_dockerfile(self) -> str:
         return get_dockerfile_base(
-            self.platform,
-            self.arch,
-            self.adapter.dockerfile_key if self.adapter else None,
-            self.adapter.starting_image_name if self.adapter else None,
+            platform=self.platform,
+            arch=self.arch,
+            dockerfile_key=self.adapter.dockerfile_key if self.adapter else None,
+            starting_image_name=self.adapter.starting_image_name
+            if self.adapter
+            else None,
         )
 
     @property
     def env_dockerfile(self) -> str:
         return get_dockerfile_env(
-            self.platform,
-            self.arch,
-            self.adapter.dockerfile_key if self.adapter else None,
-            self.base_image_key,
+            platform=self.platform,
+            arch=self.arch,
+            dockerfile_key=self.adapter.dockerfile_key if self.adapter else None,
+            base_image_name=self.base_image_key,
+            starting_image_name=self.adapter.starting_image_name
+            if self.adapter
+            else None,
         )
 
     @property
     def instance_dockerfile(self) -> str:
         return get_dockerfile_instance(
-            self.platform,
-            self.adapter.dockerfile_key if self.adapter else None,
-            self.env_image_key,
+            platform=self.platform,
+            dockerfile_key=self.adapter.dockerfile_key if self.adapter else None,
+            env_image_name=self.env_image_key,
         )
 
     @property

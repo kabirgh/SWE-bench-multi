@@ -1,6 +1,6 @@
 # If you change the base image, you need to rebuild all images (run with --force_rebuild)
 _DOCKERFILE_BASE_GO = r"""
-FROM --platform={platform} {starting_image_name}
+FROM --platform={platform} {image_name}
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
@@ -14,7 +14,7 @@ build-essential \
 RUN adduser --disabled-password --gecos 'dog' nonroot
 """
 
-_DOCKERFILE_INSTANCE_GO = r"""FROM --platform={platform} {env_image_name}
+_DOCKERFILE_INSTANCE_GO = r"""FROM --platform={platform} {image_name}
 
 COPY ./setup_repo.sh /root/
 RUN /bin/bash /root/setup_repo.sh
