@@ -2,6 +2,19 @@ import json
 import glob
 import os
 from collections import defaultdict
+import argparse
+
+# Add argument parsing
+parser = argparse.ArgumentParser(
+    description="Prepare dataset and create dummy predictions."
+)
+parser.add_argument(
+    "--output_dir",
+    type=str,
+    default=os.path.join("dataset", "all"),
+    help="Output directory for merged instances and dummy predictions",
+)
+args = parser.parse_args()
 
 # Directory containing the repo-specific instance files
 input_dir = os.path.join("dataset")
@@ -18,19 +31,21 @@ repo_instance_counts = defaultdict(int)
 for instances_file in glob.glob(
     os.path.join(input_dir, "*", "verified", "instances.jsonl")
 ):
-    with open(instances_file, "r") as f:
-        for line in f:
-            # Parse each line as JSON and add to the list
-            instance = json.loads(line.strip())
-            all_instances.append(instance)
-            # Count instances for each repo
-            repo_instance_counts[instance["repo"]] += 1
+    if "tokio" in instances_file or "caddy" in instances_file:
+        with open(instances_file, "r") as f:
+            for line in f:
+                # Parse each line as JSON and add to the list
+                instance = json.loads(line.strip())
+                all_instances.append(instance)
+                # Count instances for each repo
+                repo_instance_counts[instance["repo"]] += 1
 
 # Sort instances to ensure consistent ordering
 all_instances.sort(key=lambda x: x["instance_id"])
 
 # Output directory
-output_dir = os.path.join(input_dir, "all")
+output_dir = args.output_dir
+os.makedirs(output_dir, exist_ok=True)
 output_file = os.path.join(output_dir, "instances.jsonl")
 # So python server.py can see it
 output_file_all = os.path.join(output_dir, "all-task-instances.jsonl")
@@ -51,8 +66,8 @@ with open(output_file, "w+") as f, open(output_file_all, "w+") as f_all:
                     "hints_text": instance["hints_text"],
                     "created_at": instance["created_at"],
                     "version": instance["version"],
-                    "FAIL_TO_PASS": json.dumps(instance["FAIL_TO_PASS"]),
-                    "PASS_TO_PASS": json.dumps(instance["PASS_TO_PASS"]),
+                    "FAIL_TO_PASS": instance["FAIL_TO_PASS"],
+                    "PASS_TO_PASS": instance["PASS_TO_PASS"],
                 }
             )
             + "\n"
@@ -89,5 +104,5 @@ with open(os.path.join(output_dir, "dummy_predictions.json"), "w+") as f:
     json.dump(dummy_predictions, f, indent=2)
 
 print(
-    f"Created predictions file to apply dummy patch: {output_dir}/dummy_predictions.json"
+    f"Created predictions file to apply dummy patch: {os.path.join(output_dir, 'dummy_predictions.json')}"
 )
