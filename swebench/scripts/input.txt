@@ -1,16 +1,8 @@
-=== RUN   TestQueryFilter
---- PASS: TestQueryFilter (0.00s)
-=== RUN   TestValidateQueryFilter
---- PASS: TestValidateQueryFilter (0.00s)
-=== RUN   TestCookieFilter
-    filters_test.go:61: cookies have not been filtered:
---- FAIL: TestCookieFilter (0.00s)
-=== RUN   TestValidateCookieFilter
---- PASS: TestValidateCookieFilter (0.00s)
-=== RUN   TestRegexpFilter
---- PASS: TestRegexpFilter (0.00s)
-=== RUN   TestHashFilter
---- PASS: TestHashFilter (0.00s)
+=== RUN   TestCaddyfileAdaptToJSON
+    caddytest.go:378: adapting config using caddyfile adapter: parsing caddyfile tokens for 'default_bind': Caddyfile:2 - Error during parsing: Wrong argument count or unexpected line ending after 'tcp6/[::]'
+    caddyfile_adapt_test.go:52: failed to adapt global_options_default_bind.txt
+    caddytest.go:392: warning: map_and_vars_with_raw_types.txt:3: : Caddyfile input is not formatted; run the 'caddy fmt' command to fix inconsistencies
+--- FAIL: TestCaddyfileAdaptToJSON (0.08s)
 FAIL
-FAIL	github.com/caddyserver/caddy/v2/modules/logging	0.029s
+FAIL	github.com/caddyserver/caddy/v2/caddytest/integration	0.130s
 FAIL

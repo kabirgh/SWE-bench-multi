@@ -111,6 +111,26 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=["go test -c ./modules/logging"],
             test=["go test -v ./modules/logging"],
         ),
+        "5626": GoAdapter(
+            version="1.19",
+            install=['go test -c ./caddyconfig/httpcaddyfile -run "Test.*Import"'],
+            test=['go test -v ./caddyconfig/httpcaddyfile -run "Test.*Import"'],
+        ),
+        "5761": GoAdapter(
+            version="1.23",
+            install=['go test -c ./caddyconfig/caddyfile -run "TestLexer.*"'],
+            test=['go test -v ./caddyconfig/caddyfile -run "TestLexer.*"'],
+        ),
+        "5870": GoAdapter(
+            version="1.23",
+            install=['go test -c . -run "TestUnsyncedConfigAccess"'],
+            test=['go test -v . -run "TestUnsyncedConfigAccess"'],
+        ),
+        "4774": GoAdapter(
+            version="1.18",
+            install=['go test -c ./caddytest/integration -run "TestCaddyfileAdapt*"'],
+            test=['go test -v ./caddytest/integration -run "TestCaddyfileAdapt*"'],
+        ),
     },
     "babel/babel": {
         "14532": JavaScriptAdapter(
