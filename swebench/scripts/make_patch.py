@@ -49,4 +49,3 @@ if __name__ == "__main__":
     patch = make_patch(patch_url)
     with open(args.target_file, "w") as f:
         f.write(patch)
-    # write_patch_to_json(args.target_file, patch, f"{repo_id}-{pr_number}")
