@@ -1,8 +1,45 @@
-=== RUN   TestCaddyfileAdaptToJSON
-    caddytest.go:378: adapting config using caddyfile adapter: parsing caddyfile tokens for 'default_bind': Caddyfile:2 - Error during parsing: Wrong argument count or unexpected line ending after 'tcp6/[::]'
-    caddyfile_adapt_test.go:52: failed to adapt global_options_default_bind.txt
-    caddytest.go:392: warning: map_and_vars_with_raw_types.txt:3: : Caddyfile input is not formatted; run the 'caddy fmt' command to fix inconsistencies
---- FAIL: TestCaddyfileAdaptToJSON (0.08s)
-FAIL
-FAIL	github.com/caddyserver/caddy/v2/caddytest/integration	0.130s
-FAIL
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.19s
+     Running tests/rt_metrics.rs (target/debug/deps/rt_metrics-02c8983bbba1d609)
+
+running 23 tests
+test budget_exhaustion_yield_with_joins ... ok
+test injection_queue_depth_current_thread ... ok
+test budget_exhaustion_yield ... ok
+test blocking_queue_depth ... ok
+test active_tasks_count ... ok
+test injection_queue_depth_multi_thread ... ok
+test num_blocking_threads ... FAILED
+test num_workers ... ok
+test worker_local_schedule_count ... ok
+test remote_schedule_count ... ok
+test io_driver_fd_count ... ok
+test worker_local_queue_depth ... ok
+test num_idle_blocking_threads ... ok
+test io_driver_ready_count ... ok
+test worker_steal_count ... ignored
+test worker_park_count ... ok
+test worker_poll_count_histogram_range ... ok
+test worker_poll_count_histogram ... ok
+test worker_overflow_count ... ok
+test worker_poll_count_histogram_disabled_without_explicit_enable ... ok
+test worker_noop_count ... ok
+test worker_poll_count_and_time ... ok
+test worker_total_busy_duration ... ok
+
+failures:
+
+---- num_blocking_threads stdout ----
+thread 'num_blocking_threads' panicked at tokio/tests/rt_metrics.rs:36:5:
+assertion `left == right` failed
+  left: 0
+ right: 2
+
+
+failures:
+    num_blocking_threads
+
+test result: FAILED. 21 passed; 1 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass `-p tokio --test rt_metrics`
+error: 1 target failed:
+    `-p tokio --test rt_metrics`
