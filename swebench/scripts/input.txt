@@ -1,45 +1,32 @@
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.19s
-     Running tests/rt_metrics.rs (target/debug/deps/rt_metrics-02c8983bbba1d609)
-
-running 23 tests
-test budget_exhaustion_yield_with_joins ... ok
-test injection_queue_depth_current_thread ... ok
-test budget_exhaustion_yield ... ok
-test blocking_queue_depth ... ok
-test active_tasks_count ... ok
-test injection_queue_depth_multi_thread ... ok
-test num_blocking_threads ... FAILED
-test num_workers ... ok
-test worker_local_schedule_count ... ok
-test remote_schedule_count ... ok
-test io_driver_fd_count ... ok
-test worker_local_queue_depth ... ok
-test num_idle_blocking_threads ... ok
-test io_driver_ready_count ... ok
-test worker_steal_count ... ignored
-test worker_park_count ... ok
-test worker_poll_count_histogram_range ... ok
-test worker_poll_count_histogram ... ok
-test worker_overflow_count ... ok
-test worker_poll_count_histogram_disabled_without_explicit_enable ... ok
-test worker_noop_count ... ok
-test worker_poll_count_and_time ... ok
-test worker_total_busy_duration ... ok
-
-failures:
-
----- num_blocking_threads stdout ----
-thread 'num_blocking_threads' panicked at tokio/tests/rt_metrics.rs:36:5:
-assertion `left == right` failed
-  left: 0
- right: 2
-
-
-failures:
-    num_blocking_threads
-
-test result: FAILED. 21 passed; 1 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.02s
-
-error: test failed, to rerun pass `-p tokio --test rt_metrics`
-error: 1 target failed:
-    `-p tokio --test rt_metrics`
+=== RUN   TestEvaluations
+=== RUN   TestEvaluations/testdata/aggregators.test
+=== RUN   TestEvaluations/testdata/at_modifier.test
+=== RUN   TestEvaluations/testdata/collision.test
+=== RUN   TestEvaluations/testdata/functions.test
+=== RUN   TestEvaluations/testdata/histograms.test
+=== RUN   TestEvaluations/testdata/literals.test
+=== RUN   TestEvaluations/testdata/operators.test
+    promql_test.go:30:
+        	Error Trace:	promql_test.go:30
+        	Error:      	Received unexpected error:
+        	            	1:7: parse error: unexpected identifier "atan2"
+        	Test:       	TestEvaluations/testdata/operators.test
+=== RUN   TestEvaluations/testdata/selectors.test
+=== RUN   TestEvaluations/testdata/staleness.test
+=== RUN   TestEvaluations/testdata/subquery.test
+=== RUN   TestEvaluations/testdata/trig_functions.test
+--- FAIL: TestEvaluations (1.52s)
+    --- PASS: TestEvaluations/testdata/aggregators.test (0.25s)
+    --- PASS: TestEvaluations/testdata/at_modifier.test (0.08s)
+    --- PASS: TestEvaluations/testdata/collision.test (0.04s)
+    --- PASS: TestEvaluations/testdata/functions.test (0.62s)
+    --- PASS: TestEvaluations/testdata/histograms.test (0.09s)
+    --- PASS: TestEvaluations/testdata/literals.test (0.02s)
+    --- FAIL: TestEvaluations/testdata/operators.test (0.02s)
+    --- PASS: TestEvaluations/testdata/selectors.test (0.17s)
+    --- PASS: TestEvaluations/testdata/staleness.test (0.03s)
+    --- PASS: TestEvaluations/testdata/subquery.test (0.14s)
+    --- PASS: TestEvaluations/testdata/trig_functions.test (0.05s)
+FAIL
+FAIL	github.com/prometheus/prometheus/promql	1.544s
+FAIL

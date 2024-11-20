@@ -434,6 +434,23 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=["go test -c ./tsdb"],
             test=['go test -v ./tsdb -run "^TestSnapshot"'],
         ),
+        "10720": GoAdapter(
+            version="1.23",
+            install=["go test -c ./promql"],
+            test=['go test -v ./promql -run "^TestEvaluations"'],
+        ),
+        "10633": GoAdapter(
+            version="1.23",
+            install=["go test -c ./discovery/puppetdb"],
+            test=[
+                'go test -v ./discovery/puppetdb -run "TestPuppetDBRefreshWithParameters"'
+            ],
+        ),
+        "9248": GoAdapter(
+            version="1.23",
+            install=["go test -c ./promql"],
+            test=['go test -v ./promql -run "^TestEvaluations"'],
+        ),
     },
     "immutable-js/immutable-js": {
         "2006": JavaScriptAdapter(
