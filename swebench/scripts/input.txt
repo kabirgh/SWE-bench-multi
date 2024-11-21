@@ -1,58 +1,363 @@
-=== RUN   TestCreateDefaultRouter
---- PASS: TestCreateDefaultRouter (0.00s)
-=== RUN   TestRouterGroupBasic
---- PASS: TestRouterGroupBasic (0.00s)
-=== RUN   TestRouterGroupBasicHandle
---- PASS: TestRouterGroupBasicHandle (0.00s)
-=== RUN   TestRouterGroupInvalidStatic
---- PASS: TestRouterGroupInvalidStatic (0.00s)
-=== RUN   TestRouterGroupInvalidStaticFile
---- PASS: TestRouterGroupInvalidStaticFile (0.00s)
-=== RUN   TestRouterGroupTooManyHandlers
---- PASS: TestRouterGroupTooManyHandlers (0.00s)
-=== RUN   TestRouterGroupBadMethod
---- PASS: TestRouterGroupBadMethod (0.00s)
-=== RUN   TestRouterGroupPipeline
---- PASS: TestRouterGroupPipeline (0.00s)
-=== RUN   TestRouterMethod
---- PASS: TestRouterMethod (0.00s)
-=== RUN   TestRouterGroupRouteOK
---- PASS: TestRouterGroupRouteOK (0.00s)
-=== RUN   TestRouterMiddlewareAndStatic
-    routes_test.go:331:
-        	Error Trace:	routes_test.go:331
-        	Error:      	Not equal:
-        	            	expected: "text/plain; charset=utf-8"
-        	            	actual  : "text/x-go; charset=utf-8"
+Executing: mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteDoublesWhenLenient
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.2-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO]
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.8.2-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ gson ---
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 67 source files to /root/gson/gson/target/classes
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- bnd-maven-plugin:3.1.0:bnd-process (default) @ gson ---
+[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 97 source files to /root/gson/gson/target/test-classes
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ gson ---
+[INFO] Surefire report directory: /root/gson/gson/target/surefire-reports
 
-        	            	Diff:
-        	            	--- Expected
-        	            	+++ Actual
-        	            	@@ -1 +1 @@
-        	            	-text/plain; charset=utf-8
-        	            	+text/x-go; charset=utf-8
-        	Test:       	TestRouterMiddlewareAndStatic
---- FAIL: TestRouterMiddlewareAndStatic (0.01s)
-=== RUN   TestRouterNotFound
---- PASS: TestRouterNotFound (0.00s)
-=== RUN   TestRouterStaticFSNotFound
---- PASS: TestRouterStaticFSNotFound (0.00s)
-=== RUN   TestRouterStaticFSFileNotFound
---- PASS: TestRouterStaticFSFileNotFound (0.00s)
-=== RUN   TestMiddlewareCalledOnceByRouterStaticFSNotFound
-    routes_test.go:468:
-        	Error Trace:	routes_test.go:468
-        	Error:      	Not equal:
-        	            	expected: 1
-        	            	actual  : 2
-        	Test:       	TestMiddlewareCalledOnceByRouterStaticFSNotFound
-    routes_test.go:472:
-        	Error Trace:	routes_test.go:472
-        	Error:      	Not equal:
-        	            	expected: 2
-        	            	actual  : 4
-        	Test:       	TestMiddlewareCalledOnceByRouterStaticFSNotFound
---- FAIL: TestMiddlewareCalledOnceByRouterStaticFSNotFound (0.00s)
-FAIL
-FAIL	github.com/gin-gonic/gin	0.025s
-FAIL
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.google.gson.stream.JsonWriterTest
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.056 sec <<< FAILURE!
+testNonFiniteDoublesWhenLenient(com.google.gson.stream.JsonWriterTest)  Time elapsed: 0.013 sec  <<< ERROR!
+java.lang.IllegalArgumentException: Numeric values must be finite, but was NaN
+	at com.google.gson.stream.JsonWriter.value(JsonWriter.java:495)
+	at com.google.gson.stream.JsonWriterTest.testNonFiniteDoublesWhenLenient(JsonWriterTest.java:222)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at junit.framework.TestCase.runTest(TestCase.java:176)
+	at junit.framework.TestCase.runBare(TestCase.java:141)
+	at junit.framework.TestResult$1.protect(TestResult.java:122)
+	at junit.framework.TestResult.runProtected(TestResult.java:142)
+	at junit.framework.TestResult.run(TestResult.java:125)
+	at junit.framework.TestCase.run(TestCase.java:129)
+	at junit.framework.TestSuite.runTest(TestSuite.java:252)
+	at junit.framework.TestSuite.run(TestSuite.java:247)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:242)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:137)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+
+
+Results :
+
+Tests in error:
+  testNonFiniteDoublesWhenLenient(com.google.gson.stream.JsonWriterTest): Numeric values must be finite, but was NaN
+
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.822 s (Wall Clock)
+[INFO] Finished at: 2024-11-21T17:36:54Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test (default-test) on project gson: There are test failures.
+[ERROR]
+[ERROR] Please refer to /root/gson/gson/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+****************************************
+
+Executing: mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteBoxedDoublesWhenLenient
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.2-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO]
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.8.2-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ gson ---
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 67 source files to /root/gson/gson/target/classes
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- bnd-maven-plugin:3.1.0:bnd-process (default) @ gson ---
+[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 97 source files to /root/gson/gson/target/test-classes
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ gson ---
+[INFO] Surefire report directory: /root/gson/gson/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.google.gson.stream.JsonWriterTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.497 s (Wall Clock)
+[INFO] Finished at: 2024-11-21T17:37:05Z
+[INFO] ------------------------------------------------------------------------
+
+****************************************
+
+Executing: mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteDoubles
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.2-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO]
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.8.2-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ gson ---
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 67 source files to /root/gson/gson/target/classes
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- bnd-maven-plugin:3.1.0:bnd-process (default) @ gson ---
+[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 97 source files to /root/gson/gson/target/test-classes
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ gson ---
+[INFO] Surefire report directory: /root/gson/gson/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.google.gson.stream.JsonWriterTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.932 s (Wall Clock)
+[INFO] Finished at: 2024-11-21T17:37:15Z
+[INFO] ------------------------------------------------------------------------
+
+****************************************
+
+Executing: mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteBoxedDoubles
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.2-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO]
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.8.2-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ gson ---
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 67 source files to /root/gson/gson/target/classes
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- bnd-maven-plugin:3.1.0:bnd-process (default) @ gson ---
+[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 97 source files to /root/gson/gson/target/test-classes
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ gson ---
+[INFO] Surefire report directory: /root/gson/gson/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.google.gson.stream.JsonWriterTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.055 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.901 s (Wall Clock)
+[INFO] Finished at: 2024-11-21T17:37:25Z
+[INFO] ------------------------------------------------------------------------
+
+****************************************
+
+Executing: mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testDoubles
+[INFO] Scanning for projects...
+[WARNING]
+[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.2-SNAPSHOT
+[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
+[WARNING]
+[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
+[WARNING]
+[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
+[WARNING]
+[INFO]
+[INFO] Using the MultiThreadedBuilder implementation with a thread count of 8
+[INFO]
+[INFO] ---------------------< com.google.code.gson:gson >----------------------
+[INFO] Building Gson 2.8.2-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO]
+[INFO] --- maven-enforcer-plugin:1.0:enforce (enforce-maven) @ gson ---
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:compile (default-compile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 67 source files to /root/gson/gson/target/classes
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
+[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- bnd-maven-plugin:3.1.0:bnd-process (default) @ gson ---
+[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
+[INFO]
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ gson ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
+[INFO]
+[INFO] --- maven-compiler-plugin:3.0:testCompile (default-testCompile) @ gson ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 97 source files to /root/gson/gson/target/test-classes
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
+[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
+[INFO]
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ gson ---
+[INFO] Surefire report directory: /root/gson/gson/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running com.google.gson.stream.JsonWriterTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.053 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  7.575 s (Wall Clock)
+[INFO] Finished at: 2024-11-21T17:37:34Z
+[INFO] ------------------------------------------------------------------------
+
+****************************************
+

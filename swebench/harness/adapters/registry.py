@@ -614,6 +614,38 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
             ],
         ),
+        "2311": JavaMavenAdapter(
+            version="11",
+            test=[
+                # FAIL_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.JsonPrimitiveTest#testEqualsIntegerAndBigInteger",
+                # PASS_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.JsonPrimitiveTest#testLongEqualsBigInteger",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.JsonPrimitiveTest#testEqualsAcrossTypes",
+            ],
+        ),
+        "1100": JavaMavenAdapter(
+            version="11",
+            test=[
+                # FAIL_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.DefaultDateTypeAdapterTest#testNullValue",
+                # PASS_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.DefaultDateTypeAdapterTest#testDatePattern",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.DefaultDateTypeAdapterTest#testInvalidDatePattern",
+            ],
+        ),
+        "1093": JavaMavenAdapter(
+            version="11",
+            test=[
+                # FAIL_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteDoublesWhenLenient",
+                # PASS_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteBoxedDoublesWhenLenient",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteDoubles",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testNonFiniteBoxedDoubles",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testDoubles",
+            ],
+        ),
     },
     "apache/druid": {
         "15402": JavaMavenAdapter(

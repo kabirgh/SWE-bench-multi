@@ -3,6 +3,7 @@ import argparse
 from swebench.harness.constants import TestStatus
 from swebench.harness.adapters.cplusplus_adapter import redis_log_parser
 from swebench.harness.adapters.go_adapter import _log_parser as go_log_parser
+from swebench.harness.adapters.java_adapter import _maven_log_parser as maven_log_parser
 from swebench.harness.adapters.rust_adapter import _cargo_log_parser as rust_log_parser
 
 
@@ -11,6 +12,7 @@ PARSERS = {
     "redis": redis_log_parser,
     "go": go_log_parser,
     "rust": rust_log_parser,
+    "maven": maven_log_parser,
 }
 
 if __name__ == "__main__":
