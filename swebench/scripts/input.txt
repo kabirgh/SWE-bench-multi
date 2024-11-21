@@ -1,39 +1,58 @@
-=== RUN   TestMethodNotAllowedNoRoute
-    gin_test.go:765:
-        	Error Trace:	/root/gin/gin_test.go:765
-        	Error:      	func (assert.PanicTestFunc)(0xb6b3c0) should not panic
-        	            		Panic value:	runtime error: makeslice: cap out of range
-        	            		Panic stack:	goroutine 9 [running]:
-        	            	runtime/debug.Stack()
-        	            		/root/.asdf/installs/golang/1.23.0/go/src/runtime/debug/stack.go:26 +0x5e
-        	            	github.com/stretchr/testify/assert.didPanic.func1()
-        	            		/root/.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/stretchr/testify@v1.9.0/assert/assertions.go:1196 +0x6b
-        	            	panic({0xc39ae0?, 0xe5c790?})
-        	            		/root/.asdf/installs/golang/1.23.0/go/src/runtime/panic.go:785 +0x132
-        	            	github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc00012e680, 0xc0000b8100)
-        	            		/root/gin/gin.go:693 +0x485
-        	            	github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc00012e680, {0xe652e0, 0xc000226ec0}, 0xc0004f6dc0)
-        	            		/root/gin/gin.go:630 +0x1b2
-        	            	github.com/gin-gonic/gin.TestMethodNotAllowedNoRoute.func1()
-        	            		/root/gin/gin_test.go:765 +0x26
-        	            	github.com/stretchr/testify/assert.didPanic(0x13c9ef0?)
-        	            		/root/.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/stretchr/testify@v1.9.0/assert/assertions.go:1201 +0x75
-        	            	github.com/stretchr/testify/assert.NotPanics({0xe5f8a0, 0xc00012e4e0}, 0xc0004e2260, {0x0, 0x0, 0x0})
-        	            		/root/.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/stretchr/testify@v1.9.0/assert/assertions.go:1272 +0x7e
-        	            	github.com/gin-gonic/gin.TestMethodNotAllowedNoRoute(0xc00012e4e0)
-        	            		/root/gin/gin_test.go:765 +0x152
-        	            	testing.tRunner(0xc00012e4e0, 0xd7be08)
-        	            		/root/.asdf/installs/golang/1.23.0/go/src/testing/testing.go:1690 +0xf4
-        	            	created by testing.(*T).Run in goroutine 1
-        	            		/root/.asdf/installs/golang/1.23.0/go/src/testing/testing.go:1743 +0x390
-        	Test:       	TestMethodNotAllowedNoRoute
-    gin_test.go:766:
-        	Error Trace:	/root/gin/gin_test.go:766
+=== RUN   TestCreateDefaultRouter
+--- PASS: TestCreateDefaultRouter (0.00s)
+=== RUN   TestRouterGroupBasic
+--- PASS: TestRouterGroupBasic (0.00s)
+=== RUN   TestRouterGroupBasicHandle
+--- PASS: TestRouterGroupBasicHandle (0.00s)
+=== RUN   TestRouterGroupInvalidStatic
+--- PASS: TestRouterGroupInvalidStatic (0.00s)
+=== RUN   TestRouterGroupInvalidStaticFile
+--- PASS: TestRouterGroupInvalidStaticFile (0.00s)
+=== RUN   TestRouterGroupTooManyHandlers
+--- PASS: TestRouterGroupTooManyHandlers (0.00s)
+=== RUN   TestRouterGroupBadMethod
+--- PASS: TestRouterGroupBadMethod (0.00s)
+=== RUN   TestRouterGroupPipeline
+--- PASS: TestRouterGroupPipeline (0.00s)
+=== RUN   TestRouterMethod
+--- PASS: TestRouterMethod (0.00s)
+=== RUN   TestRouterGroupRouteOK
+--- PASS: TestRouterGroupRouteOK (0.00s)
+=== RUN   TestRouterMiddlewareAndStatic
+    routes_test.go:331:
+        	Error Trace:	routes_test.go:331
         	Error:      	Not equal:
-        	            	expected: 404
-        	            	actual  : 200
-        	Test:       	TestMethodNotAllowedNoRoute
---- FAIL: TestMethodNotAllowedNoRoute (0.00s)
+        	            	expected: "text/plain; charset=utf-8"
+        	            	actual  : "text/x-go; charset=utf-8"
+
+        	            	Diff:
+        	            	--- Expected
+        	            	+++ Actual
+        	            	@@ -1 +1 @@
+        	            	-text/plain; charset=utf-8
+        	            	+text/x-go; charset=utf-8
+        	Test:       	TestRouterMiddlewareAndStatic
+--- FAIL: TestRouterMiddlewareAndStatic (0.01s)
+=== RUN   TestRouterNotFound
+--- PASS: TestRouterNotFound (0.00s)
+=== RUN   TestRouterStaticFSNotFound
+--- PASS: TestRouterStaticFSNotFound (0.00s)
+=== RUN   TestRouterStaticFSFileNotFound
+--- PASS: TestRouterStaticFSFileNotFound (0.00s)
+=== RUN   TestMiddlewareCalledOnceByRouterStaticFSNotFound
+    routes_test.go:468:
+        	Error Trace:	routes_test.go:468
+        	Error:      	Not equal:
+        	            	expected: 1
+        	            	actual  : 2
+        	Test:       	TestMiddlewareCalledOnceByRouterStaticFSNotFound
+    routes_test.go:472:
+        	Error Trace:	routes_test.go:472
+        	Error:      	Not equal:
+        	            	expected: 2
+        	            	actual  : 4
+        	Test:       	TestMiddlewareCalledOnceByRouterStaticFSNotFound
+--- FAIL: TestMiddlewareCalledOnceByRouterStaticFSNotFound (0.00s)
 FAIL
-FAIL	github.com/gin-gonic/gin	0.035s
+FAIL	github.com/gin-gonic/gin	0.025s
 FAIL

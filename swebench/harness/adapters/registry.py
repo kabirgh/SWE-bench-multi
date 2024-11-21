@@ -941,5 +941,40 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             install=["go test -c ."],
             test=['go test . -v -run "TestMethodNotAllowedNoRoute"'],
         ),
+        "3820": GoAdapter(
+            version="1.23",
+            install=["go test -c ./binding"],
+            test=['go test -v ./binding -run "^TestMapping"'],
+        ),
+        "3741": GoAdapter(
+            version="1.23",
+            install=["go test -c ."],
+            test=['go test -v . -run "^TestColor"'],
+        ),
+        "2755": GoAdapter(
+            version="1.23",
+            install=["go test -c ."],
+            test=['go test -v . -run "^TestTree"'],
+        ),
+        "3227": GoAdapter(
+            version="1.23",
+            install=["go test -c ."],
+            test=['go test -v . -run "^TestRedirect"'],
+        ),
+        "2121": GoAdapter(
+            version="1.23",
+            install=["go test -c ./..."],
+            test=['go test -v ./... -run "^Test.*Reader"'],
+        ),
+        "1957": GoAdapter(
+            version="1.23",
+            install=["go test -c ."],
+            test=['go test -v . -run "^TestContext.*Bind"'],
+        ),
+        "1805": GoAdapter(
+            version="1.23",
+            install=["go test -c ."],
+            test=['go test -v . -run "^Test.*Router"'],
+        ),
     },
 }
