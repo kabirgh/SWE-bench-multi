@@ -57,7 +57,6 @@ def process_run_instance_log(file_path):
 
 
 def main():
-    # Add argument parser
     parser = argparse.ArgumentParser(description="Calculate build and evaluation times")
     parser.add_argument(
         "--asc", action="store_true", help="Sort times in ascending order"
@@ -65,10 +64,16 @@ def main():
     parser.add_argument(
         "--limit", type=int, default=100, help="Limit the number of results printed"
     )
+    parser.add_argument(
+        "--dir",
+        type=str,
+        default="all_100",
+        help="Directory name under logs/run_evaluation to process",
+    )
     args = parser.parse_args()
 
     log_files = glob.glob(
-        "logs/run_evaluation/all_100/gold/*/image_build_dir/build_image.log"
+        f"logs/run_evaluation/{args.dir}/gold/*/image_build_dir/build_image.log"
     )
     results = []
 
@@ -78,7 +83,9 @@ def main():
             results.append((project, duration))
 
     # Process run_instance.log files
-    run_instance_logs = glob.glob("logs/run_evaluation/all_100/gold/*/run_instance.log")
+    run_instance_logs = glob.glob(
+        f"logs/run_evaluation/{args.dir}/gold/*/run_instance.log"
+    )
     evaluation_results = []
 
     for file_path in run_instance_logs:
@@ -95,7 +102,7 @@ def main():
         project, build_duration = process_log_file(file_path)
         if project and build_duration:
             project_name = project.replace(
-                "logs/run_evaluation/all_100/gold/", ""
+                f"logs/run_evaluation/{args.dir}/gold/", ""
             ).replace("/image_build_dir", "")
             project_times[project_name] = {"build": build_duration}
 
@@ -104,7 +111,7 @@ def main():
         project = os.path.dirname(file_path)
         instance_duration = process_run_instance_log(file_path)
         if instance_duration:
-            project_name = project.replace("logs/run_evaluation/all_100/gold/", "")
+            project_name = project.replace(f"logs/run_evaluation/{args.dir}/gold/", "")
             if project_name in project_times:
                 project_times[project_name]["instance"] = instance_duration
             else:
