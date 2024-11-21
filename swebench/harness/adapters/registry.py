@@ -629,6 +629,14 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonWriterTest#testDoubles",
             ],
         ),
+        "1014": JavaMavenAdapter(
+            version="11",
+            test=[
+                # FAIL_TO_PASS
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
+            ],
+        ),
     },
     "apache/druid": {
         "15402": JavaMavenAdapter(
