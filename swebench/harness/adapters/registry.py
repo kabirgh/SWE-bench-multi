@@ -540,78 +540,61 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
     "google/gson": {
         "2158": JavaMavenAdapter(
             version="11",
-            # Download dependencies, compile test classes, and run test without printing to console (much)
-            install=[
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.PrimitiveTest -q"
-            ],
-            # TODO: mvnd?
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testByteSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testShortSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testIntSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testLongSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testFloatSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testDoubleSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testByteSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testShortSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testIntSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testLongSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testFloatSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testDoubleSerialization",
                 # PASS_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedInASingleElementArraySerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testReallyLongValuesSerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveLongAutoboxedSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveIntegerAutoboxedInASingleElementArraySerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testReallyLongValuesSerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.PrimitiveTest#testPrimitiveLongAutoboxedSerialization",
             ],
         ),
         "2024": JavaMavenAdapter(
             version="11",
-            install=[
-                "mvn test -B -pl gson -Dtest=com.google.gson.functional.FieldNamingTest,com.google.gson.functional.NamingPolicyTest -q",
-            ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.FieldNamingTest#testUpperCaseWithUnderscores",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicySerialization",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicyDeserialiation",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.FieldNamingTest#testUpperCaseWithUnderscores",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicySerialization",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.functional.NamingPolicyTest#testGsonWithUpperCaseUnderscorePolicyDeserialiation",
             ],
         ),
         "2479": JavaMavenAdapter(
             version="11",
-            install=[
-                "mvn test -B -pl gson -Dtest=com.google.gson.GsonBuilderTest -q",
-            ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeAdapterForObjectAndJsonElements",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeHierarchyAdapterJsonElements",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeAdapterForObjectAndJsonElements",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testRegisterTypeHierarchyAdapterJsonElements",
                 # PASS_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testModificationAfterCreate",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.GsonBuilderTest#testModificationAfterCreate",
             ],
         ),
         "2134": JavaMavenAdapter(
             version="11",
-            install=[
-                "mvn test -B -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest -q",
-            ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidDay",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidMonth",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidDay",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseInvalidMonth",
                 # PASS_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseWithDefaultTimezone",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.util.ISO8601UtilsTest#testDateParseWithDefaultTimezone",
             ],
         ),
         "2061": JavaMavenAdapter(
             version="11",
-            install=[
-                "mvn test -B -pl gson -Dtest=com.google.gson.stream.JsonReaderTest,com.google.gson.internal.bind.JsonTreeReaderTest -q"
-            ],
             test=[
                 # FAIL_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testHasNextEndOfDocument",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testHasNext_endOfDocument",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testHasNextEndOfDocument",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testHasNext_endOfDocument",
                 # PASS_TO_PASS
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyObject",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyArray",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject",
-                "mvn test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyObject",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.stream.JsonReaderTest#testReadEmptyArray",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject",
+                "mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject",
             ],
         ),
         "2311": JavaMavenAdapter(
