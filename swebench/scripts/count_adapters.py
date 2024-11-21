@@ -4,14 +4,32 @@ from swebench.harness.adapters.registry import ADAPTERS
 
 
 def print_table(data):
-    # Print header
-    print("| Language | Repository | Issue Count |")
-    print("|----------|------------|-------------|")
+    # Find maximum widths for each column
+    max_lang_width = max(len(lang) for lang in data.keys())
+    max_repo_width = max(len(repo) for repos in data.values() for repo in repos.keys())
+    max_count_width = max(
+        len(str(count)) for repos in data.values() for count in repos.values()
+    )
 
-    # Print rows
+    # Ensure minimum widths for header
+    max_lang_width = max(max_lang_width, len("Language"))
+    max_repo_width = max(max_repo_width, len("Repository"))
+    max_count_width = max(max_count_width, len("Issue Count"))
+
+    # Print header with dynamic widths
+    print(
+        f"| {'Language':<{max_lang_width}} | {'Repository':<{max_repo_width}} | {'Issue Count':<{max_count_width}} |"
+    )
+    print(
+        f"|{'-' * (max_lang_width + 2)}|{'-' * (max_repo_width + 2)}|{'-' * (max_count_width + 2)}|"
+    )
+
+    # Print rows with dynamic widths
     for language, repos in data.items():
         for repo, count in repos.items():
-            print(f"| {language:<8} | {repo:<38} | {count:<11} |")
+            print(
+                f"| {language:<{max_lang_width}} | {repo:<{max_repo_width}} | {count:<{max_count_width}} |"
+            )
 
 
 if __name__ == "__main__":
