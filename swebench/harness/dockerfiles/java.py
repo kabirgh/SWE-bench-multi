@@ -14,11 +14,11 @@ ant \
 unzip \
 && rm -rf /var/lib/apt/lists/*
 
-RUN curl -fsSL -o mvnd.zip https://downloads.apache.org/maven/mvnd/1.0.2/maven-mvnd-1.0.2-linux-amd64.zip
-RUN unzip mvnd.zip -d /tmp
-RUN mv /tmp/maven-mvnd-1.0.2-linux-amd64 /usr/local/mvnd
-RUN rm mvnd.zip
-RUN rm -rf /tmp/maven-mvnd-1.0.2-linux-amd64
+RUN curl -fsSL -o mvnd.zip https://downloads.apache.org/maven/mvnd/1.0.2/maven-mvnd-1.0.2-linux-amd64.zip && \
+    unzip mvnd.zip -d /tmp && \
+    mv /tmp/maven-mvnd-1.0.2-linux-amd64 /usr/local/mvnd && \
+    rm mvnd.zip && \
+    rm -rf /tmp/maven-mvnd-1.0.2-linux-amd64
 
 ENV MVND_HOME=/usr/local/mvnd
 ENV PATH=$MVND_HOME/bin:$PATH
