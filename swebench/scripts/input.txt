@@ -1,214 +1,40 @@
-Executing: mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_emptyJsonObject
-Nov 21, 2024 8:22:05 PM org.jline.utils.Log logr
-WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
-[main] WARNING org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
-[INFO] Processing build on daemon 80e00f89
-[INFO] Scanning for projects...
-[WARNING]
-[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.1-SNAPSHOT
-[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
-[WARNING]
-[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
-[WARNING]
-[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
-[WARNING]
-[INFO] BuildTimeEventSpy is registered.
-[INFO]
-[INFO] Using the SmartBuilder implementation with a thread count of 8
-[INFO]
-[INFO] ---------------------< com.google.code.gson:gson >----------------------
-[INFO] Building Gson 2.8.1-SNAPSHOT
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO]
-[INFO] --- enforcer:1.0:enforce (enforce-maven) @ gson ---
-[INFO]
-[INFO] --- resources:3.3.1:resources (default-resources) @ gson ---
-[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
-[INFO]
-[INFO] --- compiler:3.0:compile (default-compile) @ gson ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 67 source files to /root/gson/gson/target/classes
-[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
-[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
-[INFO]
-[INFO] --- bnd:3.1.0:bnd-process (default) @ gson ---
-[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
-[INFO]
-[INFO] --- resources:3.3.1:testResources (default-testResources) @ gson ---
-[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
-[INFO]
-[INFO] --- compiler:3.0:testCompile (default-testCompile) @ gson ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 96 source files to /root/gson/gson/target/test-classes
-[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
-[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
-[INFO]
-[INFO] --- surefire:3.2.5:test (default-test) @ gson ---
-[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
-[INFO]
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running com.google.gson.internal.bind.JsonTreeReaderTest
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.079 s <<< FAILURE! -- in com.google.gson.internal.bind.JsonTreeReaderTest
-[ERROR] com.google.gson.internal.bind.JsonTreeReaderTest.testSkipValue_emptyJsonObject -- Time elapsed: 0.022 s <<< ERROR!
-java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 32
-	at com.google.gson.internal.bind.JsonTreeReader.skipValue(JsonTreeReader.java:262)
-	at com.google.gson.internal.bind.JsonTreeReaderTest.testSkipValue_emptyJsonObject(JsonTreeReaderTest.java:29)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at junit.framework.TestCase.runTest(TestCase.java:176)
-	at junit.framework.TestCase.runBare(TestCase.java:141)
-	at junit.framework.TestResult$1.protect(TestResult.java:122)
-	at junit.framework.TestResult.runProtected(TestResult.java:142)
-	at junit.framework.TestResult.run(TestResult.java:125)
-	at junit.framework.TestCase.run(TestCase.java:129)
-	at junit.framework.TestSuite.runTest(TestSuite.java:252)
-	at junit.framework.TestSuite.run(TestSuite.java:247)
-	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:316)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:240)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:214)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:155)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-[INFO]
-[INFO] Results:
-[INFO]
-[ERROR] Errors:
-[ERROR]   JsonTreeReaderTest.testSkipValue_emptyJsonObject:29 » ArrayIndexOutOfBounds Index -1 out of bounds for length 32
-[INFO]
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.636 s (Wall Clock)
-[INFO] Finished at: 2024-11-21T20:22:09Z
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project gson:
-[ERROR]
-[ERROR] Please refer to /root/gson/gson/target/surefire-reports for the individual test results.
-[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
-[ERROR] -> [Help 1]
-[ERROR]
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR]
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-
-****************************************
-
-Executing: mvnd test -B -T 1C -pl gson -Dtest=com.google.gson.internal.bind.JsonTreeReaderTest#testSkipValue_filledJsonObject
-Nov 21, 2024 8:22:09 PM org.jline.utils.Log logr
-WARNING: Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
-[main] WARNING org.jline - Unable to create a system terminal, creating a dumb terminal (enable debug logging for more information)
-[INFO] Processing build on daemon 80e00f89
-[INFO] Scanning for projects...
-[WARNING]
-[WARNING] Some problems were encountered while building the effective model for com.google.code.gson:gson:jar:2.8.1-SNAPSHOT
-[WARNING] 'build.plugins.plugin.version' for org.apache.maven.plugins:maven-jar-plugin is missing. @ line 46, column 15
-[WARNING]
-[WARNING] It is highly recommended to fix these problems because they threaten the stability of your build.
-[WARNING]
-[WARNING] For this reason, future Maven versions might no longer support building such malformed projects.
-[WARNING]
-[INFO] BuildTimeEventSpy is registered.
-[INFO]
-[INFO] Using the SmartBuilder implementation with a thread count of 8
-[INFO]
-[INFO] ---------------------< com.google.code.gson:gson >----------------------
-[INFO] Building Gson 2.8.1-SNAPSHOT
-[INFO]   from pom.xml
-[INFO] --------------------------------[ jar ]---------------------------------
-[INFO]
-[INFO] --- enforcer:1.0:enforce (enforce-maven) @ gson ---
-[INFO]
-[INFO] --- resources:3.3.1:resources (default-resources) @ gson ---
-[INFO] skip non existing resourceDirectory /root/gson/gson/src/main/resources
-[INFO]
-[INFO] --- compiler:3.0:compile (default-compile) @ gson ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 67 source files to /root/gson/gson/target/classes
-[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java uses or overrides a deprecated API.
-[WARNING] /root/gson/gson/src/main/java/com/google/gson/internal/ConstructorConstructor.java: Recompile with -Xlint:deprecation for details.
-[INFO]
-[INFO] --- bnd:3.1.0:bnd-process (default) @ gson ---
-[WARNING] Export com.google.gson,  has 1,  private references [com.google.gson.internal],
-[INFO]
-[INFO] --- resources:3.3.1:testResources (default-testResources) @ gson ---
-[INFO] skip non existing resourceDirectory /root/gson/gson/src/test/resources
-[INFO]
-[INFO] --- compiler:3.0:testCompile (default-testCompile) @ gson ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 96 source files to /root/gson/gson/target/test-classes
-[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Some input files use or override a deprecated API.
-[WARNING] /root/gson/gson/src/test/java/com/google/gson/stream/JsonReaderPathTest.java: Recompile with -Xlint:deprecation for details.
-[INFO]
-[INFO] --- surefire:3.2.5:test (default-test) @ gson ---
-[INFO] Using auto detected provider org.apache.maven.surefire.junit4.JUnit4Provider
-[INFO]
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running com.google.gson.internal.bind.JsonTreeReaderTest
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.087 s <<< FAILURE! -- in com.google.gson.internal.bind.JsonTreeReaderTest
-[ERROR] com.google.gson.internal.bind.JsonTreeReaderTest.testSkipValue_filledJsonObject -- Time elapsed: 0.019 s <<< ERROR!
-java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 32
-	at com.google.gson.internal.bind.JsonTreeReader.skipValue(JsonTreeReader.java:262)
-	at com.google.gson.internal.bind.JsonTreeReaderTest.testSkipValue_filledJsonObject(JsonTreeReaderTest.java:47)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
-	at junit.framework.TestCase.runTest(TestCase.java:176)
-	at junit.framework.TestCase.runBare(TestCase.java:141)
-	at junit.framework.TestResult$1.protect(TestResult.java:122)
-	at junit.framework.TestResult.runProtected(TestResult.java:142)
-	at junit.framework.TestResult.run(TestResult.java:125)
-	at junit.framework.TestCase.run(TestCase.java:129)
-	at junit.framework.TestSuite.runTest(TestSuite.java:252)
-	at junit.framework.TestSuite.run(TestSuite.java:247)
-	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:86)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:316)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeWithRerun(JUnit4Provider.java:240)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:214)
-	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:155)
-	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-[INFO]
-[INFO] Results:
-[INFO]
-[ERROR] Errors:
-[ERROR]   JsonTreeReaderTest.testSkipValue_filledJsonObject:47 » ArrayIndexOutOfBounds Index -1 out of bounds for length 32
-[INFO]
-[ERROR] Tests run: 1, Failures: 0, Errors: 1, Skipped: 0
-[INFO]
-[INFO] ------------------------------------------------------------------------
-[INFO] BUILD FAILURE
-[INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.272 s (Wall Clock)
-[INFO] Finished at: 2024-11-21T20:22:12Z
-[INFO] ------------------------------------------------------------------------
-[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project gson:
-[ERROR]
-[ERROR] Please refer to /root/gson/gson/target/surefire-reports for the individual test results.
-[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
-[ERROR] -> [Help 1]
-[ERROR]
-[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-[ERROR] Re-run Maven using the -X switch to enable full debug logging.
-[ERROR]
-[ERROR] For more information about the errors and possible solutions, please read the following articles:
-[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-
-****************************************
-
+=== RUN   TestMenusSectionPagesMenu
+=== PAUSE TestMenusSectionPagesMenu
+=== RUN   TestBundleDuplicatePagesAndResources
+--- PASS: TestBundleDuplicatePagesAndResources (0.02s)
+=== RUN   TestRegularPagesRecursive
+WARN  found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "page": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+WARN  found no layout file for "html" for kind "section": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
+--- PASS: TestRegularPagesRecursive (0.02s)
+=== RUN   TestRegularPagesRecursiveHome
+--- PASS: TestRegularPagesRecursiveHome (0.02s)
+=== RUN   TestPagesSimilarSectionNames
+--- FAIL: TestPagesSimilarSectionNames (0.02s)
+=== RUN   TestPagesPrevNext
+--- PASS: TestPagesPrevNext (0.03s)
+=== RUN   TestPaginatorNodePagesOnly
+--- PASS: TestPaginatorNodePagesOnly (0.02s)
+=== RUN   TestRebuildAddPageListPagesInHome
+--- PASS: TestRebuildAddPageListPagesInHome (0.03s)
+=== RUN   TestRebuildAddPageWithSpaceListPagesInHome
+--- PASS: TestRebuildAddPageWithSpaceListPagesInHome (0.03s)
+=== RUN   TestOrderedPages
+=== PAUSE TestOrderedPages
+=== RUN   TestGroupedPages
+=== PAUSE TestGroupedPages
+=== RUN   TestTaxonomiesListPages
+--- PASS: TestTaxonomiesListPages (0.02s)
+=== RUN   TestTitleCaseStyleWithAutomaticSectionPages
+=== PAUSE TestTitleCaseStyleWithAutomaticSectionPages
+=== CONT  TestMenusSectionPagesMenu
+=== CONT  TestTitleCaseStyleWithAutomaticSectionPages
+=== CONT  TestGroupedPages
+=== CONT  TestOrderedPages
+--- PASS: TestOrderedPages (0.01s)
+--- PASS: TestGroupedPages (0.02s)
+--- PASS: TestTitleCaseStyleWithAutomaticSectionPages (0.02s)
+--- PASS: TestMenusSectionPagesMenu (0.02s)
+FAIL
+FAIL	github.com/gohugoio/hugo/hugolib	0.306s
+FAIL
