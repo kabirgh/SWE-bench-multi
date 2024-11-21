@@ -935,4 +935,11 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             clone_submodules=False,
         ),
     },
+    "gin-gonic/gin": {
+        "4003": GoAdapter(
+            version="1.23",
+            install=["go test -c ."],
+            test=['go test . -v -run "TestMethodNotAllowedNoRoute"'],
+        ),
+    },
 }

@@ -1,32 +1,39 @@
-=== RUN   TestEvaluations
-=== RUN   TestEvaluations/testdata/aggregators.test
-=== RUN   TestEvaluations/testdata/at_modifier.test
-=== RUN   TestEvaluations/testdata/collision.test
-=== RUN   TestEvaluations/testdata/functions.test
-=== RUN   TestEvaluations/testdata/histograms.test
-=== RUN   TestEvaluations/testdata/literals.test
-=== RUN   TestEvaluations/testdata/operators.test
-    promql_test.go:30:
-        	Error Trace:	promql_test.go:30
-        	Error:      	Received unexpected error:
-        	            	1:7: parse error: unexpected identifier "atan2"
-        	Test:       	TestEvaluations/testdata/operators.test
-=== RUN   TestEvaluations/testdata/selectors.test
-=== RUN   TestEvaluations/testdata/staleness.test
-=== RUN   TestEvaluations/testdata/subquery.test
-=== RUN   TestEvaluations/testdata/trig_functions.test
---- FAIL: TestEvaluations (1.52s)
-    --- PASS: TestEvaluations/testdata/aggregators.test (0.25s)
-    --- PASS: TestEvaluations/testdata/at_modifier.test (0.08s)
-    --- PASS: TestEvaluations/testdata/collision.test (0.04s)
-    --- PASS: TestEvaluations/testdata/functions.test (0.62s)
-    --- PASS: TestEvaluations/testdata/histograms.test (0.09s)
-    --- PASS: TestEvaluations/testdata/literals.test (0.02s)
-    --- FAIL: TestEvaluations/testdata/operators.test (0.02s)
-    --- PASS: TestEvaluations/testdata/selectors.test (0.17s)
-    --- PASS: TestEvaluations/testdata/staleness.test (0.03s)
-    --- PASS: TestEvaluations/testdata/subquery.test (0.14s)
-    --- PASS: TestEvaluations/testdata/trig_functions.test (0.05s)
+=== RUN   TestMethodNotAllowedNoRoute
+    gin_test.go:765:
+        	Error Trace:	/root/gin/gin_test.go:765
+        	Error:      	func (assert.PanicTestFunc)(0xb6b3c0) should not panic
+        	            		Panic value:	runtime error: makeslice: cap out of range
+        	            		Panic stack:	goroutine 9 [running]:
+        	            	runtime/debug.Stack()
+        	            		/root/.asdf/installs/golang/1.23.0/go/src/runtime/debug/stack.go:26 +0x5e
+        	            	github.com/stretchr/testify/assert.didPanic.func1()
+        	            		/root/.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/stretchr/testify@v1.9.0/assert/assertions.go:1196 +0x6b
+        	            	panic({0xc39ae0?, 0xe5c790?})
+        	            		/root/.asdf/installs/golang/1.23.0/go/src/runtime/panic.go:785 +0x132
+        	            	github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc00012e680, 0xc0000b8100)
+        	            		/root/gin/gin.go:693 +0x485
+        	            	github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc00012e680, {0xe652e0, 0xc000226ec0}, 0xc0004f6dc0)
+        	            		/root/gin/gin.go:630 +0x1b2
+        	            	github.com/gin-gonic/gin.TestMethodNotAllowedNoRoute.func1()
+        	            		/root/gin/gin_test.go:765 +0x26
+        	            	github.com/stretchr/testify/assert.didPanic(0x13c9ef0?)
+        	            		/root/.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/stretchr/testify@v1.9.0/assert/assertions.go:1201 +0x75
+        	            	github.com/stretchr/testify/assert.NotPanics({0xe5f8a0, 0xc00012e4e0}, 0xc0004e2260, {0x0, 0x0, 0x0})
+        	            		/root/.asdf/installs/golang/1.23.0/packages/pkg/mod/github.com/stretchr/testify@v1.9.0/assert/assertions.go:1272 +0x7e
+        	            	github.com/gin-gonic/gin.TestMethodNotAllowedNoRoute(0xc00012e4e0)
+        	            		/root/gin/gin_test.go:765 +0x152
+        	            	testing.tRunner(0xc00012e4e0, 0xd7be08)
+        	            		/root/.asdf/installs/golang/1.23.0/go/src/testing/testing.go:1690 +0xf4
+        	            	created by testing.(*T).Run in goroutine 1
+        	            		/root/.asdf/installs/golang/1.23.0/go/src/testing/testing.go:1743 +0x390
+        	Test:       	TestMethodNotAllowedNoRoute
+    gin_test.go:766:
+        	Error Trace:	/root/gin/gin_test.go:766
+        	Error:      	Not equal:
+        	            	expected: 404
+        	            	actual  : 200
+        	Test:       	TestMethodNotAllowedNoRoute
+--- FAIL: TestMethodNotAllowedNoRoute (0.00s)
 FAIL
-FAIL	github.com/prometheus/prometheus/promql	1.544s
+FAIL	github.com/gin-gonic/gin	0.035s
 FAIL
