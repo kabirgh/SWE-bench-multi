@@ -25,6 +25,7 @@ from swebench.harness.adapters.javascript_adapter import (
     karma_log_parser,
     vitest_log_parser,
 )
+from swebench.harness.adapters.ruby_adapter import RubyAdapter
 from swebench.harness.adapters.rust_adapter import RustAdapter
 from swebench.harness.constants import TEST_PYTEST
 from swebench.harness.log_parsers import MAP_REPO_TO_PARSER
@@ -994,6 +995,13 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="1.23",
             install=["go test -c ."],
             test=['go test -v . -run "^Test.*Router"'],
+        ),
+    },
+    "jekyll/jekyll": {
+        "9141": RubyAdapter(
+            version="3.3",
+            install=["script/bootstrap"],
+            test=['bundle exec ruby -I test test/test_site.rb -v -n "/static files/"'],
         ),
     },
 }

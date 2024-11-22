@@ -1,40 +1,26 @@
-=== RUN   TestMenusSectionPagesMenu
-=== PAUSE TestMenusSectionPagesMenu
-=== RUN   TestBundleDuplicatePagesAndResources
---- PASS: TestBundleDuplicatePagesAndResources (0.02s)
-=== RUN   TestRegularPagesRecursive
-WARN  found no layout file for "html" for kind "taxonomy": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
-WARN  found no layout file for "html" for kind "page": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
-WARN  found no layout file for "html" for kind "section": You should create a template file which matches Hugo Layouts Lookup Rules for this combination.
---- PASS: TestRegularPagesRecursive (0.02s)
-=== RUN   TestRegularPagesRecursiveHome
---- PASS: TestRegularPagesRecursiveHome (0.02s)
-=== RUN   TestPagesSimilarSectionNames
---- FAIL: TestPagesSimilarSectionNames (0.02s)
-=== RUN   TestPagesPrevNext
---- PASS: TestPagesPrevNext (0.03s)
-=== RUN   TestPaginatorNodePagesOnly
---- PASS: TestPaginatorNodePagesOnly (0.02s)
-=== RUN   TestRebuildAddPageListPagesInHome
---- PASS: TestRebuildAddPageListPagesInHome (0.03s)
-=== RUN   TestRebuildAddPageWithSpaceListPagesInHome
---- PASS: TestRebuildAddPageWithSpaceListPagesInHome (0.03s)
-=== RUN   TestOrderedPages
-=== PAUSE TestOrderedPages
-=== RUN   TestGroupedPages
-=== PAUSE TestGroupedPages
-=== RUN   TestTaxonomiesListPages
---- PASS: TestTaxonomiesListPages (0.02s)
-=== RUN   TestTitleCaseStyleWithAutomaticSectionPages
-=== PAUSE TestTitleCaseStyleWithAutomaticSectionPages
-=== CONT  TestMenusSectionPagesMenu
-=== CONT  TestTitleCaseStyleWithAutomaticSectionPages
-=== CONT  TestGroupedPages
-=== CONT  TestOrderedPages
---- PASS: TestOrderedPages (0.01s)
---- PASS: TestGroupedPages (0.02s)
---- PASS: TestTitleCaseStyleWithAutomaticSectionPages (0.02s)
---- PASS: TestMenusSectionPagesMenu (0.02s)
-FAIL
-FAIL	github.com/gohugoio/hugo/hugolib	0.306s
-FAIL
+# -------------------------------------------------------------
+# SPECS AND TESTS ARE RUNNING WITH WARNINGS OFF.
+# SEE: https://github.com/Shopify/liquid/issues/730
+# SEE: https://github.com/jekyll/jekyll/issues/4719
+# -------------------------------------------------------------
+
+# Running tests with run options -v -n "/static files/" --seed 33355:
+
+
+TestSite#test_: creating sites should write static files if not modified but missing in destination.  4.52 = [32m.[0m
+TestSite#test_: creating sites should write only modified static files.  4.04 = [32m.[0m
+TestSite#test_: static files in a collection should not be revisited in `Site#each_site_file`.  0.06 = [31mF[0m
+TestSite#test_: creating sites should expose list of static files to site payload.  0.00 = [32m.[0m
+TestSite#test_: static files in a collection should be exposed via site instance.  0.05 = [32m.[0m
+
+[31mFinished tests in 8.666908s, 0.5769 tests/s, 1.2692 assertions/s.[0m
+
+
+[31mFailure:
+TestSite#test_: static files in a collection should not be revisited in `Site#each_site_file`.  [test/test_site.rb:759]
+Minitest::Assertion: Expected: 105
+  Actual: 103[0m
+
+[31m5 tests, 11 assertions, 1 failures, 0 errors, 0 skips[0m
+Coverage report generated for Unit Tests to /root/jekyll/coverage.
+Line Coverage: 66.22% (2615 / 3949)
