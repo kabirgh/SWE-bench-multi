@@ -19,6 +19,10 @@ from swebench.harness.dockerfiles.python import (
     _DOCKERFILE_ENV_PYTHON,
     _DOCKERFILE_INSTANCE_PYTHON,
 )
+from swebench.harness.dockerfiles.ruby import (
+    _DOCKERFILE_BASE_RUBY,
+    _DOCKERFILE_INSTANCE_RUBY,
+)
 from swebench.harness.dockerfiles.rust import (
     _DOCKERFILE_BASE_RUST,
     _DOCKERFILE_INSTANCE_RUST,
@@ -109,5 +113,9 @@ _dockerfiles = {
     "rust": {
         "base": _DOCKERFILE_BASE_RUST,
         "instance": _DOCKERFILE_INSTANCE_RUST,
+    },
+    "ruby": {
+        "base": _DOCKERFILE_BASE_RUBY,
+        "instance": _DOCKERFILE_INSTANCE_RUBY,
     },
 }
