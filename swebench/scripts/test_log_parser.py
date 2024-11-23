@@ -6,7 +6,8 @@ from swebench.harness.adapters.go_adapter import _log_parser as go_log_parser
 from swebench.harness.adapters.java_adapter import _maven_log_parser as maven_log_parser
 from swebench.harness.adapters.rust_adapter import _cargo_log_parser as rust_log_parser
 from swebench.harness.adapters.ruby_adapter import (
-    _minitest_log_parser as ruby_log_parser,
+    minitest_log_parser,
+    cucumber_log_parser,
 )
 
 # Map parser names to parser functions
@@ -15,7 +16,8 @@ PARSERS = {
     "go": go_log_parser,
     "rust": rust_log_parser,
     "maven": maven_log_parser,
-    "ruby": ruby_log_parser,
+    "minitest": minitest_log_parser,
+    "cucumber": cucumber_log_parser,
 }
 
 if __name__ == "__main__":

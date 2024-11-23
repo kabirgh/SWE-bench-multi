@@ -1,26 +1,28 @@
-# -------------------------------------------------------------
-# SPECS AND TESTS ARE RUNNING WITH WARNINGS OFF.
-# SEE: https://github.com/Shopify/liquid/issues/730
-# SEE: https://github.com/jekyll/jekyll/issues/4719
-# -------------------------------------------------------------
+/root/jekyll/features/support/helpers.rb:3: warning: csv was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.4.0.
+You can add csv to your Gemfile or gemspec to silence this warning.
 
-# Running tests with run options -v -n "/static files/" --seed 33355:
-
-
-TestSite#test_: creating sites should write static files if not modified but missing in destination.  4.52 = [32m.[0m
-TestSite#test_: creating sites should write only modified static files.  4.04 = [32m.[0m
-TestSite#test_: static files in a collection should not be revisited in `Site#each_site_file`.  0.06 = [31mF[0m
-TestSite#test_: creating sites should expose list of static files to site payload.  0.00 = [32m.[0m
-TestSite#test_: static files in a collection should be exposed via site instance.  0.05 = [32m.[0m
-
-[31mFinished tests in 8.666908s, 0.5769 tests/s, 1.2692 assertions/s.[0m
+features/post_data.feature:6  Scenario: Use post.title variable ........ (1.430919833s)
+features/post_data.feature:30  Scenario: Use page.name variable .......F (1.325518634s)
+Worst offenders:
+  1.430919833s for "Use post.title variable" (features/post_data.feature:6)
+  1.325518634s for "Use page.name variable" (features/post_data.feature:30)
 
 
-[31mFailure:
-TestSite#test_: static files in a collection should not be revisited in `Site#each_site_file`.  [test/test_site.rb:759]
-Minitest::Assertion: Expected: 105
-  Actual: 103[0m
 
-[31m5 tests, 11 assertions, 1 failures, 0 errors, 0 skips[0m
-Coverage report generated for Unit Tests to /root/jekyll/coverage.
-Line Coverage: 66.22% (2615 / 3949)
+(::) failed steps (::)
+
+expected "Page name: " to match /Page name: 2009-03-27-star-wars.markdown/m
+Diff:
+@@ -1 +1 @@
+-/Page name: 2009-03-27-star-wars.markdown/m
++"Page name: "
+ (RSpec::Expectations::ExpectationNotMetError)
+/root/jekyll/features/step_definitions.rb:282:in `/^I should (not )?see "(.*)" in "(.*)"$/'
+features/post_data.feature:40:in `I should see "Page name: 2009-03-27-star-wars.markdown" in "_site/2009/03/27/star-wars.html"'
+
+Failing Scenarios:
+cucumber features/post_data.feature:30 # Scenario: Use page.name variable
+
+2 scenarios (1 failed, 1 passed)
+16 steps (1 failed, 15 passed)
+0m2.757s
