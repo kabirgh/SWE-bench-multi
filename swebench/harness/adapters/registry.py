@@ -1016,5 +1016,33 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=cucumber_log_parser,
         ),
+        "8047": RubyAdapter(
+            version="3.3",
+            # Remove a gem that is causing installation to fail
+            pre_install=[
+                "sed -i '/^[[:space:]]*install_if.*mingw/,/^[[:space:]]*end/d' Gemfile"
+            ],
+            install=["script/bootstrap", "bundle add webrick"],
+            test=[
+                'bundle exec ruby -I test test/test_filters.rb -v -n "/where_exp filter/"'
+            ],
+            log_parser=minitest_log_parser,
+        ),
+        "8167": RubyAdapter(
+            version="3.3",
+            install=["script/bootstrap", "bundle add webrick"],
+            test=[
+                'bundle exec ruby -I test test/test_utils.rb -v -n "/Utils.slugify/"'
+            ],
+            log_parser=minitest_log_parser,
+        ),
+        "8771": RubyAdapter(
+            version="3.3",
+            install=["script/bootstrap"],
+            test=[
+                "bundle exec cucumber --publish-quiet --format progress --no-color features/incremental_rebuild.feature:27 features/incremental_rebuild.feature:70"
+            ],
+            log_parser=cucumber_log_parser,
+        ),
     },
 }

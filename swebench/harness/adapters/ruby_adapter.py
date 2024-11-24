@@ -36,7 +36,7 @@ def minitest_log_parser(log: str) -> dict[str, str]:
     """
     test_status_map = {}
 
-    pattern = r"^(.+)\. .*=.*(\.|F).*$"
+    pattern = r"^(.+)\. .*=.*(\.|F|E).*$"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
@@ -44,7 +44,7 @@ def minitest_log_parser(log: str) -> dict[str, str]:
             test_name, outcome = match.groups()
             if outcome == ".":
                 test_status_map[test_name] = TestStatus.PASSED.value
-            elif outcome == "F":
+            elif outcome in ["F", "E"]:
                 test_status_map[test_name] = TestStatus.FAILED.value
 
     return test_status_map
