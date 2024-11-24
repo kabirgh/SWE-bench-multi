@@ -1,27 +1,25 @@
-Loaded suite test/plugin_helper/test_http_server_helper
+Loaded suite test/plugin/test_in_http
 Started
-HttpHelperTest:
-  Create a HTTP server:
-    test: mount frozen path:				E
+HttpInputTest: 
+  test_add_query_params:				.: (0.617164)
+  test_add_remote_addr_given_multi_x_forwarded_for:	.: (0.607919)
+  test_add_tag_prefix:					E
 ===============================================================================
-Error: test: mount frozen path(HttpHelperTest::Create a HTTP server): FrozenError: can't modify frozen String: "/example/hello"
-/root/fluentd/lib/fluent/plugin_helper/http_server/server.rb:81:in `<<'
-/root/fluentd/lib/fluent/plugin_helper/http_server/server.rb:81:in `block (2 levels) in <class:Server>'
-test/plugin_helper/test_http_server_helper.rb:185:in `block (4 levels) in <class:HttpHelperTest>'
-/root/fluentd/lib/fluent/plugin_helper/http_server.rb:70:in `block in http_server_create_http_server'
-/root/fluentd/lib/fluent/plugin_helper/http_server/server.rb:52:in `initialize'
-/root/fluentd/lib/fluent/plugin_helper/http_server.rb:69:in `new'
-/root/fluentd/lib/fluent/plugin_helper/http_server.rb:69:in `http_server_create_http_server'
-test/plugin_helper/test_http_server_helper.rb:184:in `block (3 levels) in <class:HttpHelperTest>'
-test/plugin_helper/test_http_server_helper.rb:36:in `on_driver'
-test/plugin_helper/test_http_server_helper.rb:183:in `block (2 levels) in <class:HttpHelperTest>'
+Error: test_add_tag_prefix(HttpInputTest): NoMethodError: undefined method `add_tag_prefix' for #<Fluent::Plugin::HttpInput:0x00007f43e07fbe00>
+test/plugin/test_in_http.rb:1033:in `test_add_tag_prefix'
+     1030: 
+     1031:   def test_add_tag_prefix
+     1032:     d = create_driver(config + "add_tag_prefix test")
+  => 1033:     assert_equal "test", d.instance.add_tag_prefix
+     1034: 
+     1035:     time = event_time("2011-01-02 13:14:15.123 UTC")
+     1036:     float_time = time.to_f
 ===============================================================================
-: (0.005610)
-    test: mount given path:				.: (0.041442)
+: (0.020822)
 
-Finished in 0.048232859 seconds.
+Finished in 1.248084973 seconds.
 -------------------------------------------------------------------------------
-2 tests, 24 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
-50% passed
+3 tests, 7 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+66.6667% passed
 -------------------------------------------------------------------------------
-41.47 tests/s, 497.59 assertions/s
+2.40 tests/s, 5.61 assertions/s

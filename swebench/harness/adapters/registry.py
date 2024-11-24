@@ -1051,8 +1051,22 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="3.3",
             install=["bundle install"],
             test=[
-                'bundle exec ruby test/plugin_helper/test_http_server_helper.rb -v -n "/mount/"'
+                "bundle exec ruby test/plugin_helper/test_http_server_helper.rb -v -n '/mount/'"
             ],
+            log_parser=ruby_unit_log_parser,
+        ),
+        "4311": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/config/test_system_config.rb -v -n '/rotate_age/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
+        "4655": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=["bundle exec ruby test/plugin/test_in_http.rb -v -n '/test_add/'"],
             log_parser=ruby_unit_log_parser,
         ),
     },
