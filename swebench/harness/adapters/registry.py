@@ -29,6 +29,7 @@ from swebench.harness.adapters.ruby_adapter import (
     RubyAdapter,
     cucumber_log_parser,
     minitest_log_parser,
+    ruby_unit_log_parser,
 )
 from swebench.harness.adapters.rust_adapter import RustAdapter
 from swebench.harness.constants import TEST_PYTEST
@@ -1043,6 +1044,16 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "bundle exec cucumber --publish-quiet --format progress --no-color features/incremental_rebuild.feature:27 features/incremental_rebuild.feature:70"
             ],
             log_parser=cucumber_log_parser,
+        ),
+    },
+    "fluent/fluentd": {
+        "4598": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                'bundle exec ruby test/plugin_helper/test_http_server_helper.rb -v -n "/mount/"'
+            ],
+            log_parser=ruby_unit_log_parser,
         ),
     },
 }

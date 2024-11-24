@@ -1,33 +1,27 @@
-/root/jekyll/features/support/helpers.rb:3: warning: csv was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.4.0.
-You can add csv to your Gemfile or gemspec to silence this warning.
+Loaded suite test/plugin_helper/test_http_server_helper
+Started
+HttpHelperTest:
+  Create a HTTP server:
+    test: mount frozen path:				E
+===============================================================================
+Error: test: mount frozen path(HttpHelperTest::Create a HTTP server): FrozenError: can't modify frozen String: "/example/hello"
+/root/fluentd/lib/fluent/plugin_helper/http_server/server.rb:81:in `<<'
+/root/fluentd/lib/fluent/plugin_helper/http_server/server.rb:81:in `block (2 levels) in <class:Server>'
+test/plugin_helper/test_http_server_helper.rb:185:in `block (4 levels) in <class:HttpHelperTest>'
+/root/fluentd/lib/fluent/plugin_helper/http_server.rb:70:in `block in http_server_create_http_server'
+/root/fluentd/lib/fluent/plugin_helper/http_server/server.rb:52:in `initialize'
+/root/fluentd/lib/fluent/plugin_helper/http_server.rb:69:in `new'
+/root/fluentd/lib/fluent/plugin_helper/http_server.rb:69:in `http_server_create_http_server'
+test/plugin_helper/test_http_server_helper.rb:184:in `block (3 levels) in <class:HttpHelperTest>'
+test/plugin_helper/test_http_server_helper.rb:36:in `on_driver'
+test/plugin_helper/test_http_server_helper.rb:183:in `block (2 levels) in <class:HttpHelperTest>'
+===============================================================================
+: (0.005610)
+    test: mount given path:				.: (0.041442)
 
-features/incremental_rebuild.feature:27  Scenario: Rebuild when content is changed ........... (3.784306738s)
-features/incremental_rebuild.feature:70  Scenario: Rebuild when a data file is changed .............................F--- (3.550154116s)
-Worst offenders:
-  3.784306738s for "Rebuild when content is changed" (features/incremental_rebuild.feature:27)
-  3.550154116s for "Rebuild when a data file is changed" (features/incremental_rebuild.feature:70)
-
-
-
-(::) failed steps (::)
-
-expected "About Us\n\\n\\n<ul>\n\n  <li title=\"John Doe -- Admin\">John Doe</li>\n\n</ul>" to match /Jane Doe -- Admin/m
-Diff:
-@@ -1,6 +1,11 @@
--/Jane Doe -- Admin/m
-+About Us
-+\n\n<ul>
-+
-+  <li title="John Doe -- Admin">John Doe</li>
-+
-+</ul>
- (RSpec::Expectations::ExpectationNotMetError)
-/root/jekyll/features/step_definitions.rb:282:in `/^I should (not )?see "(.*)" in "(.*)"$/'
-features/incremental_rebuild.feature:118:in `I should see "Jane Doe -- Admin" in "_site/about.html"'
-
-Failing Scenarios:
-cucumber features/incremental_rebuild.feature:70 # Scenario: Rebuild when a data file is changed
-
-2 scenarios (1 failed, 1 passed)
-44 steps (1 failed, 3 skipped, 40 passed)
-0m7.333s
+Finished in 0.048232859 seconds.
+-------------------------------------------------------------------------------
+2 tests, 24 assertions, 0 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
+50% passed
+-------------------------------------------------------------------------------
+41.47 tests/s, 497.59 assertions/s
