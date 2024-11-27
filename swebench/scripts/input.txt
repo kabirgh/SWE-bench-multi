@@ -1,85 +1,48 @@
 /root/fluentd/lib/fluent/compat/parser.rb:28: warning: csv was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.4.0.
 You can add csv to your Gemfile or gemspec to silence this warning.
-Loaded suite test/test_config
+Loaded suite test/plugin/test_in_http
 Started
-ConfigTest: 
-  test_check_not_fetchd:				.: (0.001609)
-  test_include:						F
+HttpInputTest:
+  test_application_json:				.: (0.616961)
+  test_application_msgpack:				.: (0.611252)
+  test_application_ndjson:				F
 ===============================================================================
-Failure: test_include(ConfigTest)
-test/test_config.rb:84:in `test_include'
-     81:     assert_equal 'root_config', c['k1']
-     82:     assert_equal 'relative_path_include', c['k2']
-     83:     assert_equal 'relative_include_in_included_file', c['k3']
-  => 84:     assert_equal 'absolute_path_include', c['k4']
-     85:     assert_equal 'uri_include', c['k5']
-     86:     assert_equal 'wildcard_include_1', c['k6']
-     87:     assert_equal 'wildcard_include_2', c['k7']
-<"absolute_path_include"> expected but was
-<nil>
+Failure: test_application_ndjson(HttpInputTest)
+test/plugin/test_in_http.rb:560:in `block (2 levels) in test_application_ndjson'
+     557:     d.run(expect_records: 1) do
+     558:       events.each do |tag, time, record|
+     559:         res = post("/#{tag}?time=#{time}", record, {"Content-Type"=>"application/x-ndjson"})
+  => 560:         assert_equal("200", res.code)
+     561:       end
+     562:     end
+     563:     assert_equal(expected, d.events)
+test/plugin/test_in_http.rb:558:in `each'
+test/plugin/test_in_http.rb:558:in `block in test_application_ndjson'
+/root/fluentd/lib/fluent/test/driver/base.rb:198:in `block in run_actual'
+/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/timeout.rb:186:in `block in timeout'
+/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/timeout.rb:41:in `handle_timeout'
+/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/timeout.rb:195:in `timeout'
+/root/fluentd/lib/fluent/test/driver/base.rb:197:in `run_actual'
+/root/fluentd/lib/fluent/test/driver/base.rb:95:in `run'
+/root/fluentd/lib/fluent/test/driver/base_owner.rb:130:in `run'
+test/plugin/test_in_http.rb:557:in `test_application_ndjson'
+<"200">(UTF-8) expected but was
+<"400">(ASCII-8BIT)
 
 diff:
-? "absolute_path_include"
-? ni                     
-? ?????    -----------------
-===============================================================================
-: (0.023614)
-  test_inline:						.: (0.005273)
-  .build: 
-    test: read config:					.: (0.001117)
-    test: read config with additional_config:		.: (0.000983)
-    test: read config with encoding:			.: (0.003767)
-  yaml config: 
-    test_check_not_fetchd:				.: (0.002324)
-    test_included:					.: (0.002849)
-    test_included_glob:					E
-===============================================================================
-Error: test_included_glob(ConfigTest::yaml config): Errno::ENOENT: No such file or directory @ rb_sysopen - /root/fluentd/test/tmp/config/include/*.yaml
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `initialize'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `open'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `open'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `load'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:47:in `block in load'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:43:in `accept'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:340:in `block in register_empty'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:340:in `each'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:340:in `register_empty'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:148:in `visit_Psych_Nodes_Sequence'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/visitor.rb:30:in `visit'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/visitor.rb:6:in `accept'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:35:in `accept'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:347:in `block in revive_hash'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:345:in `each'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:345:in `each_slice'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:345:in `revive_hash'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:73:in `revive_hash'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:169:in `visit_Psych_Nodes_Mapping'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/visitor.rb:30:in `visit'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/visitor.rb:6:in `accept'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:35:in `accept'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:320:in `visit_Psych_Nodes_Document'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/visitor.rb:30:in `visit'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/visitor.rb:6:in `accept'
-/root/.asdf/installs/ruby/3.3.5/lib/ruby/3.3.0/psych/visitors/to_ruby.rb:35:in `accept'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:59:in `block in load'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `open'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `open'
-/root/fluentd/lib/fluent/config/yaml_parser/loader.rb:58:in `load'
-test/test_config.rb:18:in `read_config'
-test/test_config.rb:268:in `test_included_glob'
-     265:             $type: memory
-     266:             flush_interval: 1s
-     267:       EOS
-  => 268:       root_conf = read_config("#{TMP_DIR}/config.yaml", use_yaml: true)
-     269:       tcp_source_conf = root_conf.elements.first
-     270:       dummy_source_conf = root_conf.elements[1]
-     271:       parse_tcp_conf = tcp_source_conf.elements.first
-===============================================================================
-: (0.017203)
+? 200
+? 4
+? ?
 
-Finished in 0.061218733 seconds.
+? Encoding: UTF  -8
+?           ASCII  BIT
+?           ???  +++
+===============================================================================
+: (0.632782)
+
+Finished in 1.863084235 seconds.
 -------------------------------------------------------------------------------
-9 tests, 24 assertions, 1 failures, 1 errors, 0 pendings, 0 omissions, 0 notifications
-77.7778% passed
+3 tests, 9 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+66.6667% passed
 -------------------------------------------------------------------------------
-147.01 tests/s, 392.04 assertions/s
+1.61 tests/s, 4.83 assertions/s

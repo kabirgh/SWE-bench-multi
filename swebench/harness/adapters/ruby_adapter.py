@@ -73,7 +73,7 @@ def cucumber_log_parser(log: str) -> dict[str, str]:
 def ruby_unit_log_parser(log: str) -> dict[str, str]:
     test_status_map = {}
 
-    pattern = r"^\s*(?:test: )?(.+):\s+(\.|E\b|F\b)"
+    pattern = r"^\s*(?:test: )?(.+):\s+(\.|E\b|F\b|O\b)"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
@@ -83,5 +83,7 @@ def ruby_unit_log_parser(log: str) -> dict[str, str]:
                 test_status_map[test_name] = TestStatus.PASSED.value
             elif outcome in ["E", "F"]:
                 test_status_map[test_name] = TestStatus.FAILED.value
+            elif outcome == "O":
+                test_status_map[test_name] = TestStatus.SKIPPED.value
 
     return test_status_map

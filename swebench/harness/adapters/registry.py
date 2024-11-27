@@ -1081,5 +1081,27 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             test=["bundle exec ruby test/test_config.rb -v"],
             log_parser=ruby_unit_log_parser,
         ),
+        "3640": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/plugin_helper/test_retry_state.rb -v -n '/exponential backoff/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
+        "3641": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=["bundle exec ruby test/test_supervisor.rb -v"],
+            log_parser=ruby_unit_log_parser,
+        ),
+        "3616": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/plugin/test_in_http.rb -v -n '/test_application/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
     },
 }
