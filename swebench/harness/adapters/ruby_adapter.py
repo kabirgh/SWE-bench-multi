@@ -73,7 +73,7 @@ def cucumber_log_parser(log: str) -> dict[str, str]:
 def ruby_unit_log_parser(log: str) -> dict[str, str]:
     test_status_map = {}
 
-    pattern = r"^\s*(?:test: )?(.+):\s+(\.|E|F)"
+    pattern = r"^\s*(?:test: )?(.+):\s+(\.|E\b|F\b)"
 
     for line in log.split("\n"):
         match = re.match(pattern, line.strip())
