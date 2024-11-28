@@ -1103,5 +1103,29 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=ruby_unit_log_parser,
         ),
+        "3631": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/test_event_router.rb -v -n '/handle_emits_error/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
+        "3466": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/plugin/test_in_tail.rb -v -n '/test_should_replace_target_info/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
+        "3328": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/plugin/test_in_tail.rb -v -n '/test_ENOENT_error_after_setup_watcher/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
     },
 }
