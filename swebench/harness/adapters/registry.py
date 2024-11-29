@@ -1127,5 +1127,13 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=ruby_unit_log_parser,
         ),
+        "3608": RubyAdapter(
+            version="3.3",
+            install=["bundle install"],
+            test=[
+                "bundle exec ruby test/plugin/test_output_as_buffered_retries.rb -v -n '/retry_max_times/'"
+            ],
+            log_parser=ruby_unit_log_parser,
+        ),
     },
 }

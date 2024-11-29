@@ -1,80 +1,32 @@
 /root/fluentd/lib/fluent/compat/parser.rb:28: warning: csv was loaded from the standard library, but will no longer be part of the default gems starting from Ruby 3.4.0.
 You can add csv to your Gemfile or gemspec to silence this warning.
-Loaded suite test/plugin/test_in_tail
+Loaded suite test/plugin/test_output_as_buffered_retries
 Started
-TailInputTest:
-  test_ENOENT_error_after_setup_watcher:		F
+BufferedOutputRetryTest: 
+  bufferd output for retries with periodical retry: 
+    test: Do not retry when retry_max_times is 0:	F
 ===============================================================================
-Failure: test_ENOENT_error_after_setup_watcher(TailInputTest):
-  Exception raised:
-  NoMethodError(<undefined method `each_value' for an instance of Fluent::Plugin::TailInput::TargetInfo>)
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:428:in `stop_watchers'
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:422:in `rescue in block in start_watchers'
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:416:in `block in start_watchers'
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:396:in `each_value'
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:396:in `start_watchers'
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:359:in `refresh_watchers'
-  /root/fluentd/lib/fluent/plugin/in_tail.rb:234:in `start'
-  /root/fluentd/lib/fluent/test/driver/base.rb:114:in `instance_start'
-  /root/fluentd/lib/fluent/test/driver/base.rb:77:in `run'
-  /root/fluentd/lib/fluent/test/driver/base_owner.rb:130:in `run'
-  test/plugin/test_in_tail.rb:1935:in `block in test_ENOENT_error_after_setup_watcher'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/assertions.rb:693:in `block in assert_nothing_raised'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/assertions.rb:1918:in `_wrap_assertion'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/assertions.rb:684:in `assert_nothing_raised'
-  test/plugin/test_in_tail.rb:1934:in `test_ENOENT_error_after_setup_watcher'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testcase.rb:896:in `run_test'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testcase.rb:591:in `block (2 levels) in run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/fixture.rb:276:in `block in create_fixtures_runner'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/fixture.rb:276:in `block in create_fixtures_runner'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/fixture.rb:276:in `block in create_fixtures_runner'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/fixture.rb:257:in `run_fixture'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/fixture.rb:292:in `run_setup'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testcase.rb:589:in `block in run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testcase.rb:588:in `catch'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testcase.rb:588:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:68:in `run_test'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:60:in `block in run_tests'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:59:in `each'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:59:in `run_tests'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:37:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testsuite.rb:52:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:68:in `run_test'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:60:in `block in run_tests'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:59:in `each'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:59:in `run_tests'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:37:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/testsuite.rb:52:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:72:in `run_suite'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:49:in `block (3 levels) in run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:44:in `catch'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:44:in `block (2 levels) in run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/test-suite-runner.rb:17:in `run_all_tests'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:43:in `block in run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:107:in `with_listener'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnermediator.rb:42:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunner.rb:40:in `start_mediator'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunner.rb:25:in `start'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/ui/testrunnerutilities.rb:24:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/autorunner.rb:492:in `block in run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/autorunner.rb:548:in `change_work_directory'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/autorunner.rb:491:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit/autorunner.rb:67:in `run'
-  /root/.asdf/installs/ruby/3.3.5/lib/ruby/gems/3.3.0/gems/test-unit-3.6.3/lib/test/unit.rb:518:in `block (2 levels) in <top (required)>'
-test/plugin/test_in_tail.rb:1934:in `test_ENOENT_error_after_setup_watcher'
-     1931:       cleanup_file(path)
-     1932:       tw
-     1933:     end
-  => 1934:     assert_nothing_raised do
-     1935:       d.run(shutdown: false) {}
-     1936:     end
-     1937:     d.instance_shutdown
+Failure: test: Do not retry when retry_max_times is 0(BufferedOutputRetryTest::bufferd output for retries with periodical retry): <false> is not true.
+test/plugin/test_output_as_buffered_retries.rb:746:in `block (2 levels) in <class:BufferedOutputRetryTest>'
+     743: 
+     744:       assert(@i.write_count == 1)
+     745:       assert(@i.num_errors == 1)
+  => 746:       assert(@i.log.out.logs.any?{|l| l.include?("[error]: failed to flush the buffer, and hit limit for retries. dropping all chunks in the buffer queue.") && l.include?("retry_times=0") })
+     747:       assert(@i.buffer.queue.size == 0)
+     748:       assert(@i.buffer.stage.size == 1)
+     749:       assert(@i.buffer.queue.all?{|c| c.empty? })
 ===============================================================================
-: (0.022761)
+: (0.117249)
+    test: retry_max_times can limit maximum times for retries:	.: (11.170248)
+  buffered output configured as retry_forever: 
+    test: retry_timeout and retry_max_times will be ignored if retry_forever is true for exponential backoff:	.: (15.158084)
+    test: retry_timeout and retry_max_times will be ignored if retry_forever is true for periodical retries:	.: (15.160703)
+  buffered output for retries with exponential backoff: 
+    test: output plugin give retries up by retry_max_times, and clear queue in buffer:	.: (11.154053)
 
-Finished in 0.023501548 seconds.
+Finished in 52.763533589 seconds.
 -------------------------------------------------------------------------------
-1 tests, 1 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
-0% passed
+5 tests, 171 assertions, 1 failures, 0 errors, 0 pendings, 0 omissions, 0 notifications
+80% passed
 -------------------------------------------------------------------------------
-42.55 tests/s, 42.55 assertions/s
+0.09 tests/s, 3.24 assertions/s
