@@ -1147,5 +1147,37 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=rspec_transformed_json_log_parser,
         ),
+        "20958": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./fastlane/spec/actions_specs/import_from_git_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
+        ),
+        "20642": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./frameit/spec/device_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
+        ),
+        "19765": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./fastlane/spec/actions_specs/download_dsyms_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
+        ),
+        "20975": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./match/spec/storage/s3_storage_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
+        ),
     },
 }
