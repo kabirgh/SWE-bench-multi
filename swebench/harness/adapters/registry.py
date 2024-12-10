@@ -1179,5 +1179,21 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=rspec_transformed_json_log_parser,
         ),
+        "19304": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./fastlane/spec/actions_specs/zip_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
+        ),
+        "19207": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./fastlane/spec/actions_specs/zip_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
+        ),
     },
 }
