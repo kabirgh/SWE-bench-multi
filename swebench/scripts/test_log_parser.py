@@ -8,6 +8,7 @@ from swebench.harness.adapters.rust_adapter import _cargo_log_parser as rust_log
 from swebench.harness.adapters.ruby_adapter import (
     minitest_log_parser,
     cucumber_log_parser,
+    rspec_transformed_json_log_parser,
     ruby_unit_log_parser,
 )
 
@@ -20,6 +21,7 @@ PARSERS = {
     "minitest": minitest_log_parser,
     "cucumber": cucumber_log_parser,
     "ruby_unit": ruby_unit_log_parser,
+    "rspec": rspec_transformed_json_log_parser,
 }
 
 if __name__ == "__main__":

@@ -26,9 +26,11 @@ from swebench.harness.adapters.javascript_adapter import (
     vitest_log_parser,
 )
 from swebench.harness.adapters.ruby_adapter import (
+    RSPEC_JQ_TRANSFORM,
     RubyAdapter,
     cucumber_log_parser,
     minitest_log_parser,
+    rspec_transformed_json_log_parser,
     ruby_unit_log_parser,
 )
 from swebench.harness.adapters.rust_adapter import RustAdapter
@@ -1134,6 +1136,16 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "bundle exec ruby test/plugin/test_output_as_buffered_retries.rb -v -n '/retry_max_times/'"
             ],
             log_parser=ruby_unit_log_parser,
+        ),
+    },
+    "fastlane/fastlane": {
+        "21857": RubyAdapter(
+            version="3.3",
+            install=["bundle install --jobs=$(nproc)"],
+            test=[
+                f"FASTLANE_SKIP_UPDATE_CHECK=1 bundle exec rspec ./fastlane/spec/lane_manager_base_spec.rb --no-color --format json | {RSPEC_JQ_TRANSFORM}",
+            ],
+            log_parser=rspec_transformed_json_log_parser,
         ),
     },
 }

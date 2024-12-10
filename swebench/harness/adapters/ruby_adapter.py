@@ -5,6 +5,10 @@ from typing import Callable
 from swebench.harness.constants import TestStatus
 from swebench.harness.adapters.adapter import Adapter
 
+RSPEC_JQ_TRANSFORM = (
+    r"""tail -n +2 | jq -r '.examples[] | "\(.description) - \(.id) - \(.status)"'"""
+)
+
 
 @dataclass(kw_only=True)
 class RubyAdapter(Adapter):
@@ -85,5 +89,24 @@ def ruby_unit_log_parser(log: str) -> dict[str, str]:
                 test_status_map[test_name] = TestStatus.FAILED.value
             elif outcome == "O":
                 test_status_map[test_name] = TestStatus.SKIPPED.value
+
+    return test_status_map
+
+
+def rspec_transformed_json_log_parser(log: str) -> dict[str, str]:
+    test_status_map = {}
+
+    pattern = r"(.+) - (passed|failed)"
+
+    for line in log.split("\n"):
+        match = re.match(pattern, line.strip())
+        if match:
+            test_name, outcome = match.groups()
+            if outcome == "passed":
+                test_status_map[test_name] = TestStatus.PASSED.value
+            elif outcome == "failed":
+                test_status_map[test_name] = TestStatus.FAILED.value
+            else:
+                raise ValueError(f"Unknown outcome: {outcome}")
 
     return test_status_map
