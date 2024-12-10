@@ -277,6 +277,12 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 'RUSTFLAGS="--cfg tokio_unstable" cargo test --features full --test rt_metrics --no-fail-fast'
             ],
         ),
+        "4384": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package tokio --test net_types_unwind --features full --no-fail-fast"
+            ],
+        ),
     },
     "hashicorp/terraform": {
         "35611": GoAdapter(
