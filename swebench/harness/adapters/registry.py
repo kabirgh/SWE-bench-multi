@@ -1226,5 +1226,23 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             version="1.81",
             test=["RUSTFLAGS=-Awarnings cargo test --package axum --lib slash"],
         ),
+        "734": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package axum --lib -- routing::tests::head"
+            ],
+        ),
+        "691": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package axum --lib -- routing::tests::nest::nesting_router_at_root --exact"
+            ],
+        ),
+        "682": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package axum --lib trailing -- with_trailing_slash_post without_trailing_slash_post"
+            ],
+        ),
     },
 }
