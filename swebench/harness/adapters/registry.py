@@ -1202,4 +1202,12 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             log_parser=rspec_transformed_json_log_parser,
         ),
     },
+    "tokio-rs/axum": {
+        "2096": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package axum --lib -- routing::tests::fallback"
+            ],
+        ),
+    },
 }

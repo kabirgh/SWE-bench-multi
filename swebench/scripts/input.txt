@@ -1,9 +1,69 @@
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
-     Running tests/net_types_unwind.rs (target/debug/deps/net_types_unwind-858c8ce7059a3bbe)
+warning: /root/axum/axum-extra/Cargo.toml: `default_features` is deprecated in favor of `default-features` and will not work in the 2024 edition
+(in the `tower` dependency)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.38s
+     Running unittests src/lib.rs (target/debug/deps/axum-0012859e5141caa2)
 
-running 2 tests
-test net_types_are_unwind_safe ... FAILED
-test unix_net_types_are_unwind_safe ... FAILED
+running 21 tests
+test routing::method_routing::tests::fallback_accessing_state ... ok
+test routing::tests::fallback::deeply_nested_inherit_from_top ... ok
+test routing::tests::fallback::deeply_nested_inherit_from_middle ... ok
+test routing::tests::fallback::also_inherits_default_layered_fallback ... ok
+test routing::tests::fallback::doesnt_inherit_fallback_if_overriden ... ok
+test routing::tests::fallback::fallback_accessing_state ... ok
+test routing::tests::fallback::deeply_nested_inherit_from_middle_with_nest_service ... ok
+test routing::tests::fallback::doesnt_panic_if_used_with_nested_router ... ok
+test routing::tests::fallback::issue_2072 ... FAILED
+test routing::tests::fallback::basic ... ok
+test routing::tests::fallback::merge_empty_into_router_with_fallback ... ok
+test routing::tests::fallback::issue_2072_outer_fallback_after_merge ... FAILED
+test routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback ... FAILED
+test routing::tests::fallback::nest_fallback_on_inner ... ok
+test routing::tests::fallback::merge_router_with_fallback_into_empty ... ok
+test routing::tests::fallback::nest ... ok
+test routing::tests::fallback::issue_2072_outer_fallback_before_merge ... ok
+test routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback ... FAILED
+test routing::tests::fallback::with_middleware_on_inner_fallback ... ok
+test routing::tests::fallback::or ... ok
+test routing::tests::fallback::nested_router_inherits_fallback ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+failures:
 
+---- routing::tests::fallback::issue_2072 stdout ----
+Listening on 127.0.0.1:40329
+thread 'routing::tests::fallback::issue_2072' panicked at axum/src/routing/tests/fallback.rs:213:5:
+assertion `left == right` failed
+  left: ""
+ right: "inner"
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- routing::tests::fallback::issue_2072_outer_fallback_after_merge stdout ----
+Listening on 127.0.0.1:44357
+thread 'routing::tests::fallback::issue_2072_outer_fallback_after_merge' panicked at axum/src/routing/tests/fallback.rs:253:5:
+assertion `left == right` failed
+  left: "outer"
+ right: "inner"
+
+---- routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback stdout ----
+Listening on 127.0.0.1:44711
+thread 'routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback' panicked at axum/src/routing/tests/fallback.rs:272:5:
+assertion `left == right` failed
+  left: "outer"
+ right: "inner"
+
+---- routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback stdout ----
+Listening on 127.0.0.1:43931
+thread 'routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback' panicked at axum/src/routing/tests/fallback.rs:291:5:
+assertion `left == right` failed
+  left: "outer"
+ right: "inner"
+
+
+failures:
+    routing::tests::fallback::issue_2072
+    routing::tests::fallback::issue_2072_outer_fallback_after_merge
+    routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback
+    routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback
+
+test result: FAILED. 17 passed; 4 failed; 0 ignored; 0 measured; 267 filtered out; finished in 0.01s
+
+error: test failed, to rerun pass `-p axum --lib`
