@@ -1,69 +1,356 @@
 warning: /root/axum/axum-extra/Cargo.toml: `default_features` is deprecated in favor of `default-features` and will not work in the 2024 edition
 (in the `tower` dependency)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.38s
-     Running unittests src/lib.rs (target/debug/deps/axum-0012859e5141caa2)
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+  --> axum-core/src/lib.rs:46:26
+   |
+46 | #![deny(unreachable_pub, private_in_public)]
+   |                          ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(renamed_and_removed_lints)]` on by default
 
-running 21 tests
-test routing::method_routing::tests::fallback_accessing_state ... ok
-test routing::tests::fallback::deeply_nested_inherit_from_top ... ok
-test routing::tests::fallback::deeply_nested_inherit_from_middle ... ok
-test routing::tests::fallback::also_inherits_default_layered_fallback ... ok
-test routing::tests::fallback::doesnt_inherit_fallback_if_overriden ... ok
-test routing::tests::fallback::fallback_accessing_state ... ok
-test routing::tests::fallback::deeply_nested_inherit_from_middle_with_nest_service ... ok
-test routing::tests::fallback::doesnt_panic_if_used_with_nested_router ... ok
-test routing::tests::fallback::issue_2072 ... FAILED
-test routing::tests::fallback::basic ... ok
-test routing::tests::fallback::merge_empty_into_router_with_fallback ... ok
-test routing::tests::fallback::issue_2072_outer_fallback_after_merge ... FAILED
-test routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback ... FAILED
-test routing::tests::fallback::nest_fallback_on_inner ... ok
-test routing::tests::fallback::merge_router_with_fallback_into_empty ... ok
-test routing::tests::fallback::nest ... ok
-test routing::tests::fallback::issue_2072_outer_fallback_before_merge ... ok
-test routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback ... FAILED
-test routing::tests::fallback::with_middleware_on_inner_fallback ... ok
-test routing::tests::fallback::or ... ok
-test routing::tests::fallback::nested_router_inherits_fallback ... ok
+warning: `axum-core` (lib) generated 1 warning
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+  --> axum-macros/src/lib.rs:40:26
+   |
+40 | #![deny(unreachable_pub, private_in_public)]
+   |                          ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+   --> axum/src/lib.rs:386:26
+    |
+386 | #![deny(unreachable_pub, private_in_public)]
+    |                          ^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: `axum-macros` (lib) generated 1 warning
+warning: `axum` (lib) generated 1 warning
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+  --> axum-extra/src/lib.rs:40:26
+   |
+40 | #![deny(unreachable_pub, private_in_public)]
+   |                          ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: `axum-extra` (lib) generated 1 warning
+warning: `axum-macros` (lib test) generated 1 warning (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running unittests src/lib.rs (target/debug/deps/axum_macros-82f093ac7d9bfe47)
+
+running 1 test
+warning: /root/axum/axum-extra/Cargo.toml: `default_features` is deprecated in favor of `default-features` and will not work in the 2024 edition
+(in the `tower` dependency)
+     Locking 1 package to latest compatible version
+      Adding axum-macros-tests v0.0.0 (/root/axum/target/tests/trybuild/axum-macros)
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+  --> /root/axum/axum-core/src/lib.rs:46:26
+   |
+46 | #![deny(unreachable_pub, private_in_public)]
+   |                          ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: `axum-core` (lib) generated 1 warning
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+   --> /root/axum/axum/src/lib.rs:386:26
+    |
+386 | #![deny(unreachable_pub, private_in_public)]
+    |                          ^^^^^^^^^^^^^^^^^
+    |
+    = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+  --> /root/axum/axum-macros/src/lib.rs:40:26
+   |
+40 | #![deny(unreachable_pub, private_in_public)]
+   |                          ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: `axum` (lib) generated 1 warning
+warning: `axum-macros` (lib) generated 1 warning
+warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+  --> /root/axum/axum-extra/src/lib.rs:40:26
+   |
+40 | #![deny(unreachable_pub, private_in_public)]
+   |                          ^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(renamed_and_removed_lints)]` on by default
+
+warning: `axum-extra` (lib) generated 1 warning
+   Compiling axum-macros-tests v0.0.0 (/root/axum/target/tests/trybuild/axum-macros)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.85s
+
+
+test [0m[1mtests/typed_path/pass/into_uri.rs[0m ... [0m[32mok
+[0m
+[0m[1m[33mSTDERR:
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-core/src/lib.rs:46:26
+[0m[33m   |
+[0m[33m46 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m   --> /root/axum/axum/src/lib.rs:386:26
+[0m[33m    |
+[0m[33m386 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m    |                          ^^^^^^^^^^^^^^^^^
+[0m[33m    |
+[0m[33m    = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-macros/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-extra/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+test [0m[1mtests/typed_path/pass/named_fields_struct.rs[0m ... [0m[32mok
+[0m
+[0m[1m[33mSTDERR:
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-core/src/lib.rs:46:26
+[0m[33m   |
+[0m[33m46 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m   --> /root/axum/axum/src/lib.rs:386:26
+[0m[33m    |
+[0m[33m386 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m    |                          ^^^^^^^^^^^^^^^^^
+[0m[33m    |
+[0m[33m    = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-macros/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-extra/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+test [0m[1mtests/typed_path/pass/option_result.rs[0m ... [0m[32mok
+[0m
+[0m[1m[33mSTDERR:
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-core/src/lib.rs:46:26
+[0m[33m   |
+[0m[33m46 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-macros/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m   --> /root/axum/axum/src/lib.rs:386:26
+[0m[33m    |
+[0m[33m386 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m    |                          ^^^^^^^^^^^^^^^^^
+[0m[33m    |
+[0m[33m    = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-extra/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+test [0m[1mtests/typed_path/pass/tuple_struct.rs[0m ... [0m[32mok
+[0m
+[0m[1m[33mSTDERR:
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-core/src/lib.rs:46:26
+[0m[33m   |
+[0m[33m46 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-macros/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m   --> /root/axum/axum/src/lib.rs:386:26
+[0m[33m    |
+[0m[33m386 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m    |                          ^^^^^^^^^^^^^^^^^
+[0m[33m    |
+[0m[33m    = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-extra/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+test [0m[1mtests/typed_path/pass/unit_struct.rs[0m ... [0m[32mok
+[0m
+[0m[1m[33mSTDERR:
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-core/src/lib.rs:46:26
+[0m[33m   |
+[0m[33m46 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m   --> /root/axum/axum/src/lib.rs:386:26
+[0m[33m    |
+[0m[33m386 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m    |                          ^^^^^^^^^^^^^^^^^
+[0m[33m    |
+[0m[33m    = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-macros/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-extra/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+test [0m[1mtests/typed_path/pass/url_encoding.rs[0m ... [0m[32mok
+[0m
+[0m[1m[33mSTDERR:
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-core/src/lib.rs:46:26
+[0m[33m   |
+[0m[33m46 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-macros/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m   --> /root/axum/axum/src/lib.rs:386:26
+[0m[33m    |
+[0m[33m386 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m    |                          ^^^^^^^^^^^^^^^^^
+[0m[33m    |
+[0m[33m    = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m
+[0m[33mwarning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
+[0m[33m  --> /root/axum/axum-extra/src/lib.rs:40:26
+[0m[33m   |
+[0m[33m40 | #![deny(unreachable_pub, private_in_public)]
+[0m[33m   |                          ^^^^^^^^^^^^^^^^^
+[0m[33m   |
+[0m[33m   = note: `#[warn(renamed_and_removed_lints)]` on by default
+[0m[33m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+test [0m[1mtests/typed_path/pass/wildcards.rs[0m ... [0m[1m[31merror
+[0m[31m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m[31merror: `typed_path` cannot contain wildcards
+[0m[31m --> tests/typed_path/pass/wildcards.rs:5:14
+[0m[31m  |
+[0m[31m5 | #[typed_path("/*rest")]
+[0m[31m  |              ^^^^^^^^
+[0m[31m
+[0m[31merror[E0277]: the trait bound `{closure@$DIR/tests/typed_path/pass/wildcards.rs:11:55: 11:66}: Handler<_>` is not satisfied
+[0m[31m  --> tests/typed_path/pass/wildcards.rs:11:55
+[0m[31m   |
+[0m[31m11 |     axum::Router::<axum::body::Body>::new().typed_get(|_: MyPath| async {});
+[0m[31m   |                                             --------- ^^^^^^^^^^^^^^^^^^^^ the trait `Handler<_>` is not implemented for closure `{closure@$DIR/tests/typed_path/pass/wildcards.rs:11:55: 11:66}`
+[0m[31m   |                                             |
+[0m[31m   |                                             required by a bound introduced by this call
+[0m[31m   |
+[0m[31m   = help: the trait `Handler<T, ReqBody>` is implemented for `Layered<S, T>`
+[0m[31mnote: required by a bound in `axum_extra::routing::RouterExt::typed_get`
+[0m[31m  --> $WORKSPACE/axum-extra/src/routing/mod.rs
+[0m[31m   |
+[0m[31m   |     fn typed_get<H, T, P>(self, handler: H) -> Self
+[0m[31m   |        --------- required by a bound in this associated function
+[0m[31m   |     where
+[0m[31m   |         H: Handler<T, B>,
+[0m[31m   |            ^^^^^^^^^^^^^ required by this bound in `RouterExt::typed_get`
+[0m[31m┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈
+[0m
+
+
+test typed_path::ui ... FAILED
 
 failures:
 
----- routing::tests::fallback::issue_2072 stdout ----
-Listening on 127.0.0.1:40329
-thread 'routing::tests::fallback::issue_2072' panicked at axum/src/routing/tests/fallback.rs:213:5:
-assertion `left == right` failed
-  left: ""
- right: "inner"
+---- typed_path::ui stdout ----
+thread 'typed_path::ui' panicked at /root/.cargo/registry/src/index.crates.io-6f17d22bba15001f/trybuild-1.0.101/src/run.rs:101:13:
+1 of 7 tests failed
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
----- routing::tests::fallback::issue_2072_outer_fallback_after_merge stdout ----
-Listening on 127.0.0.1:44357
-thread 'routing::tests::fallback::issue_2072_outer_fallback_after_merge' panicked at axum/src/routing/tests/fallback.rs:253:5:
-assertion `left == right` failed
-  left: "outer"
- right: "inner"
-
----- routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback stdout ----
-Listening on 127.0.0.1:44711
-thread 'routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback' panicked at axum/src/routing/tests/fallback.rs:272:5:
-assertion `left == right` failed
-  left: "outer"
- right: "inner"
-
----- routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback stdout ----
-Listening on 127.0.0.1:43931
-thread 'routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback' panicked at axum/src/routing/tests/fallback.rs:291:5:
-assertion `left == right` failed
-  left: "outer"
- right: "inner"
-
 
 failures:
-    routing::tests::fallback::issue_2072
-    routing::tests::fallback::issue_2072_outer_fallback_after_merge
-    routing::tests::fallback::merge_router_with_fallback_into_nested_router_with_fallback
-    routing::tests::fallback::merging_nested_router_with_fallback_into_router_with_fallback
+    typed_path::ui
 
-test result: FAILED. 17 passed; 4 failed; 0 ignored; 0 measured; 267 filtered out; finished in 0.01s
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 3.50s
 
-error: test failed, to rerun pass `-p axum --lib`
+error: test failed, to rerun pass `-p axum-macros --lib`
+error: 1 target failed:
+    `-p axum-macros --lib`

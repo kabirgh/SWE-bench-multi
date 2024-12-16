@@ -1209,5 +1209,22 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "RUSTFLAGS=-Awarnings cargo test --package axum --lib -- routing::tests::fallback"
             ],
         ),
+        "1934": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package axum --lib -- routing::tests::fallback"
+            ],
+        ),
+        # All tests for 1730 are PASS_TO_PASS since it tests compilation
+        "1730": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package axum --lib -- routing::tests::mod state"
+            ],
+        ),
+        "1119": RustAdapter(
+            version="1.81",
+            test=["RUSTFLAGS=-Awarnings cargo test --package axum --lib slash"],
+        ),
     },
 }
