@@ -1245,4 +1245,13 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
         ),
     },
+    # docker image key doesn't accept uppercase letters and git is case insensitive, so we write BurntSushi/ripgrep as burntsushi/ripgrep
+    "burntsushi/ripgrep": {
+        "2576": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package ripgrep --test integration -- regression"
+            ],
+        ),
+    },
 }
