@@ -1,46 +1,28 @@
-   Compiling bat v0.21.0 (/root/bat)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.77s
-     Running tests/integration_tests.rs (target/debug/deps/integration_tests-459fc11e9631cff0)
+   Compiling bat v0.10.0 (/root/bat)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.53s
+     Running tests/integration_tests.rs (target/debug/deps/integration_tests-f6012612deca9bc0)
 
-running 18 tests
-test no_paging_short_arg ... ok
-test disable_pager_if_disable_paging_flag_comes_after_paging ... FAILED
-test alias_pager_disable_long_overrides_short ... ok
-test no_pager_arg ... ok
-test alias_pager_disable ... ok
-test env_var_bat_pager_value_bat ... ok
-test env_var_pager_value_bat ... ok
-test no_paging_arg ... ok
-test pager_disable ... ok
-test pager_basic ... ok
-test pager_failed_to_parse ... ok
-test pager_more ... ok
-test pager_overwrite ... ok
-test pager_value_bat ... ok
-test pager_most_from_bat_pager_env_var ... ok
-test pager_most_from_pager_arg ... ok
-test pager_most_from_pager_env_var ... ok
-test pager_most_with_arg ... ok
+running 2 tests
+test does_not_print_unwanted_file_named_cache ... FAILED
+test can_print_file_named_cache ... ok
 
 failures:
 
----- disable_pager_if_disable_paging_flag_comes_after_paging stdout ----
-thread 'disable_pager_if_disable_paging_flag_comes_after_paging' panicked at /rustc/eeb90cda1969383f56a2637cbd3037bdf598841c/library/core/src/ops/function.rs:250:5:
-Unexpected stdout, failed var == "hello world\n"
-├── var: "pager-output\n"
-└── var as str: pager-output
-
-command=`cd "tests/examples" && env -u BAT_CACHE_PATH -u BAT_CONFIG_DIR -u BAT_CONFIG_PATH -u BAT_OPTS -u BAT_PAGER -u BAT_STYLE -u BAT_TABS -u BAT_THEME -u COLORTERM -u NO_COLOR PAGER="echo pager-output" "/root/bat/target/debug/bat" "--no-config" "--paging=always" "-P" "test.txt"`
+---- does_not_print_unwanted_file_named_cache stdout ----
+thread 'does_not_print_unwanted_file_named_cache' panicked at /root/.cargo/registry/src/index.crates.io-6f17d22bba15001f/assert_cmd-0.11.1/src/assert.rs:181:13:
+Unexpected success
+command=`cd "tests/examples" && env -u BAT_CONFIG_PATH -u BAT_PAGER -u BAT_STYLE -u BAT_TABS -u BAT_THEME -u PAGER "/root/bat/target/debug/bat" "cach"`
 code=0
-stdout="pager-output\n"
-stderr=""
+stdout=```test
+```
+stderr=``````
 
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
-    disable_pager_if_disable_paging_flag_comes_after_paging
+    does_not_print_unwanted_file_named_cache
 
-test result: FAILED. 17 passed; 1 failed; 0 ignored; 0 measured; 76 filtered out; finished in 0.32s
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 32 filtered out; finished in 4.02s
 
 error: test failed, to rerun pass `-p bat --test integration_tests`

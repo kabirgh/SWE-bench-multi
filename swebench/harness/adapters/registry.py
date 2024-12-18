@@ -1291,5 +1291,23 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests pag"
             ],
         ),
+        "2260": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests syntax"
+            ],
+        ),
+        "1892": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests ignored_suffix_arg"
+            ],
+        ),
+        "562": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests cache"
+            ],
+        ),
     },
 }
