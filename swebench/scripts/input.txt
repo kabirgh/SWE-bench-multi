@@ -1,171 +1,46 @@
-warning: unexpected `cfg` condition value: `avx-accel`
-   --> crates/core/app.rs:121:13
-    |
-121 |     if cfg!(feature = "avx-accel") {
-    |             ^^^^^^^^^^^^^^^^^^^^^
-    |
-    = note: expected values for `feature` are: `pcre2` and `simd-accel`
-    = help: consider adding `avx-accel` as a feature in `Cargo.toml`
-    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
-    = note: `#[warn(unexpected_cfgs)]` on by default
+   Compiling bat v0.21.0 (/root/bat)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 5.77s
+     Running tests/integration_tests.rs (target/debug/deps/integration_tests-459fc11e9631cff0)
 
-warning: `ripgrep` (build script) generated 1 warning
-   Compiling ripgrep v13.0.0 (/root/ripgrep)
-warning: field `0` is never read
-  --> crates/ignore/src/dir.rs:33:28
-   |
-33 | pub struct IgnoreMatch<'a>(IgnoreMatchInner<'a>);
-   |            -----------     ^^^^^^^^^^^^^^^^^^^^
-   |            |
-   |            field in this struct
-   |
-   = help: consider removing this field
-   = note: `IgnoreMatch` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
-   = note: `#[warn(dead_code)]` on by default
-
-warning: field `0` is never read
-  --> crates/ignore/src/dir.rs:39:14
-   |
-39 |     Override(overrides::Glob<'a>),
-   |     -------- ^^^^^^^^^^^^^^^^^^^
-   |     |
-   |     field in this variant
-   |
-   = note: `IgnoreMatchInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
-help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
-   |
-39 |     Override(()),
-   |              ~~
-
-warning: field `0` is never read
-  --> crates/ignore/src/dir.rs:40:15
-   |
-40 |     Gitignore(&'a gitignore::Glob),
-   |     --------- ^^^^^^^^^^^^^^^^^^^
-   |     |
-   |     field in this variant
-   |
-   = note: `IgnoreMatchInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
-help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
-   |
-40 |     Gitignore(()),
-   |               ~~
-
-warning: field `0` is never read
-  --> crates/ignore/src/dir.rs:41:11
-   |
-41 |     Types(types::Glob<'a>),
-   |     ----- ^^^^^^^^^^^^^^^
-   |     |
-   |     field in this variant
-   |
-   = note: `IgnoreMatchInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
-help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
-   |
-41 |     Types(()),
-   |           ~~
-
-warning: field `0` is never read
-  --> crates/ignore/src/overrides.rs:24:21
-   |
-24 | pub struct Glob<'a>(GlobInner<'a>);
-   |            ----     ^^^^^^^^^^^^^
-   |            |
-   |            field in this struct
-   |
-   = help: consider removing this field
-   = note: `Glob` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
-
-warning: field `0` is never read
-  --> crates/ignore/src/overrides.rs:31:13
-   |
-31 |     Matched(&'a gitignore::Glob),
-   |     ------- ^^^^^^^^^^^^^^^^^^^
-   |     |
-   |     field in this variant
-   |
-   = note: `GlobInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
-help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
-   |
-31 |     Matched(()),
-   |             ~~
-
-warning: `ignore` (lib) generated 6 warnings
-warning: field `value_name` is never read
-   --> crates/core/app.rs:221:9
-    |
-217 |     Positional {
-    |     ---------- field in this variant
-...
-221 |         value_name: &'static str,
-    |         ^^^^^^^^^^
-    |
-    = note: `RGArgKind` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
-    = note: `#[warn(dead_code)]` on by default
-
-warning: field `long` is never read
-   --> crates/core/app.rs:236:9
-    |
-234 |     Switch {
-    |     ------ field in this variant
-235 |         /// The long name of a flag. This is always non-empty.
-236 |         long: &'static str,
-    |         ^^^^
-    |
-    = note: `RGArgKind` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
-
-warning: fields `long` and `value_name` are never read
-   --> crates/core/app.rs:258:9
-    |
-256 |     Flag {
-    |     ---- fields in this variant
-257 |         /// The long name of a flag. This is always non-empty.
-258 |         long: &'static str,
-    |         ^^^^
-...
-265 |         value_name: &'static str,
-    |         ^^^^^^^^^^
-    |
-    = note: `RGArgKind` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
-
-warning: `ripgrep` (bin "rg") generated 4 warnings (1 duplicate)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.69s
-     Running tests/tests.rs (target/debug/deps/integration-592263f78281b3a3)
-
-running 1 test
-test regression::r2208 ... FAILED
+running 18 tests
+test no_paging_short_arg ... ok
+test disable_pager_if_disable_paging_flag_comes_after_paging ... FAILED
+test alias_pager_disable_long_overrides_short ... ok
+test no_pager_arg ... ok
+test alias_pager_disable ... ok
+test env_var_bat_pager_value_bat ... ok
+test env_var_pager_value_bat ... ok
+test no_paging_arg ... ok
+test pager_disable ... ok
+test pager_basic ... ok
+test pager_failed_to_parse ... ok
+test pager_more ... ok
+test pager_overwrite ... ok
+test pager_value_bat ... ok
+test pager_most_from_bat_pager_env_var ... ok
+test pager_most_from_pager_arg ... ok
+test pager_most_from_pager_env_var ... ok
+test pager_most_with_arg ... ok
 
 failures:
 
----- regression::r2208 stdout ----
-thread 'regression::r2208' panicked at tests/regression.rs:1119:5:
+---- disable_pager_if_disable_paging_flag_comes_after_paging stdout ----
+thread 'disable_pager_if_disable_paging_flag_comes_after_paging' panicked at /rustc/eeb90cda1969383f56a2637cbd3037bdf598841c/library/core/src/ops/function.rs:250:5:
+Unexpected stdout, failed var == "hello world\n"
+├── var: "pager-output\n"
+└── var as str: pager-output
 
-printed outputs differ!
-
-expected:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- [-h] [-U|-u <pkgspec>[,<pkgspec>...]] [<reqs-in>...] [-- <pip-compile-arg>...]
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-got:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- [-h] [-U|-u <pkgspec>[,<pkgspec>...]] [<reqs-in>...] [-- <pip-compile-arg>...]
-    emulate -L zsh
-    unset REPLY
-    if [[ $1 == --help ]] { zpy $0; return }
-    [[ $ZPY_PROCS ]] || return
-
-    local gen_ha
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+command=`cd "tests/examples" && env -u BAT_CACHE_PATH -u BAT_CONFIG_DIR -u BAT_CONFIG_PATH -u BAT_OPTS -u BAT_PAGER -u BAT_STYLE -u BAT_TABS -u BAT_THEME -u COLORTERM -u NO_COLOR PAGER="echo pager-output" "/root/bat/target/debug/bat" "--no-config" "--paging=always" "-P" "test.txt"`
+code=0
+stdout="pager-output\n"
+stderr=""
 
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
-    regression::r2208
+    disable_pager_if_disable_paging_flag_comes_after_paging
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 273 filtered out; finished in 0.04s
+test result: FAILED. 17 passed; 1 failed; 0 ignored; 0 measured; 76 filtered out; finished in 0.32s
 
-error: test failed, to rerun pass `-p ripgrep --test integration`
+error: test failed, to rerun pass `-p bat --test integration_tests`

@@ -1260,4 +1260,36 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
         ),
     },
+    "sharkdp/bat": {
+        "3108": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests pag"
+            ],
+        ),
+        "2835": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests header"
+            ],
+        ),
+        "2650": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests map_syntax"
+            ],
+        ),
+        "2393": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests cache_"
+            ],
+        ),
+        "2201": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package bat --test integration_tests pag"
+            ],
+        ),
+    },
 }
