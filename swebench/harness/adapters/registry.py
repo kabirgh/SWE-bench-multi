@@ -1253,5 +1253,11 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
                 "RUSTFLAGS=-Awarnings cargo test --package ripgrep --test integration -- regression"
             ],
         ),
+        "2209": RustAdapter(
+            version="1.81",
+            test=[
+                "RUSTFLAGS=-Awarnings cargo test --package ripgrep --test integration -- regression::r2208 --exact"
+            ],
+        ),
     },
 }

@@ -1,81 +1,171 @@
-warning: /root/axum/axum-extra/Cargo.toml: `default_features` is deprecated in favor of `default-features` and will not work in the 2024 edition
-(in the `tower` dependency)
-warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
-  --> axum-core/src/lib.rs:46:26
-   |
-46 | #![deny(unreachable_pub, private_in_public)]
-   |                          ^^^^^^^^^^^^^^^^^
-   |
-   = note: `#[warn(renamed_and_removed_lints)]` on by default
+warning: unexpected `cfg` condition value: `avx-accel`
+   --> crates/core/app.rs:121:13
+    |
+121 |     if cfg!(feature = "avx-accel") {
+    |             ^^^^^^^^^^^^^^^^^^^^^
+    |
+    = note: expected values for `feature` are: `pcre2` and `simd-accel`
+    = help: consider adding `avx-accel` as a feature in `Cargo.toml`
+    = note: see <https://doc.rust-lang.org/nightly/rustc/check-cfg/cargo-specifics.html> for more information about checking conditional configuration
+    = note: `#[warn(unexpected_cfgs)]` on by default
 
-warning: `axum-core` (lib) generated 1 warning
-warning: lint `private_in_public` has been removed: replaced with another group of lints, see RFC <https://rust-lang.github.io/rfcs/2145-type-privacy.html> for more information
-   --> axum/src/lib.rs:448:26
-    |
-448 | #![deny(unreachable_pub, private_in_public)]
-    |                          ^^^^^^^^^^^^^^^^^
-    |
-    = note: `#[warn(renamed_and_removed_lints)]` on by default
-
-warning: struct `Ext` is never constructed
-   --> axum/src/extract/request_parts.rs:269:16
-    |
-269 |         struct Ext;
-    |                ^^^
-    |
-    = note: `#[warn(dead_code)]` on by default
-
+warning: `ripgrep` (build script) generated 1 warning
+   Compiling ripgrep v13.0.0 (/root/ripgrep)
 warning: field `0` is never read
-  --> axum/src/test_helpers.rs:22:31
+  --> crates/ignore/src/dir.rs:33:28
    |
-22 | pub(crate) struct NotSendSync(*const ());
-   |                   ----------- ^^^^^^^^^
-   |                   |
-   |                   field in this struct
+33 | pub struct IgnoreMatch<'a>(IgnoreMatchInner<'a>);
+   |            -----------     ^^^^^^^^^^^^^^^^^^^^
+   |            |
+   |            field in this struct
    |
    = help: consider removing this field
+   = note: `IgnoreMatch` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+   = note: `#[warn(dead_code)]` on by default
 
-warning: `axum` (lib test) generated 3 warnings
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.25s
-     Running unittests src/lib.rs (target/debug/deps/axum-f9f0ca23f48ee43b)
+warning: field `0` is never read
+  --> crates/ignore/src/dir.rs:39:14
+   |
+39 |     Override(overrides::Glob<'a>),
+   |     -------- ^^^^^^^^^^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `IgnoreMatchInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+39 |     Override(()),
+   |              ~~
 
-running 6 tests
-test routing::tests::wildcard_with_trailing_slash ... FAILED
-test routing::tests::with_and_without_trailing_slash ... ok
-test routing::tests::with_trailing_slash ... ok
-test routing::tests::with_trailing_slash_post ... FAILED
-test routing::tests::without_trailing_slash_post ... FAILED
-test routing::tests::without_trailing_slash ... ok
+warning: field `0` is never read
+  --> crates/ignore/src/dir.rs:40:15
+   |
+40 |     Gitignore(&'a gitignore::Glob),
+   |     --------- ^^^^^^^^^^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `IgnoreMatchInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+40 |     Gitignore(()),
+   |               ~~
+
+warning: field `0` is never read
+  --> crates/ignore/src/dir.rs:41:11
+   |
+41 |     Types(types::Glob<'a>),
+   |     ----- ^^^^^^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `IgnoreMatchInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+41 |     Types(()),
+   |           ~~
+
+warning: field `0` is never read
+  --> crates/ignore/src/overrides.rs:24:21
+   |
+24 | pub struct Glob<'a>(GlobInner<'a>);
+   |            ----     ^^^^^^^^^^^^^
+   |            |
+   |            field in this struct
+   |
+   = help: consider removing this field
+   = note: `Glob` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+
+warning: field `0` is never read
+  --> crates/ignore/src/overrides.rs:31:13
+   |
+31 |     Matched(&'a gitignore::Glob),
+   |     ------- ^^^^^^^^^^^^^^^^^^^
+   |     |
+   |     field in this variant
+   |
+   = note: `GlobInner` has derived impls for the traits `Debug` and `Clone`, but these are intentionally ignored during dead code analysis
+help: consider changing the field to be of unit type to suppress this warning while preserving the field numbering, or remove the field
+   |
+31 |     Matched(()),
+   |             ~~
+
+warning: `ignore` (lib) generated 6 warnings
+warning: field `value_name` is never read
+   --> crates/core/app.rs:221:9
+    |
+217 |     Positional {
+    |     ---------- field in this variant
+...
+221 |         value_name: &'static str,
+    |         ^^^^^^^^^^
+    |
+    = note: `RGArgKind` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+    = note: `#[warn(dead_code)]` on by default
+
+warning: field `long` is never read
+   --> crates/core/app.rs:236:9
+    |
+234 |     Switch {
+    |     ------ field in this variant
+235 |         /// The long name of a flag. This is always non-empty.
+236 |         long: &'static str,
+    |         ^^^^
+    |
+    = note: `RGArgKind` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: fields `long` and `value_name` are never read
+   --> crates/core/app.rs:258:9
+    |
+256 |     Flag {
+    |     ---- fields in this variant
+257 |         /// The long name of a flag. This is always non-empty.
+258 |         long: &'static str,
+    |         ^^^^
+...
+265 |         value_name: &'static str,
+    |         ^^^^^^^^^^
+    |
+    = note: `RGArgKind` has a derived impl for the trait `Clone`, but this is intentionally ignored during dead code analysis
+
+warning: `ripgrep` (bin "rg") generated 4 warnings (1 duplicate)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.69s
+     Running tests/tests.rs (target/debug/deps/integration-592263f78281b3a3)
+
+running 1 test
+test regression::r2208 ... FAILED
 
 failures:
 
----- routing::tests::wildcard_with_trailing_slash stdout ----
-thread 'routing::tests::wildcard_with_trailing_slash' panicked at axum/src/routing/tests/mod.rs:408:5:
-assertion `left == right` failed
-  left: 301
- right: 308
+---- regression::r2208 stdout ----
+thread 'regression::r2208' panicked at tests/regression.rs:1119:5:
+
+printed outputs differ!
+
+expected:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ [-h] [-U|-u <pkgspec>[,<pkgspec>...]] [<reqs-in>...] [-- <pip-compile-arg>...]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+got:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ [-h] [-U|-u <pkgspec>[,<pkgspec>...]] [<reqs-in>...] [-- <pip-compile-arg>...]
+    emulate -L zsh
+    unset REPLY
+    if [[ $1 == --help ]] { zpy $0; return }
+    [[ $ZPY_PROCS ]] || return
+
+    local gen_ha
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
----- routing::tests::with_trailing_slash_post stdout ----
-Listening on 127.0.0.1:36973
-thread 'routing::tests::with_trailing_slash_post' panicked at axum/src/routing/tests/mod.rs:366:5:
-assertion `left == right` failed
-  left: 405
- right: 200
-
----- routing::tests::without_trailing_slash_post stdout ----
-Listening on 127.0.0.1:42401
-thread 'routing::tests::without_trailing_slash_post' panicked at axum/src/routing/tests/mod.rs:378:5:
-assertion `left == right` failed
-  left: 405
- right: 200
-
 
 failures:
-    routing::tests::wildcard_with_trailing_slash
-    routing::tests::with_trailing_slash_post
-    routing::tests::without_trailing_slash_post
+    regression::r2208
 
-test result: FAILED. 3 passed; 3 failed; 0 ignored; 0 measured; 121 filtered out; finished in 0.01s
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 273 filtered out; finished in 0.04s
 
-error: test failed, to rerun pass `-p axum --lib`
+error: test failed, to rerun pass `-p ripgrep --test integration`
