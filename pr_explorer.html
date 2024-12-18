@@ -96,14 +96,33 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div id="app-container">
         <div id="sidebar">
-            <div id="repo-list"></div>
-            <div id="pr-list"></div>
+            <div id="repo-list">
+                <div class="loader" id="repo-loader"></div>
+            </div>
+            <div id="pr-list">
+                <div class="loader" id="pr-loader"></div>
+            </div>
         </div>
         <div id="main-content">
             <div id="descriptions">
@@ -118,35 +137,27 @@
         const prList = document.getElementById('pr-list');
         const prDescription = document.getElementById('pr-description');
         const issueDescription = document.getElementById('issue-description');
+        const repoLoader = document.getElementById('repo-loader');
+        const prLoader = document.getElementById('pr-loader');
         let allData = {};
 
         function loadJSONFiles() {
-            const promises = [];
-            const jsonFiles = [];
-
-            // Get all dataset/<repo>/<repo>-task-instances.jsonl files
+            repoLoader.style.display = 'block';
             fetch('/list_files')
                 .then(response => response.json())
                 .then(files => {
-                    files.forEach(file => {
-                        promises.push(
-                            fetch(`/instances/${file}`)
-                                .then(response => response.json())
-                                .then(data => {
-                                    allData[data.repo_short] = data;
-                                })
-                        );
-                    });
-
-                    Promise.all(promises).then(() => {
-                        displayRepositories();
-                    });
+                    displayRepositories(files);
+                    repoLoader.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error loading repositories:', error);
+                    repoLoader.style.display = 'none';
                 });
         }
 
-        function displayRepositories() {
+        function displayRepositories(repos) {
             repoList.innerHTML = '<h3>Repositories</h3>';
-            Object.keys(allData).sort().forEach(repo => {
+            repos.sort().forEach(repo => {
                 const repoItem = document.createElement('div');
                 repoItem.className = 'repo-item';
 
@@ -166,11 +177,26 @@
                 repoItem.appendChild(repoText);
                 repoItem.onclick = (e) => {
                     if (e.target !== checkbox) {
-                        displayPullRequests(repo);
+                        loadRepoData(repo);
                     }
                 };
                 repoList.appendChild(repoItem);
             });
+        }
+
+        function loadRepoData(repo) {
+            prLoader.style.display = 'block';
+            fetch(`/instances/${repo}`)
+                .then(response => response.json())
+                .then(data => {
+                    allData[data.repo_short] = data;
+                    displayPullRequests(repo);
+                    prLoader.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error loading repo data:', error);
+                    prLoader.style.display = 'none';
+                });
         }
 
         function displayPullRequests(repo) {
