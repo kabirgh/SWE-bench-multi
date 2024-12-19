@@ -230,6 +230,25 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
             log_parser=redis_log_parser,
         ),
+        "11631": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/geo --only "/.*GEOSEARCH .*"'
+            ],
+            log_parser=redis_log_parser,
+        ),
+        "11510": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/introspection --only "/.*MONITOR.*"'
+            ],
+            log_parser=redis_log_parser,
+        ),
+        "11279": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=["TERM=dumb ./runtest --durable --single unit/acl"],
+            log_parser=redis_log_parser,
+        ),
     },
     "tokio-rs/tokio": {
         "6724": RustAdapter(

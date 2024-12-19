@@ -1,28 +1,125 @@
-   Compiling bat v0.10.0 (/root/bat)
-    Finished `test` profile [unoptimized + debuginfo] target(s) in 3.53s
-     Running tests/integration_tests.rs (target/debug/deps/integration_tests-f6012612deca9bc0)
+Cleanup: may take some time... OK
+Starting test server at port 21079
+[ready]: 417543
+Testing unit/acl
+[ready]: 417544
+[ready]: 417548
+[ready]: 417542
+[ready]: 417541
+[ready]: 417549
+[ready]: 417545
+[ready]: 417550
+[ready]: 417551
+[ready]: 417546
+[ready]: 417547
+[ready]: 417553
+[ready]: 417552
+[ready]: 417556
+[ready]: 417554
+[ready]: 417555
+[ok]: Connections start with the default user (0 ms)
+[ok]: It is possible to create new users (0 ms)
+[ok]: Usernames can not contain spaces or null characters (1 ms)
+[ok]: New users start disabled (1 ms)
+[ok]: Enabling the user allows the login (1 ms)
+[ok]: Only the set of correct passwords work (2 ms)
+[ok]: It is possible to remove passwords from the set of valid ones (0 ms)
+[ok]: Test password hashes can be added (1 ms)
+[ok]: Test password hashes validate input (1 ms)
+[ok]: ACL GETUSER returns the password hash instead of the actual password (1 ms)
+[ok]: Test hashed passwords removal (1 ms)
+[ok]: By default users are not able to access any command (0 ms)
+[ok]: By default users are not able to access any key (0 ms)
+[ok]: It's possible to allow the access of a subset of keys (1 ms)
+[ok]: By default, only default user is able to publish to any channel (1 ms)
+[ok]: By default, only default user is not able to publish to any shard channel (1 ms)
+[ok]: By default, only default user is able to subscribe to any channel (2 ms)
+[ok]: By default, only default user is able to subscribe to any shard channel (1 ms)
+[ok]: By default, only default user is able to subscribe to any pattern (2 ms)
+[ok]: It's possible to allow publishing to a subset of channels (1 ms)
+[ok]: It's possible to allow publishing to a subset of shard channels (1 ms)
+[err]: Validate subset of channels is prefixed with resetchannels flag in tests/unit/acl.tcl
+Expected 'user hpuser on nopass sanitize-payload resetchannels &foo +@all' to be equal to 'user hpuser on nopass resetchannels &foo +@all' (context: type eval line 9 cmd {assert_equal {user hpuser on nopass sanitize-payload resetchannels &foo +@all} $user} proc ::test)
+[ok]: In transaction queue publish/subscribe/psubscribe to unauthorized channel will fail (3 ms)
+[ok]: It's possible to allow subscribing to a subset of channels (1 ms)
+[ok]: It's possible to allow subscribing to a subset of shard channels (2 ms)
+[ok]: It's possible to allow subscribing to a subset of channel patterns (2 ms)
+[ok]: Subscribers are killed when revoked of channel permission (3 ms)
+[ok]: Subscribers are killed when revoked of channel permission (2 ms)
+[ok]: Subscribers are killed when revoked of pattern permission (2 ms)
+[ok]: Subscribers are pardoned if literal permissions are retained and/or gaining allchannels (3 ms)
+[ok]: Users can be configured to authenticate with any password (0 ms)
+[ok]: ACLs can exclude single commands (1 ms)
+[ok]: ACLs can include or exclude whole classes of commands (2 ms)
+[ok]: ACLs can include single subcommands (2 ms)
+[ok]: ACLs can exclude single subcommands, case 1 (2 ms)
+[ok]: ACLs can exclude single subcommands, case 2 (3 ms)
+[ok]: ACLs cannot include a subcommand with a specific arg (1 ms)
+[ok]: ACLs cannot exclude or include a container commands with a specific arg (1 ms)
+[ok]: ACLs cannot exclude or include a container command with two args (1 ms)
+[ok]: ACLs including of a type includes also subcommands (1 ms)
+[ok]: ACLs can block SELECT of all but a specific DB (3 ms)
+[ok]: ACLs can block all DEBUG subcommands except one (3 ms)
+[ok]: ACLs set can include subcommands, if already full command exists (6 ms)
+[ok]: ACLs set can exclude subcommands, if already full command exists (9 ms)
+[err]: ACL SETUSER RESET reverting to default newly created user in tests/unit/acl.tcl
+Expected 'user example off resetchannels -@all' to be equal to 'user example off sanitize-payload resetchannels -@all' (context: type eval line 17 cmd {assert_equal $current_user_output $user} proc ::test)
+[ok]: ACL GETUSER is able to translate back command permissions (4 ms)
+[ok]: ACL GETUSER provides reasonable results (74 ms)
+[ok]: ACL CAT with illegal arguments (0 ms)
+[ok]: ACL CAT without category - list all categories (0 ms)
+[ok]: ACL CAT category - list all commands/subcommands that belong to category (3 ms)
+[ok]: ACL requires explicit permission for scripting for EVAL_RO, EVALSHA_RO and FCALL_RO (1 ms)
+[ok]: ACL #5998 regression: memory leaks adding / removing subcommands (1 ms)
+[ok]: ACL LOG shows failed command executions at toplevel (3 ms)
+[ok]: ACL LOG shows failed subcommand executions at toplevel (10 ms)
+[ok]: ACL LOG is able to test similar events (2 ms)
+[ok]: ACL LOG is able to log keys access violations and key name (2 ms)
+[ok]: ACL LOG is able to log channel access violations and channel name (1 ms)
+[ok]: ACL LOG RESET is able to flush the entries in the log (0 ms)
+[ok]: ACL LOG can distinguish the transaction context (1) (2 ms)
+[ok]: ACL LOG can distinguish the transaction context (2) (3 ms)
+[ok]: ACL can log errors in the context of Lua scripting (2 ms)
+[ok]: ACL LOG can accept a numerical argument to show less entries (3 ms)
+[ok]: ACL LOG can log failed auth attempts (1 ms)
+[ok]: ACL LOG entries are limited to a maximum amount (5 ms)
+[ok]: When default user is off, new connections are not authenticated (1 ms)
+[ok]: When default user has no command permission, hello command still works for other users (2 ms)
+[ok]: ACL HELP should not have unexpected options (0 ms)
+[ok]: Delete a user that the client doesn't use (1 ms)
+[ok]: Delete a user that the client is using (1 ms)
+[ok]: ACL GENPASS command failed test (1 ms)
+[ok]: Default user can not be removed (0 ms)
+[ok]: ACL load non-existing configured ACL file (1 ms)
+[ok]: default: load from include file, can access any channels (2 ms)
+[ok]: default: with config acl-pubsub-default allchannels after reset, can access any channels (1 ms)
+[ok]: default: with config acl-pubsub-default resetchannels after reset, can not access any channels (1 ms)
+[ok]: Alice: can execute all command (1 ms)
+[ok]: Bob: just execute @set and acl command (0 ms)
+[ok]: ACL load and save (9 ms)
+[ok]: ACL load and save with restricted channels (9 ms)
+[ok]: Default user has access to all channels irrespective of flag (1 ms)
+[ok]: Update acl-pubsub-default, existing users shouldn't get affected (3 ms)
+[ok]: Single channel is valid (1 ms)
+[ok]: Single channel is not valid with allchannels (1 ms)
+[ok]: Only default user has access to all channels irrespective of flag (3 ms)
+[ok]: default: load from config file, without channel permission default user can't access any channels (0 ms)
+[ok]: default: load from config file with all channels permissions (1 ms)
+[ok]: Test loading an ACL file with duplicate users (8 ms)
+[ok]: Test loading an ACL file with duplicate default user (7 ms)
+[ok]: Test loading duplicate users in config on startup (12 ms)
+[ok]: ACL from config file and config rewrite (215 ms)
+[1/1 done]: unit/acl (2 seconds)
 
-running 2 tests
-test does_not_print_unwanted_file_named_cache ... FAILED
-test can_print_file_named_cache ... ok
+                   The End
 
-failures:
+Execution time of different units:
+  2 seconds - unit/acl
 
----- does_not_print_unwanted_file_named_cache stdout ----
-thread 'does_not_print_unwanted_file_named_cache' panicked at /root/.cargo/registry/src/index.crates.io-6f17d22bba15001f/assert_cmd-0.11.1/src/assert.rs:181:13:
-Unexpected success
-command=`cd "tests/examples" && env -u BAT_CONFIG_PATH -u BAT_PAGER -u BAT_STYLE -u BAT_TABS -u BAT_THEME -u PAGER "/root/bat/target/debug/bat" "cach"`
-code=0
-stdout=```test
-```
-stderr=``````
+!!! WARNING The following tests failed:
 
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    does_not_print_unwanted_file_named_cache
-
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 32 filtered out; finished in 4.02s
-
-error: test failed, to rerun pass `-p bat --test integration_tests`
+*** [err]: Validate subset of channels is prefixed with resetchannels flag in tests/unit/acl.tcl
+Expected 'user hpuser on nopass sanitize-payload resetchannels &foo +@all' to be equal to 'user hpuser on nopass resetchannels &foo +@all' (context: type eval line 9 cmd {assert_equal {user hpuser on nopass sanitize-payload resetchannels &foo +@all} $user} proc ::test)
+*** [err]: ACL SETUSER RESET reverting to default newly created user in tests/unit/acl.tcl
+Expected 'user example off resetchannels -@all' to be equal to 'user example off sanitize-payload resetchannels -@all' (context: type eval line 17 cmd {assert_equal $current_user_output $user} proc ::test)
+Cleanup: may take some time... OK
