@@ -1,125 +1,37 @@
 Cleanup: may take some time... OK
 Starting test server at port 21079
-[ready]: 417543
-Testing unit/acl
-[ready]: 417544
-[ready]: 417548
-[ready]: 417542
-[ready]: 417541
-[ready]: 417549
-[ready]: 417545
-[ready]: 417550
-[ready]: 417551
-[ready]: 417546
-[ready]: 417547
-[ready]: 417553
-[ready]: 417552
-[ready]: 417556
-[ready]: 417554
-[ready]: 417555
-[ok]: Connections start with the default user (0 ms)
-[ok]: It is possible to create new users (0 ms)
-[ok]: Usernames can not contain spaces or null characters (1 ms)
-[ok]: New users start disabled (1 ms)
-[ok]: Enabling the user allows the login (1 ms)
-[ok]: Only the set of correct passwords work (2 ms)
-[ok]: It is possible to remove passwords from the set of valid ones (0 ms)
-[ok]: Test password hashes can be added (1 ms)
-[ok]: Test password hashes validate input (1 ms)
-[ok]: ACL GETUSER returns the password hash instead of the actual password (1 ms)
-[ok]: Test hashed passwords removal (1 ms)
-[ok]: By default users are not able to access any command (0 ms)
-[ok]: By default users are not able to access any key (0 ms)
-[ok]: It's possible to allow the access of a subset of keys (1 ms)
-[ok]: By default, only default user is able to publish to any channel (1 ms)
-[ok]: By default, only default user is not able to publish to any shard channel (1 ms)
-[ok]: By default, only default user is able to subscribe to any channel (2 ms)
-[ok]: By default, only default user is able to subscribe to any shard channel (1 ms)
-[ok]: By default, only default user is able to subscribe to any pattern (2 ms)
-[ok]: It's possible to allow publishing to a subset of channels (1 ms)
-[ok]: It's possible to allow publishing to a subset of shard channels (1 ms)
-[err]: Validate subset of channels is prefixed with resetchannels flag in tests/unit/acl.tcl
-Expected 'user hpuser on nopass sanitize-payload resetchannels &foo +@all' to be equal to 'user hpuser on nopass resetchannels &foo +@all' (context: type eval line 9 cmd {assert_equal {user hpuser on nopass sanitize-payload resetchannels &foo +@all} $user} proc ::test)
-[ok]: In transaction queue publish/subscribe/psubscribe to unauthorized channel will fail (3 ms)
-[ok]: It's possible to allow subscribing to a subset of channels (1 ms)
-[ok]: It's possible to allow subscribing to a subset of shard channels (2 ms)
-[ok]: It's possible to allow subscribing to a subset of channel patterns (2 ms)
-[ok]: Subscribers are killed when revoked of channel permission (3 ms)
-[ok]: Subscribers are killed when revoked of channel permission (2 ms)
-[ok]: Subscribers are killed when revoked of pattern permission (2 ms)
-[ok]: Subscribers are pardoned if literal permissions are retained and/or gaining allchannels (3 ms)
-[ok]: Users can be configured to authenticate with any password (0 ms)
-[ok]: ACLs can exclude single commands (1 ms)
-[ok]: ACLs can include or exclude whole classes of commands (2 ms)
-[ok]: ACLs can include single subcommands (2 ms)
-[ok]: ACLs can exclude single subcommands, case 1 (2 ms)
-[ok]: ACLs can exclude single subcommands, case 2 (3 ms)
-[ok]: ACLs cannot include a subcommand with a specific arg (1 ms)
-[ok]: ACLs cannot exclude or include a container commands with a specific arg (1 ms)
-[ok]: ACLs cannot exclude or include a container command with two args (1 ms)
-[ok]: ACLs including of a type includes also subcommands (1 ms)
-[ok]: ACLs can block SELECT of all but a specific DB (3 ms)
-[ok]: ACLs can block all DEBUG subcommands except one (3 ms)
-[ok]: ACLs set can include subcommands, if already full command exists (6 ms)
-[ok]: ACLs set can exclude subcommands, if already full command exists (9 ms)
-[err]: ACL SETUSER RESET reverting to default newly created user in tests/unit/acl.tcl
-Expected 'user example off resetchannels -@all' to be equal to 'user example off sanitize-payload resetchannels -@all' (context: type eval line 17 cmd {assert_equal $current_user_output $user} proc ::test)
-[ok]: ACL GETUSER is able to translate back command permissions (4 ms)
-[ok]: ACL GETUSER provides reasonable results (74 ms)
-[ok]: ACL CAT with illegal arguments (0 ms)
-[ok]: ACL CAT without category - list all categories (0 ms)
-[ok]: ACL CAT category - list all commands/subcommands that belong to category (3 ms)
-[ok]: ACL requires explicit permission for scripting for EVAL_RO, EVALSHA_RO and FCALL_RO (1 ms)
-[ok]: ACL #5998 regression: memory leaks adding / removing subcommands (1 ms)
-[ok]: ACL LOG shows failed command executions at toplevel (3 ms)
-[ok]: ACL LOG shows failed subcommand executions at toplevel (10 ms)
-[ok]: ACL LOG is able to test similar events (2 ms)
-[ok]: ACL LOG is able to log keys access violations and key name (2 ms)
-[ok]: ACL LOG is able to log channel access violations and channel name (1 ms)
-[ok]: ACL LOG RESET is able to flush the entries in the log (0 ms)
-[ok]: ACL LOG can distinguish the transaction context (1) (2 ms)
-[ok]: ACL LOG can distinguish the transaction context (2) (3 ms)
-[ok]: ACL can log errors in the context of Lua scripting (2 ms)
-[ok]: ACL LOG can accept a numerical argument to show less entries (3 ms)
-[ok]: ACL LOG can log failed auth attempts (1 ms)
-[ok]: ACL LOG entries are limited to a maximum amount (5 ms)
-[ok]: When default user is off, new connections are not authenticated (1 ms)
-[ok]: When default user has no command permission, hello command still works for other users (2 ms)
-[ok]: ACL HELP should not have unexpected options (0 ms)
-[ok]: Delete a user that the client doesn't use (1 ms)
-[ok]: Delete a user that the client is using (1 ms)
-[ok]: ACL GENPASS command failed test (1 ms)
-[ok]: Default user can not be removed (0 ms)
-[ok]: ACL load non-existing configured ACL file (1 ms)
-[ok]: default: load from include file, can access any channels (2 ms)
-[ok]: default: with config acl-pubsub-default allchannels after reset, can access any channels (1 ms)
-[ok]: default: with config acl-pubsub-default resetchannels after reset, can not access any channels (1 ms)
-[ok]: Alice: can execute all command (1 ms)
-[ok]: Bob: just execute @set and acl command (0 ms)
-[ok]: ACL load and save (9 ms)
-[ok]: ACL load and save with restricted channels (9 ms)
-[ok]: Default user has access to all channels irrespective of flag (1 ms)
-[ok]: Update acl-pubsub-default, existing users shouldn't get affected (3 ms)
-[ok]: Single channel is valid (1 ms)
-[ok]: Single channel is not valid with allchannels (1 ms)
-[ok]: Only default user has access to all channels irrespective of flag (3 ms)
-[ok]: default: load from config file, without channel permission default user can't access any channels (0 ms)
-[ok]: default: load from config file with all channels permissions (1 ms)
-[ok]: Test loading an ACL file with duplicate users (8 ms)
-[ok]: Test loading an ACL file with duplicate default user (7 ms)
-[ok]: Test loading duplicate users in config on startup (12 ms)
-[ok]: ACL from config file and config rewrite (215 ms)
-[1/1 done]: unit/acl (2 seconds)
+[ready]: 831726
+Testing unit/cluster/cluster-shards
+[ready]: 831729
+[ready]: 831725
+[ready]: 831728
+[ready]: 831732
+[ready]: 831733
+[ready]: 831730
+[ready]: 831734
+[ready]: 831736
+[ready]: 831727
+[ready]: 831731
+[ready]: 831735
+[ready]: 831738
+[ready]: 831737
+[ready]: 831739
+[ready]: 831741
+[ok]: Cluster should start ok (3 ms)
+[ok]: Cluster shards response is ok for shard 0 (2 ms)
+[ok]: Kill a node and tell the replica to immediately takeover (33 ms)
+[ok]: Verify health as fail for killed node (3198 ms)
+[err]: CLUSTER SHARDS slot response is non-empty when primary node fails in tests/unit/cluster/cluster-shards.tcl
+Expected '0 5461' to be equal to '' (context: type eval line 2 cmd {assert_equal $shard_0_slot_coverage [dict get [get_node_info_from_shard $node_0_id $validation_node "shard"] "slots"]} proc ::test)
+[1/1 done]: unit/cluster/cluster-shards (15 seconds)
 
                    The End
 
 Execution time of different units:
-  2 seconds - unit/acl
+  15 seconds - unit/cluster/cluster-shards
 
 !!! WARNING The following tests failed:
 
-*** [err]: Validate subset of channels is prefixed with resetchannels flag in tests/unit/acl.tcl
-Expected 'user hpuser on nopass sanitize-payload resetchannels &foo +@all' to be equal to 'user hpuser on nopass resetchannels &foo +@all' (context: type eval line 9 cmd {assert_equal {user hpuser on nopass sanitize-payload resetchannels &foo +@all} $user} proc ::test)
-*** [err]: ACL SETUSER RESET reverting to default newly created user in tests/unit/acl.tcl
-Expected 'user example off resetchannels -@all' to be equal to 'user example off sanitize-payload resetchannels -@all' (context: type eval line 17 cmd {assert_equal $current_user_output $user} proc ::test)
+*** [err]: CLUSTER SHARDS slot response is non-empty when primary node fails in tests/unit/cluster/cluster-shards.tcl
+Expected '0 5461' to be equal to '' (context: type eval line 2 cmd {assert_equal $shard_0_slot_coverage [dict get [get_node_info_from_shard $node_0_id $validation_node "shard"] "slots"]} proc ::test)
 Cleanup: may take some time... OK

@@ -1329,4 +1329,25 @@ ADAPTERS: dict[str, dict[str, Adapter]] = {
             ],
         ),
     },
+    "valkey-io/valkey": {
+        "199": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=[
+                'TERM=dumb ./runtest --durable --single integration/valkey-cli --only "/Valid Connection Scheme.*"'
+            ],
+            log_parser=redis_log_parser,
+        ),
+        "928": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=[
+                'TERM=dumb ./runtest --durable --single unit/cluster/replica-migration --only "/.*NOREPLICAS.*"'
+            ],
+            log_parser=redis_log_parser,
+        ),
+        "790": CPlusPlusAdapter(
+            build=["make distclean", "make"],
+            test=["TERM=dumb ./runtest --durable --single unit/cluster/cluster-shards"],
+            log_parser=redis_log_parser,
+        ),
+    },
 }
